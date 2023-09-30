@@ -5,11 +5,11 @@ return {
     opts = function(_, opts)
       -- customize the dashboard header
       opts.section.header.val = {
-        "    ███    ██ ██    ██ ██ ███    ███",
-        "    ████   ██ ██    ██ ██ ████  ████",
-        "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
-        "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
-        "    ██   ████   ████   ██ ██      ██",
+        "███    ██ ██    ██ ██ ███    ███",
+        "████   ██ ██    ██ ██ ████  ████",
+        "██ ██  ██ ██    ██ ██ ██ ████ ██",
+        "██  ██ ██  ██  ██  ██ ██  ██  ██",
+        "██   ████   ████   ██ ██      ██",
       }
       return opts
     end,
@@ -172,6 +172,25 @@ return {
 
       return opts
     end,
+  },
+
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = {
+      filesystem = {
+        filtered_items = {
+          hide_dotfiles = false,
+          hide_gitignored = false,
+          always_show = {
+            ".gitignored",
+          },
+          never_show = {
+            ".DS_Store",
+            "thumbs.db",
+          },
+        },
+      },
+    },
   },
 
   -- You can disable default plugins as follows:
