@@ -67,7 +67,6 @@ return {
   { import = "astrocommunity.programming-language-support.rest-nvim" },
 
   { import = "astrocommunity.project.nvim-spectre" },
-  { import = "astrocommunity.project.project-nvim" },
 
   { import = "astrocommunity.scrolling.mini-animate" },
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
