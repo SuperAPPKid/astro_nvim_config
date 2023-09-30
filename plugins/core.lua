@@ -106,7 +106,7 @@ return {
     "hrsh7th/nvim-cmp",
     dependencies = {
       { "hrsh7th/cmp-calc" },
-      { "jcdickinson/codeium.nvim" },
+      { "Exafunction/codeium.nvim" },
     },
     opts = function(_, opts)
       local cmp = require "cmp"

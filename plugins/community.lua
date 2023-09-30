@@ -46,6 +46,16 @@ return {
   { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
 
   { import = "astrocommunity.motion.flash-nvim" },
+  {
+    "folke/flash.nvim",
+    opts = {
+      modes = {
+        search = {
+          enabled = false,
+        },
+      },
+    },
+  },
   { import = "astrocommunity.motion.mini-ai" },
   {
     "echasnovski/mini.ai",
@@ -66,7 +76,12 @@ return {
   { import = "astrocommunity.programming-language-support.nvim-jqx" },
   { import = "astrocommunity.programming-language-support.rest-nvim" },
 
-  { import = "astrocommunity.project.nvim-spectre" },
+  {
+    import = "astrocommunity.project.nvim-spectre",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+  },
 
   { import = "astrocommunity.scrolling.mini-animate" },
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
