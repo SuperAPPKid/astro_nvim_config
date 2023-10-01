@@ -8,7 +8,22 @@ return {
   -- { import = "astrocommunity.bars-and-lines.dropbar-nvim" },
   { import = "astrocommunity.bars-and-lines.vim-illuminate" },
 
-  { import = "astrocommunity.code-runner.compiler-nvim" },
+  { import = "astrocommunity.code-runner.executor-nvim" },
+  {
+    "google/executor.nvim",
+    opts = {
+      use_split = false,
+    },
+    keys = function(_, keys)
+      local executor_prefix = "<leader>R"
+      table.insert(keys, { executor_prefix, desc = "Executor" })
+      table.insert(keys, { executor_prefix .. "r", "<cmd>ExecutorRun<CR>", desc = "Run (Executor)" })
+      table.insert(keys, { executor_prefix .. "R", "<cmd>ExecutorSetCommand<CR>", desc = "Set Command (Executor)" })
+      table.insert(keys, { executor_prefix .. "d", "<cmd>ExecutorShowDetail<CR>", desc = "Show Detail (Executor)" })
+      table.insert(keys, { executor_prefix .. "c", "<cmd>ExecutorReset<CR>", desc = "Clear (Executor)" })
+      return keys
+    end,
+  },
 
   { import = "astrocommunity.color.ccc-nvim" },
 
