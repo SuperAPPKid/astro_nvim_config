@@ -13,8 +13,8 @@ return {
   -- first key is the mode
   n = {
     -- disabled
-    ["<leader>q"] = false,
-    ["<leader>w"] = false,
+    -- ["<leader>q"] = false,
+    -- ["<leader>w"] = false,
 
     -- save file
     ["<C-s>"] = save_file,
