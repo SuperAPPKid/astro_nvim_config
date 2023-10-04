@@ -37,6 +37,7 @@ return {
     --   "<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>",
     --   desc = "Redraw / clear hlsearch / diff update",
     -- },
+    ["<leader>a"] = { "<cmd>AerialToggle<cr>", desc = "Toggle Aerial" },
   },
   t = {
     ["<esc><esc>"] = { "<c-\\><c-n>", desc = "Enter Normal Mode" },
