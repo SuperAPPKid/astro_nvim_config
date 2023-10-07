@@ -21,29 +21,30 @@ return {
       local status = require "astronvim.utils.status"
       local hl = status.hl
 
-      opts.statusline = { -- statusline
-        hl = { fg = "fg", bg = "bg" },
-        status.component.mode { mode_text = { padding = { left = 1, right = 1 } } }, -- add the mode text
-        status.component.git_branch {
-          padding = { right = 1 },
-        },
-        status.component.file_info {
-          -- enable the file_icon and disable the highlighting based on filetype
-          file_icon = { padding = { left = 0 } },
-          filename = { fallback = "Empty" },
-          padding = { right = 1 },
-        },
-        status.component.git_diff(),
-        status.component.diagnostics(),
-        status.component.fill(),
-        status.component.lsp(),
-        -- status.component.treesitter(),
-        status.component.nav {
-          percentage = { padding = { right = 1 } },
-          ruler = false,
-          scrollbar = false,
-        },
-      }
+      -- opts.statusline = { -- statusline
+      --   hl = { fg = "fg", bg = "bg" },
+      --   status.component.mode { mode_text = { padding = { left = 1, right = 1 } } }, -- add the mode text
+      --   status.component.git_branch {
+      --     padding = { right = 1 },
+      --   },
+      --   status.component.file_info {
+      --     -- enable the file_icon and disable the highlighting based on filetype
+      --     file_icon = { padding = { left = 0 } },
+      --     filename = { fallback = "Empty" },
+      --     padding = { right = 1 },
+      --   },
+      --   status.component.git_diff(),
+      --   status.component.diagnostics(),
+      --   status.component.fill(),
+      --   status.component.lsp(),
+      --   -- status.component.treesitter(),
+      --   status.component.nav {
+      --     percentage = { padding = { right = 1 } },
+      --     ruler = false,
+      --     scrollbar = false,
+      --   },
+      -- }
+      opts.statusline = nil
 
       -- opts.winbar = nil
 
