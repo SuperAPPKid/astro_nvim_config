@@ -26,6 +26,9 @@ return {
   },
 
   { import = "astrocommunity.color.ccc-nvim" },
+  { import = "astrocommunity.color.headlines-nvim" },
+  { import = "astrocommunity.color.modes-nvim" },
+  { import = "astrocommunity.color.tint-nvim" },
 
   { import = "astrocommunity.completion.cmp-cmdline" },
 
@@ -38,6 +41,16 @@ return {
   -- { import = "astrocommunity.diagnostics.lsp_lines-nvim" },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
 
+  { import = "astrocommunity.editing-support.auto-save-nvim" },
+  -- { import = "astrocommunity.editing-support.chatgpt-nvim" },
+  { import = "astrocommunity.editing-support.comment-box-nvim" },
+  { import = "astrocommunity.editing-support.cutlass-nvim" },
+  {
+    "gbprod/cutlass.nvim",
+    opts = {
+      cut_key = "m",
+    },
+  },
   { import = "astrocommunity.editing-support.hypersonic-nvim" },
   {
     "tomiis4/Hypersonic.nvim",
@@ -46,12 +59,21 @@ return {
     },
   },
   { import = "astrocommunity.editing-support.multicursors-nvim" },
+  { import = "astrocommunity.editing-support.neogen" },
+  { import = "astrocommunity.editing-support.nvim-devdocs" },
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
+  { import = "astrocommunity.editing-support.refactoring-nvim" },
+  { import = "astrocommunity.editing-support.treesj" },
   { import = "astrocommunity.editing-support.telescope-undo-nvim" },
+  { import = "astrocommunity.editing-support.text-case-nvim" },
   { import = "astrocommunity.editing-support.todo-comments-nvim" },
   { import = "astrocommunity.editing-support.vim-move" },
+  { import = "astrocommunity.editing-support.yanky-nvim" },
 
   { import = "astrocommunity.git.diffview-nvim" },
+  { import = "astrocommunity.git.neogit" },
+  { import = "astrocommunity.git.octo-nvim" },
+  { import = "astrocommunity.git.openingh-nvim" },
 
   { import = "astrocommunity.indent.indent-tools-nvim" },
 
@@ -59,6 +81,8 @@ return {
   { import = "astrocommunity.lsp.lsp-signature-nvim" },
 
   { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
+
+  -- { import = "astrocommunity.media.vim-wakatime" },
 
   { import = "astrocommunity.motion.flash-nvim" },
   {
