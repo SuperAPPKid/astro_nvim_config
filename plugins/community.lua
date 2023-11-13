@@ -101,11 +101,15 @@ return {
       silent = true,
     },
   },
-  { import = "astrocommunity.motion.mini-surround" },
+  { import = "astrocommunity.motion.nvim-surround" },
   {
-    "echasnovski/mini.surround",
+    "kylechui/nvim-surround",
     opts = {
-      silent = true,
+      keymaps = {
+        normal = "yu",
+        delete = "du",
+        change = "cu",
+      },
     },
   },
   { import = "astrocommunity.motion.vim-matchup" },
