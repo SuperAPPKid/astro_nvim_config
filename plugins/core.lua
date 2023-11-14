@@ -216,15 +216,32 @@ return {
     },
   },
   -- By adding to the which-key config and using our helper function you can add more which-key registered bindings
-  -- {
-  --   "folke/which-key.nvim",
-  --   config = function(plugin, opts)
-  --     require "plugins.configs.which-key"(plugin, opts) -- include the default astronvim config that calls the setup call
-  --     -- Add bindings which show up as group name
-  --     local wk = require "which-key"
-  --     wk.register({
-  --       b = { name = "Buffer" },
-  --     }, { mode = "n", prefix = "<leader>" })
-  --   end,
-  -- },
+  {
+    "folke/which-key.nvim",
+    --   config = function(plugin, opts)
+    --     require "plugins.configs.which-key"(plugin, opts) -- include the default astronvim config that calls the setup call
+    --     -- Add bindings which show up as group name
+    --     local wk = require "which-key"
+    --     wk.register({
+    --       b = { name = "Buffer" },
+    --     }, { mode = "n", prefix = "<leader>" })
+    --   end,
+    opts = {
+      triggers_blacklist = {
+        i = { "j", "k", "d", "D", "s", "S" },
+        v = { "j", "k", "d", "D", "s", "S" },
+        n = { "d", "D", "s", "S" },
+      },
+    },
+    -- opts = function(_, opts)
+    --   opts.triggers_blacklist = {
+    --     -- list of mode / prefixes that should never be hooked by WhichKey
+    --     -- this is mostly relevant for keymaps that start with a native binding
+    --     i = { "j", "k", "d", "D", "s", "S" },
+    --     v = { "j", "k", "d", "D", "s", "S" },
+    --     n = { "d", "D", "s", "S" },
+    --   }
+    --   return opts
+    -- end,
+  },
 }
