@@ -40,7 +40,8 @@ return {
     ["<leader>a"] = { "<cmd>AerialToggle<cr>", desc = "Toggle Aerial" },
   },
   t = {
-    ["<esc><esc>"] = { "<c-\\><c-n>", desc = "Enter Normal Mode" },
+    ["<C-t>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" },
+    ["<C-q>"] = { function() require("astronvim.utils.buffer").close() end, desc = "Close buffer" },
   },
   i = {
     -- save file
