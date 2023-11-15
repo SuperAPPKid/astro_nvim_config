@@ -38,6 +38,17 @@ return {
     --   desc = "Redraw / clear hlsearch / diff update",
     -- },
     ["<leader>a"] = { "<cmd>AerialToggle<cr>", desc = "Toggle Aerial" },
+
+    -- telescope find files search hidden file
+    ["<leader>ff"] = {
+      function()
+        require("telescope.builtin").find_files {
+          no_ignore = true,
+          find_command = { "rg", "--ignore", "--files", "--hidden", "-g", "!.git" },
+        }
+      end,
+      desc = "Find files",
+    },
   },
   t = {
     ["<C-t>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" },
