@@ -363,4 +363,9 @@ return {
       }
     end,
   },
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-telescope/telescope-dap.nvim" },
+    opts = function() require("telescope").load_extension "dap" end,
+  },
 }
