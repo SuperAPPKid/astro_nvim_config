@@ -244,4 +244,9 @@ return {
     --   return opts
     -- end,
   },
+
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, _) vim.treesitter.language.register("bash", "dotenv") end,
+  },
 }

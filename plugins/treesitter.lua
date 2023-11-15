@@ -3,7 +3,35 @@ return {
   opts = function(_, opts)
     -- add more things to the ensure_installed table protecting against community packs modifying it
     opts.ensure_installed = require("astronvim.utils").list_insert_unique(opts.ensure_installed, {
-      -- "lua"
+      "arduino",
+      "cmake",
+      "csv",
+      "diff",
+      "dot",
+      "git_config",
+      "git_rebase",
+      "gitattributes",
+      "gitcommit",
+      "gitignore",
+      "godot_resource",
+      "gomod",
+      "gosum",
+      "gotmpl",
+      "gowork",
+      "graphql",
+      "jsdoc",
+      "luadoc",
+      "make",
+      "phpdoc",
+      "pod",
+      "regex",
+      "scss",
+      "sql",
+      "ssh_config",
+      "swift",
+      "xml",
     })
+    vim.treesitter.language.register("bash", "dotenv")
+    vim.treesitter.language.register("go", "api")
   end,
 }
