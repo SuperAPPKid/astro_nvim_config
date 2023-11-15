@@ -7,6 +7,29 @@ return {
   { import = "astrocommunity.bars-and-lines.heirline-vscode-winbar" },
   -- { import = "astrocommunity.bars-and-lines.dropbar-nvim" },
   { import = "astrocommunity.bars-and-lines.vim-illuminate" },
+  {
+    "RRethy/vim-illuminate",
+    keys = {
+      {
+        "]c",
+        function() require("illuminate").goto_next_reference() end,
+        mode = "n",
+        desc = "Move to next reference under cursor",
+      },
+      {
+        "[c",
+        function() require("illuminate").goto_prev_reference() end,
+        mode = "n",
+        desc = "Move to previous reference under cursor",
+      },
+      {
+        "a",
+        function() require("illuminate").textobj_select() end,
+        mode = { "o", "x" },
+        desc = "Selects the reference under cursor",
+      },
+    },
+  },
 
   { import = "astrocommunity.code-runner.executor-nvim" },
   {
