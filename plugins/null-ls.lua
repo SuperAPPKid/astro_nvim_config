@@ -10,7 +10,7 @@ return {
     config.sources = {
       -- Set a formatter
       -- null_ls.builtins.formatting.stylua,
-      -- null_ls.builtins.formatting.prettier,
+      null_ls.builtins.formatting.prettier,
       null_ls.builtins.formatting.clang_format.with {
         filetypes = { "c", "cpp", "objc", "objcpp", "cc", "cxx" },
       },
