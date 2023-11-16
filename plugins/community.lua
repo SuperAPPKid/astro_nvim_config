@@ -166,6 +166,23 @@ return {
   { import = "astrocommunity.pack.dart" },
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.go" },
+  {
+    "leoluz/nvim-dap-go",
+    config = function(_, opts)
+      require("dap-go").setup(opts)
+
+      local dap = require "dap"
+      local go_debug_config
+      for _, config in ipairs(dap.configurations.go) do
+        if go_debug_config ~= nil then break end
+        go_debug_config = config
+      end
+      dap.configurations.go = {}
+
+      require("dap.ext.vscode").load_launchjs()
+      table.insert(dap.configurations["go"], go_debug_config)
+    end,
+  },
   { import = "astrocommunity.pack.helm" },
   { import = "astrocommunity.pack.html-css" },
   { import = "astrocommunity.pack.java" },
