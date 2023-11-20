@@ -37,6 +37,7 @@ return {
     --   "<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>",
     --   desc = "Redraw / clear hlsearch / diff update",
     -- },
+
     ["<leader>a"] = { "<cmd>AerialToggle<cr>", desc = "Toggle Aerial" },
 
     -- telescope find files search hidden file
@@ -61,6 +62,9 @@ return {
   v = {
     -- save file
     ["<C-s>"] = save_file,
+
+    -- paste without yanking selected text
+    ["p"] = { "P" },
   },
   s = {
     -- save file
