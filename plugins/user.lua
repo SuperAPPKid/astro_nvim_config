@@ -363,9 +363,35 @@ return {
       }
     end,
   },
+
   {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-telescope/telescope-dap.nvim" },
     opts = function() require("telescope").load_extension "dap" end,
+  },
+
+  {
+    "luckasRanarison/nvim-devdocs",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    cmd = {
+      "DevdocsFetch",
+      "DevdocsInstall",
+      "DevdocsUninstall",
+      "DevdocsOpen",
+      "DevdocsOpenFloat",
+      "DevdocsUpdate",
+      "DevdocsUpdateAll",
+    },
+    keys = function(_, _)
+      local prefix = "<leader>f"
+      return {
+        { prefix .. "d", "<cmd>DevdocsOpenCurrent<CR>", desc = "Find Devdocs for current file", mode = { "n" } },
+        { prefix .. "D", "<cmd>DevdocsOpen<CR>", desc = "Find Devdocs", mode = { "n" } },
+      }
+    end,
   },
 }
