@@ -151,6 +151,8 @@ return {
 
   { import = "astrocommunity.search.nvim-hlslens" },
 
+  -- { import = "astrocommunity.scrolling.satellite-nvim" },
+
   { import = "astrocommunity.syntax.vim-easy-align" },
 
   { import = "astrocommunity.test.neotest" },
