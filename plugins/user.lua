@@ -394,4 +394,48 @@ return {
       }
     end,
   },
+
+  {
+    "gbprod/yanky.nvim",
+    event = "UIEnter",
+    dependencies = {
+      { "kkharji/sqlite.lua", enabled = not jit.os:find "Windows" },
+    },
+    opts = function()
+      local mapping = require "yanky.telescope.mapping"
+      local mappings = mapping.get_defaults()
+      mappings.i["<c-p>"] = nil
+      return {
+        highlight = { timer = 200 },
+        ring = { storage = jit.os:find "Windows" and "shada" or "sqlite" },
+        picker = {
+          telescope = {
+            use_default_mappings = false,
+            mappings = mappings,
+          },
+        },
+      }
+    end,
+    keys = function(_, _)
+      return {
+        {
+          "<leader>fy",
+          function() require("telescope").extensions.yank_history.yank_history() end,
+          desc = "Open Yank History",
+        },
+        { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
+        { "p", "<Plug>(YankyPutAfter)", mode = { "n" }, desc = "Put yanked text after cursor" },
+        { "p", "<Plug>(YankyPutBefore)", mode = { "x" }, desc = "Put yanked text before cursor" },
+        { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before cursor" },
+        { "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after selection" },
+        { "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before selection" },
+        { "[y", "<Plug>(YankyCycleForward)", desc = "Cycle forward through yank history" },
+        { "]y", "<Plug>(YankyCycleBackward)", desc = "Cycle backward through yank history" },
+        { "]p", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
+        { "[p", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put indented before cursor (linewise)" },
+        { "]P", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
+        { "[P", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put indented before cursor (linewise)" },
+      }
+    end,
+  },
 }

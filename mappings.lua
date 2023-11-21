@@ -63,8 +63,9 @@ return {
     -- save file
     ["<C-s>"] = save_file,
 
+    -- plugin: Yanky conflict with this key
     -- paste without yanking selected text
-    ["p"] = { "P" },
+    -- ["p"] = { "P", desc = "Paste without yanking" },
   },
   s = {
     -- save file
