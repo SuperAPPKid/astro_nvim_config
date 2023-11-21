@@ -38,8 +38,6 @@ return {
     --   desc = "Redraw / clear hlsearch / diff update",
     -- },
 
-    ["<leader>a"] = { "<cmd>AerialToggle<cr>", desc = "Toggle Aerial" },
-
     -- telescope find files search hidden file
     ["<leader>ff"] = {
       function()
