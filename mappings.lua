@@ -48,6 +48,12 @@ return {
       end,
       desc = "Find files",
     },
+
+    -- fix dap-ui size changed issue temporarily
+    ["<leader>du"] = {
+      function() require("dapui").toggle { reset = true } end,
+      desc = "Toggle Debugger UI",
+    },
   },
   t = {
     ["<C-t>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" },

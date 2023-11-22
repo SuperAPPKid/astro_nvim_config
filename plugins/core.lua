@@ -289,4 +289,49 @@ return {
       hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
   },
+
+  {
+    "rcarriga/nvim-dap-ui",
+    opts = function(_, opts)
+      opts.expand_lines = false
+      opts.layouts = {
+        {
+          elements = {
+            {
+              id = "scopes",
+              size = 0.25,
+            },
+            {
+              id = "breakpoints",
+              size = 0.25,
+            },
+            {
+              id = "stacks",
+              size = 0.25,
+            },
+            {
+              id = "watches",
+              size = 0.25,
+            },
+          },
+          position = "left",
+          size = 0.3,
+        },
+        {
+          elements = {
+            {
+              id = "repl",
+              size = 0.5,
+            },
+            {
+              id = "console",
+              size = 0.5,
+            },
+          },
+          position = "bottom",
+          size = 0.4,
+        },
+      }
+    end,
+  },
 }
