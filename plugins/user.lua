@@ -147,7 +147,7 @@ return {
           provider = {
             name = "file_info",
             opts = {
-              type = "relative-short",
+              type = "relative",
             },
           },
           hl = {
