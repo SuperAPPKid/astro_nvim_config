@@ -89,14 +89,18 @@ return {
   { import = "astrocommunity.editing-support.todo-comments-nvim" },
   { import = "astrocommunity.editing-support.vim-move" },
 
+  { import = "astrocommunity.file-explorer/oil-nvim" },
+
   { import = "astrocommunity.git.blame-nvim" },
   { import = "astrocommunity.git.diffview-nvim" },
+  { import = "astrocommunity.git.gist-nvim" },
   { import = "astrocommunity.git.neogit" },
-  { import = "astrocommunity.git.octo-nvim" },
+  -- { import = "astrocommunity.git.octo-nvim" },
   { import = "astrocommunity.git.openingh-nvim" },
 
   { import = "astrocommunity.indent.indent-tools-nvim" },
 
+  { import = "astrocommunity.lsp.garbage-day-nvim" },
   { import = "astrocommunity.lsp.inc-rename-nvim" },
   { import = "astrocommunity.lsp.lsp-signature-nvim" },
 
@@ -158,6 +162,8 @@ return {
   { import = "astrocommunity.test.neotest" },
   { import = "astrocommunity.test.nvim-coverage" },
 
+  { import = "astrocommunity.utility.nvim-toggler" },
+
   -- { import = "astrocommunity.worflow.hardtime-nvim" },
 
   { import = "astrocommunity.pack.angular" },
@@ -195,6 +201,7 @@ return {
   { import = "astrocommunity.pack.ruby" },
   { import = "astrocommunity.pack.rust" },
   { import = "astrocommunity.pack.svelte" },
+  { import = "astrocommunity.pack.swift" },
   { import = "astrocommunity.pack.tailwindcss" },
   { import = "astrocommunity.pack.terraform" },
   { import = "astrocommunity.pack.toml" },
