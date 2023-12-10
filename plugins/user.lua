@@ -413,4 +413,52 @@ return {
       },
     },
   },
+
+  {
+    "okuuva/auto-save.nvim",
+    cmd = "ASToggle", -- optional for lazy loading on command
+    -- event = { "User AstroFile", "InsertEnter" },
+    event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
+    opts = function(_, _)
+      local group = vim.api.nvim_create_augroup("autosave", {})
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "AutoSaveWritePre",
+        group = group,
+        callback = function(_)
+          -- save global autoformat status
+          vim.g.OLD_AUTOFORMAT = vim.g.autoformat_enabled
+
+          vim.g.autoformat_enabled = false
+          vim.g.OLD_AUTOFORMAT_BUFFERS = {}
+          -- disable all manually enabled buffers
+          for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+            if vim.b[bufnr].autoformat_enabled then
+              table.insert(vim.g.OLD_BUFFER_AUTOFORMATS, bufnr)
+              vim.b[bufnr].autoformat_enabled = false
+            end
+          end
+        end,
+      })
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "AutoSaveWritePost",
+        group = group,
+        callback = function(_)
+          -- restore global autoformat status
+          vim.g.autoformat_enabled = vim.g.OLD_AUTOFORMAT
+          -- reenable all manually enabled buffers
+          for _, bufnr in ipairs(vim.g.OLD_AUTOFORMAT_BUFFERS or {}) do
+            vim.b[bufnr].autoformat_enabled = true
+          end
+        end,
+      })
+
+      return {
+        execution_message = {
+          enabled = false,
+        },
+      }
+    end,
+  },
 }

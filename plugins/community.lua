@@ -62,7 +62,6 @@ return {
   -- { import = "astrocommunity.diagnostics.lsp_lines-nvim" },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
 
-  { import = "astrocommunity.editing-support.auto-save-nvim" },
   -- { import = "astrocommunity.editing-support.chatgpt-nvim" },
   { import = "astrocommunity.editing-support.comment-box-nvim" },
   { import = "astrocommunity.editing-support.cutlass-nvim" },
