@@ -94,6 +94,39 @@ return {
 
   { import = "astrocommunity.git.blame-nvim" },
   { import = "astrocommunity.git.diffview-nvim" },
+  {
+    "sindrets/diffview.nvim",
+    opts = {
+      hooks = {
+        view_opened = function() require("diffview.actions").toggle_files() end,
+      },
+    },
+    keys = function(_, keys)
+      local last_tabpage = vim.api.nvim_get_current_tabpage()
+
+      table.insert(keys, {
+        "<leader>gd",
+        function()
+          local lib = require "diffview.lib"
+          local view = lib.get_current_view()
+          if view then
+            -- Current tabpage is a Diffview: go to previous tabpage
+            vim.api.nvim_set_current_tabpage(last_tabpage)
+          else
+            for _, v in ipairs(lib.views) do
+              local tabn = vim.api.nvim_tabpage_get_number(v.tabpage)
+              vim.cmd.tabclose(tabn)
+            end
+
+            last_tabpage = vim.api.nvim_get_current_tabpage()
+
+            vim.cmd "DiffviewOpen -uno -- %"
+          end
+        end,
+        desc = "Open Diffview",
+      })
+    end,
+  },
   { import = "astrocommunity.git.gist-nvim" },
   { import = "astrocommunity.git.neogit" },
   -- { import = "astrocommunity.git.octo-nvim" },
