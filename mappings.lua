@@ -38,17 +38,6 @@ return {
     --   desc = "Redraw / clear hlsearch / diff update",
     -- },
 
-    -- telescope find files search hidden file
-    ["<leader>ff"] = {
-      function()
-        require("telescope.builtin").find_files {
-          no_ignore = true,
-          find_command = { "rg", "--ignore", "--files", "--hidden", "-g", "!.git" },
-        }
-      end,
-      desc = "Find files",
-    },
-
     -- fix dap-ui size changed issue temporarily
     ["<leader>du"] = {
       function() require("dapui").toggle { reset = true } end,
