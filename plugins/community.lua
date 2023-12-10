@@ -68,6 +68,7 @@ return {
   { import = "astrocommunity.editing-support.cutlass-nvim" },
   {
     "gbprod/cutlass.nvim",
+    lazy = false,
     opts = {
       cut_key = "m",
     },
