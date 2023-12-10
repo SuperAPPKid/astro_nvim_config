@@ -94,9 +94,10 @@ return {
     end,
   },
   { import = "astrocommunity.editing-support.telescope-undo-nvim" },
-  -- { import = "astrocommunity.editing-support.text-case-nvim" },
+  { import = "astrocommunity.editing-support.text-case-nvim" },
   { import = "astrocommunity.editing-support.todo-comments-nvim" },
   { import = "astrocommunity.editing-support.vim-move" },
+  { import = "astrocommunity.editing-support.wildfire-nvim" },
 
   { import = "astrocommunity.file-explorer/oil-nvim" },
 
@@ -164,9 +165,9 @@ return {
   { import = "astrocommunity.motion.mini-ai" },
   {
     "echasnovski/mini.ai",
-    opts = {
-      silent = true,
-    },
+    -- opts = {
+    --   silent = true,
+    -- },
   },
   { import = "astrocommunity.motion.nvim-surround" },
   {
