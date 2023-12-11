@@ -85,6 +85,14 @@ return {
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
   { import = "astrocommunity.editing-support.refactoring-nvim" },
   { import = "astrocommunity.editing-support.treesj" },
+  {
+    "Wansmer/treesj",
+    keys = function(_, _)
+      return {
+        { "<leader>j", "<CMD>TSJToggle<CR>", desc = "Toggle Treesitter Join" },
+      }
+    end,
+  },
   { import = "astrocommunity.editing-support.telescope-undo-nvim" },
   -- { import = "astrocommunity.editing-support.text-case-nvim" },
   { import = "astrocommunity.editing-support.todo-comments-nvim" },
