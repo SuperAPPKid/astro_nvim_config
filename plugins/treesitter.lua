@@ -31,6 +31,11 @@ return {
       "swift",
       "xml",
     })
+    opts.textobjects = {
+      select = { enabled = false },
+      move = { enabled = false },
+      swap = { enabled = false },
+    }
     vim.treesitter.language.register("bash", "dotenv")
     vim.treesitter.language.register("go", "api")
   end,

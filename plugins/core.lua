@@ -196,7 +196,7 @@ return {
 
   -- You can disable default plugins as follows:
   -- { "max397574/better-escape.nvim", enabled = false },
-  --
+
   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
   -- {
   --   "L3MON4D3/LuaSnip",
@@ -207,6 +207,7 @@ return {
   --     luasnip.filetype_extend("javascript", { "javascriptreact" })
   --   end,
   -- },
+
   {
     "windwp/nvim-autopairs",
     opts = {
@@ -215,6 +216,7 @@ return {
       },
     },
   },
+
   -- By adding to the which-key config and using our helper function you can add more which-key registered bindings
   {
     "folke/which-key.nvim",
@@ -236,11 +238,6 @@ return {
     --   }
     --   return opts
     -- end,
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, _) vim.treesitter.language.register("bash", "dotenv") end,
   },
 
   {
