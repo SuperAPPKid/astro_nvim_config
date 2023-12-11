@@ -378,39 +378,37 @@ return {
   },
 
   {
-    {
-      "folke/edgy.nvim",
-      event = "VeryLazy",
-      opts = {
-        animate = { enabled = false },
-        exit_when_last = true,
-        wo = {
-          winhighlight = "",
+    "folke/edgy.nvim",
+    event = "VeryLazy",
+    opts = {
+      animate = { enabled = false },
+      exit_when_last = true,
+      wo = {
+        winhighlight = "",
+      },
+      bottom = {
+        { ft = "qf", title = "QuickFix" },
+        {
+          ft = "help",
+          size = { height = 20 },
+          -- don't open help files in edgy that we're editing
+          filter = function(buf) return vim.bo[buf].buftype == "help" end,
         },
-        bottom = {
-          { ft = "qf", title = "QuickFix" },
-          {
-            ft = "help",
-            size = { height = 20 },
-            -- don't open help files in edgy that we're editing
-            filter = function(buf) return vim.bo[buf].buftype == "help" end,
-          },
+      },
+      left = {
+        {
+          ft = "neo-tree",
+          filter = function(buf) return vim.b[buf].neo_tree_source == "filesystem" end,
+          pinned = true,
+          open = "Neotree position=left filesystem",
         },
-        left = {
-          {
-            ft = "neo-tree",
-            filter = function(buf) return vim.b[buf].neo_tree_source == "filesystem" end,
-            pinned = true,
-            open = "Neotree position=left filesystem",
-          },
-        },
-        right = {
-          {
-            ft = "aerial",
-            title = "Symbols",
-            pinned = true,
-            open = function() require("aerial").open() end,
-          },
+      },
+      right = {
+        {
+          ft = "aerial",
+          title = "Symbols",
+          pinned = true,
+          open = function() require("aerial").open() end,
         },
       },
     },
