@@ -371,33 +371,38 @@ return {
   },
 
   {
-    "gbprod/yanky.nvim",
+    "AckslD/nvim-neoclip.lua",
     event = "UIEnter",
     dependencies = {
-      { "kkharji/sqlite.lua", enabled = not jit.os:find "Windows" },
+      { "nvim-telescope/telescope.nvim" },
+      { "kkharji/sqlite.lua", module = "sqlite" },
     },
+    opts = {
+      enable_persistent_history = true,
+    },
+    config = function(_, opts)
+      require("neoclip").setup(opts)
+      require("telescope").load_extension "neoclip"
+    end,
+    keys = {
+      { "<leader>fy", "<cmd>Telescope neoclip<cr>", desc = "Find yanks (neoclip)" },
+    },
+  },
+
+  {
+    "gbprod/yanky.nvim",
+    event = "UIEnter",
     opts = function()
-      local mapping = require "yanky.telescope.mapping"
-      local mappings = mapping.get_defaults()
-      mappings.i["<c-p>"] = nil
       return {
-        highlight = { timer = 200 },
-        ring = { storage = jit.os:find "Windows" and "shada" or "sqlite" },
-        picker = {
-          telescope = {
-            use_default_mappings = false,
-            mappings = mappings,
-          },
+        ring = {
+          history_length = 0,
+          storage = "memory",
         },
+        highlight = { timer = 200 },
       }
     end,
     keys = function(_, _)
       return {
-        {
-          "<leader>fy",
-          function() require("telescope").extensions.yank_history.yank_history() end,
-          desc = "Open Yank History",
-        },
         { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
         { "p", "<Plug>(YankyPutAfter)", mode = { "n" }, desc = "Put yanked text after cursor" },
         { "p", "<Plug>(YankyPutBefore)", mode = { "x" }, desc = "Put yanked text before cursor" },
