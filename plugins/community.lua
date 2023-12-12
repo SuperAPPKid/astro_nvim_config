@@ -203,12 +203,10 @@ return {
     },
   },
 
-  { import = "astrocommunity.scrolling.mini-animate" },
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
+  -- { import = "astrocommunity.scrolling.satellite-nvim" },
 
   { import = "astrocommunity.search.nvim-hlslens" },
-
-  -- { import = "astrocommunity.scrolling.satellite-nvim" },
 
   { import = "astrocommunity.syntax.vim-easy-align" },
 
