@@ -70,14 +70,14 @@ return {
           expr = true,
         },
         {
-          "˙", -- code-l
+          "<A-l>",
           function() return vim.fn["codeium#CycleCompletions"](1) end,
           mode = "i",
           noremap = false,
           expr = true,
         },
         {
-          "¬", -- code-h
+          "<A-h>",
           function() return vim.fn["codeium#CycleCompletions"](-1) end,
           mode = "i",
           noremap = false,

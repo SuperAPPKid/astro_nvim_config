@@ -95,15 +95,6 @@ return {
   { "numToStr/Comment.nvim", enable = false },
 
   {
-    "windwp/nvim-autopairs",
-    opts = {
-      fast_wrap = {
-        map = "<C-x>",
-      },
-    },
-  },
-
-  {
     "hrsh7th/nvim-cmp",
     dependencies = {
       { "hrsh7th/cmp-calc" },
@@ -212,7 +203,7 @@ return {
     "windwp/nvim-autopairs",
     opts = {
       fast_wrap = {
-        map = "∑",
+        map = "<A-w>",
       },
     },
   },
