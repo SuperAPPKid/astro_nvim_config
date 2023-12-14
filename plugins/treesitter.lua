@@ -1,5 +1,19 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  dependencies = { "nvim-treesitter/nvim-treesitter-context" },
+  cmd = {
+    "TSContextEnable",
+    "TSContextDisable",
+    "TSContextToggle",
+  },
+  keys = function(_, keys)
+    table.insert(keys, {
+      "[C",
+      function() require("treesitter-context").go_to_context() end,
+      desc = "Jumping to context",
+      silent = true,
+    })
+  end,
   opts = function(_, opts)
     -- add more things to the ensure_installed table protecting against community packs modifying it
     opts.ensure_installed = require("astronvim.utils").list_insert_unique(opts.ensure_installed, {
