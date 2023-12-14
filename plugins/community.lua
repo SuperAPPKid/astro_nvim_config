@@ -154,9 +154,13 @@ return {
   {
     "folke/flash.nvim",
     opts = {
+      labels = "hjukilosdfetg",
       modes = {
         search = {
           enabled = false,
+        },
+        treesitter = {
+          labels = "hjukilosdfetg",
         },
       },
     },
@@ -179,6 +183,7 @@ return {
       },
     },
   },
+  { import = "astrocommunity.motion.nvim-spider" },
   { import = "astrocommunity.motion.vim-matchup" },
 
   { import = "astrocommunity.programming-language-support.csv-vim" },
