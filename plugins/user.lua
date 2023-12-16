@@ -517,4 +517,21 @@ return {
       }
     end,
   },
+
+  {
+    "superappkid/projectmgr.nvim",
+    event = "VeryLazy",
+    lazy = false,
+    opts = {
+      session = {
+        enabled = false,
+      },
+      scripts = {
+        enabled = false,
+      },
+    },
+    keys = {
+      { "<leader>fp", "<cmd>ProjectMgr<cr>", desc = "Open ProjectMgr panel" },
+    },
+  },
 }

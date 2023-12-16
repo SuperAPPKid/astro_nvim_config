@@ -196,17 +196,6 @@ return {
       "nvim-lua/plenary.nvim",
     },
   },
-  { import = "astrocommunity.project.project-nvim" },
-  {
-    "ahmedkhalf/project.nvim",
-    keys = {
-      {
-        "<leader>fp",
-        function() require("telescope").extensions.projects.projects() end,
-        desc = "Open project",
-      },
-    },
-  },
 
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
   -- { import = "astrocommunity.scrolling.satellite-nvim" },
