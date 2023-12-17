@@ -49,6 +49,7 @@ return {
   },
 
   { import = "astrocommunity.color.ccc-nvim" },
+  { import = "astrocommunity.color.headlines-nvim" },
   { import = "astrocommunity.color.tint-nvim" },
 
   { import = "astrocommunity.completion.cmp-cmdline" },
@@ -96,6 +97,25 @@ return {
   { import = "astrocommunity.editing-support.todo-comments-nvim" },
   { import = "astrocommunity.editing-support.vim-move" },
   { import = "astrocommunity.editing-support.wildfire-nvim" },
+  { import = "astrocommunity.editing-support.zen-mode-nvim" },
+  {
+    "folke/zen-mode.nvim",
+    keys = function(_, _)
+      return {
+        { "<leader>zz", "<CMD>ZenMode<CR>", desc = "Toggle ZenMode" },
+      }
+    end,
+    opts = {
+      window = {
+        width = 0.85,
+        height = 0.95,
+        options = {
+          number = true,
+          relativenumber = true,
+        },
+      },
+    },
+  },
 
   { import = "astrocommunity.file-explorer/oil-nvim" },
 
