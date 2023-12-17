@@ -95,5 +95,15 @@ return {
         ["%.env%.[%w_.-]+"] = "dotenv",
       },
     }
+
+    -- Autocmd
+    local autocmd = vim.api.nvim_create_autocmd
+    local augroup = vim.api.nvim_create_augroup
+    autocmd("TermClose", {
+      pattern = "*lazygit*",
+      desc = "Refresh buf when closing lazygit",
+      group = augroup("lazygit close", { clear = true }),
+      callback = function(_) vim.cmd "checktime" end,
+    })
   end,
 }

@@ -6,6 +6,7 @@ return {
     number = true, -- sets vim.opt.number
     spell = false, -- sets vim.opt.spell
     wrap = true, -- sets vim.opt.wrap
+    autoread = true,
   },
   g = {
     mapleader = " ", -- sets vim.g.mapleader
