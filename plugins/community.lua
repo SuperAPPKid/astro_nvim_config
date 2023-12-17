@@ -49,7 +49,6 @@ return {
   },
 
   { import = "astrocommunity.color.ccc-nvim" },
-  { import = "astrocommunity.color.modes-nvim" },
   { import = "astrocommunity.color.tint-nvim" },
 
   { import = "astrocommunity.completion.cmp-cmdline" },

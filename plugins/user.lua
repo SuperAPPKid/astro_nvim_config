@@ -534,4 +534,22 @@ return {
       { "<leader>fp", "<cmd>ProjectMgr<cr>", desc = "Open ProjectMgr panel" },
     },
   },
+
+  {
+    { "folke/which-key.nvim", optional = true, opts = { plugins = { presets = { operators = false } } } },
+    {
+      "mvllow/modes.nvim",
+      event = "VeryLazy",
+      opts = {
+        line_opacity = 0.3,
+        ignore_filetypes = {
+          "neo-tree",
+          "neo-tree-popup",
+          "neo-tree-preview",
+          "NvimTree",
+          "TelescopePrompt",
+        },
+      },
+    },
+  },
 }
