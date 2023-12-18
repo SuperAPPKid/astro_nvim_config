@@ -64,14 +64,6 @@ return {
 
   -- { import = "astrocommunity.editing-support.chatgpt-nvim" },
   { import = "astrocommunity.editing-support.comment-box-nvim" },
-  { import = "astrocommunity.editing-support.cutlass-nvim" },
-  {
-    "gbprod/cutlass.nvim",
-    lazy = false,
-    opts = {
-      cut_key = "m",
-    },
-  },
   { import = "astrocommunity.editing-support.hypersonic-nvim" },
   {
     "tomiis4/Hypersonic.nvim",
