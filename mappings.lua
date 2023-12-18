@@ -43,6 +43,9 @@ return {
       function() require("dapui").toggle { reset = true } end,
       desc = "Toggle Debugger UI",
     },
+
+    ["<leader>f'"] = false,
+    ["<leader>fr"] = false,
   },
   t = {
     ["<C-t>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" },

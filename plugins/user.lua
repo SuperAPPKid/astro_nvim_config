@@ -426,7 +426,7 @@ return {
     opts = function() require("telescope").load_extension "scope" end,
     keys = {
       {
-        "<leader>fs",
+        "<leader>fb",
         function() require("telescope").extensions.scope.buffers() end,
         desc = "Open Scopes",
       },
