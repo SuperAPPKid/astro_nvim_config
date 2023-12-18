@@ -243,15 +243,13 @@ return {
       require("dap-go").setup(opts)
 
       local dap = require "dap"
-      local go_debug_config
-      for _, config in ipairs(dap.configurations.go) do
-        if go_debug_config ~= nil then break end
-        go_debug_config = config
-      end
+      local go_debug_configs = dap.configurations.go
       dap.configurations.go = {}
 
       require("dap.ext.vscode").load_launchjs()
-      table.insert(dap.configurations["go"], go_debug_config)
+      for _, config in ipairs(go_debug_configs) do
+        table.insert(dap.configurations["go"], config)
+      end
     end,
   },
   { import = "astrocommunity.pack.helm" },
