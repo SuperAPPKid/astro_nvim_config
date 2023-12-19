@@ -563,4 +563,17 @@ return {
       if utils.is_available "hop.nvim" then opts.exclude = utils.list_insert_unique(opts.exclude, { "ns", "nS" }) end
     end,
   },
+
+  {
+    "johmsalas/text-case.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    event = "User AstroFile",
+    config = function(_, opts)
+      require("textcase").setup(opts)
+      require("telescope").load_extension "textcase"
+    end,
+    keys = {
+      { "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" }, desc = "Telescope" },
+    },
+  },
 }

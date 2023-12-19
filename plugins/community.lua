@@ -85,7 +85,6 @@ return {
     end,
   },
   { import = "astrocommunity.editing-support.telescope-undo-nvim" },
-  { import = "astrocommunity.editing-support.text-case-nvim" },
   { import = "astrocommunity.editing-support.todo-comments-nvim" },
   { import = "astrocommunity.editing-support.vim-move" },
   { import = "astrocommunity.editing-support.wildfire-nvim" },
