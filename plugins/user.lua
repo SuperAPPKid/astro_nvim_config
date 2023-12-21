@@ -576,4 +576,6 @@ return {
       { "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" }, desc = "Telescope" },
     },
   },
+
+  { import = "user.plugins.tmp" },
 }

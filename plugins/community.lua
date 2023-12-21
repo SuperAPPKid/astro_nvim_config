@@ -243,7 +243,7 @@ return {
       end
     end,
   },
-  { import = "astrocommunity.pack.helm" },
+  -- { import = "astrocommunity.pack.helm" },
   { import = "astrocommunity.pack.html-css" },
   { import = "astrocommunity.pack.java" },
   { import = "astrocommunity.pack.kotlin" },
