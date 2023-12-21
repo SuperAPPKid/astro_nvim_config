@@ -49,7 +49,6 @@ return {
   },
 
   { import = "astrocommunity.color.ccc-nvim" },
-  { import = "astrocommunity.color.headlines-nvim" },
   { import = "astrocommunity.color.tint-nvim" },
 
   { import = "astrocommunity.completion.cmp-cmdline" },
@@ -98,12 +97,8 @@ return {
     end,
     opts = {
       window = {
-        width = 0.85,
-        height = 0.95,
-        options = {
-          number = true,
-          relativenumber = true,
-        },
+        width = 0.75,
+        height = 1,
       },
     },
   },
@@ -199,6 +194,7 @@ return {
   { import = "astrocommunity.programming-language-support.csv-vim" },
   { import = "astrocommunity.programming-language-support.nvim-jqx" },
   { import = "astrocommunity.programming-language-support.rest-nvim" },
+  { import = "astrocommunity.programming-language-support.xbase" },
 
   {
     import = "astrocommunity.project.nvim-spectre",
