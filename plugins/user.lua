@@ -577,5 +577,33 @@ return {
     },
   },
 
+  {
+    "Pocco81/true-zen.nvim",
+    opts = function(_, opts)
+      local utils = require "astronvim.utils"
+      return utils.extend_tbl(opts, {
+        integrations = {
+          tmux = os.getenv "TMUX" ~= nil, -- hide tmux status bar in (minimalist, ataraxis)
+          twilight = utils.is_available "twilight.nvim", -- enable twilight (ataraxis)
+        },
+      })
+    end,
+    keys = function(_, _)
+      local prefix = "<leader>z"
+      return {
+        {
+          prefix .. "z",
+          function() require("true-zen").focus() end,
+          desc = "Focus (True Zen)",
+        },
+        {
+          prefix .. "m",
+          function() require("true-zen").minimalist() end,
+          desc = "Minimalist (True Zen)",
+        },
+      }
+    end,
+  },
+
   { import = "user.plugins.tmp" },
 }
