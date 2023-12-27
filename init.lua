@@ -99,11 +99,28 @@ return {
     -- Autocmd
     local autocmd = vim.api.nvim_create_autocmd
     local augroup = vim.api.nvim_create_augroup
+
     autocmd("TermClose", {
       pattern = "*lazygit*",
       desc = "Refresh buf when closing lazygit",
       group = augroup("lazygit close", { clear = true }),
       callback = function(_) vim.cmd "checktime" end,
+    })
+
+    local isStdIn = false
+    vim.api.nvim_del_augroup_by_name "alpha_autostart" -- disable alpha auto start
+    autocmd("StdinReadPre", {
+      callback = function() isStdIn = true end,
+    })
+    autocmd("VimEnter", {
+      callback = vim.schedule_wrap(function()
+        -- Only load the session if nvim was started with no args
+        if vim.fn.argc(-1) == 0 and not isStdIn then
+          require("resession").load(vim.fn.getcwd(), { dir = "dirsession", silence_errors = true })
+        else
+          vim.api.nvim_del_augroup_by_name "resession_auto_save"
+        end
+      end),
     })
   end,
 }
