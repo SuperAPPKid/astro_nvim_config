@@ -4,8 +4,29 @@ return {
 
   -- available plugins can be found at https://github.com/AstroNvim/astrocommunity
 
-  { import = "astrocommunity.bars-and-lines.heirline-vscode-winbar" },
-  -- { import = "astrocommunity.bars-and-lines.dropbar-nvim" },
+  -- { import = "astrocommunity.bars-and-lines.heirline-vscode-winbar" },
+  { import = "astrocommunity.bars-and-lines.dropbar-nvim" },
+  {
+    "Bekaboo/dropbar.nvim",
+    dependencies = {
+      "nvim-telescope/telescope-fzf-native.nvim",
+    },
+    opts = {
+      bar = {
+        pick = {
+          pivots = "hjkluio890",
+        },
+      },
+    },
+    keys = {
+      {
+        "<leader>E",
+        function() require("dropbar.api").pick(vim.v.count ~= 0 and vim.v.count) end,
+        mode = "n",
+        desc = "dropbar",
+      },
+    },
+  },
   { import = "astrocommunity.bars-and-lines.vim-illuminate" },
   {
     "RRethy/vim-illuminate",
