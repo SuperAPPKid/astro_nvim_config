@@ -589,5 +589,14 @@ return {
     end,
   },
 
+  {
+    "stevearc/oil.nvim",
+    event = "User AstroFile",
+    opts = {},
+    keys = {
+      { "<leader>o", function() require("oil").open() end, desc = "Open folder in Oil" },
+    },
+  },
+
   { import = "user.plugins.tmp" },
 }

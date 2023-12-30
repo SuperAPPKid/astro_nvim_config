@@ -88,8 +88,6 @@ return {
   { import = "astrocommunity.editing-support.vim-move" },
   { import = "astrocommunity.editing-support.wildfire-nvim" },
 
-  { import = "astrocommunity.file-explorer/oil-nvim" },
-
   { import = "astrocommunity.git.blame-nvim" },
   { import = "astrocommunity.git.diffview-nvim" },
   {
