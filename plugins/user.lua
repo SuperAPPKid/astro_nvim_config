@@ -418,22 +418,6 @@ return {
   },
 
   {
-    "tiagovla/scope.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-    },
-    opts = function() require("telescope").load_extension "scope" end,
-    keys = {
-      {
-        "<leader>fb",
-        function() require("telescope").extensions.scope.buffers() end,
-        desc = "Open Scopes",
-      },
-    },
-  },
-
-  {
     "folke/edgy.nvim",
     event = "VeryLazy",
     opts = {
