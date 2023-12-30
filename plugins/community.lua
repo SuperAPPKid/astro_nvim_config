@@ -146,7 +146,7 @@ return {
   },
   { import = "astrocommunity.git.gist-nvim" },
   { import = "astrocommunity.git.neogit" },
-  -- { import = "astrocommunity.git.octo-nvim" },
+  { import = "astrocommunity.git.octo-nvim" },
   { import = "astrocommunity.git.openingh-nvim" },
 
   { import = "astrocommunity.indent.indent-tools-nvim" },
