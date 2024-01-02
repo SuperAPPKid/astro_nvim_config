@@ -598,5 +598,102 @@ return {
     },
   },
 
+  {
+    "monaqa/dial.nvim",
+    event = "User AstroFile",
+    config = function()
+      local augend = require "dial.augend"
+      local general_group = {
+        augend.integer.alias.decimal,
+        augend.integer.alias.octal,
+        augend.integer.alias.hex,
+        augend.date.alias["%Y/%m/%d"],
+        augend.date.alias["%-m/%-d"],
+        augend.date.alias["%Y-%m-%d"],
+        augend.date.alias["%Y年%-m月%-d日"],
+        augend.date.alias["%Y年%-m月%-d日(%ja)"],
+        augend.date.alias["%H:%M:%S"],
+        augend.date.alias["%H:%M"],
+        augend.constant.alias.ja_weekday,
+        augend.constant.alias.ja_weekday_full,
+        augend.constant.alias.bool,
+        augend.semver.alias.semver,
+        augend.misc.alias.markdown_header,
+        augend.hexcolor.new {
+          case = "lower",
+        },
+      }
+      local visual_group = general_group
+      table.insert(
+        visual_group,
+        augend.case.new {
+          types = { "camelCase", "PascalCase", "snake_case", "SCREAMING_SNAKE_CASE" },
+        }
+      )
+      require("dial.config").augends:register_group {
+        normal = general_group,
+        visual = visual_group,
+      }
+    end,
+    keys = {
+      {
+        "<leader>i",
+        mode = { "n", "v" },
+        desc = "incr/decr",
+      },
+      {
+        "<leader>ia",
+        mode = { "n", "v" },
+        desc = "additive",
+      },
+      -- Visual mode mappings
+      {
+        "<leader>i+",
+        mode = { "v" },
+        function() return require("dial.map").manipulate("increment", "visual", "visual") end,
+        desc = "Increment",
+      },
+      {
+        "<leader>i-",
+        mode = { "v" },
+        function() return require("dial.map").manipulate("decrement", "visual", "visual") end,
+        desc = "Decrement",
+      },
+      {
+        "<leader>ia+",
+        mode = { "v" },
+        function() return require("dial.map").manipulate("increment", "gvisual", "visual") end,
+        desc = "Increment",
+      },
+      {
+        "<leader>ia-",
+        mode = { "v" },
+        function() return require("dial.map").manipulate("decrement", "gvisual", "visual") end,
+        desc = "Decrement",
+      },
+      -- Normal mode mappings
+      {
+        "<leader>i+",
+        function() return require("dial.map").manipulate("increment", "normal", "normal") end,
+        desc = "Increment",
+      },
+      {
+        "<leader>i-",
+        function() return require("dial.map").manipulate("decrement", "normal", "normal") end,
+        desc = "Decrement",
+      },
+      {
+        "<leader>ia+",
+        function() return require("dial.map").manipulate("increment", "gnormal", "normal") end,
+        desc = "Increment",
+      },
+      {
+        "<leader>ia-",
+        function() return require("dial.map").manipulate("decrement", "gnormal", "normal") end,
+        desc = "Decrement",
+      },
+    },
+  },
+
   { import = "user.plugins.tmp" },
 }

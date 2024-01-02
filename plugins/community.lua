@@ -217,8 +217,6 @@ return {
   { import = "astrocommunity.test.neotest" },
   { import = "astrocommunity.test.nvim-coverage" },
 
-  { import = "astrocommunity.utility.nvim-toggler" },
-
   -- { import = "astrocommunity.worflow.hardtime-nvim" },
 
   { import = "astrocommunity.pack.angular" },
