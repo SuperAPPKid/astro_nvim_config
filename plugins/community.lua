@@ -186,9 +186,17 @@ return {
     "kylechui/nvim-surround",
     opts = {
       keymaps = {
-        normal = "yu",
+        insert = "<C-u>u",
+        insert_line = "<C-u>U",
         delete = "du",
         change = "cu",
+        change_line = "cU",
+        visual = "u",
+        visual_line = "U",
+        normal = false,
+        normal_line = false,
+        normal_cur = false,
+        normal_cur_line = false,
       },
     },
   },
