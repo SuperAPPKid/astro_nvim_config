@@ -1,6 +1,13 @@
 return {
   "nvim-treesitter/nvim-treesitter",
-  dependencies = { "nvim-treesitter/nvim-treesitter-context" },
+  dependencies = {
+    {
+      "nvim-treesitter/nvim-treesitter-context",
+      opts = {
+        multiline_threshold = 1,
+      },
+    },
+  },
   cmd = {
     "TSContextEnable",
     "TSContextDisable",
@@ -45,7 +52,33 @@ return {
       "swift",
       "xml",
     })
+
     opts.textobjects.select.enabled = false
+
+    opts.textobjects.move.goto_next_start = {
+      ["]f"] = { query = "@function.outer", desc = "Next function start" },
+      ["]a"] = { query = "@parameter.inner", desc = "Next argument start" },
+    }
+    opts.textobjects.move.goto_next_end = {
+      ["]F"] = { query = "@function.outer", desc = "Next function end" },
+      ["]A"] = { query = "@parameter.inner", desc = "Next argument end" },
+    }
+    opts.textobjects.move.goto_previous_start = {
+      ["[f"] = { query = "@function.outer", desc = "Previous function start" },
+      ["[a"] = { query = "@parameter.inner", desc = "Previous argument start" },
+    }
+    opts.textobjects.move.goto_previous_end = {
+      ["[F"] = { query = "@function.outer", desc = "Previous function end" },
+      ["[A"] = { query = "@parameter.inner", desc = "Previous argument end" },
+    }
+
+    opts.textobjects.swap.swap_next = {
+      [">A"] = { query = "@parameter.inner", desc = "Swap next argument" },
+    }
+    opts.textobjects.swap.swap_previous = {
+      ["<A"] = { query = "@parameter.inner", desc = "Swap previous argument" },
+    }
+
     vim.treesitter.language.register("bash", "dotenv")
     vim.treesitter.language.register("go", "api")
   end,

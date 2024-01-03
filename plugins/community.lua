@@ -175,9 +175,17 @@ return {
   { import = "astrocommunity.motion.mini-ai" },
   {
     "echasnovski/mini.ai",
-    -- opts = {
-    --   silent = true,
-    -- },
+    opts = {
+      n_lines = 1000,
+      search_method = "cover",
+      mappings = {
+        around_next = "",
+        inside_next = "",
+        around_last = "",
+        inside_last = "",
+      },
+      silent = true,
+    },
   },
   { import = "astrocommunity.motion.nvim-surround" },
   {
