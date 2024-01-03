@@ -149,10 +149,7 @@ return {
   { import = "astrocommunity.git.octo-nvim" },
   { import = "astrocommunity.git.openingh-nvim" },
 
-  { import = "astrocommunity.indent.indent-tools-nvim" },
-
   { import = "astrocommunity.lsp.garbage-day-nvim" },
-  { import = "astrocommunity.lsp.inc-rename-nvim" },
   { import = "astrocommunity.lsp.lsp-signature-nvim" },
   { import = "astrocommunity.lsp.nvim-lsp-file-operations" },
 
@@ -202,7 +199,6 @@ return {
     },
   },
   { import = "astrocommunity.motion.nvim-spider" },
-  { import = "astrocommunity.motion.vim-matchup" },
 
   { import = "astrocommunity.programming-language-support.csv-vim" },
   { import = "astrocommunity.programming-language-support.nvim-jqx" },
@@ -221,7 +217,7 @@ return {
 
   { import = "astrocommunity.search.nvim-hlslens" },
 
-  { import = "astrocommunity.syntax.vim-easy-align" },
+  -- { import = "astrocommunity.syntax.vim-easy-align" },
 
   { import = "astrocommunity.test.neotest" },
   { import = "astrocommunity.test.nvim-coverage" },
