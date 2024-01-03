@@ -154,6 +154,7 @@ return {
   { import = "astrocommunity.lsp.garbage-day-nvim" },
   { import = "astrocommunity.lsp.inc-rename-nvim" },
   { import = "astrocommunity.lsp.lsp-signature-nvim" },
+  { import = "astrocommunity.lsp.nvim-lsp-file-operations" },
 
   { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
 
@@ -231,6 +232,11 @@ return {
   { import = "astrocommunity.pack.ansible" },
   { import = "astrocommunity.pack.bash" },
   { import = "astrocommunity.pack.cpp" },
+  {
+    "p00f/clangd_extensions.nvim",
+    optional = true,
+    opts = { extensions = { autoSetHints = false } },
+  },
   { import = "astrocommunity.pack.dart" },
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.go" },
@@ -249,6 +255,11 @@ return {
       end
     end,
   },
+  {
+    "ray-x/go.nvim",
+    optional = true,
+    opts = { lsp_inlay_hints = { enable = false } },
+  },
   -- { import = "astrocommunity.pack.helm" },
   { import = "astrocommunity.pack.html-css" },
   { import = "astrocommunity.pack.java" },
@@ -259,6 +270,11 @@ return {
   { import = "astrocommunity.pack.python" },
   { import = "astrocommunity.pack.ruby" },
   { import = "astrocommunity.pack.rust" },
+  {
+    "simrat39/rust-tools.nvim",
+    optional = true,
+    opts = { tools = { inlay_hints = { auto = false } } },
+  },
   { import = "astrocommunity.pack.svelte" },
   { import = "astrocommunity.pack.swift" },
   { import = "astrocommunity.pack.tailwindcss" },
