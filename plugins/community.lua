@@ -176,13 +176,15 @@ return {
   {
     "echasnovski/mini.ai",
     opts = {
-      n_lines = 1000,
+      n_lines = 1500,
       search_method = "cover",
       mappings = {
         around_next = "",
         inside_next = "",
         around_last = "",
         inside_last = "",
+        goto_left = "",
+        goto_right = "",
       },
       silent = true,
     },

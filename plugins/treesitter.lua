@@ -7,6 +7,14 @@ return {
         multiline_threshold = 1,
       },
     },
+    {
+      "andymass/vim-matchup",
+      init = function()
+        vim.g.matchup_matchparen_offscreen = { method = "popup", fullwidth = 1, highlight = "Normal", syntax_hl = 1 }
+        vim.g.matchup_transmute_enabled = 1
+        vim.g.matchup_delim_noskips = 2
+      end,
+    },
   },
   cmd = {
     "TSContextEnable",
@@ -77,6 +85,10 @@ return {
     }
     opts.textobjects.swap.swap_previous = {
       ["<A"] = { query = "@parameter.inner", desc = "Swap previous argument" },
+    }
+
+    opts.matchup = {
+      enable = true,
     }
 
     vim.treesitter.language.register("bash", "dotenv")
