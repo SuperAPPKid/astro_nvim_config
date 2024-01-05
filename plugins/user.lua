@@ -44,16 +44,6 @@ return {
   },
 
   {
-    "Exafunction/codeium.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    config = {
-      require("codeium").setup {},
-    },
-  },
-
-  {
     "Exafunction/codeium.vim",
     event = "User AstroFile",
     config = function(_, _)

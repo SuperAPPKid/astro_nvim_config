@@ -71,10 +71,16 @@ return {
     "hrsh7th/nvim-cmp",
     dependencies = {
       { "hrsh7th/cmp-calc" },
-      { "Exafunction/codeium.nvim" },
+      {
+        "Exafunction/codeium.nvim",
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+        },
+      },
     },
     opts = function(_, opts)
       local cmp = require "cmp"
+      require("codeium").setup {}
 
       local kind_icons = {
         Text = "󰉿",
