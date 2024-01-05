@@ -498,6 +498,7 @@ return {
         execution_message = {
           enabled = false,
         },
+        write_all_buffers = true,
       }
     end,
   },
