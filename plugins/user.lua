@@ -661,35 +661,35 @@ return {
         desc = "Decrement",
       },
       {
-        "<leader>ia+",
+        "<leader>iai",
         mode = { "v" },
         function() return require("dial.map").manipulate("increment", "gvisual", "visual") end,
         desc = "Increment",
       },
       {
-        "<leader>ia-",
+        "<leader>iad",
         mode = { "v" },
         function() return require("dial.map").manipulate("decrement", "gvisual", "visual") end,
         desc = "Decrement",
       },
       -- Normal mode mappings
       {
-        "<leader>i+",
+        "<leader>ii",
         function() return require("dial.map").manipulate("increment", "normal", "normal") end,
         desc = "Increment",
       },
       {
-        "<leader>i-",
+        "<leader>id",
         function() return require("dial.map").manipulate("decrement", "normal", "normal") end,
         desc = "Decrement",
       },
       {
-        "<leader>ia+",
+        "<leader>iai",
         function() return require("dial.map").manipulate("increment", "gnormal", "normal") end,
         desc = "Increment",
       },
       {
-        "<leader>ia-",
+        "<leader>iad",
         function() return require("dial.map").manipulate("decrement", "gnormal", "normal") end,
         desc = "Decrement",
       },
