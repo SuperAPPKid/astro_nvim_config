@@ -694,4 +694,13 @@ return {
       },
     },
   },
+
+  {
+    "rmagatti/goto-preview",
+    config = function(_, opts) require("goto-preview").setup(opts) end,
+    opts = {
+      width = 100,
+      height = 25,
+    },
+  },
 }
