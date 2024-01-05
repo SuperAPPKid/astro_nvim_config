@@ -694,6 +694,4 @@ return {
       },
     },
   },
-
-  { import = "user.plugins.tmp" },
 }
