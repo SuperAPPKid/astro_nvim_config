@@ -7,7 +7,7 @@ return function(client, bufnr)
     local goto_preview = require "goto-preview"
     if client.supports_method "textDocument/definition" then
       mappings["gD"] = {
-        function() vim.lsp.buf.definition() end,
+        function() require("telescope.builtin").lsp_definitions() end,
         desc = "Go to the definition of current symbol",
       }
       mappings["gd"] = {
@@ -39,7 +39,7 @@ return function(client, bufnr)
 
     if client.supports_method "textDocument/references" then
       mappings["gR"] = {
-        function() vim.lsp.buf.references() end,
+        function() require("telescope.builtin").lsp_references() end,
         desc = "Go to references of current symbol",
       }
       mappings["gr"] = {
