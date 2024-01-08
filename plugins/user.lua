@@ -668,9 +668,55 @@ return {
   {
     "rmagatti/goto-preview",
     config = function(_, opts) require("goto-preview").setup(opts) end,
-    opts = {
-      width = 100,
-      height = 25,
-    },
+    opts = function(_, opts)
+      local jump_func = function(bufr)
+        local function jump()
+          require("goto-preview").close_all_win { skip_curr_window = false }
+          vim.lsp.buf.definition()
+        end
+
+        vim.keymap.set("n", "<CR>", jump, {
+          noremap = true,
+          silent = true,
+          buffer = bufr,
+        })
+      end
+
+      local tab_func = function(bufr)
+        local tabOpen = function()
+          vim.cmd "wincmd T"
+          require("goto-preview").close_all_win { skip_curr_window = false }
+          vim.lsp.buf.definition()
+        end
+
+        vim.keymap.set("n", "<Tab>", tabOpen, {
+          noremap = true,
+          silent = true,
+          buffer = bufr,
+        })
+      end
+
+      local close_func = function(bufr)
+        vim.keymap.set("n", "q", function() require("goto-preview").close_all_win { skep_curr_windoe = false } end, {
+          noremap = true,
+          silent = true,
+          buffer = bufr,
+        })
+      end
+
+      opts.width = 100
+      opts.height = 25
+      opts.post_open_hook = function(bufr, _)
+        jump_func(bufr)
+        tab_func(bufr)
+        close_func(bufr)
+      end
+      opts.post_close_hook = function(bufr, _)
+        vim.keymap.del("n", "<CR>", { buffer = bufr })
+        vim.keymap.del("n", "<Tab>", { buffer = bufr })
+        vim.keymap.del("n", "q", { buffer = bufr })
+      end
+      return opts
+    end,
   },
 }
