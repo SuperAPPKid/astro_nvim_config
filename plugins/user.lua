@@ -618,48 +618,48 @@ return {
       },
       -- Visual mode mappings
       {
-        "<leader>i+",
+        "<leader>ii",
         mode = { "v" },
-        function() return require("dial.map").manipulate("increment", "visual", "visual") end,
+        function() require("dial.map").manipulate("increment", "visual", "visual") end,
         desc = "Increment",
       },
       {
-        "<leader>i-",
+        "<leader>id",
         mode = { "v" },
-        function() return require("dial.map").manipulate("decrement", "visual", "visual") end,
+        function() require("dial.map").manipulate("decrement", "visual", "visual") end,
         desc = "Decrement",
       },
       {
         "<leader>iai",
         mode = { "v" },
-        function() return require("dial.map").manipulate("increment", "gvisual", "visual") end,
+        function() require("dial.map").manipulate("increment", "gvisual", "visual") end,
         desc = "Increment",
       },
       {
         "<leader>iad",
         mode = { "v" },
-        function() return require("dial.map").manipulate("decrement", "gvisual", "visual") end,
+        function() require("dial.map").manipulate("decrement", "gvisual", "visual") end,
         desc = "Decrement",
       },
       -- Normal mode mappings
       {
         "<leader>ii",
-        function() return require("dial.map").manipulate("increment", "normal", "normal") end,
+        function() require("dial.map").manipulate("increment", "normal", "normal") end,
         desc = "Increment",
       },
       {
         "<leader>id",
-        function() return require("dial.map").manipulate("decrement", "normal", "normal") end,
+        function() require("dial.map").manipulate("decrement", "normal", "normal") end,
         desc = "Decrement",
       },
       {
         "<leader>iai",
-        function() return require("dial.map").manipulate("increment", "gnormal", "normal") end,
+        function() require("dial.map").manipulate("increment", "gnormal", "normal") end,
         desc = "Increment",
       },
       {
         "<leader>iad",
-        function() return require("dial.map").manipulate("decrement", "gnormal", "normal") end,
+        function() require("dial.map").manipulate("decrement", "gnormal", "normal") end,
         desc = "Decrement",
       },
     },
