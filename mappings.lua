@@ -20,11 +20,11 @@ return {
     ["<C-s>"] = save_file,
 
     -- buffers
-    ["<S-h>"] = {
+    ["H"] = {
       function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
-      desc = "Previou s buffer",
+      desc = "Previous buffer",
     },
-    ["<S-l>"] = {
+    ["L"] = {
       function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
       desc = "Next buffer",
     },
