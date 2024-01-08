@@ -520,7 +520,7 @@ return {
   {
     { "folke/which-key.nvim", optional = true, opts = { plugins = { presets = { operators = false } } } },
     {
-      "mvllow/modes.nvim",
+      "superappkid/modes.nvim",
       event = "VeryLazy",
       opts = {
         line_opacity = 0.3,
