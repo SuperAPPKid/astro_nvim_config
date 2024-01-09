@@ -94,9 +94,9 @@ return {
     local augroup = vim.api.nvim_create_augroup
 
     autocmd("TermClose", {
-      pattern = "*lazygit*",
-      desc = "Refresh buf when closing lazygit",
-      group = augroup("lazygit close", { clear = true }),
+      pattern = "*",
+      desc = "Refresh buf when closing Terminal",
+      group = augroup("terminal close", { clear = true }),
       callback = function(_) vim.cmd "checktime" end,
     })
 
