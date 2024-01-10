@@ -106,6 +106,26 @@ return {
   },
   { import = "astrocommunity.editing-support.telescope-undo-nvim" },
   { import = "astrocommunity.editing-support.todo-comments-nvim" },
+  {
+    "folke/todo-comments.nvim",
+    keys = {
+      {
+        "<leader>xt",
+        "<cmd>TodoTrouble<CR>",
+        desc = "Todo (Trouble)",
+      },
+      {
+        "<leader>ft",
+        "<cmd>TodoTelescope<CR>",
+        desc = "Find todo",
+      },
+      {
+        "<leader>fT",
+        function() require("telescope.builtin").colorscheme { enable_preview = true } end,
+        desc = "Find themes",
+      },
+    },
+  },
   { import = "astrocommunity.editing-support.vim-move" },
   { import = "astrocommunity.editing-support.wildfire-nvim" },
 
