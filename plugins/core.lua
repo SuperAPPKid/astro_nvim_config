@@ -65,7 +65,14 @@ return {
     end,
   },
 
-  { "numToStr/Comment.nvim", enable = false },
+  {
+    "numToStr/Comment.nvim",
+    config = function(_, opts)
+      local ft = require "Comment.ft"
+      ft({ "api" }, ft.get "go")
+      require("Comment").setup(opts)
+    end,
+  },
 
   {
     "hrsh7th/nvim-cmp",
