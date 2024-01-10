@@ -235,13 +235,6 @@ return {
   { import = "astrocommunity.programming-language-support.rest-nvim" },
   { import = "astrocommunity.programming-language-support.xbase" },
 
-  {
-    import = "astrocommunity.project.nvim-spectre",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-  },
-
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
   -- { import = "astrocommunity.scrolling.satellite-nvim" },
 

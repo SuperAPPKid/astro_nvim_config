@@ -784,4 +784,48 @@ return {
       },
     },
   },
+
+  {
+    "nvim-pack/nvim-spectre",
+    cmd = "Spectre",
+    keys = function()
+      return {
+        {
+          "<leader>s",
+          mode = { "n", "x" },
+          desc = "󰛔 Search / Replace",
+        },
+        {
+          "<leader>ss",
+          function() require("spectre").toggle() end,
+          desc = "Toggle Spectre",
+        },
+        {
+          "<leader>sf",
+          function() require("spectre").open_file_search() end,
+          desc = "Spectre (current file)",
+        },
+      }
+    end,
+    opts = {
+      live_update = true, -- auto execute search again when you write to any file in vim
+      mapping = {
+        toggle_line = { map = "dd" },
+        enter_file = { map = "<CR>" },
+        send_to_qf = { map = "F" },
+        replace_cmd = { map = "c" },
+        show_option_menu = { map = "o" },
+        run_current_replace = { map = "C" },
+        run_replace = { map = "R" },
+        change_view_mode = { map = "tv" },
+        change_replace_sed = { map = "ts" },
+        change_replace_oxi = { map = "to" },
+        toggle_live_update = { map = "tu" },
+        toggle_ignore_case = { map = "ti" },
+        toggle_ignore_hidden = { map = "th" },
+        resume_last_search = { map = "<C-r>" },
+      },
+      is_insert_mode = true, -- start open panel on is_insert_mode
+    },
+  },
 }
