@@ -503,7 +503,6 @@ return {
   {
     "superappkid/projectmgr.nvim",
     event = "VeryLazy",
-    lazy = false,
     opts = {
       session = {
         enabled = false,
@@ -521,7 +520,7 @@ return {
     { "folke/which-key.nvim", optional = true, opts = { plugins = { presets = { operators = false } } } },
     {
       "superappkid/modes.nvim",
-      event = "VeryLazy",
+      event = "User AstroFile",
       opts = {
         line_opacity = 0.3,
         ignore_filetypes = {
