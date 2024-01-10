@@ -424,7 +424,21 @@ return {
         winhighlight = "",
       },
       bottom = {
-        { ft = "qf", title = "QuickFix" },
+        {
+          ft = "Trouble",
+          size = { height = 0.33 },
+        },
+        {
+          ft = "toggleterm",
+          size = { height = 0.33 },
+          -- exclude floating windows
+          filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == "" end,
+        },
+        {
+          ft = "qf",
+          size = { height = 0.33 },
+          title = "QuickFix",
+        },
         {
           ft = "help",
           size = { height = 20 },
@@ -435,17 +449,22 @@ return {
       left = {
         {
           ft = "neo-tree",
+          size = { width = 36 },
           filter = function(buf) return vim.b[buf].neo_tree_source == "filesystem" end,
           pinned = true,
-          open = "Neotree position=left filesystem",
+          open = "Neotree toggle",
         },
       },
       right = {
         {
           ft = "aerial",
           title = "Symbols",
-          pinned = true,
-          open = function() require("aerial").open() end,
+          size = { width = 52 },
+        },
+        {
+          ft = "spectre_panel",
+          title = "Search/Replace",
+          size = { width = 64 },
         },
       },
     },
