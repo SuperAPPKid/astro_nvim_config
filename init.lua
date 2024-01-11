@@ -52,7 +52,13 @@ return {
     servers = {
       -- "pyright"
     },
-    config = {},
+    config = {
+      intelephense = {
+        handlers = {
+          ["textDocument/publishDiagnostics"] = function() end,
+        },
+      },
+    },
   },
 
   -- Configure require("lazy").setup() options
