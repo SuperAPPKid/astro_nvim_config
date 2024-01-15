@@ -687,11 +687,19 @@ return {
     "rmagatti/goto-preview",
     config = function(_, opts) require("goto-preview").setup(opts) end,
     opts = function(_, opts)
+      opts.width = 100
+      opts.height = 25
+      opts.border = "double"
+      opts.stack_floating_preview_windows = false -- Whether to nest floating windows
+      opts.preview_window_title = { enable = false }
+
       local jump_func = function(bufr)
         local function callback()
-          vim.keymap.del("n", "<CR>", { buffer = bufr })
+          local view = vim.fn.winsaveview()
           require("goto-preview").close_all_win { skip_curr_window = false }
-          vim.lsp.buf.definition()
+          vim.api.nvim_buf_set_option(bufr, "buflisted", true)
+          vim.cmd(string.format("buffer %s", vim.fn.fnameescape(vim.api.nvim_buf_get_name(bufr))))
+          vim.fn.winrestview(view)
         end
 
         vim.keymap.set("n", "<CR>", callback, {
@@ -703,10 +711,12 @@ return {
 
       local tab_func = function(bufr)
         local callback = function()
-          vim.keymap.del("n", "<Tab>", { buffer = bufr })
-          vim.cmd "wincmd T"
+          local view = vim.fn.winsaveview()
+          local f_name = vim.fn.fnameescape(vim.api.nvim_buf_get_name(bufr))
+
           require("goto-preview").close_all_win { skip_curr_window = false }
-          vim.lsp.buf.definition()
+          vim.cmd(string.format("tabnew %s", f_name))
+          vim.fn.winrestview(view)
         end
 
         vim.keymap.set("n", "<Tab>", callback, {
@@ -717,10 +727,7 @@ return {
       end
 
       local close_func = function(bufr)
-        local callback = function()
-          require("goto-preview").close_all_win { skep_curr_windoe = false }
-          vim.keymap.del("n", "q", { buffer = bufr })
-        end
+        local callback = function() require("goto-preview").close_all_win { skip_curr_window = false } end
         vim.keymap.set("n", "q", callback, {
           noremap = true,
           silent = true,
@@ -728,12 +735,29 @@ return {
         })
       end
 
-      opts.width = 100
-      opts.height = 25
-      opts.post_open_hook = function(bufr, _)
+      local buf_win_pairs = {}
+      opts.post_open_hook = function(bufr, win)
+        if buf_win_pairs[bufr] then return end
+
+        buf_win_pairs[bufr] = win
         jump_func(bufr)
         tab_func(bufr)
         close_func(bufr)
+
+        local group_id =
+          vim.api.nvim_create_augroup(string.format("my-goto-preview_%s_%s", bufr, win), { clear = true })
+
+        vim.api.nvim_create_autocmd("WinClosed", {
+          pattern = tostring(win),
+          group = group_id,
+          callback = function()
+            buf_win_pairs[bufr] = nil
+            vim.keymap.del("n", "<CR>", { buffer = bufr })
+            vim.keymap.del("n", "<Tab>", { buffer = bufr })
+            vim.keymap.del("n", "q", { buffer = bufr })
+            vim.api.nvim_del_augroup_by_id(group_id)
+          end,
+        })
       end
       return opts
     end,
