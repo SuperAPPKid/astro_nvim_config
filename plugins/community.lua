@@ -229,6 +229,12 @@ return {
     },
   },
   { import = "astrocommunity.motion.nvim-spider" },
+  {
+    "chrisgrieser/nvim-spider",
+    opts = {
+      subwordMovement = false,
+    },
+  },
 
   { import = "astrocommunity.programming-language-support.csv-vim" },
   { import = "astrocommunity.programming-language-support.nvim-jqx" },
