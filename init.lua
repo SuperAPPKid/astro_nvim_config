@@ -108,13 +108,6 @@ return {
     local autocmd = vim.api.nvim_create_autocmd
     local augroup = vim.api.nvim_create_augroup
 
-    autocmd("TermClose", {
-      pattern = "*",
-      desc = "Refresh buf when closing Terminal",
-      group = augroup("terminal close", { clear = true }),
-      callback = function(_) vim.cmd "checktime" end,
-    })
-
     local isStdIn = false
     autocmd("StdinReadPre", {
       callback = function() isStdIn = true end,
