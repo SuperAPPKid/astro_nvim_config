@@ -202,6 +202,7 @@ return {
   {
     "echasnovski/mini.ai",
     opts = {
+      use_nvim_treesitter = false,
       n_lines = 1500,
       search_method = "cover",
       mappings = {
