@@ -374,9 +374,27 @@ return {
       { "nvim-telescope/telescope.nvim" },
       { "kkharji/sqlite.lua", module = "sqlite" },
     },
-    opts = {
-      enable_persistent_history = true,
-    },
+    opts = function(_, opts)
+      local function is_whitespace(line) return vim.fn.match(line, [[^\s*$]]) ~= -1 end
+
+      local function all(tbl, check)
+        for _, entry in ipairs(tbl) do
+          if not check(entry) then return false end
+        end
+        return true
+      end
+
+      opts.filter = function(data)
+        -- if data.filetype == "spectre_panel" then return false end
+        return not all(data.event.regcontents, is_whitespace)
+      end
+      opts.enable_persistent_history = true
+      opts.keys = {
+        telescope = {
+          i = { paste_behind = false },
+        },
+      }
+    end,
     config = function(_, opts)
       require("neoclip").setup(opts)
       require("telescope").load_extension "neoclip"
@@ -465,6 +483,7 @@ return {
           ft = "spectre_panel",
           title = "Search/Replace",
           size = { width = 64 },
+          filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == "" end,
         },
       },
     },
@@ -868,7 +887,6 @@ return {
         toggle_ignore_hidden = { map = "th" },
         resume_last_search = { map = "<C-r>" },
       },
-      is_insert_mode = true, -- start open panel on is_insert_mode
     },
   },
 }
