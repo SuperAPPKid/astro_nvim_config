@@ -160,14 +160,22 @@ return {
           leave_dirs_open = true,
         },
         filtered_items = {
+          visible = true,
           hide_dotfiles = false,
           hide_gitignored = false,
+          hide_by_name = {
+            ".git",
+            ".github",
+          },
           always_show = {
             ".gitignored",
           },
           never_show = {
             ".DS_Store",
             "thumbs.db",
+          },
+          never_show_by_pattern = { -- uses glob style patterns
+            "/**/..",
           },
         },
       },
