@@ -842,6 +842,17 @@ return {
               return require("fidget.integration.nvim-notify").delegate(msg, level, opts)
             end
           end,
+          view = {
+            render_message = function(msg, cnt)
+              msg = cnt == 1 and msg or string.format("(%dx) %s", cnt, msg)
+              msg = #msg > 20 and vim.fn.strcharpart(msg, 0, 16) .. "..." or msg -- truncate to 16 characters
+              return msg
+            end,
+          },
+          window = {
+            border = "rounded",
+            max_height = 10,
+          },
         },
       },
     },
