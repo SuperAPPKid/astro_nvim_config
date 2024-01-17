@@ -245,6 +245,7 @@ return {
       },
     },
   },
+  { import = "astrocommunity.motion.tabout-nvim" },
 
   { import = "astrocommunity.programming-language-support.csv-vim" },
   { import = "astrocommunity.programming-language-support.nvim-jqx" },
