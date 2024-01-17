@@ -186,8 +186,15 @@ return {
   { import = "astrocommunity.motion.flash-nvim" },
   {
     "folke/flash.nvim",
+    config = function(_, opts)
+      require("flash").setup(opts)
+      vim.api.nvim_set_hl(0, "FlashCursor", { link = "Normal" })
+    end,
     opts = {
       labels = "hjukilosdfetg",
+      label = {
+        current = false,
+      },
       modes = {
         search = {
           enabled = false,
@@ -195,6 +202,9 @@ return {
         treesitter = {
           labels = "hjukilosdfetg",
         },
+      },
+      prompt = {
+        enabled = false,
       },
     },
   },
