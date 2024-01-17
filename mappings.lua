@@ -30,8 +30,8 @@ return {
     },
 
     -- tabs
-    ["<leader><tab><tab>"] = { "<cmd>tabnew<cr>", desc = "New Tab" },
-    ["<leader><tab>q"] = { "<cmd>tabclose<cr>", desc = "Close Tab" },
+    ["<leader><tab><tab>"] = { "<cmd>tabnew %<cr>", desc = "New Tab" },
+    ["<leader><tab>q"] = { "<cmd>windo bd<cr>", desc = "Close Tab" },
 
     -- ["<leader>ur"] = {
     --   "<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>",
