@@ -192,7 +192,7 @@ return {
     "windwp/nvim-autopairs",
     opts = {
       fast_wrap = {
-        map = "<A-w>",
+        map = "<C-r>",
       },
     },
   },
