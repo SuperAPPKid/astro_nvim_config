@@ -440,6 +440,7 @@ return {
       exit_when_last = true,
       wo = {
         winhighlight = "",
+        winbar = false,
       },
       bottom = {
         {
@@ -860,7 +861,6 @@ return {
             end,
           },
           window = {
-            border = "rounded",
             max_height = 10,
           },
         },
