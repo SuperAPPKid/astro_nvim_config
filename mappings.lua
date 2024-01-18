@@ -31,7 +31,26 @@ local mapping = {
 
     -- tabs
     ["<leader><tab><tab>"] = { "<cmd>tabnew %<cr>", desc = "New Tab" },
-    ["<leader><tab>q"] = { "<cmd>windo bd<cr>", desc = "Close Tab" },
+    ["<leader><tab>q"] = {
+      function()
+        local before_bufs = vim.fn.tabpagebuflist()
+
+        vim.cmd "tabclose"
+
+        local after_bufs = vim.fn.tabpagebuflist()
+
+        -- find differnce from before_bufs to after_bufs
+        local diff = {}
+        for _, bb in ipairs(before_bufs) do
+          if not vim.tbl_contains(after_bufs, bb) then table.insert(diff, bb) end
+        end
+
+        for _, buf in ipairs(diff) do
+          vim.cmd("bwipeout " .. tostring(buf))
+        end
+      end,
+      desc = "New Tab",
+    },
 
     -- ["<leader>ur"] = {
     --   "<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>",
