@@ -447,12 +447,6 @@ return {
           size = { height = 0.33 },
         },
         {
-          ft = "toggleterm",
-          size = { height = 0.33 },
-          -- exclude floating windows
-          filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == "" end,
-        },
-        {
           ft = "qf",
           size = { height = 0.33 },
           title = "QuickFix",
@@ -462,6 +456,14 @@ return {
           size = { height = 20 },
           -- don't open help files in edgy that we're editing
           filter = function(buf) return vim.bo[buf].buftype == "help" end,
+        },
+        {
+          ft = "toggleterm",
+          size = { height = 0.33 },
+          filter = function(buf, _)
+            local _, term = require("toggleterm.terminal").identify(vim.api.nvim_buf_get_name(buf))
+            if term then return term.direction == "horizontal" end
+          end,
         },
       },
       left = {
@@ -484,6 +486,14 @@ return {
           title = "Search/Replace",
           size = { width = 64 },
           filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == "" end,
+        },
+        {
+          ft = "toggleterm",
+          size = { width = 64 },
+          filter = function(buf, _)
+            local _, term = require("toggleterm.terminal").identify(vim.api.nvim_buf_get_name(buf))
+            if term then return term.direction == "vertical" end
+          end,
         },
       },
     },

@@ -312,4 +312,35 @@ return {
       }
     end,
   },
+
+  {
+    "akinsho/toggleterm.nvim",
+    config = function(_, opts)
+      require("toggleterm").setup(opts)
+      vim.api.nvim_create_autocmd("TermOpen", {
+        group = vim.api.nvim_create_augroup("my_toggle_term", { clear = true }),
+        pattern = "term://*toggleterm#*",
+        callback = function(args)
+          vim.keymap.set("t", "<C-n>", [[<C-\><C-n>]], {
+            desc = "Normal mode",
+            noremap = true,
+            silent = true,
+            buffer = args.buf,
+          })
+          vim.keymap.set({ "n", "t" }, "<C-q>", function() require("astronvim.utils.buffer").close() end, {
+            desc = "Close buffer",
+            noremap = true,
+            silent = true,
+            buffer = args.buf,
+          })
+        end,
+      })
+    end,
+    opts = {
+      open_mapping = "<C-t>",
+    },
+    keys = {
+      "<C-t>", -- for lazy loading
+    },
+  },
 }
