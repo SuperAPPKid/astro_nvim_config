@@ -161,12 +161,13 @@ return {
       table.insert(keys, {
         "<leader>gd",
         function() find_target_tab "DiffviewOpen -uno -- %" end,
-        desc = "Open Diff",
+        desc = "Open Filei Diff",
       })
 
       table.insert(keys, {
         "<leader>gD",
         function() find_target_tab "DiffviewFileHistory %" end,
+        desc = "Open File History",
       })
     end,
   },
