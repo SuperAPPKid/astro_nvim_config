@@ -180,6 +180,16 @@ return {
   { import = "astrocommunity.lsp.nvim-lsp-file-operations" },
 
   { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
+  {
+    "iamcco/markdown-preview.nvim",
+    keys = {
+      {
+        "<leader>zm",
+        "<cmd>MarkdownPreviewToggle<cr>",
+        desc = "markdown preview",
+      },
+    },
+  },
 
   -- { import = "astrocommunity.media.vim-wakatime" },
 

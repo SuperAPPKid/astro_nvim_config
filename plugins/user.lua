@@ -960,6 +960,13 @@ return {
   {
     "aurum77/live-server.nvim",
     build = function() require("live_server.util").install() end,
-    cmd = { "LiveServer", "LiveServerStart", "LiveServerStop" },
+    ft = "html",
+    keys = {
+      {
+        "<leader>zh",
+        "<cmd>LiveServer<cr>",
+        desc = "html preview",
+      },
+    },
   },
 }
