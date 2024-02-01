@@ -121,8 +121,8 @@ return {
 
       opts.sources = cmp.config.sources({
         { name = "nvim_lsp", priority = 1000 },
-        { name = "buffer", priority = 800 },
-        { name = "luasnip", priority = 600 },
+        { name = "luasnip", priority = 800 },
+        { name = "buffer", priority = 700 },
         { name = "codeium", priority = 500 },
       }, {
         { name = "calc", priority = 1000 },
