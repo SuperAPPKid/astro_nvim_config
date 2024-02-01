@@ -916,34 +916,35 @@ return {
     keys = function(_, _)
       local neowords = require "neowords"
       local p = neowords.pattern_presets
-      local bigword_hops = neowords.get_word_hops(
-        p.number,
+      local word_hops = neowords.get_word_hops(
         p.hex_color,
-        "\\v-@![-_[:lower:][:upper:]\\u0800-\\uffff]+" -- utf-8 words
+        "\\v[-]@![-[:digit:][:lower:][:upper:]\\u0800-\\uffff]+", -- utf-8 words
+        "\\V\\[{[(}\\])]\\+", -- brackets {}[]()
+        "\\v(``)|(\"\")|''" -- quotes '"
       )
 
       return {
         {
           "w",
-          bigword_hops.forward_start,
+          word_hops.forward_start,
           mode = { "n", "x", "o" },
           desc = "Next word",
         },
         {
           "e",
-          bigword_hops.forward_end,
+          word_hops.forward_end,
           mode = { "n", "x", "o" },
           desc = "Next end of word",
         },
         {
           "b",
-          bigword_hops.backward_start,
+          word_hops.backward_start,
           mode = { "n", "x", "o" },
           desc = "Previous word",
         },
         {
           "ge",
-          bigword_hops.backward_end,
+          word_hops.backward_end,
           mode = { "n", "x", "o" },
           desc = "Previous end of word",
         },
