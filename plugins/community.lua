@@ -161,7 +161,7 @@ return {
       table.insert(keys, {
         "<leader>gd",
         function() find_target_tab "DiffviewOpen -uno -- %" end,
-        desc = "Open Filei Diff",
+        desc = "Open File Diff",
       })
 
       table.insert(keys, {
