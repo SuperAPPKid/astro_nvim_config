@@ -730,6 +730,7 @@ return {
           vim.api.nvim_buf_set_option(bufr, "buflisted", true)
           vim.cmd(string.format("buffer %s", vim.fn.fnameescape(vim.api.nvim_buf_get_name(bufr))))
           vim.fn.winrestview(view)
+          vim.cmd "normal! m'"
         end
 
         vim.keymap.set("n", "<CR>", callback, {
@@ -747,6 +748,7 @@ return {
           require("goto-preview").close_all_win { skip_curr_window = false }
           vim.cmd(string.format("tabnew %s", f_name))
           vim.fn.winrestview(view)
+          vim.cmd "normal! m'"
         end
 
         vim.keymap.set("n", "<Tab>", callback, {
