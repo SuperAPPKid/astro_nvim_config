@@ -183,7 +183,7 @@ return {
   },
 
   -- You can disable default plugins as follows:
-  { "s1n7ax/nvim-window-picker", enabled = false },
+  -- { "s1n7ax/nvim-window-picker", enabled = false },
 
   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
   -- {
