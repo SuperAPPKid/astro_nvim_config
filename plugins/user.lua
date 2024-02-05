@@ -972,4 +972,49 @@ return {
       },
     },
   },
+
+  {
+    "echasnovski/mini.surround",
+    opts = function(_, _)
+      local prefix = "<leader>s"
+      local mapping = {}
+      mapping[prefix] = {
+        desc = "Surround",
+      }
+      require("astronvim.utils").set_mappings {
+        n = mapping,
+        x = mapping,
+      }
+
+      return {
+        use_nvim_treesitter = false,
+        n_lines = 1500,
+        search_method = "cover",
+        mappings = {
+          add = prefix .. "s", -- Add surrounding in Normal and Visual modes
+          delete = prefix .. "d", -- Delete surrounding
+          replace = prefix .. "c", -- Replace surrounding
+
+          find = prefix .. "f", -- Find surrounding (to the right)
+          find_left = prefix .. "F", -- Find surrounding (to the left)
+
+          highlight = "", -- Highlight surrounding
+          update_n_lines = "", -- Update n_lines
+          suffix_last = "", -- Suffix to search with "prev" method
+          suffix_next = "", -- Suffix to search with "next" method
+        },
+        silent = true,
+      }
+    end,
+    keys = function(plugin, _)
+      local opts = plugin.opts()
+      return {
+        { opts.mappings.add, desc = "Add surrounding", mode = { "n", "v" } },
+        { opts.mappings.delete, desc = "Delete surrounding" },
+        { opts.mappings.replace, desc = "Replace surrounding" },
+        { opts.mappings.find, desc = "Find right surrounding" },
+        { opts.mappings.find_left, desc = "Find left surrounding" },
+      }
+    end,
+  },
 }
