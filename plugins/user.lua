@@ -1014,4 +1014,18 @@ return {
       }
     end,
   },
+
+  {
+    "superappkid/lsp_signature.nvim",
+    event = "LspAttach",
+    opts = function(_, opts)
+      opts.cursorhold_update = false
+      opts.doc_lines = 0
+      opts.wrap = false
+      opts.hint_enable = false
+      opts.handler_opts = {
+        border = "double", -- double, rounded, single, shadow, none, or a table of borders
+      }
+    end,
+  },
 }

@@ -176,7 +176,6 @@ return {
   { import = "astrocommunity.git.octo-nvim" },
   { import = "astrocommunity.git.openingh-nvim" },
 
-  { import = "astrocommunity.lsp.lsp-signature-nvim" },
   { import = "astrocommunity.lsp.nvim-lsp-file-operations" },
 
   { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
