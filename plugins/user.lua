@@ -876,19 +876,16 @@ return {
     keys = function()
       return {
         {
-          "<leader>s",
+          "<leader>zs",
           mode = { "n", "x" },
-          desc = "󰛔 Search / Replace",
-        },
-        {
-          "<leader>ss",
           function() require("spectre").toggle() end,
-          desc = "Toggle Spectre",
+          desc = "Search / Replace",
         },
         {
-          "<leader>sf",
+          "<leader>zS",
+          mode = { "n", "x" },
           function() require("spectre").open_file_search() end,
-          desc = "Spectre (current file)",
+          desc = "Search / Replace (current file)",
         },
       }
     end,
