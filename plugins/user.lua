@@ -917,7 +917,7 @@ return {
       local p = neowords.pattern_presets
       local word_hops = neowords.get_word_hops(
         p.hex_color,
-        "\\v[-]@![-[:digit:][:lower:][:upper:]\\u0800-\\uffff]+", -- utf-8 words
+        "\\v[-]@![_[:digit:][:lower:][:upper:]\\u0800-\\uffff]+", -- utf-8 words
         "\\V\\[{[(}\\])]\\+", -- brackets {}[]()
         "\\v(``)|(\"\")|''" -- quotes '"
       )
