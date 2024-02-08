@@ -75,6 +75,45 @@ return {
   { import = "astrocommunity.completion.cmp-cmdline" },
 
   { import = "astrocommunity.debugging.nvim-bqf" },
+  { import = "astrocommunity.debugging.nvim-chainsaw" },
+  {
+    "chrisgrieser/nvim-chainsaw",
+    keys = function(_, _)
+      local prefix = "<leader>L"
+      local plugin = require "chainsaw"
+      return {
+        {
+          prefix,
+          desc = "Logging",
+        },
+        {
+          prefix .. "L",
+          function() plugin.variableLog() end,
+          desc = "log the name and value for current variable",
+        },
+        {
+          prefix .. "A",
+          function() plugin.assertLog() end,
+          desc = "assertion statement under the cursor",
+        },
+        {
+          prefix .. "l",
+          function() plugin.messageLog() end,
+          desc = "create log under the cursor",
+        },
+        {
+          prefix .. "t",
+          function() plugin.timelog() end,
+          desc = "create time log",
+        },
+        {
+          prefix .. "d",
+          function() plugin.removeLogs() end,
+          desc = "remove all log created by chainsaw",
+        },
+      }
+    end,
+  },
   { import = "astrocommunity.debugging.nvim-dap-repl-highlights" },
   -- { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
   { import = "astrocommunity.debugging.persistent-breakpoints-nvim" },
