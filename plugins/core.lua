@@ -371,6 +371,11 @@ return {
     end,
     opts = {
       open_mapping = "<C-t>",
+      float_opts = {
+        border = "double",
+        height = function(_) return vim.o.lines - 4 end,
+        width = function(_) return math.floor(vim.o.columns * 0.9) end,
+      },
     },
     keys = {
       "<C-t>", -- for lazy loading
