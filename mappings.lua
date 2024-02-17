@@ -131,4 +131,11 @@ if is_available "toggleterm.nvim" and vim.fn.executable "joshuto" == 1 then
   }
 end
 
+if is_available "neo-tree.nvim" then
+  mapping.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle Filesystem" }
+  mapping.n["<leader>be"] = { "<cmd>Neotree source=buffers toggle<cr>", desc = "Toggle Buffers (neo-tree)" }
+  mapping.n["<leader>ge"] = { "<cmd>Neotree source=git_status toggle<cr>", desc = "Toggle Git (neo-tree)" }
+  mapping.n["<leader>le"] = { "<cmd>Neotree source=diagnostics toggle<cr>", desc = "Toggle Diagnostics (neo-tree)" }
+end
+
 return mapping

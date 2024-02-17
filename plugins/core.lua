@@ -154,8 +154,41 @@ return {
 
   {
     "nvim-neo-tree/neo-tree.nvim",
-    opts = {
-      filesystem = {
+    dependencies = {
+      "mrbjarksen/neo-tree-diagnostics.nvim",
+      "miversen33/netman.nvim",
+    },
+    opts = function(_, opts)
+      local utils = require "astronvim.utils"
+
+      opts.sources = {
+        "filesystem",
+        "buffers",
+        "git_status",
+        "diagnostics",
+        "netman.ui.neo-tree",
+      }
+      opts.source_selector.show_separator_on_edge = true
+      opts.source_selector.winbar = false
+
+      -- add diagnostics
+      for idx, source in ipairs(opts.source_selector.sources) do
+        if source.source == "diagnostics" then
+          table.remove(opts.source_selector.sources, idx)
+          break
+        end
+      end
+      opts.source_selector.sources =
+        utils.list_insert_unique(opts.source_selector.sources, { source = "diagnostics", display_name = " Issue" })
+      opts.diagnostics = {
+        auto_preview = { enabled = true },
+      }
+
+      -- add remote
+      opts.source_selector.sources =
+        utils.list_insert_unique(opts.source_selector.sources, { source = "remote", display_name = "󰌘 Remote" })
+
+      opts.filesystem = utils.extend_tbl(opts.filesystem, {
         follow_current_file = {
           leave_dirs_open = true,
         },
@@ -178,8 +211,8 @@ return {
             "/**/..",
           },
         },
-      },
-    },
+      })
+    end,
   },
 
   -- You can disable default plugins as follows:

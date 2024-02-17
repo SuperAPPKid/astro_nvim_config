@@ -470,8 +470,7 @@ return {
       left = {
         {
           ft = "neo-tree",
-          size = { width = 36 },
-          filter = function(buf) return vim.b[buf].neo_tree_source == "filesystem" end,
+          size = { width = 48 },
           pinned = true,
           open = "Neotree toggle",
         },
