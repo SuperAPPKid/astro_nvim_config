@@ -323,7 +323,10 @@ return {
   {
     "ray-x/go.nvim",
     optional = true,
-    opts = { lsp_inlay_hints = { enable = false } },
+    opts = {
+      lsp_inlay_hints = { enable = false },
+      lsp_codelens = false,
+    },
   },
   { import = "astrocommunity.pack.helm" },
   { import = "astrocommunity.pack.html-css" },
