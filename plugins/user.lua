@@ -1028,4 +1028,29 @@ return {
       }
     end,
   },
+
+  {
+    {
+      "rest-nvim/rest.nvim",
+      dependencies = { "nvim-lua/plenary.nvim" },
+      ft = { "http", "json" },
+      cmd = {
+        "RestNvim",
+        "RestNvimPreview",
+        "RestNvimLast",
+      },
+      keys = {
+        { "<leader>zr", "<Plug>RestNvim", desc = "Run request" },
+      },
+    },
+    {
+      "nvim-treesitter/nvim-treesitter",
+      opts = function(_, opts)
+        if opts.ensure_installed ~= "all" then
+          opts.ensure_installed =
+            require("astronvim.utils").list_insert_unique(opts.ensure_installed, { "http", "json" })
+        end
+      end,
+    },
+  },
 }

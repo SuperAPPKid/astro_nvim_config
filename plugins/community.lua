@@ -134,6 +134,12 @@ return {
   { import = "astrocommunity.editing-support.neogen" },
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
   { import = "astrocommunity.editing-support.refactoring-nvim" },
+  {
+    "ThePrimeagen/refactoring.nvim",
+    keys = {
+      { "<leader>r", desc = "Refactor" },
+    },
+  },
   { import = "astrocommunity.editing-support.treesj" },
   {
     "Wansmer/treesj",
@@ -278,7 +284,6 @@ return {
 
   { import = "astrocommunity.programming-language-support.csv-vim" },
   { import = "astrocommunity.programming-language-support.nvim-jqx" },
-  { import = "astrocommunity.programming-language-support.rest-nvim" },
   { import = "astrocommunity.programming-language-support.xbase" },
 
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
