@@ -1075,4 +1075,20 @@ return {
       },
     },
   },
+
+  {
+    "uga-rosa/translate.nvim",
+    opts = {
+      preset = {
+        output = {
+          floating = {
+            border = "double",
+          },
+        },
+      },
+    },
+    keys = {
+      { "<leader>t", "<cmd>Translate ZH-TW<cr>", mode = { "x" }, desc = "Translate" },
+    },
+  },
 }
