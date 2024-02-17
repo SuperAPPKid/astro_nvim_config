@@ -2,7 +2,7 @@ return {
   "nvim-treesitter/nvim-treesitter",
   dependencies = {
     {
-      "nvim-treesitter/nvim-treesitter-context",
+      "superappkid/nvim-treesitter-context",
       opts = {
         max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
         multiline_threshold = 1, -- Maximum number of lines to show for a single context
@@ -32,6 +32,16 @@ return {
     })
   end,
   opts = function(_, opts)
+    local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+    parser_config.go = {
+      install_info = {
+        url = "https://github.com/superappkid/tree-sitter-go",
+        files = { "src/parser.c" },
+        revision = "b1843aa70530cfc7143665b1f57d2bb757d59087",
+      },
+      branch = "master",
+    }
+
     -- add more things to the ensure_installed table protecting against community packs modifying it
     opts.ensure_installed = require("astronvim.utils").list_insert_unique(opts.ensure_installed, {})
 
