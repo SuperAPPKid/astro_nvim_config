@@ -30,7 +30,7 @@ local mapping = {
     },
 
     -- tabs
-    ["<leader><tab>"] = { desc = "Tabs" },
+    ["<leader><tab>"] = { desc = " Tabs" },
     ["<leader><tab><tab>"] = { "<cmd>tabnew %<cr>", desc = "New Tab" },
     ["<leader><tab>q"] = {
       function()
@@ -66,6 +66,8 @@ local mapping = {
 
     ["<leader>f'"] = false,
     ["<leader>fr"] = false,
+
+    ["<leader>z"] = { desc = " Misc" },
   },
   i = {
     -- save file

@@ -652,64 +652,70 @@ return {
         visual = visual_group,
       }
     end,
-    keys = {
-      {
-        "<leader>i",
-        mode = { "n", "v" },
-        desc = "incr/decr",
-      },
-      {
-        "<leader>ia",
-        mode = { "n", "v" },
-        desc = "additive",
-      },
-      -- Visual mode mappings
-      {
-        "<leader>ii",
-        mode = { "v" },
-        function() require("dial.map").manipulate("increment", "visual", "visual") end,
-        desc = "Increment",
-      },
-      {
-        "<leader>id",
-        mode = { "v" },
-        function() require("dial.map").manipulate("decrement", "visual", "visual") end,
-        desc = "Decrement",
-      },
-      {
-        "<leader>iai",
-        mode = { "v" },
-        function() require("dial.map").manipulate("increment", "gvisual", "visual") end,
-        desc = "Increment",
-      },
-      {
-        "<leader>iad",
-        mode = { "v" },
-        function() require("dial.map").manipulate("decrement", "gvisual", "visual") end,
-        desc = "Decrement",
-      },
-      -- Normal mode mappings
-      {
-        "<leader>ii",
-        function() require("dial.map").manipulate("increment", "normal", "normal") end,
-        desc = "Increment",
-      },
-      {
-        "<leader>id",
-        function() require("dial.map").manipulate("decrement", "normal", "normal") end,
-        desc = "Decrement",
-      },
-      {
-        "<leader>iai",
-        function() require("dial.map").manipulate("increment", "gnormal", "normal") end,
-        desc = "Increment",
-      },
-      {
-        "<leader>iad",
-        function() require("dial.map").manipulate("decrement", "gnormal", "normal") end,
-        desc = "Decrement",
-      },
-    },
+    keys = function(_, _)
+      local prefix = "<leader>i"
+      local prefix_additive = prefix .. "a"
+      local mapping = {}
+      mapping[prefix] = {
+        desc = "󱓉 incr/decr",
+      }
+      mapping[prefix_additive] = {
+        desc = "󱖢 additive",
+      }
+      require("astronvim.utils").set_mappings {
+        n = mapping,
+        x = mapping,
+      }
+
+      return {
+        -- Visual mode mappings
+        {
+          prefix .. "i",
+          mode = { "v" },
+          function() require("dial.map").manipulate("increment", "visual", "visual") end,
+          desc = "Increment",
+        },
+        {
+          prefix .. "d",
+          mode = { "v" },
+          function() require("dial.map").manipulate("decrement", "visual", "visual") end,
+          desc = "Decrement",
+        },
+        {
+          prefix_additive .. "i",
+          mode = { "v" },
+          function() require("dial.map").manipulate("increment", "gvisual", "visual") end,
+          desc = "Increment",
+        },
+        {
+          prefix_additive .. "d",
+          mode = { "v" },
+          function() require("dial.map").manipulate("decrement", "gvisual", "visual") end,
+          desc = "Decrement",
+        },
+        -- Normal mode mappings
+        {
+          prefix .. "i",
+          function() require("dial.map").manipulate("increment", "normal", "normal") end,
+          desc = "Increment",
+        },
+        {
+          prefix .. "d",
+          function() require("dial.map").manipulate("decrement", "normal", "normal") end,
+          desc = "Decrement",
+        },
+        {
+          prefix_additive .. "i",
+          function() require("dial.map").manipulate("increment", "gnormal", "normal") end,
+          desc = "Increment",
+        },
+        {
+          prefix_additive .. "d",
+          function() require("dial.map").manipulate("decrement", "gnormal", "normal") end,
+          desc = "Decrement",
+        },
+      }
+    end,
   },
 
   {
@@ -975,7 +981,7 @@ return {
       local prefix = "<leader>s"
       local mapping = {}
       mapping[prefix] = {
-        desc = "Surround",
+        desc = "󰅪 Surround",
       }
       require("astronvim.utils").set_mappings {
         n = mapping,

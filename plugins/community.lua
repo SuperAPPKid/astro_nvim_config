@@ -59,12 +59,18 @@ return {
       use_split = false,
     },
     keys = function(_, keys)
-      local executor_prefix = "<leader>R"
-      table.insert(keys, { executor_prefix, desc = "Executor" })
-      table.insert(keys, { executor_prefix .. "r", "<cmd>ExecutorRun<CR>", desc = "Run (Executor)" })
-      table.insert(keys, { executor_prefix .. "R", "<cmd>ExecutorSetCommand<CR>", desc = "Set Command (Executor)" })
-      table.insert(keys, { executor_prefix .. "d", "<cmd>ExecutorShowDetail<CR>", desc = "Show Detail (Executor)" })
-      table.insert(keys, { executor_prefix .. "c", "<cmd>ExecutorReset<CR>", desc = "Clear (Executor)" })
+      local prefix = "<leader>R"
+
+      require("astronvim.utils").set_mappings {
+        n = {
+          [prefix] = { desc = "󰙵 Executor" },
+        },
+      }
+
+      table.insert(keys, { prefix .. "r", "<cmd>ExecutorRun<CR>", desc = "Run (Executor)" })
+      table.insert(keys, { prefix .. "R", "<cmd>ExecutorSetCommand<CR>", desc = "Set Command (Executor)" })
+      table.insert(keys, { prefix .. "d", "<cmd>ExecutorShowDetail<CR>", desc = "Show Detail (Executor)" })
+      table.insert(keys, { prefix .. "c", "<cmd>ExecutorReset<CR>", desc = "Clear (Executor)" })
       return keys
     end,
   },
@@ -81,11 +87,13 @@ return {
     keys = function(_, _)
       local prefix = "<leader>L"
       local plugin = require "chainsaw"
-      return {
-        {
-          prefix,
-          desc = "Logging",
+
+      require("astronvim.utils").set_mappings {
+        n = {
+          [prefix] = { desc = "󱂅 Logging" },
         },
+      }
+      return {
         {
           prefix .. "L",
           function() plugin.variableLog() end,
@@ -136,9 +144,14 @@ return {
   { import = "astrocommunity.editing-support.refactoring-nvim" },
   {
     "ThePrimeagen/refactoring.nvim",
-    keys = {
-      { "<leader>r", desc = "Refactor" },
-    },
+    keys = function(_, keys)
+      require("astronvim.utils").set_mappings {
+        n = {
+          ["<leader>r"] = { desc = "󱁤 Refactor" },
+        },
+      }
+      return keys
+    end,
   },
   { import = "astrocommunity.editing-support.treesj" },
   {
