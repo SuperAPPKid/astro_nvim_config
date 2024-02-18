@@ -544,6 +544,13 @@ return {
           enabled = false,
         },
         write_all_buffers = true,
+        condition = function(buf)
+          local fn = vim.fn
+
+          -- don't save for special-buffers
+          if fn.getbufvar(buf, "&buftype") ~= "" then return false end
+          return true
+        end,
       }
     end,
   },
@@ -1096,5 +1103,41 @@ return {
     keys = {
       { "<leader>t", "<cmd>Translate ZH-TW<cr>", mode = { "x" }, desc = "Translate" },
     },
+  },
+
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = true,
+    keys = function(_, _)
+      local harpoon = require "harpoon"
+
+      local prefix = "<leader><leader>"
+      require("astronvim.utils").set_mappings {
+        n = {
+          [prefix] = { desc = "󰐃 Harpoon" },
+        },
+      }
+
+      return {
+        { prefix .. "a", function() harpoon:list():append() end, desc = "Add file" },
+        { "<C-p>", function() require("harpoon"):list():prev() end, desc = "Goto previous mark" },
+        { "<C-n>", function() require("harpoon"):list():next() end, desc = "Goto next mark" },
+        {
+          prefix .. "e",
+          function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
+          desc = "Toggle quick menu",
+        },
+        {
+          "<leader>f<leader>",
+          "<cmd>Telescope harpoon marks<CR>",
+          desc = "Show marks in Telescope",
+        },
+      }
+    end,
   },
 }
