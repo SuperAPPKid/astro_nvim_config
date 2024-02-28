@@ -433,6 +433,35 @@ return {
   },
 
   {
+    "tiagovla/scope.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
+    opts = function() require("telescope").load_extension "scope" end,
+    keys = {
+      {
+        "<leader>fb",
+        function() require("telescope").extensions.scope.buffers() end,
+        desc = "Open Scopes",
+      },
+    },
+    {
+      "stevearc/resession.nvim",
+      opts = function(_, opts)
+        opts.buf_filter = function(bufnr)
+          local buftype = vim.bo[bufnr].buftype
+          if buftype == "help" then return true end
+          if buftype ~= "" and buftype ~= "acwrite" then return false end
+          if vim.api.nvim_buf_get_name(bufnr) == "" then return false end
+          return true
+        end
+        opts.extensions = require("astronvim.utils").extend_tbl(opts.extensions, { scope = {} })
+      end,
+    },
+  },
+
+  {
     "folke/edgy.nvim",
     event = "VeryLazy",
     opts = {
