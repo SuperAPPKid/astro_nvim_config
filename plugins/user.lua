@@ -1191,4 +1191,19 @@ return {
       input_buffer_type = "dressing",
     },
   },
+
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && npx --yes yarn install",
+    init = function() vim.g.mkdp_filetypes = { "markdown" } end,
+    ft = { "markdown" },
+    keys = {
+      {
+        "<leader>zm",
+        "<cmd>MarkdownPreviewToggle<cr>",
+        desc = "markdown preview",
+      },
+    },
+  },
 }
