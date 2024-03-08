@@ -645,7 +645,11 @@ return {
   {
     "stevearc/oil.nvim",
     event = "User AstroFile",
-    opts = {},
+    opts = {
+      view_options = {
+        show_hidden = true,
+      },
+    },
     keys = {
       { "<leader>o", function() require("oil").open() end, desc = "Open folder in Oil" },
     },
