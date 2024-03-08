@@ -1182,4 +1182,13 @@ return {
       vim.g.matchup_delim_noskips = 2
     end,
   },
+
+  {
+    "smjonas/inc-rename.nvim",
+    event = "LspAttach",
+    config = true,
+    opts = {
+      input_buffer_type = "dressing",
+    },
+  },
 }

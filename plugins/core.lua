@@ -381,4 +381,11 @@ return {
       "<C-t>", -- for lazy loading
     },
   },
+
+  {
+    "stevearc/dressing.nvim",
+    opts = {
+      input = { default_prompt = "" },
+    },
+  },
 }

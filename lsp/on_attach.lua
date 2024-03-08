@@ -55,6 +55,13 @@ return function(client, bufnr)
     }
   end
 
+  if is_available "inc-rename.nvim" then
+    mappings["<leader>lr"] = {
+      ":IncRename ",
+      desc = "Rename current symbol",
+    }
+  end
+
   utils.set_mappings({
     n = mappings,
   }, { buffer = bufnr })
