@@ -335,6 +335,7 @@ return {
 
   {
     "rcarriga/nvim-dap-ui",
+    version = "^3",
     opts = function(_, opts)
       opts.expand_lines = false
       opts.layouts = {
