@@ -292,7 +292,6 @@ return {
 
   -- { import = "astrocommunity.syntax.vim-easy-align" },
 
-  { import = "astrocommunity.test.neotest" },
   { import = "astrocommunity.test.nvim-coverage" },
 
   -- { import = "astrocommunity.worflow.hardtime-nvim" },

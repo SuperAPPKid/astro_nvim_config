@@ -1202,4 +1202,81 @@ return {
       },
     },
   },
+
+  {
+    "nvim-neotest/neotest",
+    version = "^5",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-neotest/neotest-go",
+      "nvim-neotest/neotest-python",
+      "sidlatau/neotest-dart",
+      "markemmons/neotest-deno",
+      "rouge8/neotest-rust",
+      {
+        "folke/neodev.nvim",
+        opts = function(_, opts)
+          opts.library = opts.library or {}
+          if opts.library.plugins ~= true then
+            opts.library.plugins = require("astronvim.utils").list_insert_unique(opts.library.plugins, "neotest")
+          end
+          opts.library.types = true
+        end,
+      },
+    },
+    config = function(_, opts)
+      -- get neotest namespace (api call creates or returns namespace)
+      local neotest_ns = vim.api.nvim_create_namespace "neotest"
+      vim.diagnostic.config({
+        virtual_text = {
+          format = function(diagnostic)
+            local message = diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+            return message
+          end,
+        },
+      }, neotest_ns)
+      require("neotest").setup(opts)
+    end,
+    opts = function()
+      return {
+        adapters = {
+          require "neotest-go",
+          require "neotest-rust",
+          require "neotest-python",
+          require "neotest-deno",
+          require "neotest-dart" {
+            command = "flutter", -- Command being used to run tests. Defaults to `flutter`
+            -- Change it to `fvm flutter` if using FVM
+            -- change it to `dart` for Dart only tests
+            use_lsp = true, -- When set Flutter outline information is used when constructing test name.
+          },
+        },
+      }
+    end,
+    keys = function(_, keys)
+      local prefix = "<leader>T"
+      local plugin = require "neotest"
+
+      require("astronvim.utils").set_mappings {
+        n = {
+          [prefix] = { desc = "󰙨 Test" },
+        },
+      }
+
+      return {
+        {
+          prefix .. "r",
+          function() plugin.run.run(vim.fn.expand "%") end,
+          desc = "Run the current file",
+        },
+        {
+          prefix .. "w",
+          function() plugin.watch.toggle(vim.fn.expand "%") end,
+          desc = "Toggle watch test",
+        },
+      }
+    end,
+  },
 }
