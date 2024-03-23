@@ -1074,6 +1074,17 @@ return {
   {
     {
       "rest-nvim/rest.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        {
+          "vhyrro/luarocks.nvim",
+          branch = "go-away-python",
+          opts = {
+            rocks = { "lua-curl", "nvim-nio", "mimetypes", "xml2lua" }, -- Specify LuaRocks packages to install
+          },
+        },
+      },
+      version = "^2",
       ft = { "http", "json" },
       cmd = {
         "RestNvim",
@@ -1088,8 +1099,10 @@ return {
       "nvim-treesitter/nvim-treesitter",
       opts = function(_, opts)
         if opts.ensure_installed ~= "all" then
-          opts.ensure_installed =
-            require("astronvim.utils").list_insert_unique(opts.ensure_installed, { "http", "json" })
+          opts.ensure_installed = require("astronvim.utils").list_insert_unique(
+            opts.ensure_installed,
+            { "lua", "xml", "http", "json", "graphql" }
+          )
         end
       end,
     },
