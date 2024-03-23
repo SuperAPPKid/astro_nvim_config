@@ -43,12 +43,6 @@ return {
         mode = "n",
         desc = "Move to previous reference under cursor",
       },
-      {
-        "a",
-        function() require("illuminate").textobj_select() end,
-        mode = { "o", "x" },
-        desc = "Selects the reference under cursor",
-      },
     },
   },
 

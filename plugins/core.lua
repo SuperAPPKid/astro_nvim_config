@@ -272,16 +272,25 @@ return {
     --       b = { name = "Buffer" },
     --     }, { mode = "n", prefix = "<leader>" })
     --   end,
-    -- opts = function(_, opts)
-    --   opts.triggers_blacklist = {
-    --     -- list of mode / prefixes that should never be hooked by WhichKey
-    --     -- this is mostly relevant for keymaps that start with a native binding
-    --     i = { "j", "k", "d", "D", "s", "S" },
-    --     v = { "j", "k", "d", "D", "s", "S" },
-    --     n = { "d", "D", "s", "S" },
-    --   }
-    --   return opts
-    -- end,
+    opts = function(_, opts)
+      opts.triggers_blacklist = {
+        -- list of mode / prefixes that should never be hooked by WhichKey
+        -- this is mostly relevant for keymaps that start with a native binding
+        v = { "d", "D", "s", "S", "f", "F", "t", "T", "y", "Y", "m", "M", "c", "C", "v", "V" },
+        n = { "d", "D", "s", "S", "f", "F", "t", "T", "y", "Y", "m", "M", "c", "C", "v", "V" },
+      }
+      opts.plugins = {
+        marks = false, -- shows a list of your marks on ' and `
+        registers = false, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+        presets = {
+          motions = false, -- adds help for motions
+          text_objects = false, -- help for text objects triggered after entering an operator
+          windows = false, -- default bindings on <c-w>
+          nav = false, -- misc bindings to work with windows
+        },
+      }
+      return opts
+    end,
   },
 
   {

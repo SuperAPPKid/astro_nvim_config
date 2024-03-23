@@ -601,19 +601,16 @@ return {
   },
 
   {
-    { "folke/which-key.nvim", optional = true, opts = { plugins = { presets = { operators = false } } } },
-    {
-      "superappkid/modes.nvim",
-      event = "User AstroFile",
-      opts = {
-        line_opacity = 0.3,
-        ignore_filetypes = {
-          "neo-tree",
-          "neo-tree-popup",
-          "neo-tree-preview",
-          "NvimTree",
-          "TelescopePrompt",
-        },
+    "superappkid/modes.nvim",
+    event = "User AstroFile",
+    opts = {
+      line_opacity = 0.3,
+      ignore_filetypes = {
+        "neo-tree",
+        "neo-tree-popup",
+        "neo-tree-preview",
+        "NvimTree",
+        "TelescopePrompt",
       },
     },
   },
@@ -1077,7 +1074,6 @@ return {
   {
     {
       "rest-nvim/rest.nvim",
-      dependencies = { "nvim-lua/plenary.nvim" },
       ft = { "http", "json" },
       cmd = {
         "RestNvim",
