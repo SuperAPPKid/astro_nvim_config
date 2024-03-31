@@ -632,31 +632,40 @@ return {
         fidget.setup(opts)
         vim.notify = fidget.notify
       end,
-      opts = {
-        progress = {
-          suppress_on_insert = true, -- Suppress new messages while in insert mode
-          ignore_done_already = true, -- Ignore new tasks that are already complete
-          ignore_empty_message = true, -- Ignore new tasks that don't contain a message
-        },
-        notification = {
-          -- Conditionally redirect notifications to another backend
-          redirect = function(msg, level, opts)
-            if type(level) == "number" and level >= vim.log.levels.ERROR then
-              return require("fidget.integration.nvim-notify").delegate(msg, level, opts)
-            end
-          end,
-          view = {
-            render_message = function(msg, cnt)
-              msg = cnt == 1 and msg or string.format("(%dx) %s", cnt, msg)
-              msg = #msg > 20 and vim.fn.strcharpart(msg, 0, 16) .. "..." or msg -- truncate to 16 characters
-              return msg
+      opts = function(_, _)
+        require "fidget"
+        return {
+          progress = {
+            suppress_on_insert = true, -- Suppress new messages while in insert mode
+            ignore_done_already = true, -- Ignore new tasks that are already complete
+            ignore_empty_message = true, -- Ignore new tasks that don't contain a message
+          },
+          notification = {
+            configs = {
+              default = require("astronvim.utils").extend_tbl(require("fidget.notification").default_config, {
+                icon = "󱅫",
+                icon_on_left = true,
+              }),
+            },
+            -- Conditionally redirect notifications to another backend
+            redirect = function(msg, level, opts)
+              if type(level) == "number" and level >= vim.log.levels.ERROR then
+                return require("fidget.integration.nvim-notify").delegate(msg, level, opts)
+              end
             end,
+            view = {
+              render_message = function(msg, cnt)
+                msg = cnt == 1 and msg or string.format("(%dx) %s", cnt, msg)
+                msg = #msg > 20 and vim.fn.strcharpart(msg, 0, 16) .. "..." or msg -- truncate to 16 characters
+                return msg
+              end,
+            },
+            window = {
+              winblend = 50,
+            },
           },
-          window = {
-            max_height = 10,
-          },
-        },
-      },
+        }
+      end,
     },
   },
 
