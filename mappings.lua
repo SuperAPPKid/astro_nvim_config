@@ -31,8 +31,33 @@ local mapping = {
 
     -- tabs
     ["<leader><tab>"] = { desc = " Tabs" },
+    ["<leader><tab>n"] = {
+      function()
+        local bufr = vim.api.nvim_get_current_buf()
+        local view = vim.fn.winsaveview()
+        local f_name = vim.fn.fnameescape(vim.api.nvim_buf_get_name(bufr))
+
+        vim.cmd(string.format("tabnew %s", f_name))
+        vim.fn.winrestview(view)
+      end,
+      desc = "New Tab",
+    },
+    ["<leader><tab>N"] = {
+      function()
+        local helper = require "astronvim.utils.buffer"
+        local bufr = vim.api.nvim_get_current_buf()
+        local view = vim.fn.winsaveview()
+        local f_name = vim.fn.fnameescape(vim.api.nvim_buf_get_name(bufr))
+
+        if helper.is_valid(bufr) then helper.close(bufr) end
+        vim.cmd(string.format("tabnew %s", f_name))
+        vim.fn.winrestview(view)
+      end,
+      desc = "Move to new Tab",
+    },
     ["<leader><tab>q"] = {
       function()
+        local helper = require "astronvim.utils.buffer"
         local before_bufs = vim.fn.tabpagebuflist()
 
         vim.cmd "tabclose"
@@ -42,16 +67,14 @@ local mapping = {
         -- find differnce from before_bufs to after_bufs
         local diff = {}
         for _, bb in ipairs(before_bufs) do
-          if not vim.tbl_contains(after_bufs, bb) and vim.fn.buffer_exists(bb) then
-            require("astronvim.utils").list_insert_unique(diff, bb)
-          end
+          if not vim.tbl_contains(after_bufs, bb) then require("astronvim.utils").list_insert_unique(diff, bb) end
         end
 
         for _, buf in ipairs(diff) do
-          vim.cmd("bwipeout " .. tostring(buf))
+          if helper.is_valid(buf) then helper.close(buf) end
         end
       end,
-      desc = "New Tab",
+      desc = "Close Tab",
     },
 
     -- ["<leader>ur"] = {
