@@ -5,45 +5,66 @@ return function(client, bufnr)
 
   if is_available "goto-preview" then
     local goto_preview = require "goto-preview"
+    local function is_float()
+      local win = vim.api.nvim_get_current_win()
+      local config = vim.api.nvim_win_get_config(win)
+
+      return config.relative ~= ""
+    end
+
     if client.supports_method "textDocument/definition" then
       mappings["gD"] = {
-        function() require("telescope.builtin").lsp_definitions() end,
+        function()
+          if not is_float() then require("telescope.builtin").lsp_definitions() end
+        end,
         desc = "Go to the definition of current symbol",
       }
       mappings["gd"] = {
-        function() goto_preview.goto_preview_definition {} end,
+        function()
+          if not is_float() then goto_preview.goto_preview_definition {} end
+        end,
         desc = "Show the definition of current symbol",
       }
     end
 
     if client.supports_method "textDocument/typeDefinition" then
       mappings["gy"] = {
-        function() goto_preview.goto_preview_type_definition {} end,
+        function()
+          if not is_float() then goto_preview.goto_preview_type_definition {} end
+        end,
         desc = "Definition of current type",
       }
     end
 
     if client.supports_method "textDocument/implementation" then
       mappings["gI"] = {
-        function() goto_preview.goto_preview_implementation {} end,
+        function()
+          if not is_float() then goto_preview.goto_preview_implementation {} end
+        end,
         desc = "Implementation of current symbol",
       }
     end
 
     if client.supports_method "textDocument/declaration" then
       mappings["gv"] = {
-        function() goto_preview.goto_preview_implementation {} end,
+        function()
+          if not is_float() then goto_preview.goto_preview_declaration {} end
+        end,
         desc = "Declaration of current symbol",
       }
     end
 
     if client.supports_method "textDocument/references" then
       mappings["gR"] = {
-        function() require("telescope.builtin").lsp_references() end,
+        function()
+          if not is_float() then require("telescope.builtin").lsp_references() end
+        end,
         desc = "Go to references of current symbol",
       }
       mappings["gr"] = {
-        function() goto_preview.goto_preview_references {} end,
+        function()
+          if not is_float() then goto_preview.goto_preview_references {} end
+        end,
         desc = "References of current symbol",
       }
       vim.keymap.del("n", "<leader>lR", { buffer = bufnr })
