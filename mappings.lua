@@ -142,4 +142,20 @@ if is_available "neo-tree.nvim" then
   mapping.n["<leader>le"] = { "<cmd>Neotree source=diagnostics toggle<cr>", desc = "Toggle Diagnostics (neo-tree)" }
 end
 
+if is_available "nvim-dap-ui" then
+  local function open_float(element)
+    require("dapui").float_element(element, {
+      height = nil,
+      width = math.floor(vim.o.columns * 0.8),
+      enter = true,
+    })
+  end
+  mapping.n["<leader>dh"] = { function() open_float "scopes" end, desc = "Debugger Hover" }
+  mapping.n["<leader>du"] = { function() require("dapui").toggle() end, desc = "Toggle REPL" }
+  mapping.n["<leader>dB"] = { function() open_float "breakpoints" end, desc = "Open Breakpoints" }
+  mapping.n["<leader>dd"] = { function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoints" }
+  mapping.n["<leader>dS"] = { function() open_float "stacks" end, desc = "Open Stacks" }
+  mapping.n["<leader>dw"] = { function() open_float "watches" end, desc = "Open Watches" }
+end
+
 return mapping
