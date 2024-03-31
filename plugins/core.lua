@@ -520,4 +520,9 @@ return {
       },
     },
   },
+
+  {
+    "kevinhwang91/nvim-ufo",
+    version = false,
+  },
 }
