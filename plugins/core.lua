@@ -119,7 +119,7 @@ return {
           hl = { fg = "#e06c75", bold = true },
         },
         {
-          provider = require("astronvim.utils.status").provider.file_encoding { padding = { left = 1, right = 1 } },
+          provider = require("astronvim.utils.status").provider.file_encoding { padding = { left = 0, right = 1 } },
           hl = { fg = "#d19a66", bold = true },
         },
         {
@@ -127,7 +127,7 @@ return {
           hl = { fg = "#98c379", bold = true },
         },
         {
-          provider = require("astronvim.utils.status").provider.percentage { padding = { left = 1, right = 2 } },
+          provider = require("astronvim.utils.status").provider.percentage { padding = { left = 0, right = 1 } },
           hl = { fg = "#61afef", bold = true },
         },
         {
@@ -245,6 +245,11 @@ return {
         end,
       }
 
+      opts.window = {
+        completion = cmp.config.window.bordered { border = "double" },
+        documentation = cmp.config.window.bordered { border = "double" },
+      }
+
       return opts
     end,
   },
@@ -257,6 +262,8 @@ return {
     },
     opts = function(_, opts)
       local utils = require "astronvim.utils"
+
+      opts.popup_border_style = "single"
 
       opts.sources = {
         "filesystem",
@@ -459,6 +466,11 @@ return {
         height = function(_) return vim.o.lines - 4 end,
         width = function(_) return math.floor(vim.o.columns * 0.9) end,
       },
+      highlights = {
+        NormalFloat = {
+          link = "NormalDark",
+        },
+      },
     },
     keys = {
       "<C-t>", -- for lazy loading
@@ -469,6 +481,22 @@ return {
     "stevearc/dressing.nvim",
     opts = {
       input = { default_prompt = "" },
+    },
+  },
+
+
+  {
+    {
+      "neovim/nvim-lspconfig",
+      opts = function(_, _) require("lspconfig.ui.windows").default_options.border = "double" end,
+    },
+    {
+      "williamboman/mason.nvim",
+      opts = {
+        ui = {
+          border = "double",
+        },
+      },
     },
   },
 }

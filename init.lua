@@ -79,6 +79,9 @@ return {
         },
       },
     },
+    ui = {
+      border = "double",
+    },
   },
 
   -- This function is run last and is a good place to configuring
