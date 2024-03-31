@@ -69,11 +69,6 @@ return {
     end,
   },
 
-  { import = "astrocommunity.color.ccc-nvim" },
-  {
-    "uga-rosa/ccc.nvim",
-    tag = "v1.7.2",
-  },
   -- { import = "astrocommunity.color.tint-nvim" },
 
   { import = "astrocommunity.completion.cmp-cmdline" },
