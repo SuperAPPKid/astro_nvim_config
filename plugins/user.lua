@@ -596,22 +596,15 @@ return {
     "nyngwang/NeoZoom.lua",
     config = function(_, opts) require("neo-zoom").setup(opts) end,
     opts = {
-      exclude_filetypes = { "terminal", "lspinfo", "mason", "lazy", "fzf", "qf" },
+      exclude_filetypes = { "dapui_.*", "dap-repl", "terminal", "lspinfo", "mason", "lazy", "fzf", "qf" },
       winopts = {
         offset = {
-          width = 150,
-          height = 0.85,
+          width = math.floor(vim.o.columns * 0.9),
+          height = vim.o.lines - 4,
         },
-        border = "rounded", -- this is a preset, try it :)
+        border = "thicc", -- this is a preset, try it :)
       },
-      presets = {
-        {
-          filetypes = { "dapui_.*", "dap-repl" },
-          winopts = {
-            offset = { top = 0.55, left = 0.2, width = 0.75, height = 0.4 },
-          },
-        },
-      },
+      presets = {},
     },
     keys = {
       {
