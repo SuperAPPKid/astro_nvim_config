@@ -122,7 +122,6 @@ return {
   },
   { import = "astrocommunity.debugging.nvim-dap-repl-highlights" },
   -- { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
-  { import = "astrocommunity.debugging.persistent-breakpoints-nvim" },
 
   -- { import = "astrocommunity.diagnostics.lsp_lines-nvim" },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
