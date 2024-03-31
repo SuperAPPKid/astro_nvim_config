@@ -19,6 +19,7 @@ return {
     "rebelot/heirline.nvim",
     opts = function(_, opts)
       local status = require "astronvim.utils.status"
+      local condition = require "astronvim.utils.status.condition"
       local hl = status.hl
 
       opts.tabline = { -- bufferline
@@ -57,8 +58,81 @@ return {
           condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
           status.heirline.make_tablist { -- component for each tab
             provider = status.provider.tabnr(),
-            hl = function(self) return status.hl.get_attributes(status.heirline.tab_type(self, "tab"), true) end,
+            hl = function(self) return hl.get_attributes(status.heirline.tab_type(self, "buffer"), true) end,
           },
+        },
+      }
+
+      opts.statusline = { -- statusline
+        hl = { fg = "fg", bg = "bg" },
+        status.component.mode { mode_text = { padding = { left = 1, right = 1 } } }, -- add the mode text
+        status.component.git_branch {
+          on_click = false,
+          hl = { fg = "#e5c07b" },
+        },
+        status.component.git_diff { on_click = false },
+        status.component.fill(),
+        status.component.file_info {
+          file_icon = false,
+          surround = {
+            separator = "right",
+            color = "file_info_bg",
+            condition = condition.has_filetype,
+          },
+          filename = {
+            modify = ":p:.",
+          },
+        },
+        status.component.diagnostics {
+          on_click = false,
+          surround = {
+            separator = "left",
+            color = "diagnostics_bg",
+            condition = condition.has_diagnostics,
+          },
+        },
+        status.component.fill(),
+        status.component.cmd_info {
+          surround = {
+            separator = "right",
+            color = "cmd_info_bg",
+            condition = function()
+              return condition.is_hlsearch() or condition.is_macro_recording() or condition.is_statusline_showcmd()
+            end,
+          },
+        },
+        status.component.lsp {
+          on_click = false,
+          lsp_progress = false,
+          padding = { left = 1, right = 1 },
+          hl = { fg = "#c678dd", bold = true },
+          lsp_client_names = {
+            icon = { kind = "", padding = { left = 0, right = 0 } },
+          },
+        },
+        {
+          provider = require("astronvim.utils.status").provider.file_icon { padding = { left = 1, right = 1 } },
+          hl = require("astronvim.utils.status.hl").file_icon "statusline",
+        },
+        {
+          provider = require("astronvim.utils.status").provider.filetype { padding = { left = 0, right = 1 } },
+          hl = { fg = "#e06c75", bold = true },
+        },
+        {
+          provider = require("astronvim.utils.status").provider.file_encoding { padding = { left = 1, right = 1 } },
+          hl = { fg = "#d19a66", bold = true },
+        },
+        {
+          provider = require("astronvim.utils.status").provider.ruler { padding = { left = 0, right = 1 } },
+          hl = { fg = "#98c379", bold = true },
+        },
+        {
+          provider = require("astronvim.utils.status").provider.percentage { padding = { left = 1, right = 2 } },
+          hl = { fg = "#61afef", bold = true },
+        },
+        {
+          provider = require("astronvim.utils.status").provider.scrollbar(),
+          hl = { fg = "#e5c07b", bold = true },
         },
       }
       return opts
