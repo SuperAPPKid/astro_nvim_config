@@ -1,6 +1,9 @@
 return {
   -- Add the community repository of plugin specifications
-  "AstroNvim/astrocommunity",
+  {
+    "AstroNvim/astrocommunity",
+    version = "^6",
+  },
 
   -- available plugins can be found at https://github.com/AstroNvim/astrocommunity
 
