@@ -22,6 +22,7 @@ return {
     ui_notifications_enabled = true, -- disable notifications when toggling UI elements
     resession_enabled = true, -- enable experimental resession.nvim session management (will be default in AstroNvim v4)
     inlay_hints_enabled = true, -- enable or disable LSP inlay hints on startup (Neovim v0.10 only)
+    maplocalleader = "",
     -- move_normal_option = 1,
   },
 }
