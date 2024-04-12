@@ -1,9 +1,29 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `:h astrocore`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
+
+local isStdIn = false
+local autocmds = {
+  alpha_autostart = false,
+  session_restore = {
+    {
+      event = "StdinReadPre",
+      callback = function() isStdIn = true end,
+    },
+    {
+      event = "VimEnter",
+      callback = vim.schedule_wrap(function()
+        -- Only load the session if nvim was started with no args
+        if vim.fn.argc(-1) == 0 and not isStdIn then
+          require("resession").load(vim.fn.getcwd(), { dir = "dirsession", silence_errors = true })
+        else
+          vim.api.nvim_del_augroup_by_name "resession_auto_save"
+        end
+      end),
+    },
+  },
+}
 
 ---@type LazySpec
 return {
@@ -74,6 +94,53 @@ return {
       t = {
         -- setting a mapping to false will disable it
         -- ["<esc>"] = false,
+      },
+    },
+    autocmds = {
+      alpha_autostart = false,
+      session_restore = {
+        {
+          event = "StdinReadPre",
+          callback = function() isStdIn = true end,
+        },
+        {
+          event = "VimEnter",
+          callback = vim.schedule_wrap(function()
+            -- Only load the session if nvim was started with no args
+            if vim.fn.argc(-1) == 0 and not isStdIn then
+              require("resession").load(vim.fn.getcwd(), { dir = "dirsession", silence_errors = true })
+            else
+              vim.api.nvim_del_augroup_by_name "resession_auto_save"
+            end
+          end),
+        },
+        {
+          event = "VimEnter",
+          desc = "Start Oil when vim is opened with no arguments",
+          group = vim.api.nvim_create_augroup("oil_autostart", { clear = true }),
+          callback = vim.schedule_wrap(function()
+            local should_skip
+            local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)
+            if
+              vim.fn.argc() > 0 -- don't start when opening a file
+              or #lines > 1 -- don't open if current buffer has more than 1 line
+              or (#lines == 1 and lines[1]:len() > 0) -- don't open the current buffer if it has anything on the first line
+              or #vim.tbl_filter(function(bufnr) return vim.bo[bufnr].buflisted end, vim.api.nvim_list_bufs()) > 1 -- don't open if any listed buffers
+              or not vim.o.modifiable -- don't open if not modifiable
+            then
+              should_skip = true
+            else
+              for _, arg in pairs(vim.v.argv) do
+                if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
+                  should_skip = true
+                  break
+                end
+              end
+            end
+            if should_skip then return end
+            require("oil").open()
+          end),
+        },
       },
     },
   },
