@@ -1,8 +1,186 @@
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `:h astrocore`
--- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
---       as this provides autocomplete and documentation while editing
 
+local utils = require "astrocore"
+local is_available = utils.is_available
+
+-- mapping
+
+local save_file = {
+  "<cmd>w<cr><esc>",
+  desc = "Save file",
+}
+
+local mapping = {
+  -- first key is the mode
+  n = {
+    -- second key is the lefthand side of the map
+
+    -- navigate buffer tabs with `H` and `L`
+    L = {
+      function() require("astrocore.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
+      desc = "Next buffer",
+    },
+    H = {
+      function() require("astrocore.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
+      desc = "Previous buffer",
+    },
+
+    -- mappings seen under group name "Buffer"
+    ["<Leader>bD"] = {
+      function()
+        require("astroui.status.heirline").buffer_picker(function(bufnr) require("astrocore.buffer").close(bufnr) end)
+      end,
+      desc = "Pick to close",
+    },
+
+    -- quick save
+    ["<C-s>"] = save_file,
+
+    --tabs
+    ["<leader><tab>"] = { desc = " Tabs" },
+    ["<leader><tab>n"] = {
+      function()
+        local bufr = vim.api.nvim_get_current_buf()
+        local view = vim.fn.winsaveview()
+        local f_name = vim.fn.fnameescape(vim.api.nvim_buf_get_name(bufr))
+
+        vim.cmd(string.format("tabnew %s", f_name))
+        vim.fn.winrestview(view)
+      end,
+      desc = "New Tab",
+    },
+    ["<leader><tab>N"] = {
+      function()
+        local helper = require "astrocore.buffer"
+        local bufr = vim.api.nvim_get_current_buf()
+        local view = vim.fn.winsaveview()
+        local f_name = vim.fn.fnameescape(vim.api.nvim_buf_get_name(bufr))
+
+        if helper.is_valid(bufr) then helper.close(bufr) end
+        vim.cmd(string.format("tabnew %s", f_name))
+        vim.fn.winrestview(view)
+      end,
+      desc = "Move to new Tab",
+    },
+    ["<leader><tab>q"] = {
+      function()
+        local helper = require "astrocore.buffer"
+        local before_bufs = vim.fn.tabpagebuflist()
+
+        vim.cmd "tabclose"
+
+        local after_bufs = vim.fn.tabpagebuflist()
+
+        -- find differnce from before_bufs to after_bufs
+        local diff = {}
+        for _, bb in ipairs(before_bufs) do
+          if not vim.tbl_contains(after_bufs, bb) then require("astrocore").list_insert_unique(diff, bb) end
+        end
+
+        for _, buf in ipairs(diff) do
+          if helper.is_valid(buf) then helper.close(buf) end
+        end
+      end,
+      desc = "Close Tab",
+    },
+
+    ["<leader>du"] = {
+      function() require("dapui").toggle { reset = true } end,
+      desc = "Toggle Debugger UI",
+    },
+
+    ["<leader>f'"] = false,
+    ["<leader>fr"] = false,
+
+    ["<leader>z"] = { desc = " Misc" },
+
+    ["<C-q>"] = { "<cmd>qa!<cr>", desc = "Force quit" },
+  },
+  i = {
+    -- quick save
+    ["<C-s>"] = save_file,
+  },
+  v = {
+    ["<C-s>"] = save_file,
+  },
+  s = {
+    -- save file
+    ["<C-s>"] = save_file,
+  },
+  t = {},
+}
+
+if is_available "toggleterm.nvim" and vim.fn.executable "joshuto" == 1 then
+  mapping.n["<leader>tj"] = {
+    function()
+      local edit_cmd = ""
+      local fm_tmpfile = vim.fn.tempname()
+      local feedkeys = function(keys)
+        local key_termcode = vim.api.nvim_replace_termcodes(keys, true, true, true)
+        vim.api.nvim_feedkeys(key_termcode, "n", false)
+      end
+      local opts = {
+        direction = "float",
+        hidden = true,
+        cmd = string.format('joshuto --file-chooser --output-file="%s"', fm_tmpfile),
+        dir = vim.fn.expand "%:p:h",
+        on_open = function(term)
+          edit_cmd = "edit"
+          vim.keymap.set("t", "<Tab>", function()
+            edit_cmd = "tabedit"
+            feedkeys "<cr>"
+          end, { noremap = true, silent = true, buffer = term.bufnr })
+          vim.keymap.set("t", "\\", function()
+            edit_cmd = "split"
+            feedkeys "<cr>"
+          end, { noremap = true, silent = true, buffer = term.bufnr })
+          vim.keymap.set("t", "|", function()
+            edit_cmd = "vsplit"
+            feedkeys "<cr>"
+          end, { noremap = true, silent = true, buffer = term.bufnr })
+        end,
+        on_exit = function()
+          local file = io.open(fm_tmpfile, "r")
+          if file ~= nil then
+            local file_name = file:read "*a"
+            file:close()
+            os.remove(fm_tmpfile)
+            vim.uv.new_timer():start(0, 0, vim.schedule_wrap(function() vim.cmd(edit_cmd .. " " .. file_name) end))
+          end
+        end,
+      }
+      utils.toggle_term_cmd(opts)
+    end,
+    desc = "ToggleTerm joshuto",
+  }
+end
+
+if is_available "neo-tree.nvim" then
+  mapping.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle Filesystem" }
+  mapping.n["<leader>be"] = { "<cmd>Neotree source=buffers toggle<cr>", desc = "Toggle Buffers (neo-tree)" }
+  mapping.n["<leader>ge"] = { "<cmd>Neotree source=git_status toggle<cr>", desc = "Toggle Git (neo-tree)" }
+  mapping.n["<leader>le"] = { "<cmd>Neotree source=diagnostics toggle<cr>", desc = "Toggle Diagnostics (neo-tree)" }
+end
+
+if is_available "nvim-dap-ui" then
+  local function open_float(element)
+    require("dapui").float_element(element, {
+      height = nil,
+      width = math.floor(vim.o.columns * 0.8),
+      enter = true,
+    })
+  end
+  mapping.n["<Leader>dh"] = { function() require("dap.ui.widgets").hover() end, desc = "Debugger Hover" }
+  mapping.n["<leader>dH"] = { function() open_float "scopes" end, desc = "Debugger Hover" }
+  mapping.n["<leader>du"] = { function() require("dapui").toggle() end, desc = "Toggle REPL" }
+  mapping.n["<leader>dB"] = { function() open_float "breakpoints" end, desc = "Open Breakpoints" }
+  mapping.n["<leader>dd"] = { function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoints" }
+  mapping.n["<leader>dS"] = { function() open_float "stacks" end, desc = "Open Stacks" }
+  mapping.n["<leader>dw"] = { function() open_float "watches" end, desc = "Open Watches" }
+end
+
+-- autocmds
 local isStdIn = false
 local autocmds = {
   alpha_autostart = false,
@@ -72,87 +250,7 @@ return {
     },
     -- Mappings can be configured through AstroCore as well.
     -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
-    mappings = {
-      -- first key is the mode
-      n = {
-        -- second key is the lefthand side of the map
-
-        -- navigate buffer tabs with `H` and `L`
-        -- L = {
-        --   function() require("astrocore.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
-        --   desc = "Next buffer",
-        -- },
-        -- H = {
-        --   function() require("astrocore.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
-        --   desc = "Previous buffer",
-        -- },
-
-        -- mappings seen under group name "Buffer"
-        ["<Leader>bD"] = {
-          function()
-            require("astroui.status.heirline").buffer_picker(
-              function(bufnr) require("astrocore.buffer").close(bufnr) end
-            )
-          end,
-          desc = "Pick to close",
-        },
-        -- tables with just a `desc` key will be registered with which-key if it's installed
-        -- this is useful for naming menus
-        ["<Leader>b"] = { desc = "Buffers" },
-        -- quick save
-        -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
-      },
-      t = {
-        -- setting a mapping to false will disable it
-        -- ["<esc>"] = false,
-      },
-    },
-    autocmds = {
-      alpha_autostart = false,
-      session_restore = {
-        {
-          event = "StdinReadPre",
-          callback = function() isStdIn = true end,
-        },
-        {
-          event = "VimEnter",
-          callback = vim.schedule_wrap(function()
-            -- Only load the session if nvim was started with no args
-            if vim.fn.argc(-1) == 0 and not isStdIn then
-              require("resession").load(vim.fn.getcwd(), { dir = "dirsession", silence_errors = true })
-            else
-              vim.api.nvim_del_augroup_by_name "resession_auto_save"
-            end
-          end),
-        },
-        {
-          event = "VimEnter",
-          desc = "Start Oil when vim is opened with no arguments",
-          group = vim.api.nvim_create_augroup("oil_autostart", { clear = true }),
-          callback = vim.schedule_wrap(function()
-            local should_skip
-            local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)
-            if
-              vim.fn.argc() > 0 -- don't start when opening a file
-              or #lines > 1 -- don't open if current buffer has more than 1 line
-              or (#lines == 1 and lines[1]:len() > 0) -- don't open the current buffer if it has anything on the first line
-              or #vim.tbl_filter(function(bufnr) return vim.bo[bufnr].buflisted end, vim.api.nvim_list_bufs()) > 1 -- don't open if any listed buffers
-              or not vim.o.modifiable -- don't open if not modifiable
-            then
-              should_skip = true
-            else
-              for _, arg in pairs(vim.v.argv) do
-                if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
-                  should_skip = true
-                  break
-                end
-              end
-            end
-            if should_skip then return end
-            require("oil").open()
-          end),
-        },
-      },
-    },
+    mappings = mapping,
+    autocmds = autocmds,
   },
 }
