@@ -1,9 +1,97 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
--- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
---       as this provides autocomplete and documentation while editing
+
+local utils = require "astrocore"
+local is_available = utils.is_available
+
+-- on_attach
+local on_attach = function(client, bufnr)
+  local mappings = {}
+
+  if is_available "goto-preview" then
+    local goto_preview = require "goto-preview"
+    local function is_float()
+      local win = vim.api.nvim_get_current_win()
+      local config = vim.api.nvim_win_get_config(win)
+
+      return config.relative ~= ""
+    end
+
+    if client.supports_method "textDocument/definition" then
+      mappings["gD"] = {
+        function()
+          if not is_float() then require("telescope.builtin").lsp_definitions() end
+        end,
+        desc = "Go to the definition of current symbol",
+      }
+      mappings["gd"] = {
+        function()
+          if not is_float() then goto_preview.goto_preview_definition {} end
+        end,
+        desc = "Show the definition of current symbol",
+      }
+    end
+
+    if client.supports_method "textDocument/typeDefinition" then
+      mappings["gy"] = {
+        function()
+          if not is_float() then goto_preview.goto_preview_type_definition {} end
+        end,
+        desc = "Definition of current type",
+      }
+    end
+
+    if client.supports_method "textDocument/implementation" then
+      mappings["gI"] = {
+        function()
+          if not is_float() then goto_preview.goto_preview_implementation {} end
+        end,
+        desc = "Implementation of current symbol",
+      }
+    end
+
+    if client.supports_method "textDocument/declaration" then
+      mappings["gv"] = {
+        function()
+          if not is_float() then goto_preview.goto_preview_declaration {} end
+        end,
+        desc = "Declaration of current symbol",
+      }
+    end
+
+    if client.supports_method "textDocument/references" then
+      mappings["gR"] = {
+        function()
+          if not is_float() then require("telescope.builtin").lsp_references() end
+        end,
+        desc = "Go to references of current symbol",
+      }
+      mappings["gr"] = {
+        function()
+          if not is_float() then goto_preview.goto_preview_references {} end
+        end,
+        desc = "References of current symbol",
+      }
+      vim.keymap.del("n", "<leader>lR", { buffer = bufnr })
+    end
+
+    mappings["gC"] = {
+      function() goto_preview.close_all_win {} end,
+      desc = "Close all preview",
+    }
+  end
+
+  if is_available "inc-rename.nvim" then
+    mappings["<leader>lr"] = {
+      ":IncRename ",
+      desc = "Rename current symbol",
+    }
+  end
+
+  utils.set_mappings({
+    n = mappings,
+  }, { buffer = bufnr })
+end
 
 ---@type LazySpec
 return {
@@ -45,7 +133,59 @@ return {
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
-      -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      intelephense = {
+        handlers = {
+          ["textDocument/publishDiagnostics"] = function() end,
+        },
+      },
+      clangd = {
+        filetypes = { "c", "cpp", "opjc", "objcpp" },
+        capabilities = {
+          offsetEncoding = "utf-8",
+        },
+      },
+      gopls = {
+        settings = {
+          gopls = {
+            hints = {
+              -- assignVariableTypes = true,
+              -- compositeLiteralFields = true,
+              -- compositeLiteralTypes = true,
+              -- constantValues = true,
+              -- functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+          },
+        },
+      },
+      tsserver = {
+        settings = {
+          typescript = {
+            inlayHints = {
+              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
+          },
+          javascript = {
+            inlayHints = {
+              includeInlayEnumMemberValueHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+              includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayVariableTypeHints = true,
+            },
+          },
+        },
+      },
     },
     -- customize how language servers are attached
     handlers = {
@@ -84,7 +224,7 @@ return {
     -- mappings to be set up on attaching of a language server
     mappings = {
       n = {
-        gl = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" },
+        -- gl = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" },
         -- a `cond` key can provided as the string of a server capability to be required to attach, or a function with `client` and `bufnr` parameters from the `on_attach` that returns a boolean
         -- gD = {
         --   function() vim.lsp.buf.declaration() end,
@@ -100,9 +240,6 @@ return {
     },
     -- A custom `on_attach` function to be run after the default `on_attach` function
     -- takes two parameters `client` and `bufnr`  (`:h lspconfig-setup`)
-    on_attach = function(client, bufnr)
-      -- this would disable semanticTokensProvider for all clients
-      -- client.server_capabilities.semanticTokensProvider = nil
-    end,
+    on_attach = on_attach,
   },
 }
