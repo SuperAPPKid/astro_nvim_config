@@ -75,7 +75,7 @@ local mapping = {
         -- find differnce from before_bufs to after_bufs
         local diff = {}
         for _, bb in ipairs(before_bufs) do
-          if not vim.tbl_contains(after_bufs, bb) then require("astrocore").list_insert_unique(diff, bb) end
+          if not vim.tbl_contains(after_bufs, bb) then require("astrocore").list_insert_unique(diff, { bb }) end
         end
 
         for _, buf in ipairs(diff) do

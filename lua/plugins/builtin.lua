@@ -161,15 +161,17 @@ return {
           break
         end
       end
-      opts.source_selector.sources =
-        core.list_insert_unique(opts.source_selector.sources, { source = "diagnostics", display_name = " Issue" })
+      opts.source_selector.sources = core.list_insert_unique(
+        opts.source_selector.sources,
+        { { source = "diagnostics", display_name = " Issue" } }
+      )
       opts.diagnostics = {
         auto_preview = { enabled = true },
       }
 
       -- add remote
       opts.source_selector.sources =
-        core.list_insert_unique(opts.source_selector.sources, { source = "remote", display_name = "󰌘 Remote" })
+        core.list_insert_unique(opts.source_selector.sources, { { source = "remote", display_name = "󰌘 Remote" } })
 
       opts.filesystem = core.extend_tbl(opts.filesystem, {
         follow_current_file = {
