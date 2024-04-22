@@ -486,6 +486,7 @@ return {
 
   {
     "nvim-telescope/telescope.nvim",
+    version = false,
     opts = function(_, opts)
       local defaults = opts.defaults
       defaults.layout_config = {
