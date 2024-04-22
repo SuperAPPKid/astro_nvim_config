@@ -228,7 +228,8 @@ return {
           -- disable all manually enabled buffers
           for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
             if vim.b[bufnr].autoformat then
-              table.insert(vim.g.OLD_AUTOFORMAT_BUFFERS, bufnr)
+              vim.g.OLD_AUTOFORMAT_BUFFERS =
+                require("astrocore").list_insert_unique(vim.g.OLD_AUTOFORMAT_BUFFERS, { bufnr })
               vim.b[bufnr].autoformat = false
             end
           end
