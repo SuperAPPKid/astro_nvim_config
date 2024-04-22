@@ -1,8 +1,10 @@
--- Mapping data with "desc" stored directly by vim.keymap.set().
---
--- Please use this mappings table to set keyboard mapping since this is the
--- lower level configuration and more robust one. (which-key will
--- automatically pick-up stored data by this setting.)
+-- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
+-- Configuration documentation can be found with `:h astrocore`
+
+local utils = require "astrocore"
+local is_available = utils.is_available
+
+-- mapping
 
 local save_file = {
   "<cmd>w<cr><esc>",
@@ -12,24 +14,30 @@ local save_file = {
 local mapping = {
   -- first key is the mode
   n = {
-    -- disabled
-    -- ["<leader>q"] = false,
-    -- ["<leader>w"] = false,
+    -- second key is the lefthand side of the map
 
-    -- save file
-    ["<C-s>"] = save_file,
-
-    -- buffers
-    ["H"] = {
-      function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
-      desc = "Previous buffer",
-    },
-    ["L"] = {
-      function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
+    -- navigate buffer tabs with `H` and `L`
+    L = {
+      function() require("astrocore.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
       desc = "Next buffer",
     },
+    H = {
+      function() require("astrocore.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
+      desc = "Previous buffer",
+    },
 
-    -- tabs
+    -- mappings seen under group name "Buffer"
+    ["<Leader>bD"] = {
+      function()
+        require("astroui.status.heirline").buffer_picker(function(bufnr) require("astrocore.buffer").close(bufnr) end)
+      end,
+      desc = "Pick to close",
+    },
+
+    -- quick save
+    ["<C-s>"] = save_file,
+
+    --tabs
     ["<leader><tab>"] = { desc = " Tabs" },
     ["<leader><tab>n"] = {
       function()
@@ -44,7 +52,7 @@ local mapping = {
     },
     ["<leader><tab>N"] = {
       function()
-        local helper = require "astronvim.utils.buffer"
+        local helper = require "astrocore.buffer"
         local bufr = vim.api.nvim_get_current_buf()
         local view = vim.fn.winsaveview()
         local f_name = vim.fn.fnameescape(vim.api.nvim_buf_get_name(bufr))
@@ -57,7 +65,7 @@ local mapping = {
     },
     ["<leader><tab>q"] = {
       function()
-        local helper = require "astronvim.utils.buffer"
+        local helper = require "astrocore.buffer"
         local before_bufs = vim.fn.tabpagebuflist()
 
         vim.cmd "tabclose"
@@ -67,7 +75,7 @@ local mapping = {
         -- find differnce from before_bufs to after_bufs
         local diff = {}
         for _, bb in ipairs(before_bufs) do
-          if not vim.tbl_contains(after_bufs, bb) then require("astronvim.utils").list_insert_unique(diff, bb) end
+          if not vim.tbl_contains(after_bufs, bb) then require("astrocore").list_insert_unique(diff, bb) end
         end
 
         for _, buf in ipairs(diff) do
@@ -77,12 +85,6 @@ local mapping = {
       desc = "Close Tab",
     },
 
-    -- ["<leader>ur"] = {
-    --   "<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>",
-    --   desc = "Redraw / clear hlsearch / diff update",
-    -- },
-
-    -- fix dap-ui size changed issue temporarily
     ["<leader>du"] = {
       function() require("dapui").toggle { reset = true } end,
       desc = "Toggle Debugger UI",
@@ -92,27 +94,23 @@ local mapping = {
     ["<leader>fr"] = false,
 
     ["<leader>z"] = { desc = " Misc" },
+
+    ["<C-q>"] = { "<cmd>qa!<cr>", desc = "Force quit" },
   },
   i = {
-    -- save file
+    -- quick save
     ["<C-s>"] = save_file,
   },
   v = {
-    -- save file
     ["<C-s>"] = save_file,
-
-    -- plugin: Yanky conflict with this key
-    -- paste without yanking selected text
-    -- ["p"] = { "P", desc = "Paste without yanking" },
   },
   s = {
     -- save file
     ["<C-s>"] = save_file,
   },
+  t = {},
 }
 
-local utils = require "astronvim.utils"
-local is_available = utils.is_available
 if is_available "toggleterm.nvim" and vim.fn.executable "joshuto" == 1 then
   mapping.n["<leader>tj"] = {
     function()
@@ -173,7 +171,8 @@ if is_available "nvim-dap-ui" then
       enter = true,
     })
   end
-  mapping.n["<leader>dh"] = { function() open_float "scopes" end, desc = "Debugger Hover" }
+  mapping.n["<Leader>dh"] = { function() require("dap.ui.widgets").hover() end, desc = "Debugger Hover" }
+  mapping.n["<leader>dH"] = { function() open_float "scopes" end, desc = "Debugger Hover" }
   mapping.n["<leader>du"] = { function() require("dapui").toggle() end, desc = "Toggle REPL" }
   mapping.n["<leader>dB"] = { function() open_float "breakpoints" end, desc = "Open Breakpoints" }
   mapping.n["<leader>dd"] = { function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoints" }
@@ -181,4 +180,77 @@ if is_available "nvim-dap-ui" then
   mapping.n["<leader>dw"] = { function() open_float "watches" end, desc = "Open Watches" }
 end
 
-return mapping
+-- autocmds
+local isStdIn = false
+local autocmds = {
+  alpha_autostart = false,
+  session_restore = {
+    {
+      event = "StdinReadPre",
+      callback = function() isStdIn = true end,
+    },
+    {
+      event = "VimEnter",
+      callback = vim.schedule_wrap(function()
+        -- Only load the session if nvim was started with no args
+        if vim.fn.argc(-1) == 0 and not isStdIn then
+          require("resession").load(vim.fn.getcwd(), { dir = "dirsession", silence_errors = true })
+        else
+          vim.api.nvim_del_augroup_by_name "resession_auto_save"
+        end
+      end),
+    },
+  },
+}
+
+---@type LazySpec
+return {
+  "AstroNvim/astrocore",
+  ---@type AstroCoreOpts
+  opts = {
+    -- Configure core features of AstroNvim
+    features = {
+      large_buf = { size = 1024 * 500, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
+      autopairs = true, -- enable autopairs at start
+      cmp = true, -- enable completion at start
+      diagnostics_mode = 3, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
+      highlighturl = true, -- highlight URLs at start
+      notifications = true, -- enable notifications at start
+    },
+    -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
+    diagnostics = {
+      virtual_text = true,
+      underline = true,
+    },
+    -- vim options can be configured here
+    options = {
+      opt = { -- vim.opt.<key>
+        relativenumber = true, -- sets vim.opt.relativenumber
+        number = true, -- sets vim.opt.number
+        spell = false, -- sets vim.opt.spell
+        wrap = true, -- sets vim.opt.wrap
+        autoread = true,
+        tabstop = 4,
+        shiftwidth = 4,
+        softtabstop = 4,
+        swapfile = false,
+      },
+      g = { -- vim.g.<key>
+        -- configure global vim variables (vim.g)
+        -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
+        -- This can be found in the `lua/lazy_setup.lua` file
+        autoformat_enabled = true, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
+        autopairs_enabled = true, -- enable autopairs at start
+        diagnostics_mode = 3, -- set the visibility of diagnostics in the UI (0=off, 1=only show in status line, 2=virtual text off, 3=all on)
+        icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
+        ui_notifications_enabled = true, -- disable notifications when toggling UI elements
+        inlay_hints_enabled = true, -- enable or disable LSP inlay hints on startup (Neovim v0.10 only)
+        -- move_normal_option = 1,
+      },
+    },
+    -- Mappings can be configured through AstroCore as well.
+    -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
+    mappings = mapping,
+    autocmds = autocmds,
+  },
+}

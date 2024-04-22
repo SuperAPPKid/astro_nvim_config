@@ -1,5 +1,8 @@
+-- You can also add or configure plugins by creating files in this `plugins/` folder
+-- Here are some examples:
+
+---@type LazySpec
 return {
-  -- customize alpha options
   {
     "goolord/alpha-nvim",
     opts = function(_, opts)
@@ -10,130 +13,6 @@ return {
         "██ ██  ██ ██    ██ ██ ██ ████ ██",
         "██  ██ ██  ██  ██  ██ ██  ██  ██",
         "██   ████   ████   ██ ██      ██",
-      }
-      return opts
-    end,
-  },
-
-  {
-    "rebelot/heirline.nvim",
-    opts = function(_, opts)
-      local status = require "astronvim.utils.status"
-      local condition = require "astronvim.utils.status.condition"
-      local hl = status.hl
-
-      opts.tabline = { -- bufferline
-        { -- file tree padding
-          condition = function(self)
-            self.winid = vim.api.nvim_tabpage_list_wins(0)[1]
-            return status.condition.buffer_matches(
-              { filetype = { "aerial", "dapui_.", "dap-repl", "neo%-tree", "NvimTree", "edgy" } },
-              vim.api.nvim_win_get_buf(self.winid)
-            )
-          end,
-          provider = function(self) return string.rep(" ", vim.api.nvim_win_get_width(self.winid) + 1) end,
-          hl = { bg = "tabline_bg" },
-        },
-
-        status.heirline.make_buflist(status.component.file_info {
-          file_icon = {
-            condition = function(self) return not self._show_picker end,
-            hl = hl.file_icon "tabline",
-          },
-          unique_path = {
-            hl = function(self) return hl.get_attributes(self.tab_type .. "_path") end,
-          },
-          padding = { left = 1, right = 1 },
-          hl = function(self)
-            local tab_type = self.tab_type
-            if self._show_picker and self.tab_type ~= "buffer_active" then tab_type = "buffer_visible" end
-            return hl.get_attributes(tab_type)
-          end,
-          surround = false,
-        }),
-
-        -- component for each buffer tab
-        status.component.fill { hl = { bg = "tabline_bg" } }, -- fill the rest of the tabline with background color
-        { -- tab list
-          condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
-          status.heirline.make_tablist { -- component for each tab
-            provider = status.provider.tabnr(),
-            hl = function(self) return hl.get_attributes(status.heirline.tab_type(self, "buffer"), true) end,
-          },
-        },
-      }
-
-      opts.statusline = { -- statusline
-        hl = { fg = "fg", bg = "bg" },
-        status.component.mode { mode_text = { padding = { left = 1, right = 1 } } }, -- add the mode text
-        status.component.git_branch {
-          on_click = false,
-          hl = { fg = "#e5c07b" },
-        },
-        status.component.git_diff { on_click = false },
-        status.component.fill(),
-        status.component.file_info {
-          file_icon = false,
-          surround = {
-            separator = "right",
-            color = "file_info_bg",
-            condition = condition.has_filetype,
-          },
-          filename = {
-            modify = ":p:.",
-          },
-        },
-        status.component.diagnostics {
-          on_click = false,
-          surround = {
-            separator = "left",
-            color = "diagnostics_bg",
-            condition = condition.has_diagnostics,
-          },
-        },
-        status.component.fill(),
-        status.component.cmd_info {
-          surround = {
-            separator = "right",
-            color = "cmd_info_bg",
-            condition = function()
-              return condition.is_hlsearch() or condition.is_macro_recording() or condition.is_statusline_showcmd()
-            end,
-          },
-        },
-        status.component.lsp {
-          on_click = false,
-          lsp_progress = false,
-          padding = { left = 1, right = 1 },
-          hl = { fg = "#c678dd", bold = true },
-          lsp_client_names = {
-            icon = { kind = "", padding = { left = 0, right = 0 } },
-          },
-        },
-        {
-          provider = require("astronvim.utils.status").provider.file_icon { padding = { left = 1, right = 1 } },
-          hl = require("astronvim.utils.status.hl").file_icon "statusline",
-        },
-        {
-          provider = require("astronvim.utils.status").provider.filetype { padding = { left = 0, right = 1 } },
-          hl = { fg = "#e06c75", bold = true },
-        },
-        {
-          provider = require("astronvim.utils.status").provider.file_encoding { padding = { left = 0, right = 1 } },
-          hl = { fg = "#d19a66", bold = true },
-        },
-        {
-          provider = require("astronvim.utils.status").provider.ruler { padding = { left = 0, right = 1 } },
-          hl = { fg = "#98c379", bold = true },
-        },
-        {
-          provider = require("astronvim.utils.status").provider.percentage { padding = { left = 0, right = 1 } },
-          hl = { fg = "#61afef", bold = true },
-        },
-        {
-          provider = require("astronvim.utils.status").provider.scrollbar(),
-          hl = { fg = "#e5c07b", bold = true },
-        },
       }
       return opts
     end,
@@ -261,7 +140,7 @@ return {
       "miversen33/netman.nvim",
     },
     opts = function(_, opts)
-      local utils = require "astronvim.utils"
+      local core = require "astrocore"
 
       opts.popup_border_style = "single"
 
@@ -283,16 +162,16 @@ return {
         end
       end
       opts.source_selector.sources =
-        utils.list_insert_unique(opts.source_selector.sources, { source = "diagnostics", display_name = " Issue" })
+        core.list_insert_unique(opts.source_selector.sources, { source = "diagnostics", display_name = " Issue" })
       opts.diagnostics = {
         auto_preview = { enabled = true },
       }
 
       -- add remote
       opts.source_selector.sources =
-        utils.list_insert_unique(opts.source_selector.sources, { source = "remote", display_name = "󰌘 Remote" })
+        core.list_insert_unique(opts.source_selector.sources, { source = "remote", display_name = "󰌘 Remote" })
 
-      opts.filesystem = utils.extend_tbl(opts.filesystem, {
+      opts.filesystem = core.extend_tbl(opts.filesystem, {
         follow_current_file = {
           leave_dirs_open = true,
         },
@@ -319,22 +198,34 @@ return {
     end,
   },
 
-  -- You can disable default plugins as follows:
-  -- { "s1n7ax/nvim-window-picker", enabled = false },
-
-  -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
-  -- {
-  --   "L3MON4D3/LuaSnip",
-  --   config = function(plugin, opts)
-  --     require "plugins.configs.luasnip"(plugin, opts) -- include the default astronvim config that calls the setup call
-  --     -- add more custom luasnip configuration such as filetype extend or custom snippets
-  --     local luasnip = require "luasnip"
-  --     luasnip.filetype_extend("javascript", { "javascriptreact" })
-  --   end,
-  -- },
-
   {
     "windwp/nvim-autopairs",
+    -- config = function(plugin, opts)
+    --   require "astronvim.plugins.configs.nvim-autopairs"(plugin, opts) -- include the default astronvim config that calls the setup call
+    --   -- add more custom autopairs configuration such as custom rules
+    --   local npairs = require "nvim-autopairs"
+    --   local Rule = require "nvim-autopairs.rule"
+    --   local cond = require "nvim-autopairs.conds"
+    --   npairs.add_rules(
+    --     {
+    --       Rule("$", "$", { "tex", "latex" })
+    --         -- don't add a pair if the next character is %
+    --         :with_pair(cond.not_after_regex "%%")
+    --         -- don't add a pair if  the previous character is xxx
+    --         :with_pair(
+    --           cond.not_before_regex("xxx", 3)
+    --         )
+    --         -- don't move right when repeat character
+    --         :with_move(cond.none())
+    --         -- don't delete if the next character is xx
+    --         :with_del(cond.not_after_regex "xx")
+    --         -- disable adding a newline when you press <cr>
+    --         :with_cr(cond.none()),
+    --     },
+    --     -- disable for .vim files, but it work for another filetypes
+    --     Rule("a", "a", "-vim")
+    --   )
+    -- end,
     opts = {
       fast_wrap = {
         map = "<C-r>",
@@ -342,7 +233,6 @@ return {
     },
   },
 
-  -- By adding to the which-key config and using our helper function you can add more which-key registered bindings
   {
     "folke/which-key.nvim",
     --   config = function(plugin, opts)
@@ -450,7 +340,7 @@ return {
             silent = true,
             buffer = args.buf,
           })
-          vim.keymap.set({ "n", "t" }, "<C-q>", function() require("astronvim.utils.buffer").close() end, {
+          vim.keymap.set({ "n", "t" }, "<C-q>", function() require("astrocore.buffer").close() end, {
             desc = "Close buffer",
             noremap = true,
             silent = true,
@@ -486,6 +376,7 @@ return {
 
   {
     "nvim-telescope/telescope.nvim",
+    version = false,
     opts = function(_, opts)
       local defaults = opts.defaults
       defaults.layout_config = {
@@ -524,5 +415,49 @@ return {
   {
     "kevinhwang91/nvim-ufo",
     version = false,
+  },
+
+  {
+    "RRethy/vim-illuminate",
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["]c"] = {
+            function() require("illuminate").goto_next_reference() end,
+            desc = "Move to next reference under cursor",
+          }
+          maps.n["[c"] = {
+            function() require("illuminate").goto_prev_reference() end,
+            desc = "Move to previous reference under cursor",
+          }
+        end,
+      },
+    },
+  },
+
+  {
+    "folke/todo-comments.nvim",
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["<leader>xt"] = {
+            "<cmd>TodoTrouble<CR>",
+            desc = "Todo (Trouble)",
+          }
+          maps.n["<leader>ft"] = {
+            "<cmd>TodoTelescope<CR>",
+            desc = "Find todo",
+          }
+          maps.n["<leader>fT"] = {
+            function() require("telescope.builtin").colorscheme { enable_preview = true } end,
+            desc = "Find themes",
+          }
+        end,
+      },
+    },
   },
 }

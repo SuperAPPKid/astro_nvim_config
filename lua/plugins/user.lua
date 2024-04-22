@@ -1,75 +1,5 @@
 return {
-  -- You can also add new plugins here as well:
-  -- Add plugins, the lazy syntax
-
-  {
-    "rebelot/kanagawa.nvim",
-    opts = {
-      compile = false, -- enable compiling the colorscheme
-      undercurl = true, -- enable undercurls
-      commentStyle = { italic = true },
-      functionStyle = {},
-      keywordStyle = { italic = true },
-      statementStyle = { bold = true },
-      typeStyle = {},
-      transparent = true, -- do not set background color
-      dimInactive = false, -- dim inactive window `:h hl-NormalNC`
-      terminalColors = false, -- define vim.g.terminal_color_{0,17}
-      colors = { -- add/modify theme and palette colors
-        theme = {
-          dragon = {
-            ui = {
-              fg_dim = "#c5c9c5",
-              bg = "#1F1F28",
-            },
-          },
-          all = {
-            ui = {
-              bg_gutter = "none",
-            },
-          },
-        },
-      },
-      overrides = function(colors)
-        local theme = colors.theme
-        local palette = colors.palette
-        return {
-          NormalFloat = { bg = "none" },
-          WinSeparator = { fg = palette.dragonBlue, bg = "none" },
-          FloatBorder = { fg = theme.ui.fg_dim, bg = "none" },
-          FloatTitle = { bg = "none" },
-
-          -- Save an hlgroup with dark background and dimmed foreground
-          -- so that you can use it where your still want darker windows.
-          -- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
-          NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
-
-          -- Popular plugins that open floats will link to NormalFloat by default;
-          -- set their background accordingly if you wish to keep them dark and borderless
-          LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-          MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-
-          NeoTreeFloatBorder = { fg = theme.ui.fg_dim, bg = "none" },
-          NeoTreeTitleBar = { fg = theme.ui.bg_m3, bg = theme.ui.fg_dim },
-          NeoTreeFloatTitle = { fg = theme.ui.bg_m3, bg = theme.ui.fg_dim },
-
-          WhichKeyFloat = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-          LspInfoBorder = { fg = theme.ui.fg_dim, bg = "none" },
-          DapUIFloatBorder = { fg = theme.ui.fg_dim, bg = "none" },
-
-          TelescopePromptBorder = { fg = theme.ui.fg_dim, bg = "none" },
-          TelescopeResultsBorder = { fg = theme.ui.fg_dim, bg = "none" },
-          TelescopePreviewBorder = { fg = theme.ui.fg_dim, bg = "none" },
-        }
-      end,
-      theme = "dragon", -- Load "wave" theme when 'background' option is not set
-      background = { -- map the value of 'background' option to a theme
-        dark = "dragon", -- try "dragon" !
-        light = "lotus",
-      },
-    },
-  },
-
+  -- customize alpha options
   {
     "Exafunction/codeium.vim",
     event = "User AstroFile",
@@ -114,37 +44,6 @@ return {
           noremap = false,
           expr = true,
         },
-      }
-    end,
-  },
-
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-telescope/telescope-dap.nvim" },
-    opts = function() require("telescope").load_extension "dap" end,
-  },
-
-  {
-    "luckasRanarison/nvim-devdocs",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    cmd = {
-      "DevdocsFetch",
-      "DevdocsInstall",
-      "DevdocsUninstall",
-      "DevdocsOpen",
-      "DevdocsOpenFloat",
-      "DevdocsUpdate",
-      "DevdocsUpdateAll",
-    },
-    keys = function(_, _)
-      local prefix = "<leader>f"
-      return {
-        { prefix .. "d", "<cmd>DevdocsOpenCurrent<CR>", desc = "Find Devdocs for current file", mode = { "n" } },
-        { prefix .. "D", "<cmd>DevdocsOpen<CR>", desc = "Find Devdocs", mode = { "n" } },
       }
     end,
   },
@@ -238,7 +137,7 @@ return {
           if vim.api.nvim_buf_get_name(bufnr) == "" then return false end
           return true
         end
-        opts.extensions = require("astronvim.utils").extend_tbl(opts.extensions, { scope = {} })
+        opts.extensions = require("astrocore").extend_tbl(opts.extensions, { scope = {} })
       end,
     },
   },
@@ -317,21 +216,20 @@ return {
     event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
     opts = function(_, _)
       local group = vim.api.nvim_create_augroup("autosave", {})
-
       vim.api.nvim_create_autocmd("User", {
         pattern = "AutoSaveWritePre",
         group = group,
         callback = function(_)
           -- save global autoformat status
-          vim.g.OLD_AUTOFORMAT = vim.g.autoformat_enabled
+          vim.g.OLD_AUTOFORMAT = vim.g.autoformat
 
-          vim.g.autoformat_enabled = false
+          vim.g.autoformat = false
           vim.g.OLD_AUTOFORMAT_BUFFERS = {}
           -- disable all manually enabled buffers
           for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-            if vim.b[bufnr].autoformat_enabled then
-              table.insert(vim.g.OLD_BUFFER_AUTOFORMATS, bufnr)
-              vim.b[bufnr].autoformat_enabled = false
+            if vim.b[bufnr].autoformat then
+              table.insert(vim.g.OLD_AUTOFORMAT_BUFFERS, bufnr)
+              vim.b[bufnr].autoformat = false
             end
           end
         end,
@@ -342,10 +240,10 @@ return {
         group = group,
         callback = function(_)
           -- restore global autoformat status
-          vim.g.autoformat_enabled = vim.g.OLD_AUTOFORMAT
+          vim.g.autoformat = vim.g.OLD_AUTOFORMAT
           -- reenable all manually enabled buffers
           for _, bufnr in ipairs(vim.g.OLD_AUTOFORMAT_BUFFERS or {}) do
-            vim.b[bufnr].autoformat_enabled = true
+            vim.b[bufnr].autoformat = true
           end
         end,
       })
@@ -401,10 +299,10 @@ return {
     "superappkid/cutlass.nvim",
     lazy = false,
     opts = function(_, opts)
-      local utils = require "astronvim.utils"
+      local core = require "astrocore"
       opts.cut_key = "m"
-      if utils.is_available "leap.nvim" then opts.exclude = utils.list_insert_unique(opts.exclude, { "ns", "nS" }) end
-      if utils.is_available "hop.nvim" then opts.exclude = utils.list_insert_unique(opts.exclude, { "ns", "nS" }) end
+      if core.is_available "leap.nvim" then opts.exclude = core.list_insert_unique(opts.exclude, { "ns", "nS" }) end
+      if core.is_available "hop.nvim" then opts.exclude = core.list_insert_unique(opts.exclude, { "ns", "nS" }) end
     end,
   },
 
@@ -422,15 +320,80 @@ return {
   },
 
   {
-    "stevearc/oil.nvim",
-    event = "User AstroFile",
-    opts = {
-      view_options = {
-        show_hidden = true,
+    {
+      "stevearc/oil.nvim",
+      cmd = "Oil",
+      event = "User AstroFile",
+      dependencies = {
+        {
+          "AstroNvim/astrocore",
+          opts = {
+            mappings = {
+              n = {
+                ["<Leader>o"] = { function() require("oil").open() end, desc = "Open folder in Oil" },
+              },
+            },
+            autocmds = {
+              oil_settings = {
+                {
+                  event = "FileType",
+                  desc = "Disable view saving for oil buffers",
+                  pattern = "oil",
+                  callback = function(args) vim.b[args.buf].view_activated = false end,
+                },
+                {
+                  event = "User",
+                  pattern = "OilActionsPost",
+                  desc = "Close buffers when files are deleted in Oil",
+                  callback = function(args)
+                    if args.data.err then return end
+                    for _, action in ipairs(args.data.actions) do
+                      if action.type == "delete" then
+                        local _, path = require("oil.util").parse_url(action.url)
+                        local bufnr = vim.fn.bufnr(path)
+                        if bufnr ~= -1 then require("astrocore.buffer").wipe(bufnr, true) end
+                      end
+                    end
+                  end,
+                },
+                {
+                  event = "VimEnter",
+                  desc = "Start Oil when vim is opened with no arguments",
+                  group = vim.api.nvim_create_augroup("oil_autostart", { clear = true }),
+                  callback = vim.schedule_wrap(function()
+                    local should_skip
+                    local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)
+                    if
+                      vim.fn.argc() > 0 -- don't start when opening a file
+                      or #lines > 1 -- don't open if current buffer has more than 1 line
+                      or (#lines == 1 and lines[1]:len() > 0) -- don't open the current buffer if it has anything on the first line
+                      or #vim.tbl_filter(function(bufnr) return vim.bo[bufnr].buflisted end, vim.api.nvim_list_bufs())
+                        > 1 -- don't open if any listed buffers
+                      or not vim.o.modifiable -- don't open if not modifiable
+                    then
+                      should_skip = true
+                    else
+                      for _, arg in pairs(vim.v.argv) do
+                        if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
+                          should_skip = true
+                          break
+                        end
+                      end
+                    end
+                    if should_skip then return end
+                    require("oil").open()
+                  end),
+                },
+              },
+            },
+          },
+        },
       },
-    },
-    keys = {
-      { "<leader>o", function() require("oil").open() end, desc = "Open folder in Oil" },
+      opts = {
+        view_options = {
+          show_hidden = true,
+        },
+      },
     },
   },
 
@@ -481,7 +444,7 @@ return {
       mapping[prefix_additive] = {
         desc = "󱖢 additive",
       }
-      require("astronvim.utils").set_mappings {
+      require("astrocore").set_mappings {
         n = mapping,
         x = mapping,
       }
@@ -669,7 +632,7 @@ return {
           },
           notification = {
             configs = {
-              default = require("astronvim.utils").extend_tbl(require("fidget.notification").default_config, {
+              default = require("astrocore").extend_tbl(require("fidget.notification").default_config, {
                 icon = "󱅫",
                 icon_on_left = true,
               }),
@@ -804,7 +767,7 @@ return {
       mapping[prefix] = {
         desc = "󰅪 Surround",
       }
-      require("astronvim.utils").set_mappings {
+      require("astrocore").set_mappings {
         n = mapping,
         x = mapping,
       }
@@ -883,10 +846,8 @@ return {
       "nvim-treesitter/nvim-treesitter",
       opts = function(_, opts)
         if opts.ensure_installed ~= "all" then
-          opts.ensure_installed = require("astronvim.utils").list_insert_unique(
-            opts.ensure_installed,
-            { "lua", "xml", "http", "json", "graphql" }
-          )
+          opts.ensure_installed =
+            require("astrocore").list_insert_unique(opts.ensure_installed, { "lua", "xml", "http", "json", "graphql" })
         end
       end,
     },
@@ -943,7 +904,7 @@ return {
       local harpoon = require "harpoon"
 
       local prefix = "<leader><leader>"
-      require("astronvim.utils").set_mappings {
+      require("astrocore").set_mappings {
         n = {
           [prefix] = { desc = "󰐃 Harpoon" },
         },
@@ -973,6 +934,8 @@ return {
       vim.g.matchup_matchparen_offscreen = { method = "popup", fullwidth = 1, highlight = "Normal", syntax_hl = 1 }
       vim.g.matchup_transmute_enabled = 1
       vim.g.matchup_delim_noskips = 2
+      vim.g.matchup_motion_enabled = 0
+      vim.g.matchup_text_obj_enabled = 0
     end,
   },
 
@@ -1017,7 +980,7 @@ return {
         opts = function(_, opts)
           opts.library = opts.library or {}
           if opts.library.plugins ~= true then
-            opts.library.plugins = require("astronvim.utils").list_insert_unique(opts.library.plugins, "neotest")
+            opts.library.plugins = require("astrocore").list_insert_unique(opts.library.plugins, { "neotest" })
           end
           opts.library.types = true
         end,
@@ -1056,7 +1019,7 @@ return {
       local prefix = "<leader>T"
       local plugin = require "neotest"
 
-      require("astronvim.utils").set_mappings {
+      require("astrocore").set_mappings {
         n = {
           [prefix] = { desc = "󰙨 Test" },
         },
@@ -1081,7 +1044,7 @@ return {
     "Weissle/persistent-breakpoints.nvim",
     event = "BufReadPost",
     opts = function(_, opts)
-      return require("astronvim.utils").extend_tbl(opts, {
+      return require("astrocore").extend_tbl(opts, {
         load_breakpoints_event = { "BufReadPost" },
       })
     end,
@@ -1108,69 +1071,78 @@ return {
   },
 
   {
-    { "NvChad/nvim-colorizer.lua", enabled = false },
-    {
-      "uga-rosa/ccc.nvim",
-      tag = "v1.7.2",
-      event = "User AstroFile",
-      cmd = { "CccPick", "CccConvert", "CccHighlighterEnable", "CccHighlighterDisable", "CccHighlighterToggle" },
-      config = function(_, opts)
-        require("ccc").setup(opts)
-
-        local highlighter = opts.highlighter
-        local action = function() vim.cmd.CccHighlighterToggle() end
-        if highlighter then
-          local flag = highlighter.auto_enable
-          local toggle = vim.schedule_wrap(function()
-            if flag then
-              vim.cmd.CccHighlighterEnable()
-            else
-              vim.cmd.CccHighlighterDisable()
-            end
-          end)
-          action = function()
-            flag = not flag
-            toggle()
-          end
-
-          vim.api.nvim_create_autocmd({ "BufEnter" }, {
-            callback = toggle,
-          })
-
-          toggle()
-        end
-
-        require("astronvim.utils").set_mappings {
-          n = {
-            ["<leader>uC"] = {
-              action,
-              desc = "Toggle colorizer",
-            },
-          },
-        }
-      end,
-      opts = {
-        highlighter = {
-          auto_enable = true,
-          lsp = true,
-        },
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      {
+        "nvim-telescope/telescope.nvim",
+        opts = function() require("telescope").load_extension "file_browser" end,
       },
-      keys = {
-        { "<leader>zc", "<cmd>CccConvert<cr>", desc = "Convert color" },
-        { "<leader>zp", "<cmd>CccPick<cr>", desc = "Pick Color" },
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          local prefix = "<leader>f"
+          maps.n[prefix .. "e"] = {
+            "<Cmd>:Telescope file_browser<CR>",
+            desc = "Open File browser",
+          }
+        end,
       },
     },
+    config = function()
+      require("telescope").setup {
+        extensions = {
+          file_browser = {
+            grouped = true,
+            hidden = {
+              file_browser = true,
+              folder_browser = true,
+            },
+            no_ignore = true,
+            prompt_path = true,
+            quiet = true,
+          },
+        },
+      }
+    end,
   },
 
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      "nvim-telescope/telescope-file-browser.nvim",
-      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-dap.nvim",
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          local prefix = "<leader>df"
+          maps.n[prefix] = {
+            desc = "DAP Funcs",
+          }
+          maps.n[prefix .. "c"] = {
+            "<Cmd>lua require('telescope').extensions.dap.commands()<CR>",
+            desc = "Telescope DAP commands",
+          }
+          maps.n[prefix .. "f"] = {
+            "<Cmd>lua require('telescope').extensions.dap.frames()<CR>",
+            desc = "Telescope DAP frames",
+          }
+          maps.n[prefix .. "g"] = {
+            "<Cmd>lua require('telescope').extensions.dap.configurations()<CR>",
+            desc = "Telescope DAP configurations",
+          }
+          maps.n[prefix .. "l"] = {
+            "<Cmd>lua require('telescope').extensions.dap.list_breakpoints()<CR>",
+            desc = "Telescope DAP list breakpoints",
+          }
+          maps.n[prefix .. "v"] = {
+            "<Cmd>lua require('telescope').extensions.dap.variables()<CR>",
+            desc = "Telescope DAP variables",
+          }
+        end,
+      },
     },
-    keys = {
-      { "<Leader>fe", "<Cmd>Telescope file_browser<CR>", desc = "Open File browser" },
-    },
-    opts = function() require("telescope").load_extension "file_browser" end,
+    opts = function() require("telescope").load_extension "dap" end,
   },
 }

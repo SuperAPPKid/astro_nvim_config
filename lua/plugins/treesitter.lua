@@ -1,3 +1,6 @@
+-- Customize Treesitter
+
+---@type LazySpec
 return {
   "nvim-treesitter/nvim-treesitter",
   dependencies = {
@@ -29,13 +32,13 @@ return {
       install_info = {
         url = "https://github.com/superappkid/tree-sitter-go",
         files = { "src/parser.c" },
-        revision = "b1843aa70530cfc7143665b1f57d2bb757d59087",
+        revision = "5104de7b5bc5dcde260dfec25bbbbcefccf8803f",
       },
       branch = "master",
     }
 
     -- add more things to the ensure_installed table protecting against community packs modifying it
-    opts.ensure_installed = require("astronvim.utils").list_insert_unique(opts.ensure_installed, { "php" })
+    opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "php", "lua", "vim" })
 
     opts.textobjects.select.enabled = false
 
