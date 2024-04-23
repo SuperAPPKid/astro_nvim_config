@@ -503,6 +503,7 @@ return {
 
   {
     "rmagatti/goto-preview",
+    event = "LspAttach",
     config = function(_, opts) require("goto-preview").setup(opts) end,
     opts = function(_, opts)
       opts.width = 100
@@ -931,6 +932,7 @@ return {
 
   {
     "andymass/vim-matchup",
+    event = "User AstroFile",
     init = function()
       vim.g.matchup_matchparen_offscreen = { method = "popup", fullwidth = 1, highlight = "Normal", syntax_hl = 1 }
       vim.g.matchup_transmute_enabled = 1
@@ -1072,12 +1074,26 @@ return {
   },
 
   {
-    "nvim-telescope/telescope-file-browser.nvim",
+    "nvim-telescope/telescope.nvim",
     dependencies = {
-      "nvim-lua/plenary.nvim",
       {
-        "nvim-telescope/telescope.nvim",
-        opts = function() require("telescope").load_extension "file_browser" end,
+        "nvim-telescope/telescope-file-browser.nvim",
+        config = function()
+          require("telescope").setup {
+            extensions = {
+              file_browser = {
+                grouped = true,
+                hidden = {
+                  file_browser = true,
+                  folder_browser = true,
+                },
+                no_ignore = true,
+                prompt_path = true,
+                quiet = true,
+              },
+            },
+          }
+        end,
       },
       {
         "AstroNvim/astrocore",
@@ -1091,22 +1107,7 @@ return {
         end,
       },
     },
-    config = function()
-      require("telescope").setup {
-        extensions = {
-          file_browser = {
-            grouped = true,
-            hidden = {
-              file_browser = true,
-              folder_browser = true,
-            },
-            no_ignore = true,
-            prompt_path = true,
-            quiet = true,
-          },
-        },
-      }
-    end,
+    opts = function() require("telescope").load_extension "file_browser" end,
   },
 
   {
