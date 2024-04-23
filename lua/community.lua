@@ -225,14 +225,6 @@ return {
 
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
 
-  { import = "astrocommunity.search.nvim-hlslens" },
-  {
-    "kevinhwang91/nvim-hlslens",
-    opts = {
-      calm_down = true,
-    },
-  },
-
   { import = "astrocommunity.syntax.vim-easy-align" },
 
   { import = "astrocommunity.terminal-integration.flatten-nvim" },

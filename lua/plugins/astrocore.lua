@@ -253,5 +253,18 @@ return {
     -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
     mappings = mapping,
     autocmds = autocmds,
+    -- configure functions on key press
+    on_keys = {
+      -- first key is the namespace
+      auto_hlsearch = {
+        -- list of functions to execute on key press (:h vim.on_key)
+        function(char) -- example automatically disables `hlsearch` when not actively searching
+          if vim.fn.mode() == "n" then
+            local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/" }, vim.fn.keytrans(char))
+            if vim.opt.hlsearch:get() ~= new_hlsearch then vim.opt.hlsearch = new_hlsearch end
+          end
+        end,
+      },
+    },
   },
 }

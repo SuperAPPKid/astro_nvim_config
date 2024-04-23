@@ -1146,4 +1146,10 @@ return {
     },
     opts = function() require("telescope").load_extension "dap" end,
   },
+
+  {
+    "kevinhwang91/nvim-hlslens",
+    event = "BufRead",
+    -- dependencies = { "AstroNvim/astrocore", opts = { on_keys = { auto_hlsearch = false } } },
+  },
 }
