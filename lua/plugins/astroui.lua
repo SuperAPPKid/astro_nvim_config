@@ -2,6 +2,7 @@
 -- Configuration documentation can be found with `:h astroui`
 return {
   "AstroNvim/astroui",
+  version = false,
   opts = {
     colorscheme = "kanagawa",
     highlights = {

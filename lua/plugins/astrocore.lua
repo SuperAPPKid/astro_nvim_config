@@ -206,6 +206,7 @@ local autocmds = {
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
+  version = false,
   ---@type AstroCoreOpts
   opts = {
     -- Configure core features of AstroNvim
