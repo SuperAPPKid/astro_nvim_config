@@ -15,19 +15,20 @@ return {
       },
       {
         "chrisgrieser/nvim-tinygit",
+        ft = { "git_rebase", "gitcommit" }, -- so ftplugins are loaded
         dependencies = {
           "stevearc/dressing.nvim",
           {
-            "AstroNvim/astrocore",
+            "astronvim/astrocore",
             opts = function(_, opts)
               local maps = opts.mappings
-              maps.n["<Leader>gm"] = {
-                function() require("tinygit").smartCommit() end,
-                desc = "New commit",
+              maps.n["<leader>gm"] = {
+                function() require("tinygit").smartcommit() end,
+                desc = "new commit",
               }
-              maps.n["<Leader>gP"] = {
-                function() require("tinygit").push { forceWithLease = true } end,
-                desc = "Push",
+              maps.n["<leader>gp"] = {
+                function() require("tinygit").push { forcewithlease = true } end,
+                desc = "push",
               }
             end,
           },
@@ -81,8 +82,8 @@ return {
             desc = "Open File Diff",
           }
           maps.n[prefix .. "D"] = {
-            function() find_target_tab "DiffviewOpen -uno -- %" end,
-            desc = "Open File Diff",
+            function() find_target_tab "DiffviewFileHistory %" end,
+            desc = "Open File History",
           }
         end,
       },
