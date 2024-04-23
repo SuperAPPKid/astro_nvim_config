@@ -37,7 +37,7 @@ return {
     },
     cmd = { "Fugit2", "Fugit2Graph" },
     opts = {
-      width = "80%",
+      width = "95%",
       height = "95%",
     },
   },

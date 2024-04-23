@@ -421,44 +421,37 @@ return {
 
   {
     "RRethy/vim-illuminate",
-    dependencies = {
+    keys = {
       {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          maps.n["]c"] = {
-            function() require("illuminate").goto_next_reference() end,
-            desc = "Move to next reference under cursor",
-          }
-          maps.n["[c"] = {
-            function() require("illuminate").goto_prev_reference() end,
-            desc = "Move to previous reference under cursor",
-          }
-        end,
+        "]c",
+        function() require("illuminate").goto_next_reference() end,
+        desc = "Move to next reference under cursor",
+      },
+      {
+        "[c",
+        function() require("illuminate").goto_prev_reference() end,
+        desc = "Move to previous reference under cursor",
       },
     },
   },
 
   {
     "folke/todo-comments.nvim",
-    dependencies = {
+    keys = {
       {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          maps.n["<leader>xt"] = {
-            "<cmd>TodoTrouble<CR>",
-            desc = "Todo (Trouble)",
-          }
-          maps.n["<leader>ft"] = {
-            "<cmd>TodoTelescope<CR>",
-            desc = "Find todo",
-          }
-          maps.n["<leader>fT"] = {
-            function() require("telescope.builtin").colorscheme { enable_preview = true } end,
-            desc = "Find themes",
-          }
-        end,
+        "<leader>xt",
+        "<cmd>TodoTrouble<CR>",
+        desc = "Todo (Trouble)",
+      },
+      {
+        "<leader>ft",
+        "<cmd>TodoTelescope<CR>",
+        desc = "Find todo",
+      },
+      {
+        "<leader>fT",
+        function() require("telescope.builtin").colorscheme { enable_preview = true } end,
+        desc = "Find themes",
       },
     },
   },
