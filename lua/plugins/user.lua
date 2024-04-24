@@ -1143,4 +1143,109 @@ return {
     config = true,
   },
 
+  {
+    "brenton-leighton/multiple-cursors.nvim",
+    cmd = {
+      "MultipleCursorsAddDown",
+      "MultipleCursorsAddUp",
+      "MultipleCursorsMouseAddDelete",
+      "MultipleCursorsAddMatches",
+      "MultipleCursorsAddMatchesV",
+      "MultipleCursorsAddJumpNextMatch",
+      "MultipleCursorsJumpNextMatch",
+      "MultipleCursorsLock",
+    },
+    dependencies = {
+      "AstroNvim/astrocore",
+      opts = function(_, opts)
+        local maps = opts.mappings
+        for lhs, map in pairs {
+          ["<C-PageDown>"] = { "<Cmd>MultipleCursorsAddDown<CR>", desc = "Add cursor down" },
+          ["<C-PageUp>"] = { "<Cmd>MultipleCursorsAddUp<CR>", desc = "Add cursor up" },
+          ["<C-LeftMouse>"] = { "<Cmd>MultipleCursorsMouseAddDelete<CR>", desc = "Add cursor with mouse" },
+        } do
+          maps.n[lhs] = map
+          maps.i[lhs] = map
+        end
+
+        local prefix = "<Leader>m"
+        maps.n[prefix] = { desc = " MultiCursor" }
+        maps.x[prefix] = { desc = " MultiCursor" }
+        for lhs, map in pairs {
+          [prefix .. "a"] = { "<Cmd>MultipleCursorsAddMatches<CR>", desc = "Add cursor matches" },
+          [prefix .. "A"] = {
+            "<Cmd>MultipleCursorsAddMatchesV<CR>",
+            desc = "Add cursor matches in previous visual area",
+          },
+          [prefix .. "j"] = { "<Cmd>MultipleCursorsAddJumpNextMatch<CR>", desc = "Add cursor and jump to next match" },
+          [prefix .. "J"] = { "<Cmd>MultipleCursorsJumpNextMatch<CR>", desc = "Move cursor to next match" },
+          [prefix .. "l"] = { "<Cmd>MultipleCursorsLock<CR>", desc = "Lock virtual cursors" },
+        } do
+          maps.n[lhs] = map
+          maps.x[lhs] = map
+        end
+      end,
+    },
+    config = true,
+  },
+
+  {
+    "Wansmer/treesj",
+    cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          opts.mappings.n["<leader>j"] = { "<CMD>TSJToggle<CR>", desc = "Toggle Treesitter Join" }
+        end,
+      },
+    },
+    opts = { use_default_keymaps = false },
+  },
+
+  {
+    "jbyuki/venn.nvim",
+    cmd = "VBox",
+    dependencies = {
+      "AstroNvim/astrocore",
+      ---@type AstroCoreOpts
+      opts = {
+        commands = {
+          ToggleVenn = {
+            function()
+              local mappings = {
+                n = { -- draw a line on HJKL keystokes
+                  H = "<C-v>h:VBox<CR>",
+                  J = "<C-v>j:VBox<CR>",
+                  K = "<C-v>k:VBox<CR>",
+                  L = "<C-v>l:VBox<CR>",
+                },
+                v = { -- draw a box by pressing "f" with visual selection
+                  f = ":VBox<CR>",
+                },
+              }
+              if vim.b.venn_enabled then
+                vim.opt_local.virtualedit = ""
+                for mode, map in pairs(mappings) do
+                  for lhs, _ in pairs(map) do
+                    vim.keymap.del(mode, lhs, { buffer = true })
+                  end
+                end
+                vim.b.venn_enabled = nil
+              else
+                vim.b.venn_enabled = true
+                vim.opt_local.virtualedit = "all"
+                require("astrocore").set_mappings(mappings, { buffer = true })
+              end
+              vim.notify(("Venn Diagramming Mode: %s"):format(vim.b.venn_enabled and "Enabled" or "Disabled"))
+            end,
+            desc = "Toggle venn diagramming mode",
+          },
+        },
+        mappings = {
+          n = { ["<Leader>uv"] = { function() vim.cmd.ToggleVenn() end, desc = "Toggle venn diagramming" } },
+        },
+      },
+    },
+  },
 }

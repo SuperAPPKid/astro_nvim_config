@@ -125,21 +125,8 @@ return {
   { import = "astrocommunity.editing-support.nvim-regexplainer" },
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
   { import = "astrocommunity.editing-support.refactoring-nvim" },
-  { import = "astrocommunity.editing-support.treesj" },
-  {
-    "Wansmer/treesj",
-    dependencies = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          opts.mappings.n["<leader>j"] = { "<CMD>TSJToggle<CR>", desc = "Toggle Treesitter Join" }
-        end,
-      },
-    },
-  },
   { import = "astrocommunity.editing-support.telescope-undo-nvim" },
   { import = "astrocommunity.editing-support.vim-move" },
-  { import = "astrocommunity.editing-support.vim-visual-multi" },
   { import = "astrocommunity.editing-support.wildfire-nvim" },
 
   { import = "astrocommunity.git.blame-nvim" },
@@ -217,8 +204,6 @@ return {
     },
   },
   { import = "astrocommunity.motion.tabout-nvim" },
-
-  { import = "astrocommunity.note-taking.venn-nvim" },
 
   { import = "astrocommunity.programming-language-support.csv-vim" },
   { import = "astrocommunity.programming-language-support.nvim-jqx" },
