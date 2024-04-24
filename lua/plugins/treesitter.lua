@@ -12,6 +12,22 @@ return {
         separator = "-",
       },
     },
+    {
+      "andymass/vim-matchup",
+      event = "User AstroFile",
+      init = function()
+        vim.g.matchup_matchparen_offscreen = { method = "popup", fullwidth = 1, highlight = "Normal", syntax_hl = 1 }
+        vim.g.matchup_transmute_enabled = 1
+        vim.g.matchup_delim_noskips = 2
+
+        -- vim.g.matchup_motion_enabled = 0
+        vim.g.matchup_text_obj_enabled = 0
+        -- vim.g.matchup_motion_cursor_end = 0
+
+        vim.g.matchup_matchparen_deferred = 1
+        vim.g.matchup_matchparen_hi_surround_always = 1
+      end,
+    },
   },
   cmd = {
     "TSContextEnable",
@@ -37,10 +53,11 @@ return {
       branch = "master",
     }
 
+    opts.textobjects.select.enabled = false
+    opts.matchup = { enable = true }
+
     -- add more things to the ensure_installed table protecting against community packs modifying it
     opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "php", "lua", "vim" })
-
-    opts.textobjects.select.enabled = false
 
     opts.textobjects.move.goto_next_start = {
       ["]f"] = { query = "@function.outer", desc = "Next function start" },

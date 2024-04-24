@@ -931,18 +931,6 @@ return {
   },
 
   {
-    "andymass/vim-matchup",
-    event = "User AstroFile",
-    init = function()
-      vim.g.matchup_matchparen_offscreen = { method = "popup", fullwidth = 1, highlight = "Normal", syntax_hl = 1 }
-      vim.g.matchup_transmute_enabled = 1
-      vim.g.matchup_delim_noskips = 2
-      vim.g.matchup_motion_enabled = 0
-      vim.g.matchup_text_obj_enabled = 0
-    end,
-  },
-
-  {
     "smjonas/inc-rename.nvim",
     event = "LspAttach",
     config = true,
