@@ -57,6 +57,15 @@ return {
         TelescopePromptBorder = { fg = theme.ui.fg_dim, bg = "none" },
         TelescopeResultsBorder = { fg = theme.ui.fg_dim, bg = "none" },
         TelescopePreviewBorder = { fg = theme.ui.fg_dim, bg = "none" },
+
+        IlluminatedWordText = { bg = palette.winterRed },
+        IlluminatedWordRead = { bg = palette.winterRed },
+        IlluminatedWordWrite = { bg = palette.winterRed },
+
+        DiagnosticUnderlineError = { fg = theme.diag.error },
+        DiagnosticUnderlineWarn = { fg = theme.diag.warning },
+        DiagnosticUnderlineInfo = { fg = theme.diag.info },
+        DiagnosticUnderlineHint = { fg = theme.diag.hint },
       }
     end,
     theme = "dragon", -- Load "wave" theme when 'background' option is not set
