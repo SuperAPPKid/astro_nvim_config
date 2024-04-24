@@ -420,22 +420,6 @@ return {
   },
 
   {
-    "RRethy/vim-illuminate",
-    keys = {
-      {
-        "]c",
-        function() require("illuminate").goto_next_reference() end,
-        desc = "Move to next reference under cursor",
-      },
-      {
-        "[c",
-        function() require("illuminate").goto_prev_reference() end,
-        desc = "Move to previous reference under cursor",
-      },
-    },
-  },
-
-  {
     "folke/todo-comments.nvim",
     keys = {
       {
@@ -454,5 +438,9 @@ return {
         desc = "Find themes",
       },
     },
+  },
+
+  {
+    "RRethy/vim-illuminate",
   },
 }

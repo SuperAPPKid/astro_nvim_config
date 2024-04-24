@@ -247,6 +247,7 @@ return {
         icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
         ui_notifications_enabled = true, -- disable notifications when toggling UI elements
         inlay_hints_enabled = true, -- enable or disable LSP inlay hints on startup (Neovim v0.10 only)
+        textwidth = 0,
         -- move_normal_option = 1,
       },
     },

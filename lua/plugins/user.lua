@@ -946,9 +946,9 @@ return {
     "smjonas/inc-rename.nvim",
     event = "LspAttach",
     config = true,
-    opts = {
-      input_buffer_type = "dressing",
-    },
+    -- opts = {
+    --   input_buffer_type = "dressing",
+    -- },
   },
 
   {

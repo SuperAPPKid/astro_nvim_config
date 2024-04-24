@@ -104,7 +104,7 @@ return {
       autoformat = true, -- enable or disable auto formatting on start
       codelens = true, -- enable/disable codelens refresh on start
       inlay_hints = true, -- enable/disable inlay hints on start
-      semantic_tokens = true, -- enable/disable semantic token highlighting
+      semantic_tokens = false, -- enable/disable semantic token highlighting
     },
     -- customize lsp formatting options
     formatting = {
@@ -130,6 +130,16 @@ return {
     -- enable servers that you already have installed without mason
     servers = {
       -- "pyright"
+    },
+    -- Configure default capabilities for language servers (`:h vim.lsp.protocol.make_client.capabilities()`)
+    capabilities = {
+      textDocument = {
+        completion = {
+          completionItem = {
+            snippetSupport = false,
+          },
+        },
+      },
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
@@ -213,12 +223,16 @@ return {
           event = { "CursorHold", "CursorHoldI" },
           -- the rest of the autocmd options (:h nvim_create_autocmd)
           desc = "Document Highlighting",
-          callback = function() vim.lsp.buf.document_highlight() end,
+          callback = function()
+            if false then vim.lsp.buf.document_highlight() end
+          end,
         },
         {
           event = { "CursorMoved", "CursorMovedI", "BufLeave" },
           desc = "Document Highlighting Clear",
-          callback = function() vim.lsp.buf.clear_references() end,
+          callback = function()
+            if false then return vim.lsp.buf.clear_references() end
+          end,
         },
       },
     },
