@@ -1150,7 +1150,9 @@ return {
 
   {
     "kevinhwang91/nvim-hlslens",
-    event = "BufRead",
     -- dependencies = { "AstroNvim/astrocore", opts = { on_keys = { auto_hlsearch = false } } },
+    event = "BufRead",
+    config = true,
   },
+
 }
