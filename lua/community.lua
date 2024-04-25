@@ -109,6 +109,21 @@ return {
   -- { import = "astrocommunity.editing-support.chatgpt-nvim" },
   { import = "astrocommunity.editing-support.bigfile-nvim" },
   { import = "astrocommunity.editing-support.cloak-nvim" },
+  {
+    "laytan/cloak.nvim",
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["<leader>xc"] = {
+            "<cmd>CloakToggle<CR>",
+            desc = "cloak",
+          }
+        end,
+      },
+    },
+  },
   { import = "astrocommunity.editing-support.comment-box-nvim" },
   { import = "astrocommunity.editing-support.conform-nvim" },
   { import = "astrocommunity.editing-support.hypersonic-nvim" },

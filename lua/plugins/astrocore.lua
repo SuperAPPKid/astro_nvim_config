@@ -92,6 +92,10 @@ local mapping = {
 
     ["<leader>f'"] = false,
     ["<leader>fr"] = false,
+    ["<leader>fH"] = {
+      function() require("telescope.builtin").highlights { previewer = false } end,
+      desc = "Find Highlight",
+    },
 
     ["<leader>z"] = { desc = " Misc" },
 

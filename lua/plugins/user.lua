@@ -618,6 +618,18 @@ return {
     },
     {
       "j-hui/fidget.nvim",
+      dependencies = {
+        {
+          "AstroNvim/astrocore",
+          opts = function(_, opts)
+            local maps = opts.mappings
+            maps.n["<leader>xn"] = {
+              "<cmd>Fidget history<CR>",
+              desc = "cloak",
+            }
+          end,
+        },
+      },
       event = "User AstroFile",
       config = function(_, opts)
         local fidget = require "fidget"
