@@ -159,11 +159,11 @@ return {
         settings = {
           gopls = {
             hints = {
-              -- assignVariableTypes = true,
-              -- compositeLiteralFields = true,
-              -- compositeLiteralTypes = true,
-              -- constantValues = true,
-              -- functionTypeParameters = true,
+              assignVariableTypes = true,
+              compositeLiteralFields = false,
+              compositeLiteralTypes = false,
+              constantValues = true,
+              functionTypeParameters = false,
               parameterNames = true,
               rangeVariableTypes = true,
             },
