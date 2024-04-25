@@ -62,10 +62,11 @@ return {
         IlluminatedWordRead = { bg = palette.winterRed },
         IlluminatedWordWrite = { bg = palette.winterRed },
 
-        DiagnosticUnderlineError = { fg = theme.diag.error },
-        DiagnosticUnderlineWarn = { fg = theme.diag.warning },
-        DiagnosticUnderlineInfo = { fg = theme.diag.info },
-        DiagnosticUnderlineHint = { fg = theme.diag.hint },
+        DiagnosticUnderlineError = { sp = palette.peachRed },
+        DiagnosticUnderlineWarn = { sp = palette.surimiOrange },
+        DiagnosticUnderlineInfo = { sp = palette.dragonGreen },
+        DiagnosticUnderlineHint = { sp = palette.crystalBlue },
+        DiagnosticUnderlineOk = { sp = palette.springGreen },
       }
     end,
     theme = "dragon", -- Load "wave" theme when 'background' option is not set

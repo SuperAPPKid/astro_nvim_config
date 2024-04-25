@@ -225,7 +225,7 @@ return {
     -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
     diagnostics = {
       virtual_text = true,
-      underline = true,
+      underline = { severity = { vim.diagnostic.severity.ERROR } },
     },
     -- vim options can be configured here
     options = {
