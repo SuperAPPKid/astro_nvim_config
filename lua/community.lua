@@ -156,6 +156,7 @@ return {
 
   { import = "astrocommunity.indent.indent-rainbowline" },
 
+  { import = "astrocommunity.keybinding.hydra" },
   { import = "astrocommunity.keybinding.nvcheatsheet-nvim" },
 
   { import = "astrocommunity.lsp.actions-preview-nvim" },
