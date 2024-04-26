@@ -442,5 +442,17 @@ return {
 
   {
     "RRethy/vim-illuminate",
+    keys = {
+      {
+        "]r",
+        function() require("illuminate").goto_next_reference() end,
+        desc = "Move to next reference under cursor",
+      },
+      {
+        "[r",
+        function() require("illuminate").goto_prev_reference() end,
+        desc = "Move to previous reference under cursor",
+      },
+    },
   },
 }
