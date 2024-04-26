@@ -174,6 +174,16 @@ return {
   { import = "astrocommunity.markdown-and-latex.peek-nvim" },
 
   { import = "astrocommunity.media.codesnap-nvim" },
+  {
+    "mistricky/codesnap.nvim",
+    opts = {
+      save_path = "~/Desktop",
+      has_breadcrumbs = true,
+      has_line_number = true,
+      watermark = "",
+      bg_theme = "sea",
+    },
+  },
 
   { import = "astrocommunity.motion.flash-nvim" },
   {
