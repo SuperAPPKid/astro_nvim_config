@@ -122,12 +122,15 @@ return {
         },
       }
 
-      opts.statuscolumn = nil -- statuscolumn
+      if vim.fn.has "nvim-0.10" == 1 then
+        opts.statuscolumn = nil -- statuscolumn
+      end
     end,
   },
 
   {
     "luukvbaal/statuscol.nvim",
+    enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
     event = "User AstroFile",
     config = function()
       local builtin = require "statuscol.builtin"
