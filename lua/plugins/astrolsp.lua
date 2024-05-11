@@ -132,15 +132,7 @@ return {
       -- "pyright"
     },
     -- Configure default capabilities for language servers (`:h vim.lsp.protocol.make_client.capabilities()`)
-    capabilities = {
-      textDocument = {
-        completion = {
-          completionItem = {
-            snippetSupport = false,
-          },
-        },
-      },
-    },
+    capabilities = {},
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
@@ -158,6 +150,7 @@ return {
       gopls = {
         settings = {
           gopls = {
+            usePlaceholders = false,
             hints = {
               assignVariableTypes = true,
               compositeLiteralFields = false,
