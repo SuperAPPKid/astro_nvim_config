@@ -37,21 +37,10 @@ return {
           "nvim-lua/plenary.nvim",
         },
       },
-      {
-        "petertriho/cmp-git",
-        dependencies = "nvim-lua/plenary.nvim",
-      },
     },
     config = function(_, opts)
       local cmp = require "cmp"
       cmp.setup(opts)
-      cmp.setup.filetype("gitcommit", {
-        sources = cmp.config.sources({
-          { name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
-        }, {
-          { name = "buffer" },
-        }),
-      })
       cmp.setup.filetype({ "help", "lazy" }, {
         sources = {
           { name = "path" },
@@ -61,7 +50,6 @@ return {
     end,
     opts = function(_, opts)
       local cmp = require "cmp"
-      require("cmp_git").setup {}
       require("codeium").setup {}
 
       local kind_icons = {

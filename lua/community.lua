@@ -7,10 +7,6 @@ return {
   "AstroNvim/astrocommunity",
 
   {
-    import = "astrocommunity.recipes.heirline-vscode-winbar",
-    enabled = function() return vim.fn.has "nvim-0.10" ~= 1 end,
-  },
-  {
     import = "astrocommunity.bars-and-lines.dropbar-nvim",
     enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
   },
@@ -18,7 +14,7 @@ return {
     "Bekaboo/dropbar.nvim",
     enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
     dependencies = {
-      "nvim-telescope/telescope-fzf-native.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -61,6 +57,7 @@ return {
   },
 
   { import = "astrocommunity.completion.cmp-cmdline" },
+  { import = "astrocommunity.completion.cmp-git" },
 
   { import = "astrocommunity.debugging.nvim-bqf" },
   { import = "astrocommunity.debugging.nvim-chainsaw" },
@@ -135,7 +132,7 @@ return {
   },
   -- { import = "astrocommunity.editing-support.multicursors-nvim" },
   { import = "astrocommunity.editing-support.neogen" },
-  { import = "astrocommunity.editing-support.nvim-devdocs" },
+  -- { import = "astrocommunity.editing-support.nvim-devdocs" },
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
   { import = "astrocommunity.editing-support.nvim-regexplainer" },
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
@@ -376,6 +373,14 @@ return {
   { import = "astrocommunity.programming-language-support.nvim-jqx" },
   { import = "astrocommunity.programming-language-support.xbase" },
 
+  {
+    import = "astrocommunity.recipes.heirline-vscode-winbar",
+    enabled = function() return vim.fn.has "nvim-0.10" ~= 1 end,
+  },
+  {
+    import = "astrocommunity.recipes.astrolsp-no-insert-inlay-hints",
+  },
+
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
 
   { import = "astrocommunity.syntax.vim-easy-align" },
@@ -384,7 +389,7 @@ return {
 
   { import = "astrocommunity.test.nvim-coverage" },
 
-  { import = "astrocommunity.utility.mason-tool-installer-nvim" },
+  -- { import = "astrocommunity.utility.mason-tool-installer-nvim" },
   {
     import = "astrocommunity.utility.neodim",
     enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
@@ -448,10 +453,10 @@ return {
   { import = "astrocommunity.pack.swift" },
   { import = "astrocommunity.pack.tailwindcss" },
   { import = "astrocommunity.pack.terraform" },
-  -- TODO: add after migration { import = "astrocommunity.pack.templ" },
+  { import = "astrocommunity.pack.templ" },
   { import = "astrocommunity.pack.toml" },
   { import = "astrocommunity.pack.typescript-all-in-one" },
-  -- TODO: add after migration { import = "astrocommunity.pack.vue" },
+  { import = "astrocommunity.pack.vue" },
   { import = "astrocommunity.pack.wgsl" },
   { import = "astrocommunity.pack.yaml" },
 }
