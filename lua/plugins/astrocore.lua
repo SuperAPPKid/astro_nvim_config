@@ -85,11 +85,6 @@ local mapping = {
       desc = "Close Tab",
     },
 
-    ["<leader>du"] = {
-      function() require("dapui").toggle { reset = true } end,
-      desc = "Toggle Debugger UI",
-    },
-
     ["<leader>f'"] = false,
     ["<leader>fr"] = false,
     ["<leader>fH"] = {
@@ -163,7 +158,7 @@ end
 if is_available "neo-tree.nvim" then
   mapping.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle Filesystem" }
   mapping.n["<leader>be"] = { "<cmd>Neotree source=buffers toggle<cr>", desc = "Toggle Buffers (neo-tree)" }
-  mapping.n["<leader>ge"] = { "<cmd>Neotree source=git_status toggle<cr>", desc = "Toggle Git (neo-tree)" }
+  mapping.n["<Leader>ge"] = { "<cmd>Neotree source=jj toggle<cr>", desc = "Toggle Git (neo-tree)" }
   mapping.n["<leader>le"] = { "<cmd>Neotree source=diagnostics toggle<cr>", desc = "Toggle Diagnostics (neo-tree)" }
 end
 
@@ -175,9 +170,11 @@ if is_available "nvim-dap-ui" then
       enter = true,
     })
   end
-  mapping.n["<Leader>dh"] = { function() require("dap.ui.widgets").hover() end, desc = "Debugger Hover" }
-  mapping.n["<leader>dH"] = { function() open_float "scopes" end, desc = "Debugger Hover" }
+
+  mapping.n["<leader>dR"] = false
   mapping.n["<leader>du"] = { function() require("dapui").toggle() end, desc = "Toggle REPL" }
+  mapping.n["<Leader>dh"] = { function() require("dap.ui.widgets").hover() end, desc = "Debugger Hover" }
+  mapping.n["<leader>dH"] = { function() open_float "scopes" end, desc = "Open Scopes" }
   mapping.n["<leader>dB"] = { function() open_float "breakpoints" end, desc = "Open Breakpoints" }
   mapping.n["<leader>dd"] = { function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoints" }
   mapping.n["<leader>dS"] = { function() open_float "stacks" end, desc = "Open Stacks" }

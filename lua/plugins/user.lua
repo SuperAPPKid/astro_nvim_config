@@ -623,9 +623,9 @@ return {
           "AstroNvim/astrocore",
           opts = function(_, opts)
             local maps = opts.mappings
-            maps.n["<leader>xn"] = {
+            maps.n["<leader>zn"] = {
               "<cmd>Fidget history<CR>",
-              desc = "cloak",
+              desc = "fidget history",
             }
           end,
         },

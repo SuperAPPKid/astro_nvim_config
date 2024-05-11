@@ -113,7 +113,7 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-          maps.n["<leader>xc"] = {
+          maps.n["<leader>zk"] = {
             "<cmd>CloakToggle<CR>",
             desc = "cloak",
           }
