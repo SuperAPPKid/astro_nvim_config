@@ -304,7 +304,6 @@ return {
       telescope = {},
     },
   },
-  { import = "astrocommunity.lsp.delimited-nvim" },
   -- { import = "astrocommunity.lsp.lsp-lens-nvim" },
   { import = "astrocommunity.lsp.lsplinks-nvim" },
   { import = "astrocommunity.lsp.nvim-lint" },

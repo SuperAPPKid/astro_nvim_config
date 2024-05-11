@@ -1273,4 +1273,20 @@ return {
       end,
     },
   },
+
+  {
+    "mizlan/delimited.nvim",
+    config = true,
+    event = "User AstroFile",
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["[d"] = { function() require("delimited").goto_prev() end, desc = "prev diag" }
+          maps.n["]d"] = { function() require("delimited").goto_next() end, desc = "next diag" }
+        end,
+      },
+    },
+  },
 }

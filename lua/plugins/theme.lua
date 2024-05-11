@@ -67,6 +67,11 @@ return {
         DiagnosticUnderlineInfo = { sp = palette.dragonGreen },
         DiagnosticUnderlineHint = { sp = palette.crystalBlue },
         DiagnosticUnderlineOk = { sp = palette.springGreen },
+
+        DelimitedError = { link = "DiagnosticUnderlineError" },
+        DelimitedWarn = { link = "DiagnosticUnderlineWarn" },
+        DelimitedInfo = { link = "DiagnosticUnderlineInfo" },
+        DelimitedHint = { link = "DiagnosticUnderlineHint" },
       }
     end,
     theme = "dragon", -- Load "wave" theme when 'background' option is not set
