@@ -3,6 +3,41 @@
 return {
   "AstroNvim/astroui",
   version = false,
+  dependencies = {
+    {
+      "AstroNvim/astrocore",
+      opts = function(_, opts)
+        local get_icon = require("astroui").get_icon
+        opts.signs = {
+          DapBreakpoint = {
+            text = get_icon "DapBreakpoint",
+            texthl = "DiagnosticInfo",
+            linehl = "DiagnosticBgInfo",
+          },
+          DapBreakpointCondition = {
+            text = get_icon "DapBreakpointCondition",
+            texthl = "DiagnosticInfo",
+            linehl = "DiagnosticBgInfo",
+          },
+          DapBreakpointRejected = {
+            text = get_icon "DapBreakpointRejected",
+            texthl = "DiagnosticError",
+            linehl = "DiagnosticBgError",
+          },
+          DapLogPoint = {
+            text = get_icon "DapLogPoint",
+            texthl = "DiagnosticInfo",
+            linehl = "DiagnosticBgInfo",
+          },
+          DapStopped = {
+            text = get_icon "DapStopped",
+            texthl = "DiagnosticWarn",
+            linehl = "DiagnosticBgWarn",
+          },
+        }
+      end,
+    },
+  },
   opts = {
     colorscheme = "kanagawa",
     highlights = {

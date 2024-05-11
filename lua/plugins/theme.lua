@@ -68,6 +68,10 @@ return {
         DiagnosticUnderlineHint = { sp = palette.crystalBlue },
         DiagnosticUnderlineOk = { sp = palette.springGreen },
 
+        DiagnosticBgInfo = { fg = palette.dragonWhite, bg = palette.waveBlue2, bold = true },
+        DiagnosticBgWarn = { fg = palette.winterYellow, bg = palette.autumnYellow, bold = true },
+        DiagnosticBgError = { fg = palette.winterRed, bg = palette.autumnRed, bold = true },
+
         DelimitedError = { link = "DiagnosticUnderlineError" },
         DelimitedWarn = { link = "DiagnosticUnderlineWarn" },
         DelimitedInfo = { link = "DiagnosticUnderlineInfo" },
