@@ -221,6 +221,7 @@ return {
     },
     -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
     diagnostics = {
+      update_in_insert = false,
       virtual_text = true,
       underline = { severity = { vim.diagnostic.severity.ERROR } },
     },
@@ -236,6 +237,10 @@ return {
         shiftwidth = 4,
         softtabstop = 4,
         swapfile = false,
+      },
+
+      o = {
+        wrap = true,
       },
 
       g = { -- vim.g.<key>

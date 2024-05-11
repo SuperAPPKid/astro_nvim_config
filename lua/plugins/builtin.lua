@@ -343,8 +343,8 @@ return {
       open_mapping = "<C-t>",
       float_opts = {
         border = "double",
-        height = function(_) return vim.o.lines - 4 end,
-        width = function(_) return math.floor(vim.o.columns * 0.9) end,
+        height = function(_) return vim.o.lines - 3 end,
+        width = function(_) return vim.o.columns end,
       },
       highlights = {
         NormalFloat = {

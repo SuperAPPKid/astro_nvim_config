@@ -591,7 +591,8 @@ return {
       exclude_filetypes = { "dapui_.*", "dap-repl", "terminal", "lspinfo", "mason", "lazy", "fzf", "qf" },
       winopts = {
         offset = {
-          width = math.floor(vim.o.columns * 0.9),
+          top = 1,
+          width = vim.o.columns,
           height = vim.o.lines - 4,
         },
         border = "thicc", -- this is a preset, try it :)
@@ -824,7 +825,7 @@ return {
     opts = function(_, opts)
       opts.cursorhold_update = false
       opts.doc_lines = 0
-      opts.wrap = false
+      opts.wrap = true
       opts.hint_enable = false
       opts.handler_opts = {
         border = "double", -- double, rounded, single, shadow, none, or a table of borders
