@@ -22,11 +22,11 @@ return {
             "astronvim/astrocore",
             opts = function(_, opts)
               local maps = opts.mappings
-              maps.n["<leader>gm"] = {
+              maps.n["<leader>gM"] = {
                 function() require("tinygit").smartcommit() end,
                 desc = "new commit",
               }
-              maps.n["<leader>gp"] = {
+              maps.n["<leader>gP"] = {
                 function() require("tinygit").push { forcewithlease = true } end,
                 desc = "push",
               }
