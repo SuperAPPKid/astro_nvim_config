@@ -149,7 +149,6 @@ return {
     "NeogitOrg/neogit",
     branch = "nightly",
   },
-  { import = "astrocommunity.git.octo-nvim" },
 
   { import = "astrocommunity.indent.indent-rainbowline" },
 
