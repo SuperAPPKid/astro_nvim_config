@@ -122,7 +122,7 @@ return {
     },
   },
   { import = "astrocommunity.editing-support.comment-box-nvim" },
-  { import = "astrocommunity.editing-support.conform-nvim" },
+  -- { import = "astrocommunity.editing-support.conform-nvim" },
   { import = "astrocommunity.editing-support.hypersonic-nvim" },
   {
     "tomiis4/Hypersonic.nvim",
@@ -376,9 +376,8 @@ return {
     import = "astrocommunity.recipes.heirline-vscode-winbar",
     enabled = function() return vim.fn.has "nvim-0.10" ~= 1 end,
   },
-  {
-    import = "astrocommunity.recipes.astrolsp-no-insert-inlay-hints",
-  },
+  { import = "astrocommunity.recipes.astrolsp-no-insert-inlay-hints" },
+  { import = "astrocommunity.recipes.vscode" },
 
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
 
