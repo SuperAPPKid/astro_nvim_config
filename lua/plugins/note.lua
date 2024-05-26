@@ -14,7 +14,7 @@ local get_project_name = function()
 end
 
 return {
-  "backdround/global-note.nvim",
+  "superappkid/global-note.nvim",
   dependencies = {
     { "AstroNvim/astroui", opts = { icons = { Notes = " " } } },
     {
