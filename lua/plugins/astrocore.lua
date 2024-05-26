@@ -87,8 +87,14 @@ local mapping = {
 
     ["<leader>f'"] = false,
     ["<leader>fr"] = false,
+    ["gl"] = false,
+    ["<Leader>lD"] = false,
+    ["<Leader>fd"] = {
+      function() require("telescope.builtin").diagnostics() end,
+      desc = "Search diagnostics",
+    },
     ["<leader>fH"] = {
-      function() require("telescope.builtin").highlights { previewer = false } end,
+      function() require("telescope.builtin").highlights() end,
       desc = "Find Highlight",
     },
 
