@@ -110,4 +110,28 @@ return {
       end,
     },
   },
+
+  {
+    "lewis6991/gitsigns.nvim",
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.v["<Leader>gh"] = {
+            function() require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" } end,
+            desc = "Reset Git hunk",
+          }
+          maps.v["<Leader>gs"] = {
+            function() require("gitsigns").stage_hunk { vim.fn.line ".", vim.fn.line "v" } end,
+            desc = "Stage Git hunk",
+          }
+          maps.v["<Leader>gu"] = {
+            function() require("gitsigns").undo_stage_hunk { vim.fn.line ".", vim.fn.line "v" } end,
+            desc = "Unstage Git hunk",
+          }
+        end,
+      },
+    },
+  },
 }
