@@ -326,12 +326,34 @@ return {
   { import = "astrocommunity.motion.flash-nvim" },
   {
     "folke/flash.nvim",
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          local key = "Z"
+          local value = {
+            function()
+              require("flash").jump {
+                search = { mode = "search", max_length = 0 },
+                label = { after = { 0, 0 } },
+                pattern = "^",
+              }
+            end,
+            desc = "jump to a line",
+          }
+          maps.n[key] = value
+          maps.x[key] = value
+          maps.o[key] = value
+        end,
+      },
+    },
     config = function(_, opts)
       require("flash").setup(opts)
       vim.api.nvim_set_hl(0, "FlashCursor", { link = "Normal" })
     end,
     opts = {
-      labels = "hjukilosdfetg",
+      labels = "hjukilonmyfdsgrewvct",
       label = {
         current = false,
       },
@@ -340,7 +362,7 @@ return {
           enabled = false,
         },
         treesitter = {
-          labels = "hjukilosdfetg",
+          labels = "hjukilonmyfdsgrewvct",
         },
       },
       prompt = {
