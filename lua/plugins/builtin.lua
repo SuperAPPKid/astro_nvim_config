@@ -324,29 +324,6 @@ return {
   },
 
   {
-    "nvim-telescope/telescope.nvim",
-    version = false,
-    opts = function(_, opts)
-      local defaults = opts.defaults
-      defaults.layout_config = {
-        height = math.max(math.floor(vim.o.lines * 0.6), 25),
-      }
-      defaults.borderchars = {
-        prompt = { "─", "│", " ", "│", "╭", "╮", " ", " " },
-        results = { " ", "│", "─", "│", "│", "│", "┘", "└" },
-        preview = { "─", "│", "─", "│", "╭", "┤", "┘", "└" },
-      }
-
-      defaults.prompt_prefix = " "
-      defaults.selection_caret = " "
-      defaults.entry_prefix = " "
-      defaults.selection_strategy = "reset"
-
-      opts.defaults = require("telescope.themes").get_ivy(defaults)
-    end,
-  },
-
-  {
     {
       "neovim/nvim-lspconfig",
       opts = function(_, _) require("lspconfig.ui.windows").default_options.border = "double" end,
