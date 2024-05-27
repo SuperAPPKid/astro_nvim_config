@@ -10,7 +10,7 @@ return {
         opts = function(_, opts)
           local maps = opts.mappings
           maps.n["<Leader>gf"] = { "<Cmd>Fugit2<CR>", desc = "Fugit2" }
-          maps.n["<leader>gG"] = { "<Cmd>Fugit2Graph<CR>", desc = "Fugit2 Graph" }
+          maps.n["<Leader>gG"] = { "<Cmd>Fugit2Graph<CR>", desc = "Fugit2 Graph" }
         end,
       },
       {
@@ -22,11 +22,11 @@ return {
             "astronvim/astrocore",
             opts = function(_, opts)
               local maps = opts.mappings
-              maps.n["<leader>gM"] = {
+              maps.n["<Leader>gM"] = {
                 function() require("tinygit").smartcommit() end,
                 desc = "new commit",
               }
-              maps.n["<leader>gP"] = {
+              maps.n["<Leader>gP"] = {
                 function() require("tinygit").push { forcewithlease = true } end,
                 desc = "push",
               }
@@ -76,7 +76,7 @@ return {
           end
 
           local maps = opts.mappings
-          local prefix = "<leader>g"
+          local prefix = "<Leader>g"
           maps.n[prefix .. "d"] = {
             function() find_target_tab "DiffviewOpen -uno -- %" end,
             desc = "Open File Diff",
@@ -146,7 +146,7 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-          local prefix = "<leader>gO"
+          local prefix = "<Leader>gO"
           maps.n[prefix] = { desc = require("astroui").get_icon("Octo", 1, true) .. "Octo" }
           maps.n[prefix .. "a"] = { desc = "Assignee/Reviewer" }
           maps.n[prefix .. "aa"] = { "<Cmd>Octo assignee add<CR>", desc = "Assign a user" }

@@ -38,8 +38,8 @@ local mapping = {
     ["<C-s>"] = save_file,
 
     --tabs
-    ["<leader><tab>"] = { desc = " Tabs" },
-    ["<leader><tab>n"] = {
+    ["<Leader><tab>"] = { desc = " Tabs" },
+    ["<Leader><tab>n"] = {
       function()
         local bufr = vim.api.nvim_get_current_buf()
         local view = vim.fn.winsaveview()
@@ -50,7 +50,7 @@ local mapping = {
       end,
       desc = "New Tab",
     },
-    ["<leader><tab>N"] = {
+    ["<Leader><tab>N"] = {
       function()
         local helper = require "astrocore.buffer"
         local bufr = vim.api.nvim_get_current_buf()
@@ -63,7 +63,7 @@ local mapping = {
       end,
       desc = "Move to new Tab",
     },
-    ["<leader><tab>q"] = {
+    ["<Leader><tab>q"] = {
       function()
         local helper = require "astrocore.buffer"
         local before_bufs = vim.fn.tabpagebuflist()
@@ -85,20 +85,20 @@ local mapping = {
       desc = "Close Tab",
     },
 
-    ["<leader>f'"] = false,
-    ["<leader>fr"] = false,
+    ["<Leader>f'"] = false,
+    ["<Leader>fr"] = false,
     ["gl"] = false,
     ["<Leader>lD"] = false,
     ["<Leader>fd"] = {
       function() require("telescope.builtin").diagnostics() end,
       desc = "Search diagnostics",
     },
-    ["<leader>fH"] = {
+    ["<Leader>fH"] = {
       function() require("telescope.builtin").highlights() end,
       desc = "Find Highlight",
     },
 
-    ["<leader>z"] = { desc = " Misc" },
+    ["<Leader>z"] = { desc = " Misc" },
 
     ["<C-q>"] = { "<cmd>qa!<cr>", desc = "Force quit" },
   },
@@ -117,7 +117,7 @@ local mapping = {
 }
 
 if is_available "toggleterm.nvim" and vim.fn.executable "joshuto" == 1 then
-  mapping.n["<leader>tj"] = {
+  mapping.n["<Leader>tj"] = {
     function()
       local edit_cmd = ""
       local fm_tmpfile = vim.fn.tempname()
@@ -162,10 +162,10 @@ if is_available "toggleterm.nvim" and vim.fn.executable "joshuto" == 1 then
 end
 
 if is_available "neo-tree.nvim" then
-  mapping.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle Filesystem" }
-  mapping.n["<leader>be"] = { "<cmd>Neotree source=buffers toggle<cr>", desc = "Toggle Buffers (neo-tree)" }
+  mapping.n["<Leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle Filesystem" }
+  mapping.n["<Leader>be"] = { "<cmd>Neotree source=buffers toggle<cr>", desc = "Toggle Buffers (neo-tree)" }
   mapping.n["<Leader>ge"] = { "<cmd>Neotree source=jj toggle<cr>", desc = "Toggle Git (neo-tree)" }
-  mapping.n["<leader>le"] = { "<cmd>Neotree source=diagnostics toggle<cr>", desc = "Toggle Diagnostics (neo-tree)" }
+  mapping.n["<Leader>le"] = { "<cmd>Neotree source=diagnostics toggle<cr>", desc = "Toggle Diagnostics (neo-tree)" }
 end
 
 if is_available "nvim-dap-ui" then
@@ -177,14 +177,14 @@ if is_available "nvim-dap-ui" then
     })
   end
 
-  mapping.n["<leader>dR"] = false
-  mapping.n["<leader>du"] = { function() require("dapui").toggle() end, desc = "Toggle REPL" }
+  mapping.n["<Leader>dR"] = false
+  mapping.n["<Leader>du"] = { function() require("dapui").toggle() end, desc = "Toggle REPL" }
   mapping.n["<Leader>dh"] = { function() require("dap.ui.widgets").hover() end, desc = "Debugger Hover" }
-  mapping.n["<leader>dH"] = { function() open_float "scopes" end, desc = "Open Scopes" }
-  mapping.n["<leader>dB"] = { function() open_float "breakpoints" end, desc = "Open Breakpoints" }
-  mapping.n["<leader>dd"] = { function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoints" }
-  mapping.n["<leader>dS"] = { function() open_float "stacks" end, desc = "Open Stacks" }
-  mapping.n["<leader>dw"] = { function() open_float "watches" end, desc = "Open Watches" }
+  mapping.n["<Leader>dH"] = { function() open_float "scopes" end, desc = "Open Scopes" }
+  mapping.n["<Leader>dB"] = { function() open_float "breakpoints" end, desc = "Open Breakpoints" }
+  mapping.n["<Leader>dd"] = { function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoints" }
+  mapping.n["<Leader>dS"] = { function() open_float "stacks" end, desc = "Open Stacks" }
+  mapping.n["<Leader>dw"] = { function() open_float "watches" end, desc = "Open Watches" }
 end
 
 -- autocmds

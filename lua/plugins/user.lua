@@ -81,7 +81,7 @@ return {
       require("telescope").load_extension "neoclip"
     end,
     keys = {
-      { "<leader>fy", "<cmd>Telescope neoclip<cr>", desc = "Find yanks (neoclip)" },
+      { "<Leader>fy", "<cmd>Telescope neoclip<cr>", desc = "Find yanks (neoclip)" },
     },
   },
 
@@ -120,7 +120,7 @@ return {
     opts = function() require("telescope").load_extension "scope" end,
     keys = {
       {
-        "<leader>fb",
+        "<Leader>fb",
         function() require("telescope").extensions.scope.buffers() end,
         desc = "Open Scopes",
       },
@@ -275,7 +275,7 @@ return {
       },
     },
     keys = {
-      { "<leader>fp", "<cmd>ProjectMgr<cr>", desc = "Open ProjectMgr panel" },
+      { "<Leader>fp", "<cmd>ProjectMgr<cr>", desc = "Open ProjectMgr panel" },
     },
   },
 
@@ -434,7 +434,7 @@ return {
       }
     end,
     keys = function(_, _)
-      local prefix = "<leader>i"
+      local prefix = "<Leader>i"
       local prefix_additive = prefix .. "a"
       local mapping = {}
       mapping[prefix] = {
@@ -599,7 +599,7 @@ return {
     },
     keys = {
       {
-        "<leader>zz",
+        "<Leader>zz",
         function() vim.cmd "NeoZoomToggle" end,
         desc = "Toggle Zoom",
         { silent = true, nowait = true },
@@ -622,7 +622,7 @@ return {
           "AstroNvim/astrocore",
           opts = function(_, opts)
             local maps = opts.mappings
-            maps.n["<leader>zn"] = {
+            maps.n["<Leader>zn"] = {
               "<cmd>Fidget history<CR>",
               desc = "fidget history",
             }
@@ -678,13 +678,13 @@ return {
     keys = function()
       return {
         {
-          "<leader>zs",
+          "<Leader>zs",
           mode = { "n", "x" },
           function() require("spectre").toggle() end,
           desc = "Search / Replace",
         },
         {
-          "<leader>zS",
+          "<Leader>zS",
           mode = { "n", "x" },
           function() require("spectre").open_file_search() end,
           desc = "Search / Replace (current file)",
@@ -765,7 +765,7 @@ return {
     ft = "html",
     keys = {
       {
-        "<leader>zh",
+        "<Leader>zh",
         "<cmd>LiveServer<cr>",
         desc = "html preview",
       },
@@ -775,7 +775,7 @@ return {
   {
     "echasnovski/mini.surround",
     opts = function(_, _)
-      local prefix = "<leader>s"
+      local prefix = "<Leader>s"
       local mapping = {}
       mapping[prefix] = {
         desc = "󰅪 Surround",
@@ -852,7 +852,7 @@ return {
         "RestNvimLast",
       },
       keys = {
-        { "<leader>zr", "<Plug>RestNvim", desc = "Run request" },
+        { "<Leader>zr", "<Plug>RestNvim", desc = "Run request" },
       },
     },
     {
@@ -901,7 +901,7 @@ return {
       },
     },
     keys = {
-      { "<leader>t", "<cmd>Translate ZH-TW<cr>", mode = { "x" }, desc = "Translate" },
+      { "<Leader>t", "<cmd>Translate ZH-TW<cr>", mode = { "x" }, desc = "Translate" },
     },
   },
 
@@ -916,7 +916,7 @@ return {
     keys = function(_, _)
       local harpoon = require "harpoon"
 
-      local prefix = "<leader><leader>"
+      local prefix = "<Leader><Leader>"
       require("astrocore").set_mappings {
         n = {
           [prefix] = { desc = "󰐃 Harpoon" },
@@ -933,7 +933,7 @@ return {
           desc = "Toggle quick menu",
         },
         {
-          "<leader>f<leader>",
+          "<Leader>f<Leader>",
           "<cmd>Telescope harpoon marks<CR>",
           desc = "Show marks in Telescope",
         },
@@ -958,7 +958,7 @@ return {
     ft = { "markdown" },
     keys = {
       {
-        "<leader>zm",
+        "<Leader>zm",
         "<cmd>MarkdownPreviewToggle<cr>",
         desc = "markdown preview",
       },
@@ -1018,7 +1018,7 @@ return {
       }
     end,
     keys = function(_, keys)
-      local prefix = "<leader>T"
+      local prefix = "<Leader>T"
       local plugin = require "neotest"
 
       require("astrocore").set_mappings {
@@ -1052,19 +1052,19 @@ return {
     end,
     keys = {
       {
-        "<leader>db",
+        "<Leader>db",
         function() require("persistent-breakpoints.api").toggle_breakpoint() end,
         { silent = true },
         desc = "Toggle Breakpoint",
       },
       {
-        "<leader>dd",
+        "<Leader>dd",
         function() require("persistent-breakpoints.api").clear_all_breakpoints() end,
         { silent = true },
         desc = "Clear Breakpoints",
       },
       {
-        "<leader>dC",
+        "<Leader>dC",
         function() require("persistent-breakpoints.api").set_conditional_breakpoint() end,
         { silent = true },
         desc = "Conditional Breakpoint",
@@ -1132,7 +1132,7 @@ return {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
-          opts.mappings.n["<leader>j"] = { "<CMD>TSJToggle<CR>", desc = "Toggle Treesitter Join" }
+          opts.mappings.n["<Leader>j"] = { "<CMD>TSJToggle<CR>", desc = "Toggle Treesitter Join" }
         end,
       },
     },
@@ -1184,7 +1184,7 @@ return {
             on_enter = function() vim.o.virtualedit = "all" end,
           },
           mode = "n",
-          body = "<leader>zv",
+          body = "<Leader>zv",
           heads = {
             { "H", "<C-v>h:VBox<CR>" },
             { "J", "<C-v>j:VBox<CR>" },
@@ -1266,7 +1266,7 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-          local prefix = "<leader>O"
+          local prefix = "<Leader>O"
           maps.n[prefix] = { desc = require("astroui").get_icon("Overseer", 1, true) .. "Overseer" }
 
           maps.n[prefix .. "t"] = { "<Cmd>OverseerToggle<CR>", desc = "Toggle" }

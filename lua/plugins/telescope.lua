@@ -49,7 +49,7 @@ return {
       "AstroNvim/astrocore",
       opts = function(_, opts)
         local maps = opts.mappings
-        local prefix = "<leader>f"
+        local prefix = "<Leader>f"
 
         maps.n[prefix .. "e"] = {
           "<Cmd>:Telescope file_browser<CR>",
@@ -75,7 +75,7 @@ return {
           }
         end
 
-        local dap_prefix = "<leader>df"
+        local dap_prefix = "<Leader>df"
         maps.n[dap_prefix] = {
           desc = "DAP Funcs",
         }

@@ -72,7 +72,7 @@ local on_attach = function(client, bufnr)
         end,
         desc = "References of current symbol",
       }
-      vim.keymap.del("n", "<leader>lR", { buffer = bufnr })
+      vim.keymap.del("n", "<Leader>lR", { buffer = bufnr })
     end
 
     mappings["gC"] = {
@@ -82,7 +82,7 @@ local on_attach = function(client, bufnr)
   end
 
   if is_available "inc-rename.nvim" then
-    mappings["<leader>lr"] = {
+    mappings["<Leader>lr"] = {
       ":IncRename ",
       desc = "Rename current symbol",
     }

@@ -231,7 +231,7 @@ return {
     --     local wk = require "which-key"
     --     wk.register({
     --       b = { name = "Buffer" },
-    --     }, { mode = "n", prefix = "<leader>" })
+    --     }, { mode = "n", prefix = "<Leader>" })
     --   end,
     opts = function(_, opts)
       opts.triggers_blacklist = {
@@ -347,17 +347,17 @@ return {
     "folke/todo-comments.nvim",
     keys = {
       {
-        "<leader>xt",
+        "<Leader>xt",
         "<cmd>TodoTrouble<CR>",
         desc = "Todo (Trouble)",
       },
       {
-        "<leader>ft",
+        "<Leader>ft",
         "<cmd>TodoTelescope<CR>",
         desc = "Find todo",
       },
       {
-        "<leader>fT",
+        "<Leader>fT",
         function() require("telescope.builtin").colorscheme { enable_preview = true } end,
         desc = "Find themes",
       },

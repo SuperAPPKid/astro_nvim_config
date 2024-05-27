@@ -10,8 +10,8 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-          maps.n["<leader>zc"] = { "<cmd>CccConvert<cr>", desc = "Convert color" }
-          maps.n["<leader>zp"] = { "<cmd>CccPick<cr>", desc = "Pick Color" }
+          maps.n["<Leader>zc"] = { "<cmd>CccConvert<cr>", desc = "Convert color" }
+          maps.n["<Leader>zp"] = { "<cmd>CccPick<cr>", desc = "Pick Color" }
         end,
       },
       config = function(_, opts)
@@ -42,7 +42,7 @@ return {
 
         require("astrocore").set_mappings {
           n = {
-            ["<leader>uC"] = {
+            ["<Leader>uC"] = {
               action,
               desc = "Toggle colorizer",
             },

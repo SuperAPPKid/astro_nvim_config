@@ -18,7 +18,7 @@ return {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
-          opts.mappings.n["<leader>E"] = {
+          opts.mappings.n["<Leader>E"] = {
             function() require("dropbar.api").pick(vim.v.count ~= 0 and vim.v.count) end,
             desc = "dropbar",
           }
@@ -42,7 +42,7 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-          local prefix = "<leader>R"
+          local prefix = "<Leader>R"
           maps.n[prefix] = { desc = "󰙵 Executor" }
           maps.n[prefix .. "r"] = { "<cmd>ExecutorRun<CR>", desc = "Run (Executor)" }
           maps.n[prefix .. "R"] = { "<cmd>ExecutorSetCommand<CR>", desc = "Set Command (Executor)" }
@@ -68,7 +68,7 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-          local prefix = "<leader>L"
+          local prefix = "<Leader>L"
           local plugin = require "chainsaw"
           maps.n[prefix] = { desc = "󱂅 Logging" }
           maps.n[prefix .. "L"] = {
@@ -113,7 +113,7 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-          maps.n["<leader>zk"] = {
+          maps.n["<Leader>zk"] = {
             "<cmd>CloakToggle<CR>",
             desc = "cloak",
           }
@@ -189,7 +189,7 @@ return {
           },
         },
         mode = { "n", "x" },
-        body = "<leader>uo",
+        body = "<Leader>uo",
         heads = {
           {
             "n",
