@@ -105,6 +105,8 @@ local mapping = {
   i = {
     -- quick save
     ["<C-s>"] = save_file,
+    ["<C-l>"] = "<Right>",
+    ["<C-h>"] = "<Left>",
   },
   v = {
     ["<C-s>"] = save_file,
