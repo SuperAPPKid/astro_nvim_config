@@ -156,7 +156,7 @@ return {
   { import = "astrocommunity.git.neogit" },
   {
     "NeogitOrg/neogit",
-    branch = "nightly",
+    -- branch = "nightly",
   },
 
   { import = "astrocommunity.indent.indent-rainbowline" },
