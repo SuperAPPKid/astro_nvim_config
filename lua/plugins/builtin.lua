@@ -244,6 +244,7 @@ return {
         marks = false, -- shows a list of your marks on ' and `
         registers = false, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
         presets = {
+          operators = false,
           motions = false, -- adds help for motions
           text_objects = false, -- help for text objects triggered after entering an operator
           windows = false, -- default bindings on <c-w>
