@@ -54,7 +54,7 @@ return {
       branch = "master",
     }
 
-    opts.textobjects.select.enabled = false
+    opts.textobjects.select.enable = false
     opts.matchup = { enable = true }
 
     -- add more things to the ensure_installed table protecting against community packs modifying it
