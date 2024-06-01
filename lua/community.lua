@@ -141,6 +141,15 @@ return {
   { import = "astrocommunity.editing-support.vim-move" },
   { import = "astrocommunity.editing-support.wildfire-nvim" },
 
+  { import = "astrocommunity.game.leetcode-nvim" },
+  {
+    "kawre/leetcode.nvim",
+    opts = {
+      arg = "leetcode",
+      lang = "golang",
+    },
+  },
+
   { import = "astrocommunity.git.blame-nvim" },
   { import = "astrocommunity.git.gist-nvim" },
   { import = "astrocommunity.git.gitlinker-nvim" },
