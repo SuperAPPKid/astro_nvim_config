@@ -6,14 +6,16 @@ return {
   {
     "goolord/alpha-nvim",
     opts = function(_, opts)
+      local dashboard = require "alpha.themes.dashboard"
       -- customize the dashboard header
-      opts.section.header.val = {
+      dashboard.section.header.val = {
         "███    ██ ██    ██ ██ ███    ███",
         "████   ██ ██    ██ ██ ████  ████",
         "██ ██  ██ ██    ██ ██ ██ ████ ██",
         "██  ██ ██  ██  ██  ██ ██  ██  ██",
         "██   ████   ████   ██ ██      ██",
       }
+      dashboard.config.opts.noautocmd = false
       return opts
     end,
   },
