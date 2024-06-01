@@ -151,6 +151,7 @@ return {
           "NvimTree",
           "TelescopePrompt",
           "alpha",
+          "sagaoutline",
         },
         segments = {
           {

@@ -305,13 +305,6 @@ return {
   },
   { import = "astrocommunity.keybinding.nvcheatsheet-nvim" },
 
-  { import = "astrocommunity.lsp.actions-preview-nvim" },
-  {
-    "aznhe21/actions-preview.nvim",
-    opts = {
-      telescope = {},
-    },
-  },
   -- { import = "astrocommunity.lsp.lsp-lens-nvim" },
   { import = "astrocommunity.lsp.lsplinks-nvim" },
   { import = "astrocommunity.lsp.nvim-lint" },

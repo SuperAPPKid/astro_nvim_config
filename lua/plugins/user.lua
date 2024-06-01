@@ -186,7 +186,10 @@ return {
       right = {
         {
           ft = "aerial",
-          title = "Symbols",
+          size = { width = 52 },
+        },
+        {
+          ft = "sagaoutline",
           size = { width = 52 },
         },
         {
@@ -500,89 +503,6 @@ return {
   },
 
   {
-    "rmagatti/goto-preview",
-    event = "LspAttach",
-    config = function(_, opts) require("goto-preview").setup(opts) end,
-    opts = function(_, opts)
-      opts.width = 100
-      opts.height = 25
-      opts.border = "double"
-      opts.stack_floating_preview_windows = false -- Whether to nest floating windows
-      opts.preview_window_title = { enable = false }
-
-      local jump_func = function(bufr)
-        local function callback()
-          local view = vim.fn.winsaveview()
-          require("goto-preview").close_all_win { skip_curr_window = false }
-          vim.api.nvim_buf_set_option(bufr, "buflisted", true)
-          vim.cmd(string.format("buffer %s", vim.fn.fnameescape(vim.api.nvim_buf_get_name(bufr))))
-          vim.fn.winrestview(view)
-          vim.cmd "normal! m'"
-        end
-
-        vim.keymap.set("n", "<CR>", callback, {
-          noremap = true,
-          silent = true,
-          buffer = bufr,
-        })
-      end
-
-      local tab_func = function(bufr)
-        local callback = function()
-          local view = vim.fn.winsaveview()
-          local f_name = vim.fn.fnameescape(vim.api.nvim_buf_get_name(bufr))
-
-          require("goto-preview").close_all_win { skip_curr_window = false }
-          vim.cmd(string.format("tabnew %s", f_name))
-          vim.fn.winrestview(view)
-          vim.cmd "normal! m'"
-        end
-
-        vim.keymap.set("n", "<Tab>", callback, {
-          noremap = true,
-          silent = true,
-          buffer = bufr,
-        })
-      end
-
-      local close_func = function(bufr)
-        local callback = function() require("goto-preview").close_all_win { skip_curr_window = false } end
-        vim.keymap.set("n", "q", callback, {
-          noremap = true,
-          silent = true,
-          buffer = bufr,
-        })
-      end
-
-      local buf_win_pairs = {}
-      opts.post_open_hook = function(bufr, win)
-        if buf_win_pairs[bufr] then return end
-
-        buf_win_pairs[bufr] = win
-        jump_func(bufr)
-        tab_func(bufr)
-        close_func(bufr)
-
-        local group_id =
-          vim.api.nvim_create_augroup(string.format("my-goto-preview_%s_%s", bufr, win), { clear = true })
-
-        vim.api.nvim_create_autocmd("WinClosed", {
-          pattern = tostring(win),
-          group = group_id,
-          callback = function()
-            buf_win_pairs[bufr] = nil
-            vim.keymap.del("n", "<CR>", { buffer = bufr })
-            vim.keymap.del("n", "<Tab>", { buffer = bufr })
-            vim.keymap.del("n", "q", { buffer = bufr })
-            vim.api.nvim_del_augroup_by_id(group_id)
-          end,
-        })
-      end
-      return opts
-    end,
-  },
-
-  {
     "nyngwang/NeoZoom.lua",
     config = function(_, opts) require("neo-zoom").setup(opts) end,
     opts = {
@@ -754,12 +674,6 @@ return {
   },
 
   {
-    "zeioth/garbage-day.nvim",
-    dependencies = "neovim/nvim-lspconfig",
-    event = "LspAttach",
-  },
-
-  {
     "aurum77/live-server.nvim",
     build = function() require("live_server.util").install() end,
     ft = "html",
@@ -813,20 +727,6 @@ return {
         { opts.mappings.replace, desc = "Replace surrounding" },
         { opts.mappings.find, desc = "Find right surrounding" },
         { opts.mappings.find_left, desc = "Find left surrounding" },
-      }
-    end,
-  },
-
-  {
-    "superappkid/lsp_signature.nvim",
-    event = "LspAttach",
-    opts = function(_, opts)
-      opts.cursorhold_update = false
-      opts.doc_lines = 0
-      opts.wrap = true
-      opts.hint_enable = false
-      opts.handler_opts = {
-        border = "double", -- double, rounded, single, shadow, none, or a table of borders
       }
     end,
   },
@@ -939,15 +839,6 @@ return {
         },
       }
     end,
-  },
-
-  {
-    "smjonas/inc-rename.nvim",
-    event = "LspAttach",
-    config = true,
-    -- opts = {
-    --   input_buffer_type = "dressing",
-    -- },
   },
 
   {
@@ -1195,22 +1086,6 @@ return {
           },
         }
       end,
-    },
-  },
-
-  {
-    "mizlan/delimited.nvim",
-    config = true,
-    event = "User AstroFile",
-    dependencies = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          maps.n["[d"] = { function() require("delimited").goto_prev() end, desc = "prev diag" }
-          maps.n["]d"] = { function() require("delimited").goto_next() end, desc = "next diag" }
-        end,
-      },
     },
   },
 

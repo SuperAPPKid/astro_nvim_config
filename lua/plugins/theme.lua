@@ -76,6 +76,8 @@ return {
         DelimitedWarn = { link = "DiagnosticUnderlineWarn" },
         DelimitedInfo = { link = "DiagnosticUnderlineInfo" },
         DelimitedHint = { link = "DiagnosticUnderlineHint" },
+
+        SagaBeacon = { bg = palette.lotusGray },
       }
     end,
     theme = "dragon", -- Load "wave" theme when 'background' option is not set
