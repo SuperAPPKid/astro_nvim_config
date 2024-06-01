@@ -101,6 +101,10 @@ local mapping = {
     ["<Leader>z"] = { desc = " Misc" },
 
     ["<C-q>"] = { "<cmd>qa!<cr>", desc = "Force quit" },
+
+    gra = false,
+    grn = false,
+    grr = false,
   },
   i = {
     -- quick save
@@ -108,8 +112,9 @@ local mapping = {
     ["<C-l>"] = "<Right>",
     ["<C-h>"] = "<Left>",
   },
-  v = {
+  x = {
     ["<C-s>"] = save_file,
+    gra = false,
   },
   s = {
     -- save file
