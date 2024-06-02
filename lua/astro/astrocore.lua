@@ -252,10 +252,6 @@ return {
         swapfile = false,
       },
 
-      o = {
-        wrap = true,
-      },
-
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
@@ -268,6 +264,7 @@ return {
         inlay_hints_enabled = true, -- enable or disable LSP inlay hints on startup (Neovim v0.10 only)
         textwidth = 0,
         -- move_normal_option = 1,
+        wrap = true,
       },
     },
     -- Mappings can be configured through AstroCore as well.
