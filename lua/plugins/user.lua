@@ -813,9 +813,131 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
     },
-    config = true,
+    config = function(_, opts)
+      local harpoon = require "harpoon"
+      harpoon:setup(opts)
+    end,
+    opts = {
+      settings = {
+        save_on_toggle = true,
+        sync_on_ui_close = true,
+      },
+      default = {
+        display = function(list_item)
+          if list_item.context then
+            return string.format("%s:%s", list_item.value, tostring(list_item.context.row or 0))
+          end
+          return list_item.value
+        end,
+        equals = function(list_item_a, list_item_b)
+          if list_item_a == nil and list_item_b == nil then
+            return true
+          elseif list_item_a == nil or list_item_b == nil then
+            return false
+          end
+
+          local a = {
+            value = list_item_a.value,
+            row = list_item_a.context.row or 0,
+          }
+          local b = {
+            value = list_item_b.value,
+            row = list_item_b.context.row or 0,
+          }
+          return a.value == b.value and a.row == b.row
+        end,
+        select = function(list_item, _, options)
+          if list_item == nil then return end
+
+          options = options or {}
+
+          local bufnr = vim.fn.bufnr("^" .. list_item.value .. "$")
+          if bufnr == -1 then -- must create a buffer!
+            bufnr = vim.fn.bufadd(list_item.value)
+          end
+          if not vim.api.nvim_buf_is_loaded(bufnr) then
+            vim.fn.bufload(bufnr)
+            vim.api.nvim_set_option_value("buflisted", true, {
+              buf = bufnr,
+            })
+          end
+
+          if options.vsplit then
+            vim.cmd "vsplit"
+          elseif options.split then
+            vim.cmd "split"
+          elseif options.tabedit then
+            vim.cmd "tabedit"
+          end
+
+          vim.api.nvim_set_current_buf(bufnr)
+
+          local lines = vim.api.nvim_buf_line_count(bufnr)
+          if list_item.context.row > lines then list_item.context.row = lines end
+
+          vim.api.nvim_win_set_cursor(0, {
+            list_item.context.row or 1,
+            list_item.context.col or 0,
+          })
+        end,
+        BufLeave = function() end,
+      },
+    },
     keys = function(_, _)
       local harpoon = require "harpoon"
+      local action_state = require "telescope.actions.state"
+      local action_utils = require "telescope.actions.utils"
+
+      local filter_empty_string = function(list)
+        local next = {}
+        for idx = 1, #list do
+          if list[idx].value ~= "" then table.insert(next, list[idx]) end
+        end
+
+        return next
+      end
+
+      local gen_finder = function()
+        return require("telescope.finders").new_table {
+          results = filter_empty_string(harpoon:list().items),
+          entry_maker = function(item)
+            local line = string.format("%s:%s", item.value, item.context.row or 0)
+            return {
+              value = item,
+              ordinal = line,
+              display = line,
+              lnum = item.context.row,
+              col = item.context.col,
+              filename = item.value,
+            }
+          end,
+        }
+      end
+
+      local delete_harpoon_mark = function(prompt_bufnr)
+        local confirmation = vim.fn.input(string.format "Delete current mark(s)? [y/n]: ")
+        if string.len(confirmation) == 0 or string.sub(string.lower(confirmation), 0, 1) ~= "y" then
+          print(string.format "Didn't delete mark")
+          return
+        end
+
+        local selection = action_state.get_selected_entry()
+        harpoon:list():remove(selection.value)
+
+        local function get_selections()
+          local results = {}
+          action_utils.map_selections(prompt_bufnr, function(entry) table.insert(results, entry) end)
+          return results
+        end
+
+        local selections = get_selections()
+        for _, current_selection in ipairs(selections) do
+          harpoon:list():remove(current_selection.value)
+        end
+
+        local current_picker = action_state.get_current_picker(prompt_bufnr)
+        current_picker:refresh(gen_finder(), { reset_prompt = true })
+      end
 
       local prefix = "<Leader><Leader>"
       require("astrocore").set_mappings {
@@ -825,9 +947,9 @@ return {
       }
 
       return {
-        { prefix .. "a", function() harpoon:list():append() end, desc = "Add file" },
-        { "<C-p>", function() require("harpoon"):list():prev() end, desc = "Goto previous mark" },
-        { "<C-n>", function() require("harpoon"):list():next() end, desc = "Goto next mark" },
+        { prefix .. "a", function() harpoon:list():add() end, desc = "Add file" },
+        { "<C-p>", function() require("harpoon"):list():prev { ui_nav_wrap = true } end, desc = "Goto previous mark" },
+        { "<C-n>", function() require("harpoon"):list():next { ui_nav_wrap = true } end, desc = "Goto next mark" },
         {
           prefix .. "e",
           function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
@@ -835,7 +957,16 @@ return {
         },
         {
           "<Leader>f<Leader>",
-          "<cmd>Telescope harpoon marks<CR>",
+          function()
+            require("telescope").extensions.harpoon.marks {
+              finder = gen_finder(),
+              attach_mappings = function(_, map)
+                map("i", "<c-d>", delete_harpoon_mark)
+                map("n", "<c-d>", delete_harpoon_mark)
+                return true
+              end,
+            }
+          end,
           desc = "Show marks in Telescope",
         },
       }
