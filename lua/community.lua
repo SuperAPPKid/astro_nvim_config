@@ -410,6 +410,7 @@ return {
 
   { import = "astrocommunity.test.nvim-coverage" },
 
+  { import = "astrocommunity.utility.telescope-lazy-nvim" },
   -- { import = "astrocommunity.utility.mason-tool-installer-nvim" },
   {
     import = "astrocommunity.utility.neodim",
