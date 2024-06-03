@@ -303,8 +303,9 @@ return {
     opts = function(_, opts)
       local core = require "astrocore"
       opts.cut_key = "m"
-      if core.is_available "leap.nvim" then opts.exclude = core.list_insert_unique(opts.exclude, { "ns", "nS" }) end
-      if core.is_available "hop.nvim" then opts.exclude = core.list_insert_unique(opts.exclude, { "ns", "nS" }) end
+      if core.is_available "leap.nvim" or core.is_available "hop.nvim" then
+        opts.exclude = core.list_insert_unique(opts.exclude, { "ns", "nS" })
+      end
     end,
   },
 
@@ -908,7 +909,7 @@ return {
         },
       }
     end,
-    keys = function(_, keys)
+    keys = function(_, _)
       local prefix = "<Leader>T"
       local plugin = require "neotest"
 

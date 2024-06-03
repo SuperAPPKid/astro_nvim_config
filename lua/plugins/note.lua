@@ -23,7 +23,7 @@ return {
         local maps = opts.mappings
         local prefix = "<Leader>M"
 
-        maps.n[prefix] = { desc = require("astroui").get_icon("Notes", 1, true) .. "Notes" }
+        maps.n[prefix] = { desc = require("astroui").get_icon("Notes", 0, true) .. "Notes" }
         maps.n[prefix .. "m"] = {
           function() require("global-note").toggle_note() end,
           desc = "Toggle global note",

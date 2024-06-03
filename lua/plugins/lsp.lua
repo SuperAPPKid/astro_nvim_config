@@ -311,6 +311,11 @@ return {
         outline = {
           auto_preview = false,
         },
+        rename = {
+          keys = {
+            quit = "<C-q>",
+          },
+        },
         ui = {
           border = "double",
           code_action = get_icon "DiagnosticHint",

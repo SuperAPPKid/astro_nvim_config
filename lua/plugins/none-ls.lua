@@ -17,8 +17,6 @@ return {
       null_ls.builtins.formatting.clang_format.with {
         filetypes = { "c", "cpp", "objc", "objcpp", "cc", "cxx" },
       },
-
-      null_ls.builtins.formatting.buf,
     }
     return config -- return final config table
   end,
