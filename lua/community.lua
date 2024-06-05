@@ -451,16 +451,12 @@ return {
   {
     "leoluz/nvim-dap-go",
     config = function(_, opts)
+      local dap = require "dap"
+      local old_configs = dap.configurations.go
+
       require("dap-go").setup(opts)
 
-      local dap = require "dap"
-      local go_debug_configs = dap.configurations.go
-      dap.configurations.go = {}
-
-      require("dap.ext.vscode").load_launchjs()
-      for _, config in ipairs(go_debug_configs) do
-        table.insert(dap.configurations["go"], config)
-      end
+      dap.configurations.go = old_configs
     end,
   },
   {

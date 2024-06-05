@@ -382,4 +382,12 @@ return {
       },
     },
   },
+
+  {
+    "jay-babu/mason-nvim-dap.nvim",
+    config = function(_, opts)
+      require("dap.ext.vscode").load_launchjs()
+      require("mason-nvim-dap").setup(opts)
+    end,
+  },
 }
