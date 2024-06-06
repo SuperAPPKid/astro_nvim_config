@@ -130,8 +130,8 @@ return {
 
   {
     "luukvbaal/statuscol.nvim",
+    lazy = false,
     enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
-    event = "User AstroFile",
     config = function()
       local builtin = require "statuscol.builtin"
       require("statuscol").setup {
@@ -156,7 +156,7 @@ return {
         segments = {
           {
             sign = {
-              namespace = { "todo", "dap", "diagnostic" },
+              name = { "Dap.*" },
               colwidth = 2,
               -- auto = true,
             },
@@ -164,7 +164,16 @@ return {
           },
           {
             sign = {
-              namespace = { "gitsigns_extmark_signs_" },
+              name = { "todo.*" },
+              namespace = { "diagnostic/signs" },
+              colwidth = 2,
+              -- auto = true,
+            },
+            click = "v:lua.ScSa",
+          },
+          {
+            sign = {
+              namespace = { "gitsigns" },
               colwidth = 1,
               -- auto = true,
             },
