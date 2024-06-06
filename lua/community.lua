@@ -461,11 +461,12 @@ return {
   },
   {
     "ray-x/go.nvim",
-    optional = true,
-    opts = {
-      lsp_inlay_hints = { enable = false },
-      lsp_codelens = false,
-    },
+    config = function(_, opts)
+      require("go").setup(opts)
+      local golangci_lint = require("go.null_ls").golangci_lint()
+      local null_ls = require "null-ls"
+      null_ls.register { golangci_lint }
+    end,
   },
   { import = "astrocommunity.pack.helm" },
   { import = "astrocommunity.pack.html-css" },
