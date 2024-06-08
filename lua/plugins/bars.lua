@@ -158,7 +158,6 @@ return {
             sign = {
               name = { "Dap.*" },
               colwidth = 2,
-              -- auto = true,
             },
             click = "v:lua.ScSa",
           },
@@ -167,7 +166,6 @@ return {
               name = { "todo.*" },
               namespace = { "diagnostic/signs" },
               colwidth = 2,
-              -- auto = true,
             },
             click = "v:lua.ScSa",
           },
@@ -175,7 +173,6 @@ return {
             sign = {
               namespace = { "gitsigns" },
               colwidth = 1,
-              -- auto = true,
             },
             click = "v:lua.ScSa",
           },

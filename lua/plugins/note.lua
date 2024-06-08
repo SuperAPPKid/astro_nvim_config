@@ -1,3 +1,4 @@
+local M = {}
 local get_project_name = function()
   local project_name
 
@@ -13,7 +14,7 @@ local get_project_name = function()
   return project_name
 end
 
-return {
+table.insert(M, {
   "superappkid/global-note.nvim",
   dependencies = {
     { "AstroNvim/astroui", opts = { icons = { Notes = " " } } },
@@ -61,4 +62,49 @@ return {
       }
     end,
   },
-}
+})
+
+table.insert(M, {
+  "iamcco/markdown-preview.nvim",
+  init = function() vim.g.mkdp_filetypes = { "markdown" } end,
+  build = "cd app && npx --yes yarn install",
+  dependencies = {
+    "AstroNvim/astrocore",
+    opts = function(_, opts)
+      local maps = opts.mappings
+      maps.n["<Leader>zM"] = {
+        "<cmd>MarkdownPreviewToggle<cr>",
+        desc = "markdown preview(alter)",
+      }
+    end,
+  },
+  ft = { "markdown" },
+})
+
+local deno = vim.fn.stdpath "data" .. [[/mason/bin/deno]]
+if vim.fn.executable(deno) == 1 then
+  table.insert(M, {
+    "toppair/peek.nvim",
+    build = deno .. " task --quiet build:fast",
+    dependencies = {
+      "AstroNvim/astrocore",
+      opts = function(_, opts)
+        local maps = opts.mappings
+        maps.n["<Leader>zm"] = {
+          function()
+            local peek = require "peek"
+            if peek.is_open() then
+              peek.close()
+            else
+              peek.open()
+            end
+          end,
+          desc = "markdown preview",
+        }
+      end,
+    },
+    ft = { "markdown" },
+  })
+end
+
+return M
