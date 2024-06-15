@@ -2,49 +2,9 @@ return {
   "nvim-telescope/telescope.nvim",
   version = false,
   dependencies = {
-    { "nvim-telescope/telescope-dap.nvim" },
-    {
-      "nvim-telescope/telescope-file-browser.nvim",
-      config = function()
-        require("telescope").setup {
-          extensions = {
-            file_browser = {
-              grouped = true,
-              hidden = {
-                file_browser = true,
-                folder_browser = true,
-              },
-              no_ignore = true,
-              prompt_path = true,
-              quiet = true,
-            },
-          },
-        }
-      end,
-    },
-    {
-      "nvim-telescope/telescope-live-grep-args.nvim",
-      config = function()
-        local lga_actions = require "telescope-live-grep-args.actions"
-        local actions = require "telescope.actions"
-
-        require("telescope").setup {
-          extensions = {
-            live_grep_args = {
-              auto_quoting = true, -- enable/disable auto-quoting
-              mappings = { -- extend mappings
-                i = {
-                  ["<C-k>"] = lga_actions.quote_prompt(),
-                  ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob " },
-                  -- freeze the current list and start a fuzzy search in the frozen list
-                  ["<C-space>"] = actions.to_fuzzy_refine,
-                },
-              },
-            },
-          },
-        }
-      end,
-    },
+    "nvim-telescope/telescope-dap.nvim",
+    "nvim-telescope/telescope-file-browser.nvim",
+    "nvim-telescope/telescope-live-grep-args.nvim",
     {
       "AstroNvim/astrocore",
       opts = function(_, opts)
@@ -52,8 +12,13 @@ return {
         local prefix = "<Leader>f"
 
         maps.n[prefix .. "e"] = {
-          "<Cmd>:Telescope file_browser<CR>",
+          "<Cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>",
           desc = "Open File browser",
+        }
+
+        maps.n[prefix .. "E"] = {
+          "<Cmd>Telescope file_browser<CR>",
+          desc = "Open File browser(CWD)",
         }
 
         if vim.fn.executable "rg" == 1 then
@@ -117,6 +82,27 @@ return {
     defaults.entry_prefix = " "
     defaults.selection_strategy = "reset"
     opts.defaults = require("telescope.themes").get_ivy(defaults)
+
+    opts.extensions = {
+      file_browser = {
+        grouped = true,
+        hidden = {
+          file_browser = true,
+          folder_browser = true,
+        },
+        no_ignore = true,
+        prompt_path = true,
+        quiet = true,
+      },
+      live_grep_args = {
+        auto_quoting = true, -- enable/disable auto-quoting
+        mappings = { -- extend mappings
+          i = {
+            ["<C-q>"] = require("telescope-live-grep-args.actions").quote_prompt { postfix = " " },
+          },
+        },
+      },
+    }
 
     require "astronvim.plugins.configs.telescope"(plugin, opts)
     require("telescope").load_extension "dap"
