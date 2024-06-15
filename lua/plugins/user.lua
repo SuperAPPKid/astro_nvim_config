@@ -1,54 +1,6 @@
 return {
   -- customize alpha options
   {
-    "Exafunction/codeium.vim",
-    event = "User AstroFile",
-    config = function(_, _)
-      vim.g.codeium_disable_bindings = 1
-      vim.g.codeium_manual = 1
-    end,
-    keys = function(_, _)
-      return {
-        {
-          "<C-f>",
-          function() return vim.fn["codeium#Accept"]() end,
-          mode = "i",
-          noremap = false,
-          expr = true,
-        },
-        {
-          "<A-l>",
-          function() return vim.fn["codeium#CycleCompletions"](1) end,
-          mode = "i",
-          noremap = false,
-          expr = true,
-        },
-        {
-          "<A-h>",
-          function() return vim.fn["codeium#CycleCompletions"](-1) end,
-          mode = "i",
-          noremap = false,
-          expr = true,
-        },
-        {
-          "<C-x>",
-          function() return vim.fn["codeium#Clear"]() end,
-          mode = "i",
-          noremap = false,
-          expr = true,
-        },
-        {
-          "<C-e>",
-          function() return vim.fn["codeium#Complete"]() end,
-          mode = "i",
-          noremap = false,
-          expr = true,
-        },
-      }
-    end,
-  },
-
-  {
     "AckslD/nvim-neoclip.lua",
     event = "UIEnter",
     dependencies = {
