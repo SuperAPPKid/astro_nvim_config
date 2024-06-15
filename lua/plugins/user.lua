@@ -704,9 +704,10 @@ return {
         "nvim-lua/plenary.nvim",
         {
           "vhyrro/luarocks.nvim",
-          branch = "go-away-python",
+          priority = 1000,
+          config = true,
           opts = {
-            rocks = { "lua-curl", "nvim-nio", "mimetypes", "xml2lua" }, -- Specify LuaRocks packages to install
+            rocks = { "lua-curl", "nvim-nio", "mimetypes", "xml2lua" },
           },
         },
       },
