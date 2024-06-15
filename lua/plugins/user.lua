@@ -266,12 +266,25 @@ return {
     dependencies = { "nvim-telescope/telescope.nvim" },
     event = "User AstroFile",
     config = function(_, opts)
+      local prefix = "<Leader>k"
+
+      opts.prefix = prefix
       require("textcase").setup(opts)
       require("telescope").load_extension "textcase"
+
+      local mapping = {}
+      mapping[prefix] = {
+        desc = " TextCase",
+      }
+      mapping[prefix .. "<Leader>"] = {
+        "<cmd>TextCaseOpenTelescope<CR>",
+        desc = "Telescope",
+      }
+      require("astrocore").set_mappings {
+        n = mapping,
+        x = mapping,
+      }
     end,
-    keys = {
-      { "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "v" }, desc = "Telescope" },
-    },
   },
 
   {
