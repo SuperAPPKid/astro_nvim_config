@@ -289,34 +289,64 @@ return {
       local get_icon = function(icon) return astroui.get_icon(icon, 0, true) end
       return {
         symbol_in_winbar = { enable = false },
+        callhierarchy = {
+          keys = {
+            toggle_or_req = "<CR>",
+            edit = "o",
+            vsplit = "|",
+            split = "\\",
+            tabe = "t",
+            quit = "q",
+            close = "<C-q>",
+            shuttle = "<Tab>",
+          },
+        },
         code_action = { extend_gitsigns = require("astrocore").is_available "gitsigns.nvim" },
         definition = {
+          save_pos = true,
           keys = {
             edit = "<CR>",
             vsplit = "|",
             split = "\\",
+            tabe = "t",
+            tabnew = "T",
+            quit = "q",
+            close = "<C-q>",
           },
         },
         finder = {
           keys = {
-            shuttle = "<Tab>",
+            toggle_or_open = "<CR>",
             vsplit = "|",
             split = "\\",
+            tabe = "t",
+            tabnew = "T",
+            quit = "q",
+            close = "<C-q",
+            shuttle = "<Tab>",
           },
         },
         hover = {
+          open_link = "<CR>",
           open_cmd = "!open",
         },
         lightbulb = { enable = false },
         outline = {
           auto_preview = false,
+          keys = {
+            toggle_or_jump = "<CR>",
+            jump = "o",
+          },
         },
         rename = {
+          in_select = false,
           keys = {
             quit = "<C-q>",
           },
         },
         ui = {
+          title = false,
+          -- button = { "█", "█" },
           border = "double",
           code_action = get_icon "DiagnosticHint",
           expand = get_icon "FoldClosed",
