@@ -123,10 +123,11 @@ local mapping = {
   t = {},
 }
 
-if is_available "toggleterm.nvim" and vim.fn.executable "joshuto" == 1 then
-  mapping.n["<Leader>tj"] = {
+if is_available "toggleterm.nvim" and vim.fn.executable "yazi" == 1 then
+  mapping.n["<Leader>ty"] = {
     function()
       local edit_cmd = ""
+      local file_path = vim.fn.expand('%:p')
       local fm_tmpfile = vim.fn.tempname()
       local feedkeys = function(keys)
         local key_termcode = vim.api.nvim_replace_termcodes(keys, true, true, true)
@@ -135,7 +136,7 @@ if is_available "toggleterm.nvim" and vim.fn.executable "joshuto" == 1 then
       local opts = {
         direction = "float",
         hidden = true,
-        cmd = string.format('joshuto --file-chooser --output-file="%s"', fm_tmpfile),
+        cmd = string.format([[yazi "%s" --chooser-file "%s"]], file_path, fm_tmpfile),
         dir = vim.fn.expand "%:p:h",
         on_open = function(term)
           edit_cmd = "edit"
@@ -164,7 +165,7 @@ if is_available "toggleterm.nvim" and vim.fn.executable "joshuto" == 1 then
       }
       utils.toggle_term_cmd(opts)
     end,
-    desc = "ToggleTerm joshuto",
+    desc = "ToggleTerm yazi",
   }
 end
 
