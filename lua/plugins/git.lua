@@ -113,7 +113,7 @@ return {
 
   {
     "lewis6991/gitsigns.nvim",
-    tag = "release",
+    tag = "v0.8.1",
     dependencies = {
       {
         "AstroNvim/astrocore",
