@@ -2,6 +2,16 @@
 
 ---@type LazySpec
 return {
+  {
+    "zapling/mason-lock.nvim",
+    cmd = {
+      "MasonLock",
+      "MasonLockRestore",
+    },
+    dependencies = { "williamboman/mason.nvim" },
+    init = function(plugin) require("astrocore").on_load("mason.nvim", plugin.name) end,
+    config = true,
+  },
   -- use mason-lspconfig to configure LSP installations
   {
     "williamboman/mason-lspconfig.nvim",
