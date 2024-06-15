@@ -25,6 +25,7 @@ return {
     config = function(_, opts)
       local ft = require "Comment.ft"
       ft({ "api" }, ft.get "go")
+      ft({ "gowork" }, ft.get "gomod")
       require("Comment").setup(opts)
     end,
   },
@@ -178,6 +179,7 @@ return {
       local core = require "astrocore"
 
       opts.popup_border_style = "single"
+      opts.filesystem.hijack_netrw_behavior = "disabled"
 
       opts.sources = {
         "filesystem",
