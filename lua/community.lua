@@ -461,8 +461,14 @@ return {
     "ray-x/go.nvim",
     config = function(_, opts)
       require("go").setup(opts)
-      local golangci_lint = require("go.null_ls").golangci_lint()
       local null_ls = require "null-ls"
+      -- local golangci_lint = require("go.null_ls").golangci_lint()
+      local golangci_lint = null_ls.builtins.diagnostics.golangci_lint.with {
+        method = {
+          require("null-ls.methods").internal.DIAGNOSTICS_ON_SAVE,
+          require("null-ls.methods").internal.DIAGNOSTICS_ON_OPEN,
+        },
+      }
       null_ls.register { golangci_lint }
     end,
   },

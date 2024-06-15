@@ -345,7 +345,6 @@ return {
   {
     "superappkid/nvim-dap-ui",
     version = false,
-    branch = "custom-fork",
     opts = function(_, opts)
       opts.expand_lines = false
       opts.layouts = {
