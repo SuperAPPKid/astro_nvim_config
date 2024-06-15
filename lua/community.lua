@@ -34,28 +34,6 @@ return {
     },
   },
 
-  { import = "astrocommunity.code-runner.executor-nvim" },
-  {
-    "google/executor.nvim",
-    dependencies = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          local prefix = "<Leader>R"
-          maps.n[prefix] = { desc = "󰙵 Executor" }
-          maps.n[prefix .. "r"] = { "<cmd>ExecutorRun<CR>", desc = "Run (Executor)" }
-          maps.n[prefix .. "R"] = { "<cmd>ExecutorSetCommand<CR>", desc = "Set Command (Executor)" }
-          maps.n[prefix .. "d"] = { "<cmd>ExecutorShowDetail<CR>", desc = "Show Detail (Executor)" }
-          maps.n[prefix .. "c"] = { "<cmd>ExecutorReset<CR>", desc = "Clear (Executor)" }
-        end,
-      },
-    },
-    opts = {
-      use_split = false,
-    },
-  },
-
   { import = "astrocommunity.completion.cmp-cmdline" },
   { import = "astrocommunity.completion.cmp-git" },
 
