@@ -100,7 +100,11 @@ return {
     },
   },
   { import = "astrocommunity.editing-support.comment-box-nvim" },
-  -- { import = "astrocommunity.editing-support.conform-nvim" },
+  { import = "astrocommunity.editing-support.conform-nvim" },
+  {
+    "stevearc/conform.nvim",
+    opts = { notify_on_error = false },
+  },
   { import = "astrocommunity.editing-support.hypersonic-nvim" },
   {
     "tomiis4/Hypersonic.nvim",
@@ -384,7 +388,7 @@ return {
           goto_left = "",
           goto_right = "",
         },
-        silent = false,
+        -- silent = false,
       }
     end,
   },
@@ -476,6 +480,7 @@ return {
   { import = "astrocommunity.pack.helm" },
   { import = "astrocommunity.pack.html-css" },
   { import = "astrocommunity.pack.java" },
+  { import = "astrocommunity.pack.json" },
   { import = "astrocommunity.pack.kotlin" },
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.markdown" },
