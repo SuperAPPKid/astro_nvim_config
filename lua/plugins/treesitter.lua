@@ -52,13 +52,14 @@ return {
         revision = "a537a45b239e628954922b62c4de4e104ef7c789",
       },
       branch = "master",
-  }
+    }
 
     opts.textobjects.select.enable = false
     opts.matchup = { enable = true }
 
     -- add more things to the ensure_installed table protecting against community packs modifying it
-    opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "php", "lua", "vim" })
+    opts.ensure_installed =
+      require("astrocore").list_insert_unique(opts.ensure_installed, { "php", "lua", "vim", "tmux" })
 
     opts.textobjects.move.goto_next_start = {
       ["]f"] = { query = "@function.outer", desc = "Next function start" },
