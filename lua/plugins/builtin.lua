@@ -438,4 +438,9 @@ return {
       require("mason-nvim-dap").setup(opts)
     end,
   },
+
+  {
+    "b0o/SchemaStore.nvim",
+    enabled = false,
+  },
 }
