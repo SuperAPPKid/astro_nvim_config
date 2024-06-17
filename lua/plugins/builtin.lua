@@ -34,6 +34,7 @@ return {
     "hrsh7th/nvim-cmp",
     dependencies = {
       { "hrsh7th/cmp-calc" },
+      { "f3fora/cmp-spell" },
       {
         "Exafunction/codeium.nvim",
         config = function(_, opts) require("codeium").setup(opts) end,
@@ -130,15 +131,15 @@ return {
         Copilot = "",
       }
 
-      opts.sources = cmp.config.sources({
-        { name = "nvim_lsp", priority = 1000 },
-        { name = "luasnip", priority = 800 },
-        { name = "buffer", priority = 700 },
+      opts.sources = cmp.config.sources {
+        { name = "nvim_lsp", priority = 800 },
+        { name = "luasnip", priority = 700 },
+        { name = "buffer", priority = 600 },
         { name = "codeium", priority = 500 },
-      }, {
-        { name = "calc", priority = 1000 },
-        { name = "path", priority = 500 },
-      })
+        { name = "path", priority = 400 },
+        { name = "spell", priority = 300 },
+        { name = "calc", priority = 300 },
+      }
 
       opts.formatting = {
         fields = { "abbr", "kind", "menu" },
@@ -150,6 +151,7 @@ return {
             path = "PATH",
             emoji = "emoji",
             calc = "Calc",
+            spell = "Spell",
             codeium = "Codeium",
             cmdline = "cmd",
             git = "Git",
