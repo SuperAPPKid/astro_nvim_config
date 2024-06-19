@@ -467,15 +467,22 @@ return {
     config = function(_, opts)
       require("go").setup(opts)
       local null_ls = require "null-ls"
+
       -- local golangci_lint = require("go.null_ls").golangci_lint()
       local golangci_lint = null_ls.builtins.diagnostics.golangci_lint.with {
         method = {
-          require("null-ls.methods").internal.DIAGNOSTICS_ON_SAVE,
-          require("null-ls.methods").internal.DIAGNOSTICS_ON_OPEN,
+          null_ls.methods.DIAGNOSTICS_ON_SAVE,
+          null_ls.methods.DIAGNOSTICS_ON_OPEN,
         },
       }
       null_ls.register { golangci_lint }
     end,
+    opts = {
+      preludes = {
+        default = function() return {} end,
+        GoRun = function() return {} end,
+      },
+    },
   },
   { import = "astrocommunity.pack.helm" },
   { import = "astrocommunity.pack.html-css" },
