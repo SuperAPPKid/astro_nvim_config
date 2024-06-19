@@ -66,30 +66,35 @@ return {
   },
 
   {
-    "tiagovla/scope.nvim",
-    event = "VeryLazy",
-    dependencies = { "nvim-telescope/telescope.nvim" },
-    opts = function() require("telescope").load_extension "scope" end,
-    keys = {
+    "stevearc/resession.nvim",
+    lazy = false,
+    dependencies = {
       {
-        "<Leader>fb",
-        function() require("telescope").extensions.scope.buffers() end,
-        desc = "Open Scopes",
+        "tiagovla/scope.nvim",
+        dependencies = { "nvim-telescope/telescope.nvim" },
+        opts = function() require("telescope").load_extension "scope" end,
+      },
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["<Leader>fb"] = {
+            function() require("telescope").extensions.scope.buffers() end,
+            desc = "Open Scopes",
+          }
+        end,
       },
     },
-    {
-      "stevearc/resession.nvim",
-      opts = function(_, opts)
-        opts.buf_filter = function(bufnr)
-          local buftype = vim.bo[bufnr].buftype
-          if buftype == "help" then return true end
-          if buftype ~= "" and buftype ~= "acwrite" then return false end
-          if vim.api.nvim_buf_get_name(bufnr) == "" then return false end
-          return true
-        end
-        opts.extensions = require("astrocore").extend_tbl(opts.extensions, { scope = {} })
-      end,
-    },
+    opts = function(_, opts)
+      opts.buf_filter = function(bufnr)
+        local buftype = vim.bo[bufnr].buftype
+        if buftype == "help" then return true end
+        if buftype ~= "" and buftype ~= "acwrite" then return false end
+        if vim.api.nvim_buf_get_name(bufnr) == "" then return false end
+        return true
+      end
+      opts.extensions = require("astrocore").extend_tbl(opts.extensions, { scope = {} })
+    end,
   },
 
   {
