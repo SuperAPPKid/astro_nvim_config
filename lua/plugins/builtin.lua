@@ -434,7 +434,12 @@ return {
   {
     "jay-babu/mason-nvim-dap.nvim",
     config = function(_, opts)
-      require("dap.ext.vscode").load_launchjs()
+      local providers = require("dap").providers
+      providers.configs = {
+        [0] = providers.configs["dap.launch.json"],
+        [1] = providers.configs["dap.global"],
+      }
+
       require("mason-nvim-dap").setup(opts)
     end,
   },
