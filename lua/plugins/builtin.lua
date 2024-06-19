@@ -33,6 +33,7 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
+      { "hrsh7th/cmp-nvim-lua" },
       { "hrsh7th/cmp-calc" },
       { "f3fora/cmp-spell" },
       {
@@ -81,7 +82,7 @@ return {
             end,
           },
         },
-        init = function(_, _)
+        init = function(_)
           vim.g.codeium_disable_bindings = 1
           vim.g.codeium_manual = 1
         end,
@@ -132,7 +133,8 @@ return {
       }
 
       opts.sources = cmp.config.sources {
-        { name = "nvim_lsp", priority = 800 },
+        { name = "nvim_lsp", priority = 900 },
+        { name = "nvim_lua", priority = 800 },
         { name = "luasnip", priority = 700 },
         { name = "buffer", priority = 600 },
         { name = "codeium", priority = 500 },
@@ -146,6 +148,7 @@ return {
         format = function(entry, vim_item)
           local menu_name = ({
             nvim_lsp = "LSP",
+            nvim_lua = "lua",
             luasnip = "Snippet",
             buffer = "Buffer",
             path = "PATH",
