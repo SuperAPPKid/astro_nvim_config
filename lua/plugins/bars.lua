@@ -123,7 +123,8 @@ return {
       }
 
       if vim.fn.has "nvim-0.10" == 1 then
-        opts.statuscolumn = nil -- statuscolumn
+        opts.statuscolumn = nil
+        opts.winbar = nil
       end
     end,
   },
@@ -189,5 +190,81 @@ return {
         },
       }
     end,
+  },
+
+  {
+    {
+      "Bekaboo/dropbar.nvim",
+      enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
+      event = "User AstroFile",
+      dependencies = {
+        { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+        {
+          "AstroNvim/astrocore",
+          opts = function(_, opts)
+            opts.mappings.n["<Leader>E"] = {
+              function() require("dropbar.api").pick(vim.v.count ~= 0 and vim.v.count) end,
+              desc = "dropbar",
+            }
+          end,
+        },
+      },
+      opts = function(_, opts)
+        opts.general = {
+          enable = function(buf, win, _)
+            return vim.fn.win_gettype(win) == ""
+              and vim.wo[win].winbar == ""
+              and vim.bo[buf].bt == ""
+              and (
+                vim.bo[buf].ft == "markdown"
+                or vim.bo[buf].ft == "oil"
+                or (
+                  buf and vim.api.nvim_buf_is_valid(buf) and (pcall(vim.treesitter.get_parser, buf)) and true
+                  or false
+                )
+              )
+          end,
+        }
+
+        local bar = require "dropbar.bar"
+        opts.bar = {
+          pick = {
+            pivots = "123456789",
+          },
+          sources = function(buf, _)
+            local sources = require "dropbar.sources"
+            if vim.bo[buf].ft == "oil" then
+              return {
+                {
+                  get_symbols = function(_, _, _)
+                    return {
+                      bar.dropbar_symbol_t:new {
+                        name = require("oil").get_current_dir(),
+                        name_hl = "Title",
+                      },
+                    }
+                  end,
+                },
+              }
+            end
+            if vim.bo[buf].ft == "markdown" then
+              return {
+                sources.path,
+                sources.markdown,
+              }
+            end
+            if vim.bo[buf].buftype == "terminal" then return {
+              sources.terminal,
+            } end
+            return {
+              sources.path,
+              require("dropbar.utils").source.fallback {
+                sources.lsp,
+              },
+            }
+          end,
+        }
+      end,
+    },
   },
 }

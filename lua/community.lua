@@ -6,34 +6,6 @@
 return {
   "AstroNvim/astrocommunity",
 
-  {
-    import = "astrocommunity.bars-and-lines.dropbar-nvim",
-    enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
-  },
-  {
-    "Bekaboo/dropbar.nvim",
-    enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
-    dependencies = {
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          opts.mappings.n["<Leader>E"] = {
-            function() require("dropbar.api").pick(vim.v.count ~= 0 and vim.v.count) end,
-            desc = "dropbar",
-          }
-        end,
-      },
-    },
-    opts = {
-      bar = {
-        pick = {
-          pivots = "hjkluio890",
-        },
-      },
-    },
-  },
-
   { import = "astrocommunity.completion.cmp-cmdline" },
   { import = "astrocommunity.completion.cmp-git" },
 
