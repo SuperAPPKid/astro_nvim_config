@@ -30,10 +30,13 @@ return {
             function() require("telescope").extensions.live_grep_args.live_grep_args() end,
             desc = "Find words",
           }
+
+          local args = require("astrocore").list_insert_unique({}, require("telescope.config").values.vimgrep_arguments)
+          args = require("astrocore").list_insert_unique(args, { "--hidden", "--no-ignore" })
           maps.n[prefix .. "W"] = {
             function()
               require("telescope").extensions.live_grep_args.live_grep_args {
-                additional_args = function(args) return vim.list_extend(args, { "--hidden", "--no-ignore" }) end,
+                vimgrep_arguments = args,
               }
             end,
             desc = "Find words in all files",
