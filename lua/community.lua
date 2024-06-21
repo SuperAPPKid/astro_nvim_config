@@ -434,28 +434,6 @@ return {
       dap.configurations.go = old_configs
     end,
   },
-  {
-    "ray-x/go.nvim",
-    config = function(_, opts)
-      require("go").setup(opts)
-      local null_ls = require "null-ls"
-
-      -- local golangci_lint = require("go.null_ls").golangci_lint()
-      local golangci_lint = null_ls.builtins.diagnostics.golangci_lint.with {
-        method = {
-          null_ls.methods.DIAGNOSTICS_ON_SAVE,
-          null_ls.methods.DIAGNOSTICS_ON_OPEN,
-        },
-      }
-      null_ls.register { golangci_lint }
-    end,
-    opts = {
-      preludes = {
-        default = function() return {} end,
-        GoRun = function() return {} end,
-      },
-    },
-  },
   { import = "astrocommunity.pack.helm" },
   { import = "astrocommunity.pack.html-css" },
   { import = "astrocommunity.pack.java" },
