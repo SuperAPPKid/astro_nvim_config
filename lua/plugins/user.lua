@@ -293,89 +293,87 @@ return {
   },
 
   {
-    {
-      "stevearc/oil.nvim",
-      cmd = "Oil",
-      event = "User AstroFile",
-      dependencies = {
-        {
-          "AstroNvim/astrocore",
-          opts = {
-            mappings = {
-              n = {
-                ["<Leader>o"] = { function() require("oil").open() end, desc = "Open folder in Oil" },
-              },
+    "stevearc/oil.nvim",
+    cmd = "Oil",
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = {
+          mappings = {
+            n = {
+              ["<Leader>o"] = { function() require("oil").open() end, desc = "Open folder in Oil" },
             },
-            autocmds = {
-              oil_settings = {
-                {
-                  event = "FileType",
-                  desc = "Disable view saving for oil buffers",
-                  pattern = "oil",
-                  callback = function(args) vim.b[args.buf].view_activated = false end,
-                },
-                {
-                  event = "User",
-                  pattern = "OilActionsPost",
-                  desc = "Close buffers when files are deleted in Oil",
-                  callback = function(args)
-                    if args.data.err then return end
-                    for _, action in ipairs(args.data.actions) do
-                      if action.type == "delete" then
-                        local _, path = require("oil.util").parse_url(action.url)
-                        local bufnr = vim.fn.bufnr(path)
-                        if bufnr ~= -1 then require("astrocore.buffer").wipe(bufnr, true) end
+          },
+          autocmds = {
+            oil_settings = {
+              {
+                event = "FileType",
+                desc = "Disable view saving for oil buffers",
+                pattern = "oil",
+                callback = function(args) vim.b[args.buf].view_activated = false end,
+              },
+              {
+                event = "User",
+                pattern = "OilActionsPost",
+                desc = "Close buffers when files are deleted in Oil",
+                callback = function(args)
+                  if args.data.err then return end
+                  for _, action in ipairs(args.data.actions) do
+                    if action.type == "delete" then
+                      local _, path = require("oil.util").parse_url(action.url)
+                      local bufnr = vim.fn.bufnr(path)
+                      if bufnr ~= -1 then require("astrocore.buffer").wipe(bufnr, true) end
+                    end
+                  end
+                end,
+              },
+              {
+                event = "VimEnter",
+                desc = "Start Oil when vim is opened with no arguments",
+                group = vim.api.nvim_create_augroup("oil_autostart", { clear = true }),
+                callback = vim.schedule_wrap(function()
+                  local should_skip = false
+                  local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)
+                  if
+                    #lines > 1 -- don't open if current buffer has more than 1 line
+                    or (#lines == 1 and lines[1]:len() > 0) -- don't open the current buffer if it has anything on the first line
+                    or #vim.tbl_filter(function(bufnr) return vim.bo[bufnr].buflisted end, vim.api.nvim_list_bufs()) > 1 -- don't open if any listed buffers
+                    or not vim.o.modifiable -- don't open if not modifiable
+                  then
+                    should_skip = true
+                  end
+
+                  local dir
+                  local argc = vim.fn.argc()
+                  if not should_skip and argc > 0 then
+                    local opened = vim.fn.expand "%:p"
+                    local stat = vim.loop.fs_stat(opened)
+                    if stat and stat.type == "directory" then dir = opened end
+                    for _, arg in pairs(vim.v.argv) do
+                      if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
+                        should_skip = true
+                        break
                       end
                     end
-                  end,
-                },
-                {
-                  event = "VimEnter",
-                  desc = "Start Oil when vim is opened with no arguments",
-                  group = vim.api.nvim_create_augroup("oil_autostart", { clear = true }),
-                  callback = vim.schedule_wrap(function()
-                    local should_skip = false
-                    local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)
-                    if
-                      #lines > 1 -- don't open if current buffer has more than 1 line
-                      or (#lines == 1 and lines[1]:len() > 0) -- don't open the current buffer if it has anything on the first line
-                      or #vim.tbl_filter(function(bufnr) return vim.bo[bufnr].buflisted end, vim.api.nvim_list_bufs())
-                        > 1 -- don't open if any listed buffers
-                      or not vim.o.modifiable -- don't open if not modifiable
-                    then
-                      should_skip = true
-                    end
 
-                    local dir
-                    local argc = vim.fn.argc()
-                    if not should_skip and argc > 0 then
-                      local opened = vim.fn.expand "%:p"
-                      local stat = vim.loop.fs_stat(opened)
-                      if stat and stat.type == "directory" then dir = opened end
-                      for _, arg in pairs(vim.v.argv) do
-                        if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
-                          should_skip = true
-                          break
-                        end
-                      end
+                    if not dir then should_skip = true end
+                  end
 
-                      if not dir then should_skip = true end
-                    end
-
-                    if not should_skip then require("oil").open(dir) end
-                  end),
-                },
+                  if not should_skip then require("oil").open(dir) end
+                end),
               },
             },
           },
         },
       },
-      opts = {
-        view_options = {
-          show_hidden = true,
-        },
-      },
     },
+    opts = function(_, opts)
+      local get_icon = require("astroui").get_icon
+      opts.columns = { { "icon", default_file = get_icon "DefaultFile", directory = get_icon "FolderClosed" } }
+      opts.view_options = {
+        show_hidden = true,
+      }
+    end,
   },
 
   {
