@@ -1,50 +1,64 @@
 return {
   {
-    "SuperBo/fugit2.nvim",
+    "nvim-telescope/telescope.nvim",
     dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-tree/nvim-web-devicons",
-      "nvim-lua/plenary.nvim",
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
-          local maps = opts.mappings
-          maps.n["<Leader>gf"] = { "<Cmd>Fugit2<CR>", desc = "Fugit2" }
-          maps.n["<Leader>gG"] = { "<Cmd>Fugit2Graph<CR>", desc = "Fugit2 Graph" }
+          if vim.fn.executable "git" == 1 then
+            local maps = opts.mappings
+            maps.v["<Leader>gc"] = {
+              function() require("telescope.builtin").git_bcommits_range() end,
+              desc = "Git commits (line)",
+            }
+          end
         end,
       },
-      {
-        "chrisgrieser/nvim-tinygit",
-        ft = { "git_rebase", "gitcommit" }, -- so ftplugins are loaded
-        dependencies = {
-          "stevearc/dressing.nvim",
-          {
-            "astronvim/astrocore",
-            opts = function(_, opts)
-              local maps = opts.mappings
-              maps.n["<Leader>gM"] = {
-                function() require("tinygit").smartcommit() end,
-                desc = "new commit",
-              }
-              maps.n["<Leader>gP"] = {
-                function() require("tinygit").push { forcewithlease = true } end,
-                desc = "push",
-              }
-            end,
-          },
-        },
-      },
     },
-    cmd = { "Fugit2", "Fugit2Graph" },
-    opts = {
-      width = "95%",
-      height = "95%",
+  },
+
+  {
+    "superappkid/nvim-tinygit",
+    dependencies = {
+      "stevearc/dressing.nvim",
+      {
+        "astronvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          local git_prefix = "<Leader>g"
+
+          local commit_prefix = git_prefix .. "M"
+          maps.n[commit_prefix] = {
+            desc = "Commit (tinygit)",
+          }
+          maps.n[commit_prefix .. "a"] = {
+            function() require("tinygit").smartCommit() end,
+            desc = "New",
+          }
+          maps.n[commit_prefix .. "e"] = {
+            function() require("tinygit").amendOnlyMsg() end,
+            desc = "Edit",
+          }
+
+          maps.n[git_prefix .. "P"] = {
+            function() require("tinygit").push() end,
+            desc = "Push (tinygit)",
+          }
+          maps.n[git_prefix .. "I"] = {
+            function() require("tinygit").stashPush() end,
+            desc = "Stash Push (tinygit)",
+          }
+          maps.n[git_prefix .. "O"] = {
+            function() require("tinygit").stashPop() end,
+            desc = "Stash Pop (tinygit)",
+          }
+        end,
+      },
     },
   },
 
   {
     "sindrets/diffview.nvim",
-    event = "User AstroGitFile",
     cmd = {
       "DiffviewFileHistory",
       "DiffviewOpen",
@@ -103,7 +117,7 @@ return {
       opts = function(_, opts)
         local maps = opts.mappings
         local prefix = "<Leader>go"
-        maps.n[prefix] = { desc = require("astroui").get_icon("Octo", 1, true) .. "OpenInGH" }
+        maps.n[prefix] = { desc = "Open Web" }
         maps.n[prefix .. "r"] = { "<Cmd>OpenInGHRepo<CR>", desc = "Open git repo in web" }
         maps.n[prefix .. "f"] = { "<Cmd>OpenInGHFile<CR>", desc = "Open git file in web" }
         maps.x[prefix .. "f"] = { "<Cmd>OpenInGHFileLines<CR>", desc = "Open git lines in web" }
@@ -119,6 +133,11 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
+          maps.n["<Leader>gr"] = nil
+          maps.n["<Leader>gH"] = nil
+          maps.n["<Leader>gh"] = { function() require("gitsigns").reset_hunk() end, desc = "Reset Git hunk" }
+          maps.n["<Leader>gH"] = { function() require("gitsigns").reset_buffer() end, desc = "Reset Git buffer" }
+
           maps.v["<Leader>gh"] = {
             function() require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" } end,
             desc = "Reset Git hunk",

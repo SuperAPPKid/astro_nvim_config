@@ -1,5 +1,6 @@
 return {
   "nvim-telescope/telescope.nvim",
+  branch = "master",
   version = false,
   dependencies = {
     "nvim-telescope/telescope-dap.nvim",
