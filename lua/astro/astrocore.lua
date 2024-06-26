@@ -98,6 +98,9 @@ local mapping = {
       desc = "Find Highlight",
     },
 
+    ["<Leader>lR"] = false,
+    ["<Leader>gK"] = false,
+
     ["<Leader>z"] = { desc = " Misc" },
 
     ["<C-q>"] = { "<cmd>qa!<cr>", desc = "Force quit" },
@@ -127,7 +130,7 @@ if is_available "toggleterm.nvim" and vim.fn.executable "yazi" == 1 then
   mapping.n["<Leader>ty"] = {
     function()
       local edit_cmd = ""
-      local file_path = vim.fn.expand('%:p')
+      local file_path = vim.fn.expand "%:p"
       local fm_tmpfile = vim.fn.tempname()
       local feedkeys = function(keys)
         local key_termcode = vim.api.nvim_replace_termcodes(keys, true, true, true)

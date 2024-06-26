@@ -378,7 +378,6 @@ return {
 
   {
     "monaqa/dial.nvim",
-    event = "User AstroFile",
     config = function()
       local augend = require "dial.augend"
       local general_group = {
