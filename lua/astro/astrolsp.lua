@@ -55,7 +55,7 @@ return {
           },
         },
         clangd = {
-          filetypes = { "c", "cpp", "opjc", "objcpp" },
+          filetypes = { "c", "cpp", "objc", "objcpp" },
           capabilities = {
             offsetEncoding = "utf-8",
           },
