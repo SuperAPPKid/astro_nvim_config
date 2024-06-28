@@ -366,9 +366,9 @@ return {
   },
   -- { import = "astrocommunity.motion.tabout-nvim" },
 
-  { import = "astrocommunity.programming-language-support.csv-vim" },
-  { import = "astrocommunity.programming-language-support.nvim-jqx" },
-  { import = "astrocommunity.programming-language-support.xbase" },
+  -- { import = "astrocommunity.programming-language-support.csv-vim" },
+  -- { import = "astrocommunity.programming-language-support.nvim-jqx" },
+  -- { import = "astrocommunity.programming-language-support.rest-nvim" },
 
   {
     import = "astrocommunity.recipes.heirline-vscode-winbar",
