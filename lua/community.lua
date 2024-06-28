@@ -106,7 +106,6 @@ return {
 
   { import = "astrocommunity.git.blame-nvim" },
   { import = "astrocommunity.git.gist-nvim" },
-  -- { import = "astrocommunity.git.gitlinker-nvim" },
   { import = "astrocommunity.git.neogit" },
   {
     "NeogitOrg/neogit",

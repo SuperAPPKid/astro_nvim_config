@@ -110,18 +110,90 @@ return {
   },
 
   {
-    "almo7aya/openingh.nvim",
-    cmd = { "OpenInGHRepo", "OpenInGHFile", "OpenInGHFileLines" },
+    "linrongbin16/gitlinker.nvim",
     dependencies = {
-      "AstroNvim/astrocore",
-      opts = function(_, opts)
-        local maps = opts.mappings
-        local prefix = "<Leader>go"
-        maps.n[prefix] = { desc = "Open Web" }
-        maps.n[prefix .. "r"] = { "<Cmd>OpenInGHRepo<CR>", desc = "Open git repo in web" }
-        maps.n[prefix .. "f"] = { "<Cmd>OpenInGHFile<CR>", desc = "Open git file in web" }
-        maps.x[prefix .. "f"] = { "<Cmd>OpenInGHFileLines<CR>", desc = "Open git lines in web" }
-      end,
+      "nvim-lua/plenary.nvim",
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local gitlinker = require "gitlinker"
+          local actions = require "gitlinker.actions"
+          local maps = opts.mappings
+          local prefix = "<Leader>go"
+
+          maps.n[prefix] = { desc = "Gitlinker" }
+
+          -- repo
+          maps.n[prefix .. "u"] = {
+            function() gitlinker.link { router_type = "repo" } end,
+            silent = true,
+            noremap = true,
+            desc = "GitLink Repo",
+          }
+          maps.n[prefix .. "U"] = {
+            function()
+              gitlinker.link {
+                router_type = "repo",
+                action = actions.system,
+              }
+            end,
+            silent = true,
+            noremap = true,
+            desc = "GitLink! Repo",
+          }
+
+          -- blame
+          maps.n[prefix .. "b"] = {
+            function() gitlinker.link { router_type = "blame" } end,
+            silent = true,
+            noremap = true,
+            desc = "GitLink blame",
+          }
+          maps.v[prefix .. "b"] = maps.n[prefix .. "b"]
+
+          maps.n[prefix .. "B"] = {
+            function()
+              gitlinker.link {
+                router_type = "blame",
+                action = actions.system,
+              }
+            end,
+            silent = true,
+            noremap = true,
+            desc = "GitLink! blame",
+          }
+          maps.v[prefix .. "B"] = maps.n[prefix .. "B"]
+
+          -- browse current branch
+          maps.n[prefix .. "l"] = {
+            function() gitlinker.link { router_type = "current_branch" } end,
+            silent = true,
+            noremap = true,
+            desc = "GitLink",
+          }
+          maps.v[prefix .. "l"] = maps.n[prefix .. "l"]
+
+          maps.n[prefix .. "L"] = {
+            function()
+              gitlinker.link {
+                router_type = "current_branch",
+                action = actions.system,
+              }
+            end,
+            silent = true,
+            noremap = true,
+            desc = "GitLink!",
+          }
+          maps.v[prefix .. "L"] = maps.n[prefix .. "L"]
+        end,
+      },
+    },
+    opts = {
+      router = {
+        repo = {
+          ["."] = "https://" .. "{_A.HOST}/" .. "{_A.ORG}/" .. "{_A.REPO}",
+        },
+      },
     },
   },
 
