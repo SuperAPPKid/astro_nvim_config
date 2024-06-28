@@ -1188,4 +1188,29 @@ return {
       },
     },
   },
+
+  {
+    "mistweaverco/kulala.nvim",
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["<Leader>zr"] = {
+            function() require("kulala").run() end,
+            desc = "Run the current request",
+          }
+          maps.n["]r"] = {
+            function() require("kulala").jump_next() end,
+            desc = "Jump to the next request",
+          }
+          maps.n["[r"] = {
+            function() require("kulala").jump_prev() end,
+            desc = "Jump to the previous request",
+          }
+        end,
+      },
+    },
+    ft = "http",
+  },
 }

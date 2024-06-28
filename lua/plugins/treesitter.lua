@@ -68,6 +68,7 @@ return {
       "gitattributes",
       "gitcommit",
       "gitignore",
+      "http",
     })
 
     opts.textobjects.move.goto_next_start = {

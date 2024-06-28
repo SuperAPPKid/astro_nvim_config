@@ -420,16 +420,22 @@ return {
 
   {
     "RRethy/vim-illuminate",
-    keys = {
+    dependencies = {
       {
-        "]r",
-        function() require("illuminate").goto_next_reference() end,
-        desc = "Move to next reference under cursor",
-      },
-      {
-        "[r",
-        function() require("illuminate").goto_prev_reference() end,
-        desc = "Move to previous reference under cursor",
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["]c"] = {
+            function() require("illuminate").goto_next_reference() end,
+            desc = maps.n["]r"].desc or "Move to next reference under cursor",
+          }
+          maps.n["[c"] = {
+            function() require("illuminate").goto_prev_reference() end,
+            desc = maps.n["[r"].desc or "Move to previous reference under cursor",
+          }
+          maps.n["]r"] = false
+          maps.n["[r"] = false
+        end,
       },
     },
   },
