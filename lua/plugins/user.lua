@@ -714,34 +714,6 @@ return {
   },
 
   {
-    {
-      "rest-nvim/rest.nvim",
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-      },
-      branch = "main",
-      ft = { "http", "json" },
-      cmd = {
-        "RestNvim",
-        "RestNvimPreview",
-        "RestNvimLast",
-      },
-      keys = {
-        { "<Leader>zr", "<Plug>RestNvim", desc = "Run request" },
-      },
-    },
-    {
-      "nvim-treesitter/nvim-treesitter",
-      opts = function(_, opts)
-        if opts.ensure_installed ~= "all" then
-          opts.ensure_installed =
-            require("astrocore").list_insert_unique(opts.ensure_installed, { "lua", "xml", "http", "json", "graphql" })
-        end
-      end,
-    },
-  },
-
-  {
     "amitds1997/remote-nvim.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim", -- For standard functions
