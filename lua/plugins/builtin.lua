@@ -91,7 +91,6 @@ return {
     config = function(_, opts)
       local cmp = require "cmp"
       cmp.setup(opts)
-
       cmp.setup.filetype({ "help", "lazy" }, {
         sources = {
           { name = "path" },
@@ -102,8 +101,19 @@ return {
     opts = function(_, opts)
       local cmp = require "cmp"
 
+      opts.sources = cmp.config.sources {
+        { name = "nvim_lsp", priority = 1000 },
+        { name = "nvim_lua", priority = 900 },
+        { name = "buffer", priority = 800 },
+        { name = "luasnip", priority = 700 },
+        { name = "codeium", priority = 600 },
+        { name = "path", priority = 500 },
+        { name = "spell", priority = 400 },
+        { name = "calc", priority = 300 },
+      }
+
       local kind_icons = {
-        Text = "󰉿",
+        Text = "",
         Method = "m",
         Function = "󰊕",
         Constructor = "",
@@ -124,7 +134,7 @@ return {
         Folder = "󰉋",
         EnumMember = "",
         Constant = "󰇽",
-        Struct = "",
+        Struct = "󱥒",
         Event = "",
         Operator = "󰆕",
         TypeParameter = "󰊄",
@@ -132,36 +142,36 @@ return {
         Copilot = "",
       }
 
-      opts.sources = cmp.config.sources {
-        { name = "nvim_lsp", priority = 900 },
-        { name = "nvim_lua", priority = 800 },
-        { name = "luasnip", priority = 700 },
-        { name = "buffer", priority = 600 },
-        { name = "codeium", priority = 500 },
-        { name = "path", priority = 400 },
-        { name = "spell", priority = 300 },
-        { name = "calc", priority = 300 },
+      local menu_names = {
+        nvim_lsp = "LSP",
+        nvim_lua = "lua",
+        luasnip = "Snippet",
+        buffer = "Buffer",
+        path = "PATH",
+        emoji = "emoji",
+        calc = "Calc",
+        spell = "Spell",
+        codeium = "Codeium",
+        cmdline = "cmd",
+        git = "Git",
       }
 
       opts.formatting = {
         fields = { "abbr", "kind", "menu" },
-        format = function(entry, vim_item)
-          local menu_name = ({
-            nvim_lsp = "LSP",
-            nvim_lua = "lua",
-            luasnip = "Snippet",
-            buffer = "Buffer",
-            path = "PATH",
-            emoji = "emoji",
-            calc = "Calc",
-            spell = "Spell",
-            codeium = "Codeium",
-            cmdline = "cmd",
-            git = "Git",
-          })[entry.source.name]
-          vim_item.kind = "[" .. kind_icons[vim_item.kind] .. "] " .. vim_item.kind
-          vim_item.menu = "[" .. menu_name .. "]"
-          return vim_item
+        format = function(entry, item)
+          local ok, hl_colors = pcall(require, "nvim-highlight-colors")
+          local color_item = ok and hl_colors.format(entry, { kind = item.kind })
+
+          if color_item and color_item.abbr_hl_group then
+            item.kind_hl_group = color_item.abbr_hl_group
+            item.kind = " " .. color_item.abbr .. " " .. item.kind
+          else
+            item.kind = " " .. kind_icons[item.kind] .. " " .. item.kind
+          end
+
+          local menu_name = menu_names[entry.source.name]
+          if menu_name then item.menu = "[" .. menu_name .. "]" end
+          return item
         end,
       }
 
