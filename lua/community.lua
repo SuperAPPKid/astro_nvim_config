@@ -72,11 +72,6 @@ return {
     },
   },
   { import = "astrocommunity.editing-support.comment-box-nvim" },
-  { import = "astrocommunity.editing-support.conform-nvim" },
-  {
-    "stevearc/conform.nvim",
-    opts = { notify_on_error = false },
-  },
   { import = "astrocommunity.editing-support.hypersonic-nvim" },
   {
     "tomiis4/Hypersonic.nvim",

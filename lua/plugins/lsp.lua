@@ -355,4 +355,84 @@ return {
       }
     end,
   },
+
+  {
+    "stevearc/conform.nvim",
+    event = "User AstroFile",
+    cmd = "ConformInfo",
+    dependencies = {
+      "williamboman/mason.nvim",
+      { "jay-babu/mason-null-ls.nvim", opts = { methods = { formatting = false } } },
+      {
+        "AstroNvim/astrolsp",
+        opts = {
+          options = { opt = { formatexpr = "v:lua.require'conform'.formatexpr()" } },
+          commands = {
+            Format = {
+              function(args)
+                local range = nil
+                if args.count ~= -1 then
+                  local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+                  range = {
+                    start = { args.line1, 0 },
+                    ["end"] = { args.line2, end_line:len() },
+                  }
+                end
+                require("conform").format { async = true, lsp_format = "fallback", range = range }
+              end,
+              cond = function(client)
+                local formatting_disabled = vim.tbl_get(require("astrolsp").config, "formatting", "disabled")
+                return client.supports_method "textDocument/formatting"
+                  and formatting_disabled ~= true
+                  and not vim.tbl_contains(formatting_disabled, client.name)
+              end,
+              desc = "Format buffer",
+              range = true,
+            },
+          },
+          mappings = {
+            n = {
+              ["<Leader>lf"] = { function() vim.cmd.Format() end, desc = "Format buffer" },
+              ["<Leader>uf"] = {
+                function()
+                  if vim.b.autoformat == nil then
+                    if vim.g.autoformat == nil then vim.g.autoformat = true end
+                    vim.b.autoformat = vim.g.autoformat
+                  end
+                  vim.b.autoformat = not vim.b.autoformat
+                  require("astrocore").notify(
+                    string.format("Buffer autoformatting %s", vim.b.autoformat and "on" or "off")
+                  )
+                end,
+                desc = "Toggle autoformatting (buffer)",
+              },
+              ["<Leader>uF"] = {
+                function()
+                  if vim.g.autoformat == nil then vim.g.autoformat = true end
+                  vim.g.autoformat = not vim.g.autoformat
+                  vim.b.autoformat = nil
+                  require("astrocore").notify(
+                    string.format("Global autoformatting %s", vim.g.autoformat and "on" or "off")
+                  )
+                end,
+                desc = "Toggle autoformatting (global)",
+              },
+            },
+          },
+        },
+      },
+    },
+    opts = {
+      notify_on_error = false,
+      format_on_save = function(bufnr)
+        if vim.g.autoformat == nil then vim.g.autoformat = true end
+        local autoformat = vim.b[bufnr].autoformat
+        if autoformat == nil then autoformat = vim.g.autoformat end
+        if autoformat then
+          local timeout_ms = vim.tbl_get(require("astrolsp").config, "formatting", "timeout_ms") or 500
+          return { timeout_ms = timeout_ms, lsp_format = "fallback" }
+        end
+      end,
+    },
+  },
 }
