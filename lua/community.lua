@@ -446,7 +446,6 @@ return {
   },
   { import = "astrocommunity.pack.sql" },
   { import = "astrocommunity.pack.svelte" },
-  { import = "astrocommunity.pack.swift" },
   { import = "astrocommunity.pack.tailwindcss" },
   { import = "astrocommunity.pack.terraform" },
   { import = "astrocommunity.pack.templ" },
