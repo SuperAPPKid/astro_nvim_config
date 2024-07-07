@@ -34,7 +34,7 @@ return {
     "hrsh7th/nvim-cmp",
     dependencies = {
       { "chrisgrieser/cmp-nerdfont" },
-      { "hrsh7th/cmp-emoji" },
+      -- { "hrsh7th/cmp-emoji" },
       { "js-everts/cmp-tailwind-colors", enabled = false },
       { "hrsh7th/cmp-nvim-lua" },
       { "hrsh7th/cmp-calc" },
@@ -110,6 +110,7 @@ return {
         { name = "buffer", priority = 800 },
         { name = "luasnip", priority = 700 },
         { name = "nerdfont", priority = 700 },
+        -- { name = "emoji", priority = 700 },
         { name = "codeium", priority = 600 },
         { name = "path", priority = 500 },
         { name = "spell", priority = 400 },
