@@ -225,6 +225,13 @@ return {
         end,
       },
     },
+    opts = function(_, opts)
+      local on_attach = opts.on_attach
+      opts.on_attach = function(bufnr)
+        on_attach(bufnr)
+        vim.keymap.del({ "o", "x" }, "ig", { buffer = bufnr })
+      end
+    end,
   },
 
   {
