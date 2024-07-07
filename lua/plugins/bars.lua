@@ -214,7 +214,7 @@ return {
           enable = function(buf, win, _)
             return vim.fn.win_gettype(win) == ""
               and vim.wo[win].winbar == ""
-              and vim.bo[buf].bt == ""
+              and (vim.bo[buf].bt == "" or vim.bo[buf].bt == "acwrite")
               and (
                 vim.bo[buf].ft == "markdown"
                 or vim.bo[buf].ft == "oil"
