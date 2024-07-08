@@ -43,31 +43,6 @@ return {
             desc = "Find words in all files",
           }
         end
-
-        local dap_prefix = "<Leader>df"
-        maps.n[dap_prefix] = {
-          desc = "DAP Funcs",
-        }
-        maps.n[dap_prefix .. "c"] = {
-          "<Cmd>lua require('telescope').extensions.dap.commands()<CR>",
-          desc = "Telescope DAP commands",
-        }
-        maps.n[dap_prefix .. "f"] = {
-          "<Cmd>lua require('telescope').extensions.dap.frames()<CR>",
-          desc = "Telescope DAP frames",
-        }
-        maps.n[dap_prefix .. "g"] = {
-          "<Cmd>lua require('telescope').extensions.dap.configurations()<CR>",
-          desc = "Telescope DAP configurations",
-        }
-        maps.n[dap_prefix .. "l"] = {
-          "<Cmd>lua require('telescope').extensions.dap.list_breakpoints()<CR>",
-          desc = "Telescope DAP list breakpoints",
-        }
-        maps.n[dap_prefix .. "v"] = {
-          "<Cmd>lua require('telescope').extensions.dap.variables()<CR>",
-          desc = "Telescope DAP variables",
-        }
       end,
     },
   },
