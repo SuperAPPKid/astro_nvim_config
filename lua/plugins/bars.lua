@@ -153,6 +153,7 @@ return {
           "TelescopePrompt",
           "alpha",
           "sagaoutline",
+          "leetcode.nvim",
         },
         segments = {
           {
