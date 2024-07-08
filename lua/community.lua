@@ -453,5 +453,6 @@ return {
   { import = "astrocommunity.pack.typescript-all-in-one" },
   { import = "astrocommunity.pack.vue" },
   { import = "astrocommunity.pack.wgsl" },
+  { import = "astrocommunity.pack.xml" },
   { import = "astrocommunity.pack.yaml" },
 }
