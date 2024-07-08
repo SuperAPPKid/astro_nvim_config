@@ -40,16 +40,6 @@ return {
       { "hrsh7th/cmp-calc" },
       { "f3fora/cmp-spell" },
       {
-        "Exafunction/codeium.nvim",
-        config = function(_, opts) require("codeium").setup(opts) end,
-        opts = {
-          enable_chat = true,
-        },
-        dependencies = {
-          "nvim-lua/plenary.nvim",
-        },
-      },
-      {
         "Exafunction/codeium.vim",
         dependencies = {
           {
@@ -89,6 +79,16 @@ return {
           vim.g.codeium_disable_bindings = 1
           vim.g.codeium_manual = 1
         end,
+      },
+      {
+        "Exafunction/codeium.nvim",
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+        },
+        config = function(_, opts) require("codeium").setup(opts) end,
+        opts = {
+          enable_chat = true,
+        },
       },
     },
     config = function(_, opts)
