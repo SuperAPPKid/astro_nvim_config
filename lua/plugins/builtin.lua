@@ -472,4 +472,21 @@ return {
     "b0o/SchemaStore.nvim",
     enabled = false,
   },
+
+  {
+    "max397574/better-escape.nvim",
+    opts = {
+      mappings = {
+        i = {
+          j = {
+            j = "<Esc>",
+          },
+        },
+        c = {},
+        t = {},
+        v = {},
+        s = {},
+      },
+    },
+  },
 }
