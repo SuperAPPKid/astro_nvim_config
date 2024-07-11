@@ -83,6 +83,7 @@ return {
   -- { import = "astrocommunity.editing-support.nvim-devdocs" },
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
   { import = "astrocommunity.editing-support.nvim-regexplainer" },
+  { import = "astrocommunity.editing-support.nvim-origami" },
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
   { import = "astrocommunity.editing-support.refactoring-nvim" },
   { import = "astrocommunity.editing-support.telescope-undo-nvim" },
@@ -403,6 +404,7 @@ return {
   { import = "astrocommunity.pack.angular" },
   { import = "astrocommunity.pack.ansible" },
   { import = "astrocommunity.pack.bash" },
+  { import = "astrocommunity.pack.chezmoi" },
   { import = "astrocommunity.pack.cpp" },
   {
     "p00f/clangd_extensions.nvim",
@@ -430,6 +432,7 @@ return {
   { import = "astrocommunity.pack.kotlin" },
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.markdown" },
+  { import = "astrocommunity.pack.nix" },
   { import = "astrocommunity.pack.proto" },
   { import = "astrocommunity.pack.python" },
   { import = "astrocommunity.pack.ruby" },
