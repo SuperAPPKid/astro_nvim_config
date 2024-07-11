@@ -1190,11 +1190,11 @@ return {
             function() require("kulala").run() end,
             desc = "Run the current request",
           }
-          maps.n["]r"] = {
+          maps.n["]R"] = {
             function() require("kulala").jump_next() end,
             desc = "Jump to the next request",
           }
-          maps.n["[r"] = {
+          maps.n["[R"] = {
             function() require("kulala").jump_prev() end,
             desc = "Jump to the previous request",
           }
