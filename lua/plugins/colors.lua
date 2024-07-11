@@ -18,38 +18,6 @@ return {
       vim.api.nvim_del_user_command "CccHighlighterEnable"
       vim.api.nvim_del_user_command "CccHighlighterDisable"
       vim.api.nvim_del_user_command "CccHighlighterToggle"
-
-      -- local highlighter = opts.highlighter
-      -- local action = function() vim.cmd.CccHighlighterToggle() end
-      -- if highlighter then
-      --   local flag = highlighter.auto_enable
-      --   local toggle = vim.schedule_wrap(function()
-      --     if flag then
-      --       vim.cmd.CccHighlighterEnable()
-      --     else
-      --       vim.cmd.CccHighlighterDisable()
-      --     end
-      --   end)
-      --   action = function()
-      --     flag = not flag
-      --     toggle()
-      --   end
-      --
-      --   vim.api.nvim_create_autocmd({ "BufEnter" }, {
-      --     callback = toggle,
-      --   })
-      --
-      --   toggle()
-      -- end
-      --
-      -- require("astrocore").set_mappings {
-      --   n = {
-      --     ["<Leader>uC"] = {
-      --       action,
-      --       desc = "Toggle colorizer",
-      --     },
-      --   },
-      -- }
     end,
     opts = {
       highlighter = {
