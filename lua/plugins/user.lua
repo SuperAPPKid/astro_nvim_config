@@ -504,74 +504,74 @@ return {
   },
 
   {
-    {
-      "rcarriga/nvim-notify",
-      config = function(_, opts)
-        local notify = require "notify"
-        notify.setup(opts)
-      end,
-      opts = {
-        max_width = 36,
-      },
-    },
-    {
-      "j-hui/fidget.nvim",
-      dependencies = {
-        {
-          "AstroNvim/astrocore",
-          opts = function(_, opts)
-            local maps = opts.mappings
-            maps.n["<Leader>zn"] = {
-              "<cmd>Fidget history<CR>",
-              desc = "fidget history",
-            }
-          end,
+    "j-hui/fidget.nvim",
+    specs = {
+      {
+        "rcarriga/nvim-notify",
+        config = function(_, opts)
+          local notify = require "notify"
+          notify.setup(opts)
+        end,
+        opts = {
+          max_width = 36,
         },
       },
-      event = "User AstroFile",
-      config = function(_, opts)
-        local fidget = require "fidget"
-        fidget.setup(opts)
-        vim.notify = fidget.notify
-      end,
-      opts = function(_, _)
-        require "fidget"
-        return {
-          progress = {
-            suppress_on_insert = true, -- Suppress new messages while in insert mode
-            ignore_done_already = true, -- Ignore new tasks that are already complete
-            ignore_empty_message = true, -- Ignore new tasks that don't contain a message
-          },
-          notification = {
-            configs = {
-              default = require("astrocore").extend_tbl(require("fidget.notification").default_config, {
-                icon = "󱅫",
-                icon_on_left = true,
-              }),
-            },
-            -- Conditionally redirect notifications to another backend
-            redirect = function(msg, level, opts)
-              if
-                (type(level) == "number" and level >= vim.log.levels.ERROR)
-                or (opts and opts.title and string.find(opts.title, "tinygit"))
-              then
-                return require("fidget.integration.nvim-notify").delegate(msg, level, opts)
-              end
-            end,
-            view = {
-              render_message = function(msg, cnt)
-                msg = cnt == 1 and msg or string.format("(%dx) %s", cnt, msg)
-                msg = #msg > 20 and vim.fn.strcharpart(msg, 0, 16) .. "..." or msg -- truncate to 16 characters
-                return msg
-              end,
-            },
-            window = {
-              winblend = 50,
-            },
-          },
-        }
-      end,
     },
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["<Leader>zn"] = {
+            "<cmd>Fidget history<CR>",
+            desc = "fidget history",
+          }
+        end,
+      },
+    },
+    event = "User AstroFile",
+    config = function(_, opts)
+      local fidget = require "fidget"
+      fidget.setup(opts)
+      vim.notify = fidget.notify
+    end,
+    opts = function(_, _)
+      require "fidget"
+      return {
+        progress = {
+          suppress_on_insert = true, -- Suppress new messages while in insert mode
+          ignore_done_already = true, -- Ignore new tasks that are already complete
+          ignore_empty_message = true, -- Ignore new tasks that don't contain a message
+        },
+        notification = {
+          configs = {
+            default = require("astrocore").extend_tbl(require("fidget.notification").default_config, {
+              icon = "󱅫",
+              icon_on_left = true,
+            }),
+          },
+          -- Conditionally redirect notifications to another backend
+          redirect = function(msg, level, opts)
+            if
+              (type(level) == "number" and level >= vim.log.levels.ERROR)
+              or (opts and opts.title and string.find(opts.title, "tinygit"))
+            then
+              return require("fidget.integration.nvim-notify").delegate(msg, level, opts)
+            end
+          end,
+          view = {
+            render_message = function(msg, cnt)
+              msg = cnt == 1 and msg or string.format("(%dx) %s", cnt, msg)
+              msg = #msg > 20 and vim.fn.strcharpart(msg, 0, 16) .. "..." or msg -- truncate to 16 characters
+              return msg
+            end,
+          },
+          window = {
+            winblend = 50,
+          },
+        },
+      }
+    end,
   },
 
   {
