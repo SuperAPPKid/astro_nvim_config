@@ -79,7 +79,6 @@ return {
       enable_cmdline = false,
     },
   },
-  -- { import = "astrocommunity.editing-support.multicursors-nvim" },
   { import = "astrocommunity.editing-support.neogen" },
   -- { import = "astrocommunity.editing-support.nvim-devdocs" },
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
@@ -102,10 +101,6 @@ return {
   { import = "astrocommunity.git.blame-nvim" },
   { import = "astrocommunity.git.gist-nvim" },
   { import = "astrocommunity.git.neogit" },
-  {
-    "NeogitOrg/neogit",
-    -- branch = "nightly",
-  },
 
   { import = "astrocommunity.indent.indent-rainbowline" },
 
