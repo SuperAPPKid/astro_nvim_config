@@ -1064,61 +1064,59 @@ return {
   },
 
   {
-    {
-      "jbyuki/venn.nvim",
-      cmd = "VBox",
-      dependencies = {
-        {
-          "AstroNvim/astrocore",
-          opts = function(_, opts)
-            local astrocore = require "astrocore"
-            if not astrocore.is_available "hydra.nvim" then return end
-            if not opts.commands then opts.comands = {} end
-            opts.commands.ToggleVenn = {
-              function()
-                local hydra = vim.tbl_get(astrocore.plugin_opts "hydra.nvim", "Draw Diagram", "hydra")
-                if hydra then
-                  if hydra.layer.active then
-                    hydra:exit()
-                  else
-                    hydra:activate()
-                  end
+    "jbyuki/venn.nvim",
+    cmd = "VBox",
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local astrocore = require "astrocore"
+          if not astrocore.is_available "hydra.nvim" then return end
+          if not opts.commands then opts.comands = {} end
+          opts.commands.ToggleVenn = {
+            function()
+              local hydra = vim.tbl_get(astrocore.plugin_opts "hydra.nvim", "Draw Diagram", "hydra")
+              if hydra then
+                if hydra.layer.active then
+                  hydra:exit()
+                else
+                  hydra:activate()
                 end
-              end,
-              desc = "Toggle venn diagramming mode",
-            }
-          end,
-        },
+              end
+            end,
+            desc = "Toggle venn diagramming mode",
+          }
+        end,
       },
-    },
-    {
-      "anuvyklack/hydra.nvim",
-      opts = function(_, opts)
-        local hint = [[
+      {
+        "anuvyklack/hydra.nvim",
+        opts = function(_, opts)
+          local hint = [[
  Arrow^^^^^^   Select region with <C-v> 
  ^ ^ _K_ ^ ^   _f_: surround it with box
  _H_ ^ ^ _L_
  ^ ^ _J_ ^ ^                      _<Esc>_
 ]]
-        opts["Draw Diagram"] = {
-          hint = hint,
-          config = {
-            invoke_on_body = true,
-            hint = { border = "double" },
-            on_enter = function() vim.o.virtualedit = "all" end,
-          },
-          mode = "n",
-          body = "<Leader>zv",
-          heads = {
-            { "H", "<C-v>h:VBox<CR>" },
-            { "J", "<C-v>j:VBox<CR>" },
-            { "K", "<C-v>k:VBox<CR>" },
-            { "L", "<C-v>l:VBox<CR>" },
-            { "f", ":VBox<CR>", { mode = "v" } },
-            { "<Esc>", nil, { exit = true } },
-          },
-        }
-      end,
+          opts["Draw Diagram"] = {
+            hint = hint,
+            config = {
+              invoke_on_body = true,
+              hint = { border = "double" },
+              on_enter = function() vim.o.virtualedit = "all" end,
+            },
+            mode = "n",
+            body = "<Leader>zv",
+            heads = {
+              { "H", "<C-v>h:VBox<CR>" },
+              { "J", "<C-v>j:VBox<CR>" },
+              { "K", "<C-v>k:VBox<CR>" },
+              { "L", "<C-v>l:VBox<CR>" },
+              { "f", ":VBox<CR>", { mode = "v" } },
+              { "<Esc>", nil, { exit = true } },
+            },
+          }
+        end,
+      },
     },
   },
 
