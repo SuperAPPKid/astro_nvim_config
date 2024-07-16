@@ -294,34 +294,50 @@ return {
 
   {
     "folke/which-key.nvim",
-    --   config = function(plugin, opts)
-    --     require "plugins.configs.which-key"(plugin, opts) -- include the default astronvim config that calls the setup call
-    --     -- Add bindings which show up as group name
-    --     local wk = require "which-key"
-    --     wk.register({
-    --       b = { name = "Buffer" },
-    --     }, { mode = "n", prefix = "<Leader>" })
-    --   end,
-    opts = function(_, opts)
-      opts.triggers_blacklist = {
-        -- list of mode / prefixes that should never be hooked by WhichKey
-        -- this is mostly relevant for keymaps that start with a native binding
-        v = { "d", "D", "s", "S", "f", "F", "t", "T", "y", "Y", "m", "M", "c", "C", "v", "V" },
-        n = { "d", "D", "s", "S", "f", "F", "t", "T", "y", "Y", "m", "M", "c", "C", "v", "V" },
-      }
-      opts.plugins = {
+    opts = {
+      preset = "modern",
+      filter = function(mapping)
+        if (mapping.desc or "") == "" then return false end
+        local blacklist = ({
+          v = { "d", "D", "s", "S", "f", "F", "t", "T", "y", "Y", "m", "M", "c", "C" },
+          x = { "d", "D", "s", "S", "f", "F", "t", "T", "y", "Y", "m", "M", "c", "C" },
+          n = { "d", "D", "s", "S", "f", "F", "t", "T", "y", "Y", "m", "M", "c", "C" },
+        })[mapping.mode]
+        if blacklist and vim.tbl_contains(blacklist, mapping.lhs) then return false end
+        return true
+      end,
+      modes = {
+        i = false, -- Insert mode
+        o = false, -- Operator pending mode
+        t = false, -- Terminal mode
+        c = false, -- Command mode
+        defer = {
+          v = true,
+          V = true,
+          ["<C-V>"] = true,
+        },
+      },
+      sort = { "group", "alphanum" },
+      plugins = {
         marks = false, -- shows a list of your marks on ' and `
         registers = false, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+        spelling = { enabled = false },
         presets = {
           operators = false,
           motions = false, -- adds help for motions
           text_objects = false, -- help for text objects triggered after entering an operator
           windows = false, -- default bindings on <c-w>
           nav = false, -- misc bindings to work with windows
+          z = false,
+          g = false,
         },
-      }
-      return opts
-    end,
+      },
+      win = {
+        padding = { 0, 0 }, -- extra window padding [top/bottom, right/left]
+        border = "double",
+      },
+      show_help = false,
+    },
   },
 
   {
