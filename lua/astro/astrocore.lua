@@ -116,6 +116,7 @@ local mapping = {
     ["<C-h>"] = "<Left>",
   },
   x = {
+    ["<Leader>z"] = { desc = " Misc" },
     ["<C-s>"] = save_file,
     gra = false,
   },
