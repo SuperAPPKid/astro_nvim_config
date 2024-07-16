@@ -140,7 +140,7 @@ return {
             position = "middle",
           },
         },
-        mode = { "n", "x" },
+        mode = "n",
         body = "<Leader>uo",
         heads = {
           {
