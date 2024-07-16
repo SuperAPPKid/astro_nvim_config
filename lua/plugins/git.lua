@@ -205,12 +205,18 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-          maps.n["<Leader>gr"] = nil
-          maps.n["<Leader>gH"] = nil
-          maps.n["<Leader>gh"] = { function() require("gitsigns").reset_hunk() end, desc = "Reset Git hunk" }
-          maps.n["<Leader>gH"] = { function() require("gitsigns").reset_buffer() end, desc = "Reset Git buffer" }
 
-          maps.v["<Leader>gh"] = {
+          maps.n["<Leader>gl"] = { function() require("gitsigns").blame_line() end, desc = "View Git blame" }
+          maps.n["<Leader>gr"] = { function() require("gitsigns").reset_hunk() end, desc = "Reset Git hunk" }
+          maps.n["<Leader>gR"] = { function() require("gitsigns").reset_buffer() end, desc = "Reset Git buffer" }
+          maps.n["<Leader>gp"] = {}
+          maps.n["<Leader>gs"] = { function() require("gitsigns").stage_hunk() end, desc = "Stage Git hunk" }
+          maps.n["<Leader>gS"] = { function() require("gitsigns").stage_buffer() end, desc = "Stage Git buffer" }
+          maps.n["<Leader>gu"] = { function() require("gitsigns").undo_stage_hunk() end, desc = "Unstage Git hunk" }
+          maps.n["]g"] = { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }
+          maps.n["[g"] = { function() require("gitsigns").prev_hunk() end, desc = "Previous Git hunk" }
+
+          maps.v["<Leader>gr"] = {
             function() require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" } end,
             desc = "Reset Git hunk",
           }
@@ -222,16 +228,14 @@ return {
             function() require("gitsigns").undo_stage_hunk { vim.fn.line ".", vim.fn.line "v" } end,
             desc = "Unstage Git hunk",
           }
+
+          for _, mode in ipairs { "o", "x" } do
+            maps[mode]["h"] = { ":<C-U>Gitsigns select_hunk<CR>", desc = "inside Git hunk" }
+          end
         end,
       },
     },
-    opts = function(_, opts)
-      local on_attach = opts.on_attach
-      opts.on_attach = function(bufnr)
-        on_attach(bufnr)
-        vim.keymap.del({ "o", "x" }, "ig", { buffer = bufnr })
-      end
-    end,
+    opts = function(_, opts) opts.on_attach = nil end,
   },
 
   {
@@ -313,6 +317,28 @@ return {
     opts = {
       use_diagnostic_signs = true,
       mappings = {},
+    },
+  },
+
+  {
+    "FabijanZulj/blame.nvim",
+    cmd = "BlameToggle",
+    opts = {},
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        ---@type AstroCoreOpts
+        opts = {
+          mappings = {
+            n = {
+              ["<Leader>gL"] = {
+                "<cmd>BlameToggle<cr>",
+                desc = "Toggle git blame",
+              },
+            },
+          },
+        },
+      },
     },
   },
 }
