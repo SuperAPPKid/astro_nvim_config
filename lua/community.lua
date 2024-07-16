@@ -54,7 +54,7 @@ return {
   { import = "astrocommunity.diagnostics.trouble-nvim" },
 
   -- { import = "astrocommunity.editing-support.chatgpt-nvim" },
-  { import = "astrocommunity.editing-support.bigfile-nvim" },
+  -- { import = "astrocommunity.editing-support.bigfile-nvim" },
   { import = "astrocommunity.editing-support.cloak-nvim" },
   {
     "laytan/cloak.nvim",
