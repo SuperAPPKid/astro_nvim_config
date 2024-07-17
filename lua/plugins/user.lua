@@ -1179,6 +1179,7 @@ return {
 
   {
     "mistweaverco/kulala.nvim",
+    config = true,
     dependencies = {
       {
         "AstroNvim/astrocore",
@@ -1187,6 +1188,10 @@ return {
           maps.n["<Leader>zr"] = {
             function() require("kulala").run() end,
             desc = "Run the current request",
+          }
+          maps.n["<Leader>zR"] = {
+            function() require("kulala").toggle_view() end,
+            desc = "Toggle request Header/Body",
           }
           maps.n["]R"] = {
             function() require("kulala").jump_next() end,
