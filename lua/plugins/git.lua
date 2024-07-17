@@ -323,7 +323,7 @@ return {
   {
     "FabijanZulj/blame.nvim",
     cmd = "BlameToggle",
-    opts = {},
+    config = true,
     dependencies = {
       {
         "AstroNvim/astrocore",

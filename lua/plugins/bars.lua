@@ -154,6 +154,7 @@ return {
           "alpha",
           "sagaoutline",
           "leetcode.nvim",
+          "blame",
         },
         segments = {
           {
@@ -212,12 +213,13 @@ return {
     opts = function(_, opts)
       opts.general = {
         enable = function(buf, win, _)
+          local b, w = vim.bo[buf], vim.wo[win]
           return vim.fn.win_gettype(win) == ""
-            and vim.wo[win].winbar == ""
-            and (vim.bo[buf].bt == "" or vim.bo[buf].bt == "acwrite")
+            and w.winbar == ""
+            and (b.bt == "" or b.bt == "acwrite")
             and (
-              vim.bo[buf].ft == "markdown"
-              or vim.bo[buf].ft == "oil"
+              b.ft == "markdown"
+              or b.ft == "oil"
               or (buf and vim.api.nvim_buf_is_valid(buf) and (pcall(vim.treesitter.get_parser, buf)) and true or false)
             )
         end,
@@ -230,7 +232,9 @@ return {
         },
         sources = function(buf, _)
           local sources = require "dropbar.sources"
-          if vim.bo[buf].ft == "oil" then
+          local b = vim.bo[buf]
+
+          if b.ft == "oil" then
             return {
               {
                 get_symbols = function(_, _, _)
@@ -244,15 +248,16 @@ return {
               },
             }
           end
-          if vim.bo[buf].ft == "markdown" then
-            return {
-              sources.path,
-              sources.markdown,
-            }
-          end
-          if vim.bo[buf].buftype == "terminal" then return {
-            sources.terminal,
+
+          if b.ft == "markdown" then return {
+            sources.path,
+            sources.markdown,
           } end
+
+          if b.bt == "terminal" then return { sources.terminal } end
+
+          if b.bt == "nofile" then return {} end
+
           return {
             sources.path,
             require("dropbar.utils").source.fallback {
