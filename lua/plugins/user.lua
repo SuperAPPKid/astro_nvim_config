@@ -373,6 +373,10 @@ return {
       opts.view_options = {
         show_hidden = true,
       }
+      opts.keymaps = {
+        ["<C-s>"] = false,
+        ["<C-h>"] = false,
+      }
     end,
   },
 
