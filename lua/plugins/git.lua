@@ -213,6 +213,7 @@ return {
           maps.n["<Leader>gs"] = { function() require("gitsigns").stage_hunk() end, desc = "Stage Git hunk" }
           maps.n["<Leader>gS"] = { function() require("gitsigns").stage_buffer() end, desc = "Stage Git buffer" }
           maps.n["<Leader>gu"] = { function() require("gitsigns").undo_stage_hunk() end, desc = "Unstage Git hunk" }
+          maps.n["<Leader>gh"] = { function() require("gitsigns").select_hunk() end, desc = "select Git hunk" }
           maps.n["]g"] = { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }
           maps.n["[g"] = { function() require("gitsigns").prev_hunk() end, desc = "Previous Git hunk" }
 
@@ -228,10 +229,6 @@ return {
             function() require("gitsigns").undo_stage_hunk { vim.fn.line ".", vim.fn.line "v" } end,
             desc = "Unstage Git hunk",
           }
-
-          for _, mode in ipairs { "o", "x" } do
-            maps[mode]["h"] = { ":<C-U>Gitsigns select_hunk<CR>", desc = "inside Git hunk" }
-          end
         end,
       },
     },
