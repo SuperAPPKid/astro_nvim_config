@@ -313,46 +313,6 @@ return {
       },
     },
   },
-  { import = "astrocommunity.motion.mini-ai" },
-  {
-    "echasnovski/mini.ai",
-    opts = function(_, _)
-      local gen_spec = require("mini.ai").gen_spec
-      return {
-        use_nvim_treesitter = false,
-        n_lines = 1500,
-        search_method = "cover",
-        custom_textobjects = {
-          ["c"] = gen_spec.treesitter {
-            a = { "@conditional.outer", "@loop.outer" },
-            i = { "@conditional.inner", "@loop.inner" },
-          },
-          ["f"] = gen_spec.treesitter { a = "@function.outer", i = "@function.inner" },
-          ["g"] = function()
-            local from = { line = 1, col = 1 }
-            local to = {
-              line = vim.fn.line "$",
-              col = math.max(vim.fn.getline("$"):len(), 1),
-            }
-            return { from = from, to = to }
-          end,
-          ["o"] = gen_spec.treesitter { a = "@loop.outer", i = "@loop.inner" },
-          ["|"] = gen_spec.pair("|", "|", { type = "non-balanced" }),
-          ["*"] = gen_spec.pair("*", "*", { type = "greedy" }),
-          ["_"] = gen_spec.pair("_", "_", { type = "greedy" }),
-        },
-        mappings = {
-          around_next = "",
-          inside_next = "",
-          around_last = "",
-          inside_last = "",
-          goto_left = "",
-          goto_right = "",
-        },
-        -- silent = false,
-      }
-    end,
-  },
   -- { import = "astrocommunity.motion.tabout-nvim" },
 
   -- { import = "astrocommunity.programming-language-support.csv-vim" },
