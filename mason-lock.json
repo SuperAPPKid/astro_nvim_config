@@ -2,7 +2,6 @@
   "angular-language-server": "18.1.2",
   "ansible-language-server": "1.2.3",
   "ansible-lint": "24.7.0",
-  "basedpyright": "1.13.3",
   "bash-debug-adapter": "untagged-438733f35feb8659d939",
   "bash-language-server": "5.4.0",
   "black": "24.4.2",
@@ -13,7 +12,7 @@
   "css-lsp": "4.10.0",
   "dart-debug-adapter": "v3.92.0",
   "debugpy": "1.8.2",
-  "delve": "v1.22.1",
+  "delve": "v1.23.0",
   "deno": "v1.45.2",
   "docker-compose-language-service": "0.2.0",
   "dockerfile-language-server": "0.13.0",
@@ -45,7 +44,7 @@
   "marksman": "2023-12-09",
   "prettier": "3.3.3",
   "prettierd": "0.25.3",
-  "pyright": "1.1.371",
+  "pyright": "1.1.372",
   "selene": "0.27.1",
   "shellcheck": "v0.10.0",
   "shfmt": "v3.8.0",
@@ -64,5 +63,6 @@
   "vtsls": "0.2.5",
   "vue-language-server": "2.0.26",
   "wgsl-analyzer": "v0.8.1",
-  "yaml-language-server": "1.15.0"
+  "yaml-language-server": "1.15.0",
+
 }
