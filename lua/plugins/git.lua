@@ -209,7 +209,7 @@ return {
           maps.n["<Leader>gl"] = { function() require("gitsigns").blame_line() end, desc = "View Git blame" }
           maps.n["<Leader>gr"] = { function() require("gitsigns").reset_hunk() end, desc = "Reset Git hunk" }
           maps.n["<Leader>gR"] = { function() require("gitsigns").reset_buffer() end, desc = "Reset Git buffer" }
-          maps.n["<Leader>gp"] = {}
+          maps.n["<Leader>gp"] = { function() require("gitsigns").preview_hunk_inline() end, desc = "Preview Git hunk" }
           maps.n["<Leader>gs"] = { function() require("gitsigns").stage_hunk() end, desc = "Stage Git hunk" }
           maps.n["<Leader>gS"] = { function() require("gitsigns").stage_buffer() end, desc = "Stage Git buffer" }
           maps.n["<Leader>gu"] = { function() require("gitsigns").undo_stage_hunk() end, desc = "Unstage Git hunk" }
