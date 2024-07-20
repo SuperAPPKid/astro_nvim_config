@@ -85,6 +85,8 @@ local mapping = {
       desc = "Close Tab",
     },
 
+    ["<C-W>d"] = { "" },
+    ["<C-W><C-D>"] = { "" },
     ["<Leader>f'"] = false,
     ["<Leader>fr"] = false,
     ["gl"] = false,
