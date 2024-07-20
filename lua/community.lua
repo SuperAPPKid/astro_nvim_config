@@ -328,8 +328,6 @@ return {
 
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
 
-  { import = "astrocommunity.syntax.vim-easy-align" },
-
   { import = "astrocommunity.terminal-integration.flatten-nvim" },
 
   { import = "astrocommunity.test.nvim-coverage" },
