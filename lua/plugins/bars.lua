@@ -121,18 +121,20 @@ return {
           hl = { fg = "#e5c07b", bold = true },
         },
       }
-
-      if vim.fn.has "nvim-0.10" == 1 then
-        opts.statuscolumn = nil
-        opts.winbar = nil
-      end
     end,
   },
 
   {
     "luukvbaal/statuscol.nvim",
-    lazy = false,
     enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
+    dependencies = {
+      {
+        "rebelot/heirline.nvim",
+        opts = function(_, opts)
+          if vim.fn.has "nvim-0.10" == 1 then opts.statuscolumn = nil end
+        end,
+      },
+    },
     config = function()
       local builtin = require "statuscol.builtin"
       require("statuscol").setup {
@@ -198,8 +200,13 @@ return {
   {
     "Bekaboo/dropbar.nvim",
     enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
-    event = "User AstroFile",
     dependencies = {
+      {
+        "rebelot/heirline.nvim",
+        opts = function(_, opts)
+          if vim.fn.has "nvim-0.10" == 1 then opts.winbar = nil end
+        end,
+      },
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       {
         "AstroNvim/astrocore",
