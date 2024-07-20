@@ -299,24 +299,23 @@ return {
       filter = function(mapping)
         if (mapping.desc or "") == "" then return false end
         local blacklist = ({
-          v = { "d", "D", "s", "S", "f", "F", "t", "T", "y", "Y", "m", "M", "c", "C" },
-          x = { "d", "D", "s", "S", "f", "F", "t", "T", "y", "Y", "m", "M", "c", "C" },
-          n = { "d", "D", "s", "S", "f", "F", "t", "T", "y", "Y", "m", "M", "c", "C" },
+          v = { "s", "S", "f", "F", "t", "T" },
+          x = { "s", "S", "f", "F", "t", "T" },
+          n = { "s", "S", "f", "F", "t", "T" },
         })[mapping.mode]
         if blacklist and vim.tbl_contains(blacklist, mapping.lhs) then return false end
         return true
       end,
-      modes = {
-        i = false, -- Insert mode
-        o = false, -- Operator pending mode
-        t = false, -- Terminal mode
-        c = false, -- Command mode
-        defer = {
-          v = true,
-          V = true,
-          ["<C-V>"] = true,
-        },
+      triggers = {
+        { "<auto>", mode = "ns" },
+        { "<leader>", mode = { "x" } },
+        { "]", mode = { "x" } },
+        { "[", mode = { "x" } },
       },
+      defer = function(ctx)
+        if vim.list_contains({ "d", "y", "m", "c" }, ctx.operator) then return true end
+        return vim.list_contains({ "<C-V>", "V", "v" }, ctx.mode)
+      end,
       sort = { "group", "alphanum" },
       plugins = {
         marks = false, -- shows a list of your marks on ' and `
