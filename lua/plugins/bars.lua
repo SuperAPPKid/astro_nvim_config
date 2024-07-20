@@ -155,6 +155,7 @@ return {
           "sagaoutline",
           "leetcode.nvim",
           "blame",
+          "grug-far",
         },
         segments = {
           {

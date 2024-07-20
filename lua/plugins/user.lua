@@ -17,10 +17,7 @@ return {
         return true
       end
 
-      opts.filter = function(data)
-        -- if data.filetype == "spectre_panel" then return false end
-        return not all(data.event.regcontents, is_whitespace)
-      end
+      opts.filter = function(data) return not all(data.event.regcontents, is_whitespace) end
       opts.enable_persistent_history = true
       opts.keys = {
         telescope = {
@@ -82,6 +79,7 @@ return {
             function() require("telescope").extensions.scope.buffers() end,
             desc = "Open Scopes",
           }
+
           local autocmds = opts.autocmds
           local isStdIn = false
           autocmds.session_restore = {
@@ -170,9 +168,9 @@ return {
           size = { width = 52 },
         },
         {
-          ft = "spectre_panel",
+          ft = "grug-far",
           title = "Search/Replace",
-          size = { width = 64 },
+          size = { width = 0.5 },
           filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == "" end,
         },
         {
@@ -596,46 +594,6 @@ return {
         },
       }
     end,
-  },
-
-  {
-    "nvim-pack/nvim-spectre",
-    cmd = "Spectre",
-    keys = function()
-      return {
-        {
-          "<Leader>zs",
-          mode = { "n", "x" },
-          function() require("spectre").toggle() end,
-          desc = "Search / Replace",
-        },
-        {
-          "<Leader>zS",
-          mode = { "n", "x" },
-          function() require("spectre").open_file_search() end,
-          desc = "Search / Replace (current file)",
-        },
-      }
-    end,
-    opts = {
-      live_update = true, -- auto execute search again when you write to any file in vim
-      mapping = {
-        toggle_line = { map = "dd" },
-        enter_file = { map = "<CR>" },
-        send_to_qf = { map = "F" },
-        replace_cmd = { map = "c" },
-        show_option_menu = { map = "o" },
-        run_current_replace = { map = "C" },
-        run_replace = { map = "R" },
-        change_view_mode = { map = "tv" },
-        change_replace_sed = { map = "ts" },
-        change_replace_oxi = { map = "to" },
-        toggle_live_update = { map = "tu" },
-        toggle_ignore_case = { map = "ti" },
-        toggle_ignore_hidden = { map = "th" },
-        resume_last_search = { map = "<C-r>" },
-      },
-    },
   },
 
   {
