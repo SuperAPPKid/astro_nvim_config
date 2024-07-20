@@ -202,26 +202,8 @@ if is_available "nvim-dap-ui" then
 end
 
 -- autocmds
-local isStdIn = false
 local autocmds = {
   alpha_autostart = false,
-  session_restore = {
-    {
-      event = "StdinReadPre",
-      callback = function() isStdIn = true end,
-    },
-    {
-      event = "VimEnter",
-      callback = vim.schedule_wrap(function()
-        -- Only load the session if nvim was started with no args
-        if vim.fn.argc(-1) == 0 and not isStdIn then
-          require("resession").load(vim.fn.getcwd(), { dir = "dirsession", silence_errors = true })
-        else
-          vim.api.nvim_del_augroup_by_name "resession_auto_save"
-        end
-      end),
-    },
-  },
 }
 
 ---@type LazySpec

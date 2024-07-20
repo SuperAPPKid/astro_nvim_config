@@ -82,6 +82,26 @@ return {
             function() require("telescope").extensions.scope.buffers() end,
             desc = "Open Scopes",
           }
+          local autocmds = opts.autocmds
+          local isStdIn = false
+          autocmds.session_restore = {
+            {
+              event = "StdinReadPre",
+              callback = function() isStdIn = true end,
+            },
+            {
+              event = "VimEnter",
+              nested = true,
+              callback = function()
+                -- Only load the session if nvim was started with no args
+                if vim.fn.argc(-1) == 0 and not isStdIn then
+                  require("resession").load(vim.fn.getcwd(), { dir = "dirsession", silence_errors = true })
+                else
+                  vim.api.nvim_del_augroup_by_name "resession_auto_save"
+                end
+              end,
+            },
+          }
         end,
       },
     },
