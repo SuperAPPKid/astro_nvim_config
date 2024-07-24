@@ -60,6 +60,10 @@ return {
     defaults.selection_caret = " "
     defaults.entry_prefix = " "
     defaults.selection_strategy = "reset"
+    defaults.mappings.i["<C-L>"] = false
+    defaults.mappings.i["<M-getApiRecordCR>"] = false
+    defaults.mappings.n["<M-CR>"] = false
+
     opts.defaults = require("telescope.themes").get_ivy(defaults)
 
     opts.extensions = {
