@@ -364,7 +364,7 @@ return {
       "williamboman/mason.nvim",
       { "jay-babu/mason-null-ls.nvim", opts = { methods = { formatting = false } } },
       {
-        "AstroNvim/astrolsp",
+        "AstroNvim/astrocore",
         opts = {
           options = { opt = { formatexpr = "v:lua.require'conform'.formatexpr()" } },
           commands = {
@@ -378,13 +378,7 @@ return {
                     ["end"] = { args.line2, end_line:len() },
                   }
                 end
-                require("conform").format { async = true, lsp_format = "fallback", range = range }
-              end,
-              cond = function(client)
-                local formatting_disabled = vim.tbl_get(require("astrolsp").config, "formatting", "disabled")
-                return client.supports_method "textDocument/formatting"
-                  and formatting_disabled ~= true
-                  and not vim.tbl_contains(formatting_disabled, client.name)
+                require("conform").format { async = true, range = range }
               end,
               desc = "Format buffer",
               range = true,
@@ -418,19 +412,48 @@ return {
                 desc = "Toggle autoformatting (global)",
               },
             },
+            v = {
+              ["<Leader>lf"] = {
+                function()
+                  vim.cmd.Format()
+                  vim.cmd [[execute "normal! \<ESC>"]]
+                end,
+                desc = "Format lines",
+              },
+            },
+          },
+        },
+      },
+      {
+        "AstroNvim/astrolsp",
+        opts = {
+          formatting = {
+            disabled = true,
+          },
+          mappings = {
+            n = {
+              ["<Leader>lf"] = false,
+              ["<Leader>uf"] = false,
+              ["<Leader>uF"] = false,
+            },
+            v = {
+              ["<Leader>lf"] = false,
+            },
           },
         },
       },
     },
     opts = {
       notify_on_error = false,
+      default_format_opts = { lsp_format = "fallback" },
       format_on_save = function(bufnr)
         if vim.g.autoformat == nil then vim.g.autoformat = true end
         local autoformat = vim.b[bufnr].autoformat
         if autoformat == nil then autoformat = vim.g.autoformat end
         if autoformat then
-          local timeout_ms = vim.tbl_get(require("astrolsp").config, "formatting", "timeout_ms") or 500
-          return { timeout_ms = timeout_ms, lsp_format = "fallback" }
+          return {
+            timeout_ms = vim.tbl_get(require("astrolsp").config, "formatting", "timeout_ms") or 500,
+          }
         end
       end,
     },
