@@ -49,11 +49,6 @@ return {
       -- customize language server configuration options passed to `lspconfig`
       ---@diagnostic disable: missing-fields
       config = {
-        intelephense = {
-          handlers = {
-            ["textDocument/publishDiagnostics"] = function() end,
-          },
-        },
         clangd = {
           filetypes = { "c", "cpp", "objc", "objcpp" },
           capabilities = {
