@@ -914,14 +914,8 @@ return {
       "markemmons/neotest-deno",
       "rouge8/neotest-rust",
       {
-        "folke/neodev.nvim",
-        opts = function(_, opts)
-          opts.library = opts.library or {}
-          if opts.library.plugins ~= true then
-            opts.library.plugins = require("astrocore").list_insert_unique(opts.library.plugins, { "neotest" })
-          end
-          opts.library.types = true
-        end,
+        "folke/lazydev.nvim",
+        opts = function(_, opts) opts.library = require("astrocore").list_insert_unique(opts.library, { "neotest" }) end,
       },
     },
     config = function(_, opts)
