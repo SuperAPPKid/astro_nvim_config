@@ -45,6 +45,13 @@ table.insert(M, {
         title = function() return " Note for project " .. get_project_name() .. " " end,
       },
     },
+    post_open = function(bufr, _)
+      vim.keymap.set("n", "q", "<Cmd>close<CR>", {
+        noremap = true,
+        silent = true,
+        buffer = bufr,
+      })
+    end,
     -- A nvim_open_win config to show float window.
     -- table or fun(): table
     window_config = function()
