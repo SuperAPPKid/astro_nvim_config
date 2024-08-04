@@ -158,6 +158,7 @@ return {
           "leetcode.nvim",
           "blame",
           "grug-far",
+          "toggleterm",
         },
         segments = {
           {
