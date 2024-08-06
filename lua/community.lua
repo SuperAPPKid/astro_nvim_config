@@ -385,7 +385,7 @@ return {
   },
   { import = "astrocommunity.pack.helm" },
   { import = "astrocommunity.pack.html-css" },
-  { import = "astrocommunity.pack.java" },
+  -- { import = "astrocommunity.pack.java" },
   { import = "astrocommunity.pack.json" },
   { import = "astrocommunity.pack.kotlin" },
   { import = "astrocommunity.pack.laravel" },
