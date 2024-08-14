@@ -71,7 +71,7 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local last_tabpage = vim.api.nvim_get_current_tabpage()
-          local find_target_tab = function(cmd)
+          local find_target_tab = function(cmd, range_args)
             local lib = require "diffview.lib"
             local view = lib.get_current_view()
             if view then
@@ -85,7 +85,12 @@ return {
 
               last_tabpage = vim.api.nvim_get_current_tabpage()
 
-              vim.cmd(cmd)
+              if range_args then
+                range_args.cmd = cmd
+                vim.api.nvim_cmd(range_args, { output = false })
+              else
+                vim.cmd(cmd)
+              end
             end
           end
 
@@ -98,6 +103,13 @@ return {
           maps.n[prefix .. "D"] = {
             function() find_target_tab "DiffviewFileHistory %" end,
             desc = "Open File History",
+          }
+          maps.v[prefix .. "D"] = {
+            function()
+              local line = vim.api.nvim_win_get_cursor(0)[1]
+              find_target_tab("DiffviewFileHistory", { range = { line, line } })
+            end,
+            desc = "Open File History(Line)",
           }
         end,
       },
