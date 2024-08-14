@@ -102,7 +102,18 @@ return {
       -- customize how language servers are attached
       handlers = {
         -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
-        -- function(server, opts) require("lspconfig")[server].setup(opts) end
+        function(server, handler_opts)
+          for _, v in pairs(handler_opts) do
+            -- HACK: workaround for https://github.com/neovim/neovim/issues/28058
+            if type(v) == "table" and v.workspace then
+              v.workspace.didChangeWatchedFiles = {
+                dynamicRegistration = true,
+                relativePatternSupport = false,
+              }
+            end
+          end
+          require("lspconfig")[server].setup(handler_opts)
+        end,
 
         -- the key is the server that is being setup with `lspconfig`
         -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
