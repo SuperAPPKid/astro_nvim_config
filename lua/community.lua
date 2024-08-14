@@ -316,6 +316,8 @@ return {
   },
   -- { import = "astrocommunity.motion.tabout-nvim" },
 
+  { import = "astrocommunity.neovim-lua-development.helpview-nvim" },
+
   -- { import = "astrocommunity.programming-language-support.csv-vim" },
   -- { import = "astrocommunity.programming-language-support.nvim-jqx" },
   -- { import = "astrocommunity.programming-language-support.rest-nvim" },
@@ -377,12 +379,8 @@ return {
   {
     "leoluz/nvim-dap-go",
     config = function(_, opts)
-      local dap = require "dap"
-      local old_configs = dap.configurations.go
-
+      require("dap").configurations.go = {}
       require("dap-go").setup(opts)
-
-      dap.configurations.go = old_configs
     end,
   },
   { import = "astrocommunity.pack.helm" },
