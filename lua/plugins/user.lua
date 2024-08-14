@@ -734,7 +734,7 @@ return {
       },
     },
     keys = {
-      { "<Leader>t", "<cmd>Translate ZH-TW<cr>", mode = { "x" }, desc = "Translate" },
+      { "<Leader>zt", "<cmd>Translate ZH-TW<cr>", mode = { "x" }, desc = "Translate" },
     },
   },
 
