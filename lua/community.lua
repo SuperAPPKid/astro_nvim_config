@@ -9,7 +9,6 @@ return {
   { import = "astrocommunity.completion.cmp-cmdline" },
   { import = "astrocommunity.completion.cmp-git" },
 
-  { import = "astrocommunity.debugging.nvim-bqf" },
   { import = "astrocommunity.debugging.nvim-chainsaw" },
   {
     "chrisgrieser/nvim-chainsaw",
@@ -84,6 +83,7 @@ return {
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
   { import = "astrocommunity.editing-support.nvim-regexplainer" },
   { import = "astrocommunity.editing-support.nvim-origami" },
+
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
   { import = "astrocommunity.editing-support.refactoring-nvim" },
   { import = "astrocommunity.editing-support.telescope-undo-nvim" },
@@ -319,6 +319,8 @@ return {
   -- { import = "astrocommunity.programming-language-support.csv-vim" },
   -- { import = "astrocommunity.programming-language-support.nvim-jqx" },
   -- { import = "astrocommunity.programming-language-support.rest-nvim" },
+
+  { import = "astrocommunity.quickfix.nvim-bqf" },
 
   {
     import = "astrocommunity.recipes.heirline-vscode-winbar",
