@@ -88,6 +88,35 @@ table.insert(M, {
   ft = { "markdown" },
 })
 
+table.insert(M, {
+  "OXY2DEV/markview.nvim",
+  ft = { "markdown", "markdown.mdx" },
+  dependencies = { "nvim-treesitter/nvim-treesitter" },
+  opts = {
+    modes = { "n", "no", "c" },
+    hybrid_modes = { "n" },
+
+    headings = { shift_width = 0 },
+    list_items = {
+      marker_minus = { text = "", hl = "Comment" },
+      marker_plus = { text = "✦" },
+      marker_star = { text = "✯" },
+    },
+    checkboxes = {
+      pending = { text = "󱅿" },
+      checked = { text = "󱗝" },
+      unchecked = { text = "󰅘" },
+    },
+
+    callbacks = {
+      on_enable = function(_, win)
+        vim.wo[win].conceallevel = 2
+        vim.wo[win].concealcursor = "nc"
+      end,
+    },
+  },
+})
+
 local deno = vim.fn.stdpath "data" .. [[/mason/bin/deno]]
 if vim.fn.executable(deno) == 1 then
   table.insert(M, {
