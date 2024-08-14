@@ -66,6 +66,18 @@ return {
       "DiffviewFocusFiles",
       "DiffviewRefresh",
     },
+    specs = {
+      {
+        "isakbm/gitgraph.nvim",
+        optional = true,
+        opts = {
+          hooks = {
+            on_select_commit = function(commit) vim.cmd.DiffviewOpen(commit.hash .. "^!") end,
+            on_select_range_commit = function(from, to) vim.cmd.DiffviewOpen(from.hash .. "~1.." .. to.hash) end,
+          },
+        },
+      },
+    },
     dependencies = {
       {
         "AstroNvim/astrocore",
@@ -343,6 +355,30 @@ return {
               ["<Leader>gL"] = {
                 "<cmd>BlameToggle<cr>",
                 desc = "Toggle git blame",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+
+  {
+    "isakbm/gitgraph.nvim",
+    opts = {
+      format = {
+        timestamp = "%a %b %d, %Y at %H:%M",
+      },
+    },
+    dependencies = {
+      { -- mapping to open GitGraph
+        "AstroNvim/astrocore",
+        opts = {
+          mappings = {
+            n = {
+              ["<Leader>g|"] = {
+                function() require("gitgraph").draw({}, { all = true, max_count = 5000 }) end,
+                desc = "GitGraph",
               },
             },
           },
