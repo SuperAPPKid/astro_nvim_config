@@ -574,9 +574,13 @@ return {
           },
           -- Conditionally redirect notifications to another backend
           redirect = function(msg, level, opts)
+            local title = opts and opts.title
             if
-              (type(level) == "number" and level >= vim.log.levels.ERROR)
-              or (opts and opts.title and string.find(opts.title, "tinygit"))
+              (
+                type(level) == "number"
+                and level >= vim.log.levels.ERROR
+                and ((title or true) or (string.find(title, "Codeium")))
+              ) or (title and string.find(title, "tinygit"))
             then
               return require("fidget.integration.nvim-notify").delegate(msg, level, opts)
             end
