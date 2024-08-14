@@ -4,10 +4,8 @@ return {
     "MagicDuck/grug-far.nvim",
     cmd = "GrugFar",
     opts = {
-      staticTitle = "Find and Search",
       startInInsertMode = false,
-      searchOnInsertLeave = true,
-      icons = { enabled = false },
+      transient = true,
       keymaps = {
         replace = { n = "<localleader>r" },
         qflist = { n = "<localleader>q" },
@@ -43,12 +41,13 @@ return {
             desc = "Search / Replace (current file)",
           }
           maps.x["<Leader>zs"] = {
-            function() require("grug-far").with_visual_selection() end,
+            function() require("grug-far").grug_far { startCursorRow = 4 } end,
             desc = "Search / Replace",
           }
           maps.x["<Leader>zS"] = {
             function()
               require("grug-far").with_visual_selection {
+                startCursorRow = 4,
                 prefills = { filesFilter = vim.fn.expand "%" },
               }
             end,
