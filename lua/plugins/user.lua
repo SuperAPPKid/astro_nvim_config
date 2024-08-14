@@ -1159,32 +1159,58 @@ return {
 
   {
     "mistweaverco/kulala.nvim",
+    ft = "http",
     config = true,
     dependencies = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
-          local maps = opts.mappings
-          maps.n["<Leader>zr"] = {
-            function() require("kulala").run() end,
-            desc = "Run the current request",
+          opts.mappings.n["<Leader>zr"] = {
+            function() require("kulala").scratchpad() end,
+            desc = "Create temp request",
           }
-          maps.n["<Leader>zR"] = {
-            function() require("kulala").toggle_view() end,
-            desc = "Toggle request Header/Body",
-          }
-          maps.n["]R"] = {
-            function() require("kulala").jump_next() end,
-            desc = "Jump to the next request",
-          }
-          maps.n["[R"] = {
-            function() require("kulala").jump_prev() end,
-            desc = "Jump to the previous request",
-          }
+          opts.autocmds = require("astrocore").extend_tbl(opts.autocmds, {
+            kulala_settings = {
+              {
+                event = "FileType",
+                desc = "Add run request keymap for .http",
+                pattern = "http",
+                callback = function(args)
+                  require("astrocore").set_mappings({
+                    n = {
+                      ["<Leader>zR"] = {
+                        function() require("kulala").run() end,
+                        desc = "Run current request",
+                      },
+                      ["<Leader>zRe"] = {
+                        function() require("kulala").toggle_view() end,
+                        desc = "",
+                      },
+                      ["<Leader>zRr"] = {
+                        function() require("kulala").replay() end,
+                        desc = "",
+                      },
+                      ["<Leader>zRc"] = {
+                        function() require("kulala").copy() end,
+                        desc = "",
+                      },
+                      ["]R"] = {
+                        function() require("kulala").jump_next() end,
+                        desc = "Jump to the next request",
+                      },
+                      ["[R"] = {
+                        function() require("kulala").jump_prev() end,
+                        desc = "Jump to the previous request",
+                      },
+                    },
+                  }, { buffer = args.buf })
+                end,
+              },
+            },
+          })
         end,
       },
     },
-    ft = "http",
   },
 
   {
