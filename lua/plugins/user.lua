@@ -1164,7 +1164,9 @@ return {
   {
     "mistweaverco/kulala.nvim",
     ft = "http",
-    config = true,
+    opts = {
+      winbar = true,
+    },
     dependencies = {
       {
         "AstroNvim/astrocore",
@@ -1182,29 +1184,26 @@ return {
                 callback = function(args)
                   require("astrocore").set_mappings({
                     n = {
-                      ["<Leader>zR"] = {
+                      ["<Leader>zR"] = { desc = "Request" },
+                      ["<Leader>zR<CR>"] = {
                         function() require("kulala").run() end,
-                        desc = "Run current request",
-                      },
-                      ["<Leader>zRe"] = {
-                        function() require("kulala").toggle_view() end,
-                        desc = "",
+                        desc = "Run current",
                       },
                       ["<Leader>zRr"] = {
                         function() require("kulala").replay() end,
-                        desc = "",
+                        desc = "Replay last",
                       },
                       ["<Leader>zRc"] = {
                         function() require("kulala").copy() end,
-                        desc = "",
+                        desc = "Copy as cURL",
                       },
                       ["]R"] = {
                         function() require("kulala").jump_next() end,
-                        desc = "Jump to the next request",
+                        desc = "Jump to the next",
                       },
                       ["[R"] = {
                         function() require("kulala").jump_prev() end,
-                        desc = "Jump to the previous request",
+                        desc = "Jump to the previous",
                       },
                     },
                   }, { buffer = args.buf })
