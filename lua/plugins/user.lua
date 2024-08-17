@@ -319,7 +319,7 @@ return {
         opts = {
           mappings = {
             n = {
-              ["<Leader>o"] = { function() require("oil").open() end, desc = "Open folder in Oil" },
+              ["<Leader>O"] = { function() require("oil").open() end, desc = "Open folder in Oil" },
             },
           },
           autocmds = {
@@ -1147,7 +1147,7 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-          local prefix = "<Leader>R"
+          local prefix = "<Leader>o"
           maps.n[prefix] = { desc = require("astroui").get_icon("Overseer", 1, true) .. "Overseer" }
 
           maps.n[prefix .. "t"] = { "<Cmd>OverseerToggle<CR>", desc = "Toggle" }
