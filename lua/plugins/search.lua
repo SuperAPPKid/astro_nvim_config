@@ -35,7 +35,7 @@ return {
           maps.n["<Leader>zS"] = {
             function()
               require("grug-far").grug_far {
-                prefills = { filesFilter = vim.fn.expand "%" },
+                prefills = { paths = vim.fn.expand "%" },
               }
             end,
             desc = "Search / Replace (current file)",
@@ -48,7 +48,7 @@ return {
             function()
               require("grug-far").with_visual_selection {
                 startCursorRow = 4,
-                prefills = { filesFilter = vim.fn.expand "%" },
+                prefills = { paths = vim.fn.expand "%" },
               }
             end,
             desc = "Search / Replace (current file)",
