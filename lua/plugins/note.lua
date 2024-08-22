@@ -103,9 +103,9 @@ table.insert(M, {
       marker_star = { text = "✯" },
     },
     checkboxes = {
-      pending = { text = "󱅿" },
-      checked = { text = "󱗝" },
-      unchecked = { text = "󰅘" },
+      pending = { text = "󰄗" },
+      checked = { text = "󰄵" },
+      unchecked = { text = "󰄱" },
     },
 
     callbacks = {
