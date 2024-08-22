@@ -513,14 +513,13 @@ return {
         },
         border = "thicc", -- this is a preset, try it :)
       },
-      presets = {},
     },
     keys = {
       {
         "<Leader>zz",
         function() vim.cmd "NeoZoomToggle" end,
         desc = "Toggle Zoom",
-        { silent = true, nowait = true },
+        { silent = true },
       },
     },
   },
