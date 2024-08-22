@@ -133,6 +133,12 @@ return {
       },
     },
     opts = {
+      file_panel = {
+        win_config = { -- See |diffview-config-win_config|
+          position = "bottom",
+          height = 16,
+        },
+      },
       hooks = {
         view_opened = function() require("diffview.actions").toggle_files() end,
       },
