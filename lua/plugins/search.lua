@@ -29,19 +29,19 @@ return {
         opts = function(_, opts)
           local maps = opts.mappings
           maps.n["<Leader>zs"] = {
-            function() require("grug-far").grug_far {} end,
+            function() require("grug-far").open {} end,
             desc = "Search / Replace",
           }
           maps.n["<Leader>zS"] = {
             function()
-              require("grug-far").grug_far {
+              require("grug-far").open {
                 prefills = { paths = vim.fn.expand "%" },
               }
             end,
             desc = "Search / Replace (current file)",
           }
           maps.x["<Leader>zs"] = {
-            function() require("grug-far").grug_far { startCursorRow = 4 } end,
+            function() require("grug-far").open { startCursorRow = 4 } end,
             desc = "Search / Replace",
           }
           maps.x["<Leader>zS"] = {
