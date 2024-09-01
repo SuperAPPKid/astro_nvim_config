@@ -58,6 +58,9 @@ return {
         gopls = {
           settings = {
             gopls = {
+              analyses = {
+                deprecated = false,
+              },
               usePlaceholders = false,
               hints = {
                 assignVariableTypes = true,
