@@ -98,9 +98,9 @@ table.insert(M, {
 
     headings = { shift_width = 0 },
     list_items = {
-      marker_minus = { text = "", hl = "Comment" },
+      marker_minus = { text = "▸", hl = "Comment" },
       marker_plus = { text = "✦" },
-      marker_star = { text = "✯" },
+      marker_star = { text = "※" },
     },
     checkboxes = {
       pending = { text = "󰄗" },
