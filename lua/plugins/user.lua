@@ -956,7 +956,6 @@ return {
     end,
     keys = function(_, _)
       local prefix = "<Leader>T"
-      local plugin = require "neotest"
 
       require("astrocore").set_mappings {
         n = {
@@ -967,12 +966,12 @@ return {
       return {
         {
           prefix .. "r",
-          function() plugin.run.run(vim.fn.expand "%") end,
+          function() require("neotest").run.run(vim.fn.expand "%") end,
           desc = "Run the current file",
         },
         {
           prefix .. "w",
-          function() plugin.watch.toggle(vim.fn.expand "%") end,
+          function() require("neotest").watch.toggle(vim.fn.expand "%") end,
           desc = "Toggle watch test",
         },
       }
@@ -1256,6 +1255,65 @@ return {
           goto_right = "",
         },
         silent = true,
+      }
+    end,
+  },
+
+  {
+    "Vonr/align.nvim",
+    branch = "v2",
+    keys = function(_, _)
+      local prefix = "<Leader>a"
+      require("astrocore").set_mappings {
+        x = {
+          [prefix] = { desc = "󰅪 Align" },
+        },
+      }
+      return {
+        {
+          prefix .. "1",
+          function()
+            require("align").align_to_char {
+              preview = true,
+              length = 1,
+            }
+          end,
+          mode = { "x" },
+          desc = "Aligns to 1 character",
+        },
+        {
+          prefix .. "2",
+          function()
+            require("align").align_to_char {
+              preview = true,
+              length = 2,
+            }
+          end,
+          mode = { "x" },
+          desc = "Aligns to 2 characters",
+        },
+        {
+          prefix .. "<CR>",
+          function()
+            require("align").align_to_string {
+              preview = true,
+              regex = false,
+            }
+          end,
+          mode = { "x" },
+          desc = "Aligns to a string",
+        },
+        {
+          prefix .. "r",
+          function()
+            require("align").align_to_string {
+              preview = true,
+              regex = true,
+            }
+          end,
+          mode = { "x" },
+          desc = "Aligns to a Vim regex",
+        },
       }
     end,
   },
