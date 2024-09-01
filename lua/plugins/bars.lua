@@ -213,7 +213,7 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           opts.mappings.n["<Leader>E"] = {
-            function() require("dropbar.api").pick(vim.v.count ~= 0 and vim.v.count) end,
+            function() require("dropbar.api").pick(vim.v.count ~= 0 and vim.v.count or nil) end,
             desc = "dropbar",
           }
         end,
