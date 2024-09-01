@@ -111,7 +111,7 @@ return {
         if vim.api.nvim_buf_get_name(bufnr) == "" then return false end
         return true
       end
-      opts.extensions = require("astrocore").extend_tbl(opts.extensions, { scope = {} })
+      opts.extensions = require("astrocore").extend_tbl(opts.extensions, { scope = {}, overseer = {} })
     end,
   },
 
