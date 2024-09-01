@@ -30,7 +30,7 @@ return {
       require("telescope").load_extension "neoclip"
     end,
     keys = {
-      { "<Leader>fy", "<cmd>Telescope neoclip<cr>", desc = "Find yanks (neoclip)" },
+      { "<Leader>fy", "<Cmd>Telescope neoclip<CR>", desc = "Find yanks (neoclip)" },
     },
   },
 
@@ -253,7 +253,7 @@ return {
       },
     },
     keys = {
-      { "<Leader>fp", "<cmd>ProjectMgr<cr>", desc = "Open ProjectMgr panel" },
+      { "<Leader>fp", "<Cmd>ProjectMgr<CR>", desc = "Open ProjectMgr panel" },
     },
   },
 
@@ -300,7 +300,7 @@ return {
         desc = " TextCase",
       }
       mapping[prefix .. "<Leader>"] = {
-        "<cmd>TextCaseOpenTelescope<CR>",
+        "<Cmd>TextCaseOpenTelescope<CR>",
         desc = "Telescope",
       }
       require("astrocore").set_mappings {
@@ -544,7 +544,7 @@ return {
         opts = function(_, opts)
           local maps = opts.mappings
           maps.n["<Leader>zn"] = {
-            "<cmd>Fidget history<CR>",
+            "<Cmd>Fidget history<CR>",
             desc = "fidget history",
           }
         end,
@@ -651,7 +651,7 @@ return {
     keys = {
       {
         "<Leader>zh",
-        "<cmd>LiveServer<cr>",
+        "<Cmd>LiveServer<CR>",
         desc = "html preview",
       },
     },
@@ -737,7 +737,7 @@ return {
       },
     },
     keys = {
-      { "<Leader>zt", "<cmd>Translate ZH-TW<cr>", mode = { "x" }, desc = "Translate" },
+      { "<Leader>zt", "<Cmd>Translate ZH-TW<CR>", mode = { "x" }, desc = "Translate" },
     },
   },
 
@@ -1038,7 +1038,7 @@ return {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
-          opts.mappings.n["<Leader>j"] = { "<CMD>TSJToggle<CR>", desc = "Toggle Treesitter Join" }
+          opts.mappings.n["<Leader>j"] = { "<Cmd>TSJToggle<CR>", desc = "Toggle Treesitter Join" }
         end,
       },
     },

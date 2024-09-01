@@ -416,7 +416,7 @@ return {
               ["<Leader>lf"] = {
                 function()
                   vim.cmd.Format()
-                  vim.cmd [[execute "normal! \<ESC>"]]
+                  vim.cmd [[execute "normal! \<Esc>"]]
                 end,
                 desc = "Format lines",
               },

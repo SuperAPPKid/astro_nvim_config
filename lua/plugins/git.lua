@@ -365,7 +365,7 @@ return {
           mappings = {
             n = {
               ["<Leader>gL"] = {
-                "<cmd>BlameToggle<cr>",
+                "<Cmd>BlameToggle<CR>",
                 desc = "Toggle git blame",
               },
             },

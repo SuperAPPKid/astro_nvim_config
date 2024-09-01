@@ -9,8 +9,8 @@ return {
       "AstroNvim/astrocore",
       opts = function(_, opts)
         local maps = opts.mappings
-        maps.n["<Leader>zc"] = { "<cmd>CccConvert<cr>", desc = "Convert color" }
-        maps.n["<Leader>zp"] = { "<cmd>CccPick<cr>", desc = "Pick Color" }
+        maps.n["<Leader>zc"] = { "<Cmd>CccConvert<CR>", desc = "Convert color" }
+        maps.n["<Leader>zp"] = { "<Cmd>CccPick<CR>", desc = "Pick Color" }
       end,
     },
     config = function(_, opts)

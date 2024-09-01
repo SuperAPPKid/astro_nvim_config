@@ -80,7 +80,7 @@ table.insert(M, {
     opts = function(_, opts)
       local maps = opts.mappings
       maps.n["<Leader>zM"] = {
-        "<cmd>MarkdownPreviewToggle<cr>",
+        "<Cmd>MarkdownPreviewToggle<CR>",
         desc = "markdown preview(alter)",
       }
     end,

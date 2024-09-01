@@ -67,7 +67,7 @@ return {
         opts = function(_, opts)
           local maps = opts.mappings
           maps.n["<Leader>zk"] = {
-            "<cmd>CloakToggle<CR>",
+            "<Cmd>CloakToggle<CR>",
             desc = "cloak",
           }
         end,

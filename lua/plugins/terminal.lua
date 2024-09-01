@@ -53,11 +53,11 @@ return {
       opts = {
         mappings = {
           n = {
-            ["<C-t>"] = { "<cmd>ToggleTerm<cr>" },
-            ["<Leader>ts"] = { "<cmd>Telescope toggleterm_manager<cr>", desc = "Search Toggleterms" },
+            ["<C-t>"] = { "<Cmd>ToggleTerm<CR>" },
+            ["<Leader>ts"] = { "<Cmd>Telescope toggleterm_manager<CR>", desc = "Search Toggleterms" },
           },
           i = {
-            ["<C-t>"] = { "<cmd>ToggleTerm<cr>" },
+            ["<C-t>"] = { "<Cmd>ToggleTerm<CR>" },
           },
         },
       },

@@ -278,7 +278,7 @@ return {
     --         :with_move(cond.none())
     --         -- don't delete if the next character is xx
     --         :with_del(cond.not_after_regex "xx")
-    --         -- disable adding a newline when you press <cr>
+    --         -- disable adding a newline when you press <CR>
     --         :with_cr(cond.none()),
     --     },
     --     -- disable for .vim files, but it work for another filetypes
@@ -308,7 +308,7 @@ return {
       end,
       triggers = {
         { "<auto>", mode = "ns" },
-        { "<leader>", mode = { "x" } },
+        { "<Leader>", mode = { "x" } },
         { "]", mode = { "x" } },
         { "[", mode = { "x" } },
       },
@@ -414,12 +414,12 @@ return {
     keys = {
       {
         "<Leader>xt",
-        "<cmd>TodoTrouble<CR>",
+        "<Cmd>TodoTrouble<CR>",
         desc = "Todo (Trouble)",
       },
       {
         "<Leader>ft",
-        "<cmd>TodoTelescope<CR>",
+        "<Cmd>TodoTelescope<CR>",
         desc = "Find todo",
       },
       {

@@ -7,7 +7,7 @@ local is_available = utils.is_available
 -- mapping
 
 local save_file = {
-  "<cmd>w<cr><esc>",
+  "<Cmd>w<CR><Esc>",
   desc = "Save file",
 }
 
@@ -105,7 +105,7 @@ local mapping = {
 
     ["<Leader>z"] = { desc = " Misc" },
 
-    ["<C-q>"] = { "<cmd>qa!<cr>", desc = "Force quit" },
+    ["<C-q>"] = { "<Cmd>qa!<CR>", desc = "Force quit" },
 
     gra = false,
     grn = false,
@@ -148,15 +148,15 @@ if is_available "toggleterm.nvim" and vim.fn.executable "yazi" == 1 then
           edit_cmd = "edit"
           vim.keymap.set("t", "<Tab>", function()
             edit_cmd = "tabedit"
-            feedkeys "<cr>"
+            feedkeys "<CR>"
           end, { noremap = true, silent = true, buffer = term.bufnr })
           vim.keymap.set("t", "\\", function()
             edit_cmd = "split"
-            feedkeys "<cr>"
+            feedkeys "<CR>"
           end, { noremap = true, silent = true, buffer = term.bufnr })
           vim.keymap.set("t", "|", function()
             edit_cmd = "vsplit"
-            feedkeys "<cr>"
+            feedkeys "<CR>"
           end, { noremap = true, silent = true, buffer = term.bufnr })
         end,
         on_exit = function()
@@ -176,10 +176,10 @@ if is_available "toggleterm.nvim" and vim.fn.executable "yazi" == 1 then
 end
 
 if is_available "neo-tree.nvim" then
-  mapping.n["<Leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle Filesystem" }
-  mapping.n["<Leader>be"] = { "<cmd>Neotree source=buffers toggle<cr>", desc = "Toggle Buffers (neo-tree)" }
-  mapping.n["<Leader>ge"] = { "<cmd>Neotree source=git_status toggle<cr>", desc = "Toggle Git (neo-tree)" }
-  mapping.n["<Leader>le"] = { "<cmd>Neotree source=diagnostics toggle<cr>", desc = "Toggle Diagnostics (neo-tree)" }
+  mapping.n["<Leader>e"] = { "<Cmd>Neotree toggle<CR>", desc = "Toggle Filesystem" }
+  mapping.n["<Leader>be"] = { "<Cmd>Neotree source=buffers toggle<CR>", desc = "Toggle Buffers (neo-tree)" }
+  mapping.n["<Leader>ge"] = { "<Cmd>Neotree source=git_status toggle<CR>", desc = "Toggle Git (neo-tree)" }
+  mapping.n["<Leader>le"] = { "<Cmd>Neotree source=diagnostics toggle<CR>", desc = "Toggle Diagnostics (neo-tree)" }
 end
 
 if is_available "nvim-dap-ui" then
