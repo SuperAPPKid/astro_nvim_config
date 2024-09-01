@@ -1072,20 +1072,24 @@ return {
         end,
       },
       {
-        "anuvyklack/hydra.nvim",
+        "nvimtools/hydra.nvim",
         opts = function(_, opts)
-          local hint = [[
+          opts["Draw Diagram"] = {
+            hint = [[
  Arrow^^^^^^   Select region with <C-v> 
  ^ ^ _K_ ^ ^   _f_: surround it with box
  _H_ ^ ^ _L_
  ^ ^ _J_ ^ ^                      _<Esc>_
-]]
-          opts["Draw Diagram"] = {
-            hint = hint,
+]],
             config = {
+              color = "pink",
               invoke_on_body = true,
-              hint = { border = "double" },
-              on_enter = function() vim.o.virtualedit = "all" end,
+              hint = {
+                float_opts = {
+                  border = "double",
+                },
+              },
+              on_enter = function() vim.b.virtualedit = "all" end,
             },
             mode = "n",
             body = "<Leader>zv",

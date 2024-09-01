@@ -108,9 +108,20 @@ return {
 
   { import = "astrocommunity.keybinding.hydra-nvim" },
   {
-    "anuvyklack/hydra.nvim",
+    "nvimtools/hydra.nvim",
     opts = function(_, opts)
-      local opts_hint = [[
+      opts["Side scroll"] = {
+        mode = "n",
+        body = "z",
+        heads = {
+          { "h", "5zh", { desc = "" } },
+          { "l", "5zl", { desc = "" } },
+          { "H", "zH", { desc = "󰁎󱘹󱘹󱘹" } },
+          { "L", "zL", { desc = "󱘹󱘹󱘹󰁕" } },
+        },
+      }
+      opts["Options"] = {
+        hint = [[
   ^ ^        Options
   ^
   _v_ %{ve} virtual edit
@@ -122,23 +133,14 @@ return {
   _r_ %{rnu} relative number
   ^
        ^^^^                _<Esc>_
-]]
-      opts["Side scroll"] = {
-        mode = "n",
-        body = "z",
-        heads = {
-          { "h", "5zh", { desc = "←/→" } },
-          { "l", "5zl", { desc = "←/→" } },
-          { "H", "zH", { desc = "half screen ←/→" } },
-          { "L", "zL", { desc = "half screen ←/→" } },
-        },
-      }
-      opts["Options"] = {
-        hint = opts_hint,
+]],
         config = {
+          color = "amaranth",
           invoke_on_body = true,
           hint = {
-            border = "double",
+            float_opts = {
+              border = "double",
+            },
             position = "middle",
           },
         },
