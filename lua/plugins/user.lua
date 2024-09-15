@@ -128,16 +128,16 @@ return {
       bottom = {
         {
           ft = "Trouble",
-          size = { height = 0.33 },
+          size = { height = 10 },
         },
         {
           ft = "qf",
-          size = { height = 0.33 },
+          size = { height = 10 },
           title = "QuickFix",
         },
         {
           ft = "help",
-          size = { height = 20 },
+          size = { height = 0.8 },
           -- don't open help files in edgy that we're editing
           filter = function(buf) return vim.bo[buf].buftype == "help" end,
         },
