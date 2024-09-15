@@ -20,36 +20,21 @@ return {
     end,
   },
 
-  -- HACK: Fix AstroNvim redundantly calling `vscode.load_launchjs()`
   {
-    "mfussenegger/nvim-dap",
-    dependencies = {
-      {
-        "jay-babu/mason-nvim-dap.nvim",
-        -- overrides `require("mason-nvim-dap").setup(...)`
-        config = function(_, _) end,
-        opts = function(_, opts)
-          -- add more things to the ensure_installed table protecting against community packs modifying it
-          opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
-            "python",
-            -- add more arguments for adding more debuggers
-          })
-        end,
-      },
-    },
-    opts = function()
-      require("dap").configurations = {}
-
+    "jay-babu/mason-nvim-dap.nvim",
+    config = function(_, opts)
       local providers = require("dap").providers
       providers.configs = {
         [0] = providers.configs["dap.launch.json"],
         [1] = providers.configs["dap.global"],
       }
 
-      local plugin = require("lazy.core.config").spec.plugins["mason-nvim-dap.nvim"]
-      local opts = require("lazy.core.plugin").values(plugin, "opts", false)
-
       require("mason-nvim-dap").setup(opts)
+    end,
+    opts = function(_, opts)
+      opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
+        -- add more arguments for adding more debuggers
+      })
     end,
   },
 }
