@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   -- customize alpha options
   {
@@ -5,7 +6,7 @@ return {
     event = "UIEnter",
     dependencies = {
       { "nvim-telescope/telescope.nvim" },
-      { "kkharji/sqlite.lua", module = "sqlite" },
+      { "kkharji/sqlite.lua" },
     },
     opts = function(_, opts)
       local function is_whitespace(line) return vim.fn.match(line, [[^\s*$]]) ~= -1 end
