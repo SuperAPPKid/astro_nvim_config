@@ -89,30 +89,59 @@ table.insert(M, {
 })
 
 table.insert(M, {
-  "OXY2DEV/markview.nvim",
+  "MeanderingProgrammer/render-markdown.nvim",
   ft = { "markdown", "markdown.mdx" },
-  dependencies = { "nvim-treesitter/nvim-treesitter" },
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter",
+    "nvim-tree/nvim-web-devicons",
+  },
   opts = {
-    modes = { "n", "no", "c" },
-    hybrid_modes = { "n" },
-
-    headings = { shift_width = 0 },
-    list_items = {
-      marker_minus = { text = "▸", hl = "Comment" },
-      marker_plus = { text = "✦" },
-      marker_star = { text = "※" },
+    render_modes = { "n", "v", "i", "c" },
+    heading = {
+      -- position = "inline",
+      left_pad = 1,
+      right_pad = 1,
+      icons = { "󰉫 ", "󰉬 ", "󰉭 ", "󰉮 ", "󰉯 ", "󰉰 " },
+      signs = { "󰎦", "󰎩", "󰎬", "󰎮", "󰎰", "󰎵" },
+      border = true,
+      backgrounds = {
+        "Mono",
+      },
+      foregrounds = {
+        "RainbowRed",
+        "RainbowOrange",
+        "RainbowYellow",
+        "RainbowGreen",
+        "RainbowBlue",
+        "RainbowViolet",
+      },
     },
-    checkboxes = {
-      pending = { text = "󰄗" },
-      checked = { text = "󰄵" },
-      unchecked = { text = "󰄱" },
+    code = {
+      sign = false,
+      language_pad = 1,
+      left_pad = 1,
+      right_pad = 1,
+      width = "block",
+      -- border = "thick",
     },
-
-    callbacks = {
-      on_enable = function(_, win)
-        vim.wo[win].conceallevel = 2
-        vim.wo[win].concealcursor = "nc"
-      end,
+    bullet = {
+      icons = { "▶", "◆", "▷", "◇", "◈" },
+    },
+    checkbox = {
+      unchecked = {
+        icon = "󰄱 ",
+      },
+      checked = {
+        icon = "󰄵 ",
+      },
+      custom = {
+        todo = { raw = "[-]", rendered = "󰔛 ", highlight = "RenderMarkdownTodo" },
+        important = { raw = "[~]", rendered = "󰄗 ", highlight = "DiagnosticWarn" },
+      },
+    },
+    pipe_table = {
+      preset = "heavy",
+      alignment_indicator = "",
     },
   },
 })

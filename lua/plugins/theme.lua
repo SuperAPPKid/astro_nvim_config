@@ -78,6 +78,15 @@ return {
         DelimitedHint = { link = "DiagnosticUnderlineHint" },
 
         SagaBeacon = { bg = palette.lotusGray },
+
+        Mono = { fg = palette.dragonWhite, bg = palette.sumiInk2, bold = true },
+        RainbowRed = { fg = palette.dragonRed, bold = true },
+        RainbowYellow = { fg = palette.dragonYellow, bold = true },
+        RainbowBlue = { fg = palette.dragonBlue, bold = true },
+        RainbowOrange = { fg = palette.dragonOrange, bold = true },
+        RainbowGreen = { fg = palette.dragonGreen, bold = true },
+        RainbowViolet = { fg = palette.dragonViolet, bold = true },
+        RainbowCyan = { fg = palette.dragonAqua, bold = true },
       }
     end,
     theme = "dragon", -- Load "wave" theme when 'background' option is not set
