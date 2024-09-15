@@ -142,6 +142,10 @@ return {
           filter = function(buf) return vim.bo[buf].buftype == "help" end,
         },
         {
+          ft = "neotest-output-panel",
+          size = { height = 10 },
+        },
+        {
           ft = "toggleterm",
           size = { height = 0.33 },
           filter = function(buf, _)
@@ -166,6 +170,10 @@ return {
         {
           ft = "sagaoutline",
           size = { width = 52 },
+        },
+        {
+          ft = "neotest-summary",
+          size = { width = 36 },
         },
         {
           ft = "grug-far",
@@ -910,24 +918,110 @@ return {
 
   {
     "nvim-neotest/neotest",
+    lazy = true,
     version = "^5",
     dependencies = {
-      "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-neotest/neotest-go",
-      "nvim-neotest/neotest-python",
-      "sidlatau/neotest-dart",
-      "markemmons/neotest-deno",
-      "rouge8/neotest-rust",
+      "nvim-neotest/nvim-nio",
       {
-        "folke/lazydev.nvim",
-        opts = function(_, opts) opts.library = require("astrocore").list_insert_unique(opts.library, { "neotest" }) end,
+        "AstroNvim/astroui",
+        opts = {
+          icons = {
+            Tests = "󰙨",
+            Watch = "󰂥",
+          },
+        },
+      },
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+
+          local get_file_path = function() return vim.fn.expand "%" end
+          local get_project_path = function() return vim.fn.getcwd() end
+
+          local prefix = "<Leader>T"
+
+          maps.n[prefix] = {
+            desc = require("astroui").get_icon("Tests", 1, true) .. "Tests",
+          }
+          maps.n[prefix .. "t"] = {
+            function() require("neotest").run.run() end,
+            desc = "Run test",
+          }
+          maps.n[prefix .. "d"] = {
+            function() require("neotest").run.run { suite = false, strategy = "dap" } end,
+            desc = "Debug test",
+          }
+          maps.n[prefix .. "f"] = {
+            function() require("neotest").run.run(get_file_path()) end,
+            desc = "Run all tests in file",
+          }
+          maps.n[prefix .. "p"] = {
+            function() require("neotest").run.run(get_project_path()) end,
+            desc = "Run all tests in project",
+          }
+          maps.n[prefix .. "<CR>"] = {
+            function() require("neotest").summary.toggle() end,
+            desc = "Test Summary",
+          }
+          maps.n[prefix .. "o"] = {
+            function() require("neotest").output.open() end,
+            desc = "Output hover",
+          }
+          maps.n[prefix .. "O"] = {
+            function() require("neotest").output_panel.toggle() end,
+            desc = "Output window",
+          }
+          maps.n["]T"] = {
+            function() require("neotest").jump.next() end,
+            desc = "Next test",
+          }
+          maps.n["[T"] = {
+            function() require("neotest").jump.prev() end,
+            desc = "Previous test",
+          }
+
+          local watch_prefix = prefix .. "w"
+
+          maps.n[watch_prefix] = {
+            desc = require("astroui").get_icon("Watch", 1, true) .. "Watch",
+          }
+          maps.n[watch_prefix .. "t"] = {
+            function() require("neotest").watch.toggle() end,
+            desc = "Toggle watch test",
+          }
+          maps.n[watch_prefix .. "f"] = {
+            function() require("neotest").watch.toggle(get_file_path()) end,
+            desc = "Toggle watch all test in file",
+          }
+          maps.n[watch_prefix .. "p"] = {
+            function() require("neotest").watch.toggle(get_project_path()) end,
+            desc = "Toggle watch all tests in project",
+          }
+          maps.n[watch_prefix .. "S"] = {
+            function()
+              --- NOTE: The proper type of the argument is missing in the documentation
+              ---@see https://github.com/nvim-neotest/neotest/blob/master/doc/neotest.txt#L626-L632
+              ---@diagnostic disable-next-line: missing-parameter
+              require("neotest").watch.stop()
+            end,
+            desc = "Stop all watches",
+          }
+        end,
+      },
+      {
+        "folke/neodev.nvim",
+        opts = function(_, opts)
+          opts.library = opts.library or {}
+          if opts.library.plugins ~= true then
+            opts.library.plugins = require("astrocore").list_insert_unique(opts.library.plugins, { "neotest" })
+          end
+          opts.library.types = true
+        end,
       },
     },
     config = function(_, opts)
-      -- get neotest namespace (api call creates or returns namespace)
-      local neotest_ns = vim.api.nvim_create_namespace "neotest"
       vim.diagnostic.config({
         virtual_text = {
           format = function(diagnostic)
@@ -935,46 +1029,8 @@ return {
             return message
           end,
         },
-      }, neotest_ns)
+      }, vim.api.nvim_create_namespace "neotest")
       require("neotest").setup(opts)
-    end,
-    opts = function()
-      return {
-        adapters = {
-          require "neotest-go",
-          require "neotest-rust",
-          require "neotest-python",
-          require "neotest-deno",
-          require "neotest-dart" {
-            command = "flutter", -- Command being used to run tests. Defaults to `flutter`
-            -- Change it to `fvm flutter` if using FVM
-            -- change it to `dart` for Dart only tests
-            use_lsp = true, -- When set Flutter outline information is used when constructing test name.
-          },
-        },
-      }
-    end,
-    keys = function(_, _)
-      local prefix = "<Leader>T"
-
-      require("astrocore").set_mappings {
-        n = {
-          [prefix] = { desc = "󰙨 Test" },
-        },
-      }
-
-      return {
-        {
-          prefix .. "r",
-          function() require("neotest").run.run(vim.fn.expand "%") end,
-          desc = "Run the current file",
-        },
-        {
-          prefix .. "w",
-          function() require("neotest").watch.toggle(vim.fn.expand "%") end,
-          desc = "Toggle watch test",
-        },
-      }
     end,
   },
 
