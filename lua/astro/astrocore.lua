@@ -95,6 +95,12 @@ local mapping = {
       function() require("telescope.builtin").diagnostics() end,
       desc = "Search diagnostics",
     },
+    ["<Leader>fF"] = {
+      function()
+        require("telescope.builtin").find_files { hidden = true, no_ignore = true, file_ignore_patterns = {} }
+      end,
+      desc = "Find all files",
+    },
     ["<Leader>fH"] = {
       function() require("telescope.builtin").highlights() end,
       desc = "Find Highlight",
