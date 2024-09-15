@@ -565,7 +565,6 @@ return {
       vim.notify = fidget.notify
     end,
     opts = function(_, _)
-      require "fidget"
       return {
         progress = {
           suppress_on_insert = true, -- Suppress new messages while in insert mode
@@ -581,18 +580,21 @@ return {
           },
           -- Conditionally redirect notifications to another backend
           redirect = function(msg, level, opts)
+            level = level or 0
             local title = opts and opts.title
             local should_redirect = true
 
             if type(level) == "number" and level < vim.log.levels.ERROR then
-              should_redirect = (title and string.find(title, "tinygit")) ~= nil
+              should_redirect = (title and string.find(title, "tinygit") or 0) ~= 0
             end
 
-            if should_redirect and title and string.find(title, "Codeium") then -- exclude Codeium
+            if should_redirect and (title and (string.find(title, "Codeium") or 0) ~= 0 or false) then -- exclude Codeium
               should_redirect = false
             end
 
-            if should_redirect then return require("fidget.integration.nvim-notify").delegate(msg, level, opts) end
+            if should_redirect then
+              return require("fidget.integration.nvim-notify").delegate(msg, level, opts) --
+            end
 
             return false
           end,
@@ -604,7 +606,7 @@ return {
             end,
           },
           window = {
-            winblend = 50,
+            winblend = 0,
           },
         },
       }
