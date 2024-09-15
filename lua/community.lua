@@ -345,6 +345,13 @@ return {
   { import = "astrocommunity.recipes.vscode" },
 
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
+  { import = "astrocommunity.scrolling.mini-animate" },
+  {
+    "echasnovski/mini.animate",
+    opts = {
+      scroll = { enable = false },
+    },
+  },
 
   { import = "astrocommunity.terminal-integration.flatten-nvim" },
 
