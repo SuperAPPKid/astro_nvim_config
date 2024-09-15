@@ -163,14 +163,15 @@ return {
         segments = {
           {
             sign = {
-              name = { "Dap.*" },
+              name = { "Dap.*", "neotest.*" },
+              namespace = { "render%-markdown.*" },
               colwidth = 2,
             },
             click = "v:lua.ScSa",
           },
           {
             sign = {
-              name = { "todo.*" },
+              name = { "todo%-sign.*" },
               namespace = { "diagnostic/signs" },
               colwidth = 2,
             },
