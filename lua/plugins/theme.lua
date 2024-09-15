@@ -16,7 +16,7 @@ return {
         dragon = {
           ui = {
             fg_dim = "#c5c9c5",
-            bg = "#1F1F28",
+            -- bg = "#1F1F28",
           },
         },
         all = {
@@ -71,11 +71,6 @@ return {
         DiagnosticBgInfo = { fg = palette.dragonWhite, bg = palette.waveBlue2, bold = true },
         DiagnosticBgWarn = { fg = palette.winterYellow, bg = palette.autumnYellow, bold = true },
         DiagnosticBgError = { fg = palette.winterRed, bg = palette.autumnRed, bold = true },
-
-        DelimitedError = { link = "DiagnosticUnderlineError" },
-        DelimitedWarn = { link = "DiagnosticUnderlineWarn" },
-        DelimitedInfo = { link = "DiagnosticUnderlineInfo" },
-        DelimitedHint = { link = "DiagnosticUnderlineHint" },
 
         SagaBeacon = { bg = palette.lotusGray },
 
