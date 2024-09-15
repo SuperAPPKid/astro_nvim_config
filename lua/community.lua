@@ -391,12 +391,16 @@ return {
   { import = "astrocommunity.pack.cpp" },
   {
     "p00f/clangd_extensions.nvim",
-    optional = true,
     opts = { extensions = { autoSetHints = false } },
   },
+  { import = "astrocommunity.pack.cs" },
   { import = "astrocommunity.pack.dart" },
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.go" },
+  {
+    "leoluz/nvim-dap-go",
+    ft = { "go", "gomod", "gosum", "gowork" },
+  },
   {
     "leoluz/nvim-dap-go",
     config = function(_, opts)
@@ -404,6 +408,7 @@ return {
       require("dap-go").setup(opts)
     end,
   },
+  { import = "astrocommunity.pack.godot" },
   { import = "astrocommunity.pack.helm" },
   { import = "astrocommunity.pack.html-css" },
   -- { import = "astrocommunity.pack.java" },
