@@ -87,6 +87,13 @@ return {
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
   { import = "astrocommunity.editing-support.nvim-regexplainer" },
   { import = "astrocommunity.editing-support.nvim-origami" },
+  {
+    "chrisgrieser/nvim-origami",
+    opts = {
+      keepFoldsAcrossSessions = false,
+      hOnlyOpensOnFirstColumn = true,
+    },
+  },
 
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
   { import = "astrocommunity.editing-support.refactoring-nvim" },
