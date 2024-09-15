@@ -442,4 +442,23 @@ return {
       }
     end,
   },
+
+  {
+    "nvim-tree/nvim-web-devicons",
+    opts = function(_, opts)
+      opts.override_by_extension = opts.override_by_extension or {}
+      opts.override_by_extension["blade.php"] = {
+        icon = "󰫐",
+        color = "#f05340",
+        cterm_color = "203",
+        name = "Blade",
+      }
+      opts.override_by_extension["php"] = {
+        icon = "󰟆",
+        color = "#a074c4",
+        cterm_color = "140",
+        name = "Php",
+      }
+    end,
+  },
 }
