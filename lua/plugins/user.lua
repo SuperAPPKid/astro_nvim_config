@@ -1266,52 +1266,45 @@ return {
       local prefix = "<Leader>a"
       require("astrocore").set_mappings {
         x = {
-          [prefix] = { desc = "󰅪 Align" },
+          [prefix] = {
+            desc = "󱇂 Align",
+          },
         },
       }
       return {
         {
-          prefix .. "1",
-          function()
-            require("align").align_to_char {
-              preview = true,
-              length = 1,
-            }
-          end,
-          mode = { "x" },
-          desc = "Aligns to 1 character",
-        },
-        {
-          prefix .. "2",
-          function()
-            require("align").align_to_char {
-              preview = true,
-              length = 2,
-            }
-          end,
-          mode = { "x" },
-          desc = "Aligns to 2 characters",
-        },
-        {
           prefix .. "<CR>",
           function()
+            require("align").align_to_char {
+              preview = false,
+            }
+          end,
+          mode = { "x" },
+          silent = true,
+          desc = "Aligns to char",
+        },
+        {
+          prefix .. "s",
+          function()
             require("align").align_to_string {
-              preview = true,
+              preview = false,
               regex = false,
             }
           end,
           mode = { "x" },
-          desc = "Aligns to a string",
+          silent = true,
+          desc = "Aligns to string",
         },
         {
           prefix .. "r",
           function()
             require("align").align_to_string {
-              preview = true,
+              preview = false,
               regex = true,
             }
           end,
           mode = { "x" },
+          silent = true,
           desc = "Aligns to a Vim regex",
         },
       }
