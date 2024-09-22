@@ -38,8 +38,8 @@ local mapping = {
     ["<C-s>"] = save_file,
 
     --tabs
-    ["<Leader><tab>"] = { desc = " Tabs" },
-    ["<Leader><tab>n"] = {
+    ["<Leader><Tab>"] = { desc = " Tabs" },
+    ["<Leader><Tab>n"] = {
       function()
         local bufr = vim.api.nvim_get_current_buf()
         local view = vim.fn.winsaveview()
@@ -50,7 +50,7 @@ local mapping = {
       end,
       desc = "New Tab",
     },
-    ["<Leader><tab>N"] = {
+    ["<Leader><Tab>N"] = {
       function()
         local helper = require "astrocore.buffer"
         local bufr = vim.api.nvim_get_current_buf()
@@ -63,7 +63,7 @@ local mapping = {
       end,
       desc = "Move to new Tab",
     },
-    ["<Leader><tab>q"] = {
+    ["<Leader><Tab>q"] = {
       function()
         local helper = require "astrocore.buffer"
         local before_bufs = vim.fn.tabpagebuflist()
