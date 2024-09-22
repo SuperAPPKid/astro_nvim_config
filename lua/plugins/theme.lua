@@ -74,7 +74,7 @@ return {
 
         SagaBeacon = { bg = palette.lotusGray },
 
-        Mono = { fg = palette.dragonWhite, bg = palette.sumiInk2, bold = true },
+        Mono = { fg = palette.dragonWhite, bg = palette.sumiInk3, bold = true },
         RainbowRed = { fg = palette.dragonRed, bold = true },
         RainbowYellow = { fg = palette.dragonYellow, bold = true },
         RainbowBlue = { fg = palette.dragonBlue, bold = true },
