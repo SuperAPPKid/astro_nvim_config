@@ -49,7 +49,7 @@ return {
       install_info = {
         url = "https://github.com/superappkid/tree-sitter-go",
         files = { "src/parser.c" },
-        revision = "a27b3fc13e024c20479dc5b7380c521b43185eab",
+        revision = "eabb298ee52187d9aa8cab74b81fbdb5166faa28",
       },
       branch = "master",
     }
