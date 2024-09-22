@@ -161,7 +161,7 @@ return {
   },
 
   {
-    "superappkid/lsp_signature.nvim",
+    "ray-x/lsp_signature.nvim",
     event = "LspAttach",
     opts = function(_, opts)
       opts.cursorhold_update = false
