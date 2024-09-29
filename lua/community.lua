@@ -357,7 +357,6 @@ return {
 
   { import = "astrocommunity.test.nvim-coverage" },
 
-  { import = "astrocommunity.utility.telescope-lazy-nvim" },
   -- { import = "astrocommunity.utility.mason-tool-installer-nvim" },
   {
     import = "astrocommunity.utility.neodim",
@@ -380,6 +379,16 @@ return {
       },
     },
   },
+  { import = "astrocommunity.utility.telescope-lazy-nvim" },
+  {
+    "tsakirist/telescope-lazy.nvim",
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts) opts.mappings.n["<Leader>pr"] = { "<Cmd>Telescope lazy<CR>", desc = "Plugins README" } end,
+      },
+    },
+  },
 
   -- { import = "astrocommunity.worflow.hardtime-nvim" },
 
@@ -394,6 +403,10 @@ return {
     opts = { extensions = { autoSetHints = false } },
   },
   { import = "astrocommunity.pack.cs" },
+  {
+    "Decodetalkers/csharpls-extended-lsp.nvim",
+    ft = { "cs", "csproj", "cshtml" },
+  },
   { import = "astrocommunity.pack.dart" },
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.go" },
