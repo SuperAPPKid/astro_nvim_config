@@ -338,6 +338,9 @@ return {
   { import = "astrocommunity.quickfix.nvim-bqf" },
 
   {
+    import = "astrocommunity.recipes.cache-colorscheme",
+  },
+  {
     import = "astrocommunity.recipes.heirline-vscode-winbar",
     enabled = function() return vim.fn.has "nvim-0.10" ~= 1 end,
   },
