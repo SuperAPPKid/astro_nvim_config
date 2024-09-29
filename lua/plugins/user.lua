@@ -616,43 +616,29 @@ return {
 
   {
     "backdround/neowords.nvim",
-    keys = function(_, _)
-      local neowords = require "neowords"
-      local p = neowords.pattern_presets
-      local word_hops = neowords.get_word_hops(
-        p.hex_color,
-        "\\v[-]@![[:digit:][:lower:][:upper:]\\u0800-\\uffff]+", -- utf-8 words
-        "\\V\\[{[(}\\])]\\+", -- brackets {}[]()
-        "\\v(``)|(\"\")|''" -- quotes '"
-      )
+    lazy = true,
+    dependencies = {
+      "AstroNvim/astrocore",
+      opts = function(_, opts)
+        local word_hops = function()
+          local neowords = require "neowords"
+          return neowords.get_word_hops(
+            neowords.pattern_presets.hex_color,
+            "\\v[-]@![[:digit:][:lower:][:upper:]\\u0800-\\uffff]+", -- utf-8 words
+            "\\V\\[{[(}\\])]\\+", -- brackets {}[]()
+            "\\v(``)|(\"\")|''" -- quotes '"
+          )
+        end
 
-      return {
-        {
-          "w",
-          word_hops.forward_start,
-          mode = { "n", "x", "o" },
-          desc = "Next word",
-        },
-        {
-          "e",
-          word_hops.forward_end,
-          mode = { "n", "x", "o" },
-          desc = "Next end of word",
-        },
-        {
-          "b",
-          word_hops.backward_start,
-          mode = { "n", "x", "o" },
-          desc = "Previous word",
-        },
-        {
-          "ge",
-          word_hops.backward_end,
-          mode = { "n", "x", "o" },
-          desc = "Previous end of word",
-        },
-      }
-    end,
+        local maps = opts.mappings
+        for _, mode in ipairs { "n", "x", "o" } do
+          maps[mode]["w"] = { function() word_hops().forward_start() end, desc = "Next word" }
+          maps[mode]["e"] = { function() word_hops().forward_end() end, desc = "Next end of word" }
+          maps[mode]["b"] = { function() word_hops().backward_start() end, desc = "Previous word" }
+          maps[mode]["ge"] = { function() word_hops().backward_end() end, desc = "Previous end of word" }
+        end
+      end,
+    },
   },
 
   {
