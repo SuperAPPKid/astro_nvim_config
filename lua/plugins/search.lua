@@ -18,7 +18,7 @@ end
 return {
   {
     "MagicDuck/grug-far.nvim",
-    cmd = "GrugFar",
+    lazy = true,
     ---@param opts GrugFarOptionsOverride
     opts = function(_, opts)
       opts.icons = opts.icons or {}

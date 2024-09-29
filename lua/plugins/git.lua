@@ -19,6 +19,8 @@ return {
 
   {
     "superappkid/nvim-tinygit",
+    lazy = true,
+    enabled = vim.fn.executable "git" == 1,
     dependencies = {
       "stevearc/dressing.nvim",
       {
@@ -59,6 +61,7 @@ return {
 
   {
     "sindrets/diffview.nvim",
+    enabled = vim.fn.executable "git" == 1,
     cmd = {
       "DiffviewFileHistory",
       "DiffviewOpen",
@@ -147,13 +150,13 @@ return {
 
   {
     "linrongbin16/gitlinker.nvim",
+    lazy = true,
+    enabled = vim.fn.executable "git" == 1,
     dependencies = {
       "nvim-lua/plenary.nvim",
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
-          local gitlinker = require "gitlinker"
-          local actions = require "gitlinker.actions"
           local maps = opts.mappings
           local prefix = "<Leader>go"
 
@@ -161,16 +164,16 @@ return {
 
           -- repo
           maps.n[prefix .. "u"] = {
-            function() gitlinker.link { router_type = "repo" } end,
+            function() require("gitlinker").link { router_type = "repo" } end,
             silent = true,
             noremap = true,
             desc = "GitLink Repo",
           }
           maps.n[prefix .. "U"] = {
             function()
-              gitlinker.link {
+              require("gitlinker").link {
                 router_type = "repo",
-                action = actions.system,
+                action = require("gitlinker.actions").system,
               }
             end,
             silent = true,
@@ -180,7 +183,7 @@ return {
 
           -- blame
           maps.n[prefix .. "b"] = {
-            function() gitlinker.link { router_type = "blame" } end,
+            function() require("gitlinker").link { router_type = "blame" } end,
             silent = true,
             noremap = true,
             desc = "GitLink blame",
@@ -189,9 +192,9 @@ return {
 
           maps.n[prefix .. "B"] = {
             function()
-              gitlinker.link {
+              require("gitlinker").link {
                 router_type = "blame",
-                action = actions.system,
+                action = require("gitlinker.actions").system,
               }
             end,
             silent = true,
@@ -202,7 +205,7 @@ return {
 
           -- browse current branch
           maps.n[prefix .. "l"] = {
-            function() gitlinker.link { router_type = "current_branch" } end,
+            function() require("gitlinker").link { router_type = "current_branch" } end,
             silent = true,
             noremap = true,
             desc = "GitLink",
@@ -211,9 +214,9 @@ return {
 
           maps.n[prefix .. "L"] = {
             function()
-              gitlinker.link {
+              require("gitlinker").link {
                 router_type = "current_branch",
-                action = actions.system,
+                action = require("gitlinker.actions").system,
               }
             end,
             silent = true,
@@ -273,6 +276,8 @@ return {
 
   {
     "pwntester/octo.nvim",
+    cmd = { "Octo" },
+    enabled = vim.fn.executable "git" == 1,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
@@ -346,7 +351,6 @@ return {
         end,
       },
     },
-    cmd = { "Octo" },
     opts = {
       use_diagnostic_signs = true,
       mappings = {},
@@ -356,6 +360,7 @@ return {
   {
     "FabijanZulj/blame.nvim",
     cmd = "BlameToggle",
+    enabled = vim.fn.executable "git" == 1,
     config = true,
     dependencies = {
       {
@@ -377,6 +382,8 @@ return {
 
   {
     "isakbm/gitgraph.nvim",
+    lazy = true,
+    enabled = vim.fn.executable "git" == 1,
     opts = {
       format = {
         timestamp = "%a %b %d, %Y at %H:%M",
