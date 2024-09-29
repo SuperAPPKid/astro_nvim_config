@@ -307,10 +307,11 @@ return {
         return true
       end,
       triggers = {
-        { "<auto>", mode = "ns" },
-        { "<Leader>", mode = { "x" } },
-        { "]", mode = { "x" } },
-        { "[", mode = { "x" } },
+        { "<auto>", mode = "nsx" },
+        -- { "<Leader>", mode = { "x" } },
+        -- { "g", mode = { "x" } },
+        -- { "]", mode = { "x" } },
+        -- { "[", mode = { "x" } },
       },
       defer = function(ctx)
         if vim.list_contains({ "d", "y", "m", "c" }, ctx.operator) then return true end
