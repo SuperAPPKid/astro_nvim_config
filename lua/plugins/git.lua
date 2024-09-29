@@ -354,6 +354,9 @@ return {
       },
     },
     opts = {
+      suppress_missing_scope = {
+        projects_v2 = true,
+      },
       use_diagnostic_signs = true,
       mappings = {},
     },

@@ -55,6 +55,7 @@ return {
     }
 
     opts.textobjects.select.enable = false
+    opts.incremental_selection.enable = false
     opts.matchup = { enable = true }
 
     -- add more things to the ensure_installed table protecting against community packs modifying it
