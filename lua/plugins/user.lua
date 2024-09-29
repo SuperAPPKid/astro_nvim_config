@@ -1345,4 +1345,53 @@ return {
       }
     end,
   },
+
+  {
+    "lewis6991/hover.nvim",
+    lazy = true,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = {
+          mappings = {
+            n = {
+              K = { function(...) require("hover").hover(...) end, desc = "Hover cursor" },
+              gK = { function(...) require("hover").hover_select(...) end, desc = "Hover selection" },
+              ["]h"] = { function() require("hover").hover_switch "next" end, desc = "Next hover source" },
+              ["[h"] = { function() require("hover").hover_switch "previous" end, desc = "Previous hover source" },
+            },
+          },
+        },
+      },
+      {
+        "AstroNvim/astrolsp",
+        opts = {
+          mappings = {
+            n = {
+              K = false,
+              gK = false,
+            },
+          },
+        },
+      },
+    },
+    opts = {
+      init = function()
+        -- Require providers
+        require "hover.providers.lsp"
+        -- require "hover.providers.gh"
+        -- require "hover.providers.gh_user"
+        -- require "hover.providers.jira"
+        require "hover.providers.dap"
+        require "hover.providers.fold_preview"
+        require "hover.providers.diagnostic"
+        require "hover.providers.man"
+        require "hover.providers.dictionary"
+      end,
+      preview_opts = {
+        border = "double",
+      },
+      preview_window = true,
+    },
+  },
 }
