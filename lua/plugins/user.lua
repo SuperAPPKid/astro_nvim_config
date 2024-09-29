@@ -893,8 +893,8 @@ return {
             require("telescope").extensions.harpoon.marks {
               finder = gen_finder(),
               attach_mappings = function(_, map)
-                map("i", "<c-d>", delete_harpoon_mark)
-                map("n", "<c-d>", delete_harpoon_mark)
+                map("i", "<C-d>", delete_harpoon_mark)
+                map("n", "<C-d>", delete_harpoon_mark)
                 return true
               end,
             }
