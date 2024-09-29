@@ -161,6 +161,7 @@ return {
           local prefix = "<Leader>go"
 
           maps.n[prefix] = { desc = "Gitlinker" }
+          maps.v[prefix] = { desc = "Gitlinker" }
 
           -- repo
           maps.n[prefix .. "u"] = {
@@ -244,7 +245,7 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-
+          maps.n["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")
           maps.n["<Leader>gl"] = { function() require("gitsigns").blame_line() end, desc = "View Git blame" }
           maps.n["<Leader>gr"] = { function() require("gitsigns").reset_hunk() end, desc = "Reset Git hunk" }
           maps.n["<Leader>gR"] = { function() require("gitsigns").reset_buffer() end, desc = "Reset Git buffer" }
@@ -256,6 +257,7 @@ return {
           maps.n["]g"] = { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }
           maps.n["[g"] = { function() require("gitsigns").prev_hunk() end, desc = "Previous Git hunk" }
 
+          maps.v["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")
           maps.v["<Leader>gr"] = {
             function() require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" } end,
             desc = "Reset Git hunk",

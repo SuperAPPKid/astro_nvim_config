@@ -46,7 +46,7 @@ table.insert(M, {
       },
     },
     post_open = function(bufr, _)
-      vim.keymap.set("n", "q", "<Cmd>close<CR>", {
+      vim.keymap.set("n", "<C-q>", "<Cmd>close<CR>", {
         noremap = true,
         silent = true,
         buffer = bufr,
