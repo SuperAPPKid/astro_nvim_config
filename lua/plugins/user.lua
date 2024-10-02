@@ -1394,4 +1394,23 @@ return {
       preview_window = true,
     },
   },
+
+  {
+    "kwkarlwang/bufjump.nvim",
+    lazy = true,
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          opts.mappings.n["<C-o>"] = { function() require("bufjump").backward_same_buf() end }
+          opts.mappings.n["<C-i>"] = { function() require("bufjump").forward_same_buf() end }
+        end,
+      },
+    },
+    opts = {
+      forward_key = false,
+      backward_key = false,
+      on_success = function() vim.cmd [[execute "normal! g`\"zz"]] end,
+    },
+  },
 }
