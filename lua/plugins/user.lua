@@ -357,7 +357,6 @@ return {
               {
                 event = "VimEnter",
                 desc = "Start Oil when vim is opened with no arguments",
-                group = vim.api.nvim_create_augroup("oil_autostart", { clear = true }),
                 callback = vim.schedule_wrap(function()
                   local should_skip = false
                   local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)

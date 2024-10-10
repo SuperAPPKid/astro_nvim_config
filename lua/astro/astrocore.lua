@@ -96,9 +96,7 @@ local mapping = {
       desc = "Search diagnostics",
     },
     ["<Leader>fF"] = {
-      function()
-        require("telescope.builtin").find_files { hidden = true, no_ignore = true, file_ignore_patterns = {} }
-      end,
+      function() require("telescope.builtin").find_files { hidden = true, no_ignore = true, file_ignore_patterns = {} } end,
       desc = "Find all files",
     },
     ["<Leader>fH"] = {
@@ -134,52 +132,6 @@ local mapping = {
   },
   t = {},
 }
-
-if is_available "toggleterm.nvim" and vim.fn.executable "yazi" == 1 then
-  mapping.n["<Leader>ty"] = {
-    function()
-      local edit_cmd = ""
-      local file_path = vim.fn.expand "%:p"
-      local fm_tmpfile = vim.fn.tempname()
-      local feedkeys = function(keys)
-        local key_termcode = vim.api.nvim_replace_termcodes(keys, true, true, true)
-        vim.api.nvim_feedkeys(key_termcode, "n", false)
-      end
-      local opts = {
-        direction = "float",
-        hidden = true,
-        cmd = string.format([[yazi "%s" --chooser-file "%s"]], file_path, fm_tmpfile),
-        dir = vim.fn.expand "%:p:h",
-        on_open = function(term)
-          edit_cmd = "edit"
-          vim.keymap.set("t", "<Tab>", function()
-            edit_cmd = "tabedit"
-            feedkeys "<CR>"
-          end, { noremap = true, silent = true, buffer = term.bufnr })
-          vim.keymap.set("t", "\\", function()
-            edit_cmd = "split"
-            feedkeys "<CR>"
-          end, { noremap = true, silent = true, buffer = term.bufnr })
-          vim.keymap.set("t", "|", function()
-            edit_cmd = "vsplit"
-            feedkeys "<CR>"
-          end, { noremap = true, silent = true, buffer = term.bufnr })
-        end,
-        on_exit = function()
-          local file = io.open(fm_tmpfile, "r")
-          if file ~= nil then
-            local file_name = file:read "*a"
-            file:close()
-            os.remove(fm_tmpfile)
-            vim.uv.new_timer():start(0, 0, vim.schedule_wrap(function() vim.cmd(edit_cmd .. " " .. file_name) end))
-          end
-        end,
-      }
-      utils.toggle_term_cmd(opts)
-    end,
-    desc = "ToggleTerm yazi",
-  }
-end
 
 if is_available "neo-tree.nvim" then
   mapping.n["<Leader>e"] = { "<Cmd>Neotree toggle<CR>", desc = "Toggle Filesystem" }
