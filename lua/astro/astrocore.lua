@@ -14,7 +14,52 @@ local save_file = {
 local mapping = {
   -- first key is the mode
   n = {
-    -- second key is the lefthand side of the map
+    h = {
+      function()
+        if vim.v.count > 1 then
+          return "m'" .. vim.v.count .. "h"
+        else
+          return "h"
+        end
+      end,
+      expr = true,
+      silent = true,
+    },
+    l = {
+      function()
+        if vim.v.count > 1 then
+          return "m'" .. vim.v.count .. "l"
+        else
+          return "l"
+        end
+      end,
+      expr = true,
+      silent = true,
+    },
+    j = {
+      function()
+        if vim.v.count > 1 then
+          return "m'" .. vim.v.count .. "j"
+        else
+          return "gj"
+        end
+      end,
+      expr = true,
+      silent = true,
+    },
+    k = {
+      function()
+        if vim.v.count > 1 then
+          return "m'" .. vim.v.count .. "k"
+        else
+          return "gk"
+        end
+      end,
+      expr = true,
+      silent = true,
+    },
+    gj = "j",
+    gk = "k",
 
     -- navigate buffer tabs with `H` and `L`
     L = {
