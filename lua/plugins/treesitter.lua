@@ -25,6 +25,7 @@ return {
         vim.g.matchup_text_obj_enabled = 0
         -- vim.g.matchup_motion_cursor_end = 0
 
+        vim.g.matchup_matchparen_nomode = "i"
         vim.g.matchup_matchparen_deferred = 1
         vim.g.matchup_matchparen_hi_surround_always = 1
       end,
