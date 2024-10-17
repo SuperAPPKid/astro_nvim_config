@@ -36,25 +36,25 @@ return {
       opts.startInInsertMode = false
       opts.transient = true
       opts.keymaps = {
-        replace = { n = "<localleader>r" },
-        qflist = { n = "<localleader>q" },
-        syncLocations = { n = "<localleader>s" },
-        syncLine = { n = "<localleader>l" },
+        replace = { n = "Zr" },
+        qflist = { n = "Zq" },
+        syncLocations = { n = "Zs" },
+        syncLine = { n = "Zl" },
         close = { n = "q" },
-        historyOpen = { n = "<localleader>t" },
-        historyAdd = { n = "<localleader>a" },
-        refresh = { n = "<localleader>f" },
-        openLocation = { n = "<localleader>o" },
+        historyOpen = { n = "Zt" },
+        historyAdd = { n = "Za" },
+        refresh = { n = "Zf" },
+        openLocation = { n = "Zo" },
         openNextLocation = { n = "<Tab>" },
         openPrevLocation = { n = "<S-Tab>" },
         gotoLocation = { n = "<enter>" },
         pickHistoryEntry = { n = "<enter>" },
-        abort = { n = "<localleader>b" },
+        abort = { n = "Zb" },
         help = { n = "g?" },
-        toggleShowCommand = { n = "<localleader>p" },
-        swapEngine = { n = "<localleader>e" },
-        previewLocation = { n = "<localleader>i" },
-        swapReplacementInterpreter = { n = "<localleader>x" },
+        toggleShowCommand = { n = "Zp" },
+        swapEngine = { n = "Ze" },
+        previewLocation = { n = "Zi" },
+        swapReplacementInterpreter = { n = "Zx" },
       }
     end,
     dependencies = {
@@ -104,8 +104,7 @@ return {
       {
         "folke/which-key.nvim",
         opts = function(_, opts)
-          if not opts.disable then opts.disable = {} end
-          opts.disable.ft = require("astrocore").list_insert_unique(opts.disable.ft, { "grug-far" })
+          opts.triggers = require("astrocore").list_insert_unique(opts.triggers, { { "Z", mode = "n" } })
         end,
       },
       {

@@ -281,26 +281,6 @@ return {
     "folke/flash.nvim",
     dependencies = {
       {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          local key = "Z"
-          local value = {
-            function()
-              require("flash").jump {
-                search = { mode = "search", max_length = 0 },
-                label = { after = { 0, 0 } },
-                pattern = "^",
-              }
-            end,
-            desc = "jump to a line",
-          }
-          maps.n[key] = value
-          maps.x[key] = value
-          maps.o[key] = value
-        end,
-      },
-      {
         "AstroNvim/astroui",
         opts = {
           highlights = {
