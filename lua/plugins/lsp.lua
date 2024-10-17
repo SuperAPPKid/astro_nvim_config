@@ -90,7 +90,7 @@ return {
         local function callback()
           local view = vim.fn.winsaveview()
           require("goto-preview").close_all_win { skip_curr_window = false }
-          vim.api.nvim_buf_set_option(bufr, "buflisted", true)
+          vim.api.nvim_set_option_value("buflisted", true, { buf = bufr })
           vim.cmd(string.format("buffer %s", vim.fn.fnameescape(vim.api.nvim_buf_get_name(bufr))))
           vim.fn.winrestview(view)
           vim.cmd "normal! m'"
