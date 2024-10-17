@@ -138,14 +138,14 @@ return {
             -- the rest of the autocmd options (:h nvim_create_autocmd)
             desc = "Document Highlighting",
             callback = function()
-              if false then vim.lsp.buf.document_highlight() end
+              -- vim.lsp.buf.document_highlight()
             end,
           },
           {
             event = { "CursorMoved", "CursorMovedI", "BufLeave" },
             desc = "Document Highlighting Clear",
             callback = function()
-              if false then return vim.lsp.buf.clear_references() end
+              -- vim.lsp.buf.clear_references()
             end,
           },
         },
@@ -176,6 +176,7 @@ return {
           -- },
         },
       },
+      on_attach = function(client, _) client.server_capabilities.semanticTokensProvider = nil end,
     }
     return require("astrocore").extend_tbl(opts, new_opts)
   end,

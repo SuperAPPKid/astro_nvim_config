@@ -1,3 +1,5 @@
+local SymbolKind = vim.lsp.protocol.SymbolKind
+
 ---@type LazySpec
 return {
   {
@@ -462,6 +464,119 @@ return {
             timeout_ms = vim.tbl_get(require("astrolsp").config, "formatting", "timeout_ms") or 500,
           }
         end
+      end,
+    },
+  },
+
+  {
+    "VidocqH/lsp-lens.nvim",
+    event = "LspAttach",
+    opts = {
+      sections = { -- Enable / Disable specific request, formatter example looks 'Format Requests'
+        definition = false,
+        git_authors = false,
+      },
+      target_symbol_kinds = { SymbolKind.Method, SymbolKind.Constructor, SymbolKind.Function },
+      wrapper_symbol_kinds = { SymbolKind.Class, SymbolKind.Struct },
+    },
+  },
+
+  {
+    "Wansmer/symbol-usage.nvim",
+    lazy = true,
+    dependencies = {
+      {
+        "AstroNvim/astrolsp",
+        opts = function(_, opts)
+          -- HACK: fix initial buffer symbols not show
+          local on_attach = opts.on_attach
+          local done = false
+          opts.on_attach = function(client, bufnr)
+            on_attach(client, bufnr)
+            if not done then
+              require("symbol-usage").refresh()
+              done = true
+            end
+          end
+        end,
+      },
+      {
+        "AstroNvim/astroui",
+        opts = function(_, opts)
+          local hl = function(name) return vim.api.nvim_get_hl(0, { name = name }) end
+          opts.highlights = require("astrocore").extend_tbl(opts.highlights, {
+            init = {
+              SymbolUsageRounding = { fg = hl("CursorLine").bg, italic = true },
+              SymbolUsageContent = { bg = hl("CursorLine").bg, fg = hl("Comment").fg, italic = true },
+            },
+          })
+        end,
+      },
+    },
+    opts = {
+      kinds = {},
+      filetypes = {
+        go = {
+          kinds = {
+            SymbolKind.Interface,
+            SymbolKind.Class,
+            SymbolKind.Property,
+            SymbolKind.Struct,
+            SymbolKind.Field,
+            SymbolKind.Enum,
+            SymbolKind.Constant,
+          },
+        },
+        lua = {
+          kinds = {},
+        },
+        vue = {
+          kinds = {
+            SymbolKind.Variable,
+            SymbolKind.Constant,
+          },
+        },
+        javascript = {
+          kinds = {
+            SymbolKind.Variable,
+            SymbolKind.Constant,
+          },
+        },
+        typescript = {
+          kinds = {
+            SymbolKind.Variable,
+            SymbolKind.Constant,
+          },
+        },
+        typescriptreact = {
+          kinds = {
+            SymbolKind.Variable,
+            SymbolKind.Constant,
+          },
+        },
+        javascriptreact = {
+          kinds = {
+            SymbolKind.Variable,
+            SymbolKind.Constant,
+          },
+        },
+      },
+      vt_position = "end_of_line",
+      text_format = function(symbol)
+        local res = {}
+
+        local round_start = { "▐", "SymbolUsageRounding" }
+        local round_end = { "▌", "SymbolUsageRounding" }
+
+        if symbol.references then
+          local usage = symbol.references <= 1 and "usage" or "usages"
+          local num = symbol.references == 0 and "no" or symbol.references
+          table.insert(res, round_start)
+          table.insert(res, { ("%s %s"):format(num, usage), "SymbolUsageContent" })
+          table.insert(res, round_end)
+        end
+
+        return res
       end,
     },
   },
