@@ -208,7 +208,7 @@ return {
                 vim.o.spell = true
               end
             end,
-            { exit = true, desc = "spell" },
+            { desc = "spell" },
           },
           {
             "w",
