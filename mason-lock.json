@@ -2,7 +2,6 @@
   "angular-language-server": "18.2.0",
   "ansible-language-server": "1.2.3",
   "ansible-lint": "24.9.2",
-  "basedpyright": "1.18.4",
   "bash-debug-adapter": "untagged-438733f35feb8659d939",
   "bash-language-server": "5.4.2",
   "black": "24.10.0",
@@ -17,7 +16,7 @@
   "dart-debug-adapter": "v3.98.0",
   "debugpy": "1.8.7",
   "delve": "v1.23.1",
-  "deno": "v2.0.0",
+  "deno": "v2.0.1",
   "docker-compose-language-service": "0.2.0",
   "dockerfile-language-server": "0.13.0",
   "emmet-ls": "0.4.2",
@@ -73,5 +72,6 @@
   "vtsls": "0.2.6",
   "vue-language-server": "2.1.6",
   "wgsl-analyzer": "v0.8.1",
-  "yaml-language-server": "1.15.0"
+  "yaml-language-server": "1.15.0",
+
 }
