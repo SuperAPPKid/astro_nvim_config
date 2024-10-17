@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   {
     "rmagatti/goto-preview",
@@ -66,6 +67,7 @@ return {
             desc = "Go to references of current symbol",
             cond = "textDocument/references",
           }
+
           -- opts.on_attach = function(client, bufnr)
           --   if client.supports_method "textDocument/references" then
           --     vim.keymap.del("n", "<Leader>lR", { buffer = bufnr })
@@ -187,6 +189,19 @@ return {
           maps.n["[d"] = { function() require("delimited").goto_prev() end, desc = "prev diag" }
           maps.n["]d"] = { function() require("delimited").goto_next() end, desc = "next diag" }
         end,
+      },
+      {
+        "AstroNvim/astroui",
+        opts = {
+          highlights = {
+            init = {
+              DelimitedError = { link = "DiagnosticUnderlineError" },
+              DelimitedWarn = { link = "DiagnosticUnderlineWarn" },
+              DelimitedInfo = { link = "DiagnosticUnderlineInfo" },
+              DelimitedHint = { link = "DiagnosticUnderlineHint" },
+            },
+          },
+        },
       },
     },
   },

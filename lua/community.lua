@@ -301,11 +301,17 @@ return {
           maps.o[key] = value
         end,
       },
+      {
+        "AstroNvim/astroui",
+        opts = {
+          highlights = {
+            init = {
+              FlashCursor = { link = "Normal" },
+            },
+          },
+        },
+      },
     },
-    config = function(_, opts)
-      require("flash").setup(opts)
-      vim.api.nvim_set_hl(0, "FlashCursor", { link = "Normal" })
-    end,
     opts = {
       labels = "sjkluioyhnmpadftgv;JKLUIOYHNMPTGVRFED",
       label = {
