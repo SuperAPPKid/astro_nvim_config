@@ -74,7 +74,6 @@ return {
 
           local mappings = opts.mappings
           mappings.n["<C-t>"] = { "<Cmd>ToggleTerm<CR>" }
-          mappings.i["<C-t>"] = { "<Cmd>ToggleTerm<CR>" }
 
           if vim.fn.executable "yazi" == 1 then
             mappings.n["<Leader>ty"] = {

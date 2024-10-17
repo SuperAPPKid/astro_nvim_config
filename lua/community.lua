@@ -310,7 +310,6 @@ return {
       },
     },
   },
-  -- { import = "astrocommunity.motion.tabout-nvim" },
 
   { import = "astrocommunity.neovim-lua-development.helpview-nvim" },
 
