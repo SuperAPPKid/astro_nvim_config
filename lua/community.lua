@@ -359,6 +359,27 @@ return {
   { import = "astrocommunity.test.nvim-coverage" },
 
   { import = "astrocommunity.utility.mason-tool-installer-nvim" },
+  {
+    import = "astrocommunity.utility.neodim",
+    enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
+  },
+  {
+    "zbirenbaum/neodim",
+    event = "LspAttach",
+    opts = {
+      alpha = 0.75,
+      blend_color = "#000000",
+      update_in_insert = {
+        enable = true,
+        delay = 100,
+      },
+      hide = {
+        virtual_text = false,
+        signs = false,
+        underline = false,
+      },
+    },
+  },
   { import = "astrocommunity.utility.telescope-lazy-nvim" },
   {
     "tsakirist/telescope-lazy.nvim",
