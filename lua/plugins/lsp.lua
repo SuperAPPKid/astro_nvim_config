@@ -384,16 +384,7 @@ return {
         "AstroNvim/astrocore",
         opts = {
           options = { opt = { formatexpr = "v:lua.require'conform'.formatexpr()" } },
-        },
-      },
-      {
-        "AstroNvim/astrolsp",
-        opts = function(_, opts)
-          opts.formatting = {
-            disabled = true,
-          }
-
-          opts.commands = {
+          commands = {
             Format = {
               function(args)
                 local range = nil
@@ -406,14 +397,13 @@ return {
                 end
                 require("conform").format { async = true, range = range }
               end,
-              desc = "Format buffer",
+              desc = "Format buffer (conform)",
               range = true,
             },
-          }
-
-          opts.mappings = require("astrocore").extend_tbl(opts.mappings, {
+          },
+          mappings = {
             n = {
-              ["<Leader>lf"] = { function() vim.cmd.Format() end, desc = "Format buffer" },
+              ["<Leader>lf"] = { function() vim.cmd.Format() end, desc = "Format buffer (conform)" },
               ["<Leader>uf"] = {
                 function()
                   if vim.b.autoformat == nil then
@@ -445,11 +435,23 @@ return {
                   vim.cmd.Format()
                   vim.cmd [[execute "normal! \<Esc>"]]
                 end,
-                desc = "Format lines",
+                desc = "Format lines (conform)",
               },
             },
-          })
-        end,
+          },
+        },
+      },
+      {
+        "AstroNvim/astrolsp",
+        opts = {
+          formatting = { disabled = true },
+          commands = {
+            Format = false,
+          },
+        },
+      },
+      {
+        "AstroNvim/astrolsp",
       },
     },
     opts = {
