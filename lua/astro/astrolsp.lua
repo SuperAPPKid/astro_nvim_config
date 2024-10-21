@@ -17,7 +17,7 @@ return {
         autoformat = true, -- enable or disable auto formatting on start
         codelens = true, -- enable/disable codelens refresh on start
         inlay_hints = true, -- enable/disable inlay hints on start
-        semantic_tokens = true, -- enable/disable semantic token highlighting
+        semantic_tokens = false, -- enable/disable semantic token highlighting
       },
       -- customize lsp formatting options
       formatting = {
@@ -105,22 +105,36 @@ return {
       handlers = {
         -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
         function(server, handler_opts)
-          for _, v in pairs(handler_opts) do
+          for _, handler_opt in pairs(handler_opts) do
             -- HACK: workaround for https://github.com/neovim/neovim/issues/28058
-            if type(v) == "table" and v.workspace then
-              v.workspace.didChangeWatchedFiles = {
+            if type(handler_opt) == "table" and handler_opt.workspace then
+              handler_opt.workspace.didChangeWatchedFiles = {
                 dynamicRegistration = true,
                 relativePatternSupport = false,
               }
+              break
             end
           end
+
+          -- HACK: fix https://github.com/neovim/nvim-lspconfig/issues/2542
+          local old_on_init = handler_opts.on_init
+          handler_opts.on_init = function(client, initialization_result)
+            if type(old_on_init) == "function" then old_on_init(client, initialization_result) end
+
+            if client.server_capabilities then
+              client.server_capabilities.documentFormattingProvider = false
+              client.server_capabilities.documentRangeFormattingProvider = false
+              client.server_capabilities.semanticTokensProvider = false -- turn off semantic tokens
+            end
+          end
+
           require("lspconfig")[server].setup(handler_opts)
         end,
 
         -- the key is the server that is being setup with `lspconfig`
         -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
         -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
-        dartls = false
+        dartls = false,
       },
       -- Configure buffer local auto commands to add when attaching a language server
       autocmds = {
@@ -177,7 +191,7 @@ return {
           -- },
         },
       },
-      on_attach = function(client, _) client.server_capabilities.semanticTokensProvider = nil end,
+      on_attach = function(_, _) end,
     }
     return require("astrocore").extend_tbl(opts, new_opts)
   end,

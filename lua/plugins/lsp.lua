@@ -498,10 +498,10 @@ return {
         "AstroNvim/astrolsp",
         opts = function(_, opts)
           -- HACK: fix initial buffer symbols not show
-          local on_attach = opts.on_attach
+          local old_on_attach = opts.on_attach
           local done = false
           opts.on_attach = function(client, bufnr)
-            on_attach(client, bufnr)
+            if type(old_on_attach) == "function" then old_on_attach(client, bufnr) end
             if not done then
               require("symbol-usage").refresh()
               done = true
