@@ -1,3 +1,6 @@
+local enabled = vim.fn.executable "git" == 1
+
+---@type LazySpec
 return {
   {
     "nvim-telescope/telescope.nvim",
@@ -20,7 +23,7 @@ return {
   {
     "superappkid/nvim-tinygit",
     lazy = true,
-    enabled = vim.fn.executable "git" == 1,
+    enabled = enabled,
     dependencies = {
       "stevearc/dressing.nvim",
       {
@@ -61,7 +64,7 @@ return {
 
   {
     "sindrets/diffview.nvim",
-    enabled = vim.fn.executable "git" == 1,
+    enabled = enabled,
     cmd = {
       "DiffviewFileHistory",
       "DiffviewOpen",
@@ -151,7 +154,7 @@ return {
   {
     "linrongbin16/gitlinker.nvim",
     lazy = true,
-    enabled = vim.fn.executable "git" == 1,
+    enabled = enabled,
     dependencies = {
       "nvim-lua/plenary.nvim",
       {
@@ -279,7 +282,7 @@ return {
   {
     "pwntester/octo.nvim",
     cmd = { "Octo" },
-    enabled = vim.fn.executable "git" == 1,
+    enabled = enabled,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
@@ -365,7 +368,7 @@ return {
   {
     "FabijanZulj/blame.nvim",
     cmd = "BlameToggle",
-    enabled = vim.fn.executable "git" == 1,
+    enabled = enabled,
     config = true,
     dependencies = {
       {
@@ -388,7 +391,7 @@ return {
   {
     "isakbm/gitgraph.nvim",
     lazy = true,
-    enabled = vim.fn.executable "git" == 1,
+    enabled = enabled,
     opts = {
       format = {
         timestamp = "%a %b %d, %Y at %H:%M",
