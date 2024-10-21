@@ -381,7 +381,6 @@ return {
   { import = "astrocommunity.pack.ansible" },
   { import = "astrocommunity.pack.bash" },
   { import = "astrocommunity.pack.blade" },
-  { import = "astrocommunity.pack.chezmoi" },
   { import = "astrocommunity.pack.cpp" },
   {
     "p00f/clangd_extensions.nvim",
