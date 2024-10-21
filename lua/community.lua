@@ -417,7 +417,6 @@ return {
   { import = "astrocommunity.pack.php" },
   { import = "astrocommunity.pack.proto" },
   { import = "astrocommunity.pack.python" },
-  { import = "astrocommunity.pack.ruby" },
   { import = "astrocommunity.pack.rust" },
   {
     "simrat39/rust-tools.nvim",
