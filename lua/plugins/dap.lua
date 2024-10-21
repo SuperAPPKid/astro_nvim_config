@@ -1,5 +1,24 @@
 return {
   {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      {
+        "LiadOz/nvim-dap-repl-highlights",
+        dependencies = {
+          {
+            "nvim-treesitter/nvim-treesitter",
+            opts = function(_, opts)
+              if opts.ensure_installed ~= "all" then
+                opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "dap_repl" })
+              end
+            end,
+          },
+        },
+      },
+    },
+  },
+
+  {
     "superappkid/nvim-dap-ui",
     version = false,
     opts = function(_, opts)
