@@ -6,7 +6,6 @@
 return {
   "AstroNvim/astrocommunity",
 
-  { import = "astrocommunity.code-runner.molten-nvim" },
 
   { import = "astrocommunity.completion.cmp-cmdline" },
   { import = "astrocommunity.completion.cmp-git" },
