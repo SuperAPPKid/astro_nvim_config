@@ -391,7 +391,6 @@ return {
     "Decodetalkers/csharpls-extended-lsp.nvim",
     ft = { "cs", "csproj", "cshtml" },
   },
-  { import = "astrocommunity.pack.dart" },
   { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.go" },
   {
