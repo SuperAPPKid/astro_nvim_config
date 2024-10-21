@@ -4,6 +4,7 @@
 return {
   {
     "zapling/mason-lock.nvim",
+    lazy = true,
     cmd = {
       "MasonLock",
       "MasonLockRestore",

@@ -16,6 +16,7 @@ end
 
 table.insert(M, {
   "superappkid/global-note.nvim",
+  lazy = true,
   dependencies = {
     { "AstroNvim/astroui", opts = { icons = { Notes = " " } } },
     {
