@@ -3,6 +3,13 @@ return {
     "mfussenegger/nvim-dap",
     dependencies = {
       {
+        "nvim-telescope/telescope-dap.nvim",
+        dependencies = {
+          { "nvim-telescope/telescope.nvim" },
+        },
+        config = function(_, _) require("telescope").load_extension "dap" end,
+      },
+      {
         "LiadOz/nvim-dap-repl-highlights",
         dependencies = {
           {

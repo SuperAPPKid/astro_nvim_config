@@ -67,11 +67,8 @@ return {
     "stevearc/resession.nvim",
     lazy = false,
     dependencies = {
-      {
-        "tiagovla/scope.nvim",
-        dependencies = { "nvim-telescope/telescope.nvim" },
-        opts = function() require("telescope").load_extension "scope" end,
-      },
+      { "tiagovla/scope.nvim" },
+      { "nvim-telescope/telescope.nvim" },
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -104,6 +101,10 @@ return {
         end,
       },
     },
+    config = function(_, opts)
+      require("resession").setup(opts)
+      require("telescope").load_extension "scope"
+    end,
     opts = function(_, opts)
       opts.buf_filter = function(bufnr)
         local buftype = vim.bo[bufnr].buftype
