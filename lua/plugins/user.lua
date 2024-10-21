@@ -740,6 +740,7 @@ return {
 
   {
     "ThePrimeagen/harpoon",
+    lazy = true,
     branch = "harpoon2",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -816,7 +817,6 @@ return {
       },
     },
     keys = function(_, _)
-      local harpoon = require "harpoon"
       local action_state = require "telescope.actions.state"
       local action_utils = require "telescope.actions.utils"
 
@@ -831,7 +831,7 @@ return {
 
       local gen_finder = function()
         return require("telescope.finders").new_table {
-          results = filter_empty_string(harpoon:list().items),
+          results = filter_empty_string(require("harpoon"):list().items),
           entry_maker = function(item)
             local line = string.format("%s:%s", item.value, item.context.row or 0)
             return {
@@ -854,7 +854,7 @@ return {
         end
 
         local selection = action_state.get_selected_entry()
-        harpoon:list():remove(selection.value)
+        require("harpoon"):list():remove(selection.value)
 
         local function get_selections()
           local results = {}
@@ -864,7 +864,7 @@ return {
 
         local selections = get_selections()
         for _, current_selection in ipairs(selections) do
-          harpoon:list():remove(current_selection.value)
+          require("harpoon"):list():remove(current_selection.value)
         end
 
         local current_picker = action_state.get_current_picker(prompt_bufnr)
@@ -879,12 +879,12 @@ return {
       }
 
       return {
-        { prefix .. "a", function() harpoon:list():add() end, desc = "Add file" },
+        { prefix .. "a", function() require("harpoon"):list():add() end, desc = "Add file" },
         { "<C-p>", function() require("harpoon"):list():prev { ui_nav_wrap = true } end, desc = "Goto previous mark" },
         { "<C-n>", function() require("harpoon"):list():next { ui_nav_wrap = true } end, desc = "Goto next mark" },
         {
           prefix .. "e",
-          function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
+          function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end,
           desc = "Toggle quick menu",
         },
         {
