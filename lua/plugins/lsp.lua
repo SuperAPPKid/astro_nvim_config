@@ -448,10 +448,17 @@ return {
           commands = {
             Format = false,
           },
+          mappings = {
+            n = {
+              ["<Leader>lf"] = false,
+              ["<Leader>uF"] = false,
+              ["<Leader>uf"] = false,
+            },
+            v = {
+              ["<Leader>lf"] = false,
+            },
+          },
         },
-      },
-      {
-        "AstroNvim/astrolsp",
       },
     },
     opts = {
