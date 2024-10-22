@@ -2,16 +2,7 @@
 return {
   {
     "gbprod/yanky.nvim",
-    event = "UIEnter",
-    opts = function()
-      return {
-        ring = {
-          history_length = 0,
-          storage = "memory",
-        },
-        highlight = { timer = 200 },
-      }
-    end,
+    event = "User AstroFile",
     keys = function(_, _)
       return {
         { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
@@ -24,6 +15,17 @@ return {
         { "]y", "<Plug>(YankyCycleBackward)", desc = "Cycle backward through yank history" },
         { "]p", "<Plug>(YankyPutAfterLinewise)", desc = "Put indented after cursor (linewise)" },
         { "[p", "<Plug>(YankyPutBeforeLinewise)", desc = "Put indented before cursor (linewise)" },
+      }
+    end,
+    opts = function()
+      return {
+        ring = {
+          history_length = 0,
+          storage = "memory",
+        },
+        highlight = {
+          timer = 200,
+        },
       }
     end,
   },
