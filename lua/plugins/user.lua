@@ -218,9 +218,6 @@ return {
       })
 
       return {
-        execution_message = {
-          enabled = false,
-        },
         write_all_buffers = true,
         condition = function(buf)
           local fn = vim.fn
