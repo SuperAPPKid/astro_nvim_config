@@ -39,6 +39,7 @@ local M = {
     },
     opts = {
       title = " Global note ",
+      directory = "~/Documents/Notes",
       additional_presets = {
         project_local = {
           command_name = "ProjectNote",
