@@ -202,16 +202,13 @@ return {
 
   {
     "Bekaboo/dropbar.nvim",
+    lazy = false,
     enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
-    specs = {
+    keys = {
       {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          opts.mappings.n["<Leader>E"] = {
-            function() require("dropbar.api").pick(vim.v.count ~= 0 and vim.v.count or nil) end,
-            desc = "dropbar",
-          }
-        end,
+        "<Leader>E",
+        function() require("dropbar.api").pick(vim.v.count ~= 0 and vim.v.count or nil) end,
+        desc = "dropbar",
       },
     },
     dependencies = {

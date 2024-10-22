@@ -40,47 +40,6 @@ return {
       { "hrsh7th/cmp-calc" },
       { "f3fora/cmp-spell" },
       {
-        "Exafunction/codeium.vim",
-        specs = {
-          {
-            "AstroNvim/astrocore",
-            opts = function(_, opts)
-              local mappings = opts.mappings
-              mappings.i["<C-f>"] = {
-                function() return vim.fn["codeium#Accept"]() end,
-                expr = true,
-                silent = true,
-              }
-              mappings.i["<A-l>"] = {
-
-                function() return vim.fn["codeium#CycleCompletions"](1) end,
-                expr = true,
-                silent = true,
-              }
-              mappings.i["<A-h>"] = {
-                function() return vim.fn["codeium#CycleCompletions"](-1) end,
-                expr = true,
-                silent = true,
-              }
-              mappings.i["<C-x>"] = {
-                function() return vim.fn["codeium#Clear"]() end,
-                expr = true,
-                silent = true,
-              }
-              mappings.i["<C-e>"] = {
-                function() return vim.fn["codeium#Complete"]() end,
-                expr = true,
-                silent = true,
-              }
-            end,
-          },
-        },
-        init = function(_)
-          vim.g.codeium_disable_bindings = 1
-          vim.g.codeium_manual = 1
-        end,
-      },
-      {
         "Exafunction/codeium.nvim",
         commit = "937667b2cadc7905e6b9ba18ecf84694cf227567",
         dependencies = {

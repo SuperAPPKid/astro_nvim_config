@@ -6,59 +6,6 @@ return {
     "nvim-telescope/telescope.nvim",
     branch = "master",
     version = false,
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-
-          maps.n[prefix .. "e"] = {
-            "<Cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>",
-            desc = "Open File browser",
-          }
-          maps.n[prefix .. "E"] = {
-            "<Cmd>Telescope file_browser<CR>",
-            desc = "Open File browser(CWD)",
-          }
-
-          maps.n["<Leader>fK"] = {
-            "<Cmd>TextCaseOpenTelescope<CR>",
-            desc = "select TextCase",
-          }
-
-          maps.n["<Leader>fy"] = {
-            "<Cmd>Telescope neoclip<CR>",
-            desc = "Find yanks (neoclip)",
-          }
-
-          maps.n["<Leader>fb"] = {
-            function() require("telescope").extensions.scope.buffers() end,
-            desc = "Open Scopes",
-          }
-
-          maps.n[prefix .. "c"] = {
-            function(...) require("telescope-live-grep-args.shortcuts").grep_word_under_cursor(...) end,
-            desc = "Find word under cursor",
-          }
-          maps.n[prefix .. "w"] = {
-            function() require("telescope").extensions.live_grep_args.live_grep_args() end,
-            desc = "Find words",
-          }
-          maps.n[prefix .. "W"] = {
-            function()
-              local args =
-                require("astrocore").list_insert_unique({}, require("telescope.config").values.vimgrep_arguments)
-              args = require("astrocore").list_insert_unique(args, { "--hidden", "--no-ignore" })
-
-              require("telescope").extensions.live_grep_args.live_grep_args {
-                vimgrep_arguments = args,
-              }
-            end,
-            desc = "Find words in all files",
-          }
-        end,
-      },
-    },
     config = function(plugin, opts)
       local defaults = opts.defaults
       defaults.layout_config = {
@@ -86,6 +33,18 @@ return {
   {
     "nvim-telescope/telescope-file-browser.nvim",
     lazy = true,
+    keys = {
+      {
+        prefix .. "e",
+        "<Cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>",
+        desc = "Open File browser",
+      },
+      {
+        prefix .. "E",
+        "<Cmd>Telescope file_browser<CR>",
+        desc = "Open File browser(CWD)",
+      },
+    },
     dependencies = {
       {
         "nvim-telescope/telescope.nvim",
@@ -112,6 +71,39 @@ return {
     "nvim-telescope/telescope-live-grep-args.nvim",
     enable = vim.fn.executable "rg" == 1,
     lazy = true,
+    keys = {
+      {
+        prefix .. "c",
+        function(...) require("telescope-live-grep-args.shortcuts").grep_word_under_cursor(...) end,
+        desc = "Find word under cursor",
+      },
+      {
+        prefix .. "w",
+        function() require("telescope").extensions.live_grep_args.live_grep_args() end,
+        desc = "Find words",
+      },
+      {
+        prefix .. "W",
+        function()
+          local args = require("astrocore").list_insert_unique({}, require("telescope.config").values.vimgrep_arguments)
+          args = require("astrocore").list_insert_unique(args, { "--hidden", "--no-ignore" })
+          require("telescope").extensions.live_grep_args.live_grep_args {
+            vimgrep_arguments = args,
+          }
+        end,
+        desc = "Find words in all files",
+      },
+    },
+    specs = {
+      {
+        "Astronvim/astrocore",
+        opts = function(_, opts)
+          opts.mappings.n[prefix .. "c"] = false
+          opts.mappings.n[prefix .. "w"] = false
+          opts.mappings.n[prefix .. "W"] = false
+        end,
+      },
+    },
     dependencies = {
       {
         "nvim-telescope/telescope.nvim",
@@ -138,6 +130,9 @@ return {
   {
     "tiagovla/scope.nvim",
     lazy = true,
+    keys = {
+      { "<Leader>fb", function() require("telescope").extensions.scope.buffers() end, desc = "Open Scopes" },
+    },
     dependencies = {
       { "nvim-telescope/telescope.nvim" },
     },
@@ -150,7 +145,9 @@ return {
   {
     "johmsalas/text-case.nvim",
     lazy = true,
-    cmd = { "TextCaseOpenTelescope" },
+    keys = {
+      { "<Leader>fK", "<Cmd>TextCaseOpenTelescope<CR>", desc = "select TextCase" },
+    },
     dependencies = {
       { "nvim-telescope/telescope.nvim" },
     },
@@ -166,6 +163,9 @@ return {
   {
     "AckslD/nvim-neoclip.lua",
     lazy = true,
+    keys = {
+      { "<Leader>fy", "<Cmd>Telescope neoclip<CR>", desc = "Find yanks (neoclip)" },
+    },
     dependencies = {
       { "nvim-telescope/telescope.nvim" },
       { "kkharji/sqlite.lua" },

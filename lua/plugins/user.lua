@@ -234,7 +234,9 @@ return {
 
   {
     "superappkid/projectmgr.nvim",
-    event = "VeryLazy",
+    keys = {
+      { "<Leader>fp", "<Cmd>ProjectMgr<CR>", desc = "Open ProjectMgr panel" },
+    },
     opts = {
       session = {
         enabled = false,
@@ -242,9 +244,6 @@ return {
       scripts = {
         enabled = false,
       },
-    },
-    keys = {
-      { "<Leader>fp", "<Cmd>ProjectMgr<CR>", desc = "Open ProjectMgr panel" },
     },
   },
 
@@ -364,40 +363,6 @@ return {
 
   {
     "monaqa/dial.nvim",
-    config = function()
-      local augend = require "dial.augend"
-      local general_group = {
-        augend.integer.alias.decimal,
-        augend.integer.alias.octal,
-        augend.integer.alias.hex,
-        augend.date.alias["%Y/%m/%d"],
-        augend.date.alias["%-m/%-d"],
-        augend.date.alias["%Y-%m-%d"],
-        augend.date.alias["%Y年%-m月%-d日"],
-        augend.date.alias["%Y年%-m月%-d日(%ja)"],
-        augend.date.alias["%H:%M:%S"],
-        augend.date.alias["%H:%M"],
-        augend.constant.alias.ja_weekday,
-        augend.constant.alias.ja_weekday_full,
-        augend.constant.alias.bool,
-        augend.semver.alias.semver,
-        augend.misc.alias.markdown_header,
-        augend.hexcolor.new {
-          case = "lower",
-        },
-      }
-      local visual_group = general_group
-      table.insert(
-        visual_group,
-        augend.case.new {
-          types = { "camelCase", "PascalCase", "snake_case", "SCREAMING_SNAKE_CASE" },
-        }
-      )
-      require("dial.config").augends:register_group {
-        normal = general_group,
-        visual = visual_group,
-      }
-    end,
     keys = function(_, _)
       local prefix = "<Leader>i"
       local prefix_additive = prefix .. "a"
@@ -462,10 +427,57 @@ return {
         },
       }
     end,
+    config = function()
+      local augend = require "dial.augend"
+      local general_group = {
+        augend.integer.alias.decimal,
+        augend.integer.alias.octal,
+        augend.integer.alias.hex,
+        augend.date.alias["%Y/%m/%d"],
+        augend.date.alias["%-m/%-d"],
+        augend.date.alias["%Y-%m-%d"],
+        augend.date.alias["%Y年%-m月%-d日"],
+        augend.date.alias["%Y年%-m月%-d日(%ja)"],
+        augend.date.alias["%H:%M:%S"],
+        augend.date.alias["%H:%M"],
+        augend.constant.alias.ja_weekday,
+        augend.constant.alias.ja_weekday_full,
+        augend.constant.alias.bool,
+        augend.semver.alias.semver,
+        augend.misc.alias.markdown_header,
+        augend.hexcolor.new {
+          case = "lower",
+        },
+      }
+      local visual_group = general_group
+      table.insert(
+        visual_group,
+        augend.case.new {
+          types = { "camelCase", "PascalCase", "snake_case", "SCREAMING_SNAKE_CASE" },
+        }
+      )
+      require("dial.config").augends:register_group {
+        normal = general_group,
+        visual = visual_group,
+      }
+    end,
   },
 
   {
     "nyngwang/NeoZoom.lua",
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["<Leader>zz"] = {
+            "<Cmd>NeoZoomToggle<CR>",
+            desc = "Toggle Zoom",
+            silent = true,
+          }
+        end,
+      },
+    },
     config = function(_, opts) require("neo-zoom").setup(opts) end,
     opts = {
       exclude_filetypes = { "dapui_.*", "dap-repl", "terminal", "lspinfo", "mason", "lazy", "fzf", "qf" },
@@ -476,14 +488,6 @@ return {
           height = vim.o.lines - 4,
         },
         border = "thicc", -- this is a preset, try it :)
-      },
-    },
-    keys = {
-      {
-        "<Leader>zz",
-        function() vim.cmd "NeoZoomToggle" end,
-        desc = "Toggle Zoom",
-        { silent = true },
       },
     },
   },
@@ -600,17 +604,32 @@ return {
     "aurum77/live-server.nvim",
     build = function() require("live_server.util").install() end,
     ft = "html",
-    keys = {
+    specs = {
       {
-        "<Leader>zh",
-        "<Cmd>LiveServer<CR>",
-        desc = "html preview",
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["<Leader>zh"] = {
+            "<Cmd>LiveServer<CR>",
+            desc = "html preview",
+          }
+        end,
       },
     },
   },
 
   {
     "echasnovski/mini.surround",
+    keys = function(plugin, _)
+      local opts = plugin.opts()
+      return {
+        { opts.mappings.add, desc = "Add surrounding", mode = { "n", "v" } },
+        { opts.mappings.delete, desc = "Delete surrounding" },
+        { opts.mappings.replace, desc = "Replace surrounding" },
+        { opts.mappings.find, desc = "Find right surrounding" },
+        { opts.mappings.find_left, desc = "Find left surrounding" },
+      }
+    end,
     opts = function(_, _)
       local prefix = "<Leader>s"
       local mapping = {}
@@ -642,16 +661,6 @@ return {
         silent = true,
       }
     end,
-    keys = function(plugin, _)
-      local opts = plugin.opts()
-      return {
-        { opts.mappings.add, desc = "Add surrounding", mode = { "n", "v" } },
-        { opts.mappings.delete, desc = "Delete surrounding" },
-        { opts.mappings.replace, desc = "Replace surrounding" },
-        { opts.mappings.find, desc = "Find right surrounding" },
-        { opts.mappings.find_left, desc = "Find left surrounding" },
-      }
-    end,
   },
 
   {
@@ -679,6 +688,9 @@ return {
 
   {
     "uga-rosa/translate.nvim",
+    keys = {
+      { "<Leader>zt", "<Cmd>Translate ZH-TW<CR>", mode = { "x" }, desc = "Translate" },
+    },
     opts = {
       preset = {
         output = {
@@ -687,9 +699,6 @@ return {
           },
         },
       },
-    },
-    keys = {
-      { "<Leader>zt", "<Cmd>Translate ZH-TW<CR>", mode = { "x" }, desc = "Translate" },
     },
   },
 
@@ -700,76 +709,6 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
-    },
-    config = function(_, opts)
-      local harpoon = require "harpoon"
-      harpoon:setup(opts)
-    end,
-    opts = {
-      settings = {
-        save_on_toggle = true,
-        sync_on_ui_close = true,
-      },
-      default = {
-        display = function(list_item)
-          if list_item.context then
-            return string.format("%s:%s", list_item.value, tostring(list_item.context.row or 0))
-          end
-          return list_item.value
-        end,
-        equals = function(list_item_a, list_item_b)
-          if list_item_a == nil and list_item_b == nil then
-            return true
-          elseif list_item_a == nil or list_item_b == nil then
-            return false
-          end
-
-          local a = {
-            value = list_item_a.value,
-            row = list_item_a.context.row or 0,
-          }
-          local b = {
-            value = list_item_b.value,
-            row = list_item_b.context.row or 0,
-          }
-          return a.value == b.value and a.row == b.row
-        end,
-        select = function(list_item, _, options)
-          if list_item == nil then return end
-
-          options = options or {}
-
-          local bufnr = vim.fn.bufnr("^" .. list_item.value .. "$")
-          if bufnr == -1 then -- must create a buffer!
-            bufnr = vim.fn.bufadd(list_item.value)
-          end
-          if not vim.api.nvim_buf_is_loaded(bufnr) then
-            vim.fn.bufload(bufnr)
-            vim.api.nvim_set_option_value("buflisted", true, {
-              buf = bufnr,
-            })
-          end
-
-          if options.vsplit then
-            vim.cmd "vsplit"
-          elseif options.split then
-            vim.cmd "split"
-          elseif options.tabedit then
-            vim.cmd "tabedit"
-          end
-
-          vim.api.nvim_set_current_buf(bufnr)
-
-          local lines = vim.api.nvim_buf_line_count(bufnr)
-          if list_item.context.row > lines then list_item.context.row = lines end
-
-          vim.api.nvim_win_set_cursor(0, {
-            list_item.context.row or 1,
-            list_item.context.col or 0,
-          })
-        end,
-        BufLeave = function() end,
-      },
     },
     keys = function(_, _)
       local action_state = require "telescope.actions.state"
@@ -858,6 +797,76 @@ return {
         },
       }
     end,
+    config = function(_, opts)
+      local harpoon = require "harpoon"
+      harpoon:setup(opts)
+    end,
+    opts = {
+      settings = {
+        save_on_toggle = true,
+        sync_on_ui_close = true,
+      },
+      default = {
+        display = function(list_item)
+          if list_item.context then
+            return string.format("%s:%s", list_item.value, tostring(list_item.context.row or 0))
+          end
+          return list_item.value
+        end,
+        equals = function(list_item_a, list_item_b)
+          if list_item_a == nil and list_item_b == nil then
+            return true
+          elseif list_item_a == nil or list_item_b == nil then
+            return false
+          end
+
+          local a = {
+            value = list_item_a.value,
+            row = list_item_a.context.row or 0,
+          }
+          local b = {
+            value = list_item_b.value,
+            row = list_item_b.context.row or 0,
+          }
+          return a.value == b.value and a.row == b.row
+        end,
+        select = function(list_item, _, options)
+          if list_item == nil then return end
+
+          options = options or {}
+
+          local bufnr = vim.fn.bufnr("^" .. list_item.value .. "$")
+          if bufnr == -1 then -- must create a buffer!
+            bufnr = vim.fn.bufadd(list_item.value)
+          end
+          if not vim.api.nvim_buf_is_loaded(bufnr) then
+            vim.fn.bufload(bufnr)
+            vim.api.nvim_set_option_value("buflisted", true, {
+              buf = bufnr,
+            })
+          end
+
+          if options.vsplit then
+            vim.cmd "vsplit"
+          elseif options.split then
+            vim.cmd "split"
+          elseif options.tabedit then
+            vim.cmd "tabedit"
+          end
+
+          vim.api.nvim_set_current_buf(bufnr)
+
+          local lines = vim.api.nvim_buf_line_count(bufnr)
+          if list_item.context.row > lines then list_item.context.row = lines end
+
+          vim.api.nvim_win_set_cursor(0, {
+            list_item.context.row or 1,
+            list_item.context.col or 0,
+          })
+        end,
+        BufLeave = function() end,
+      },
+    },
   },
 
   {
@@ -1324,6 +1333,51 @@ return {
         opts.mappings.n[prefix .. "rr"] = { "<Cmd>MoltenReevaluateCell<CR>", desc = "Re-evaluate cell" }
         opts.mappings.v[prefix .. "r"] = { ":<C-u>MoltenEvaluateVisual<CR>gv", desc = "Evaluate visual selection" }
       end,
+    },
+  },
+
+  {
+    "Exafunction/codeium.vim",
+    init = function(_)
+      vim.g.codeium_disable_bindings = 1
+      vim.g.codeium_manual = 1
+    end,
+    keys = {
+      {
+        "<C-f>",
+        function() return vim.fn["codeium#Accept"]() end,
+        mode = "i",
+        expr = true,
+        silent = true,
+      },
+      {
+        "<A-l>",
+        function() return vim.fn["codeium#CycleCompletions"](1) end,
+        mode = "i",
+        expr = true,
+        silent = true,
+      },
+      {
+        "<A-h>",
+        function() return vim.fn["codeium#CycleCompletions"](-1) end,
+        mode = "i",
+        expr = true,
+        silent = true,
+      },
+      {
+        "<C-x>",
+        function() return vim.fn["codeium#Clear"]() end,
+        mode = "i",
+        expr = true,
+        silent = true,
+      },
+      {
+        "<C-e>",
+        function() return vim.fn["codeium#Complete"]() end,
+        mode = "i",
+        expr = true,
+        silent = true,
+      },
     },
   },
 }

@@ -4,16 +4,9 @@ return {
     "uga-rosa/ccc.nvim",
     tag = "v1.7.2",
     event = "User AstroFile",
-    cmd = { "CccPick", "CccConvert" },
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          maps.n["<Leader>zc"] = { "<Cmd>CccConvert<CR>", desc = "Convert color" }
-          maps.n["<Leader>zp"] = { "<Cmd>CccPick<CR>", desc = "Pick Color" }
-        end,
-      },
+    keys = {
+      { "<Leader>zc", "<Cmd>CccConvert<CR>", desc = "Convert color" },
+      { "<Leader>zp", "<Cmd>CccPick<CR>", desc = "Pick Color" },
     },
     config = function(_, opts)
       require("ccc").setup(opts)
@@ -32,14 +25,11 @@ return {
   {
     "brenoprata10/nvim-highlight-colors",
     event = "User AstroFile",
-    cmd = "HighlightColors",
-    specs = {
+    keys = {
       {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          maps.n["<Leader>uC"] = { function() vim.cmd.HighlightColors "Toggle" end, desc = "Toggle color highlight" }
-        end,
+        "<Leader>uC",
+        function() vim.cmd.HighlightColors "Toggle" end,
+        desc = "Toggle color highlight",
       },
     },
     opts = {
