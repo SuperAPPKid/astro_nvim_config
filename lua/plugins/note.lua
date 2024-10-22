@@ -17,7 +17,7 @@ end
 table.insert(M, {
   "superappkid/global-note.nvim",
   lazy = true,
-  dependencies = {
+  specs = {
     { "AstroNvim/astroui", opts = { icons = { Notes = " " } } },
     {
       "AstroNvim/astrocore",
@@ -76,7 +76,7 @@ table.insert(M, {
   "iamcco/markdown-preview.nvim",
   init = function() vim.g.mkdp_filetypes = { "markdown" } end,
   build = "cd app && npx --yes yarn install",
-  dependencies = {
+  specs = {
     "AstroNvim/astrocore",
     opts = function(_, opts)
       local maps = opts.mappings
@@ -152,7 +152,7 @@ if vim.fn.executable(deno) == 1 then
   table.insert(M, {
     "toppair/peek.nvim",
     build = deno .. " task --quiet build:fast",
-    dependencies = {
+    specs = {
       "AstroNvim/astrocore",
       opts = function(_, opts)
         local maps = opts.mappings

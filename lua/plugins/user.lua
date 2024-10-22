@@ -256,7 +256,7 @@ return {
   {
     "stevearc/oil.nvim",
     cmd = "Oil",
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = {
@@ -470,18 +470,6 @@ return {
     "j-hui/fidget.nvim",
     specs = {
       {
-        "rcarriga/nvim-notify",
-        config = function(_, opts)
-          local notify = require "notify"
-          notify.setup(opts)
-        end,
-        opts = {
-          max_width = 36,
-        },
-      },
-    },
-    dependencies = {
-      {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
@@ -490,6 +478,18 @@ return {
             desc = "fidget history",
           }
         end,
+      },
+    },
+    dependencies = {
+      {
+        "rcarriga/nvim-notify",
+        config = function(_, opts)
+          local notify = require "notify"
+          notify.setup(opts)
+        end,
+        opts = {
+          max_width = 36,
+        },
       },
     },
     event = "User AstroFile",
@@ -550,7 +550,7 @@ return {
   {
     "backdround/neowords.nvim",
     lazy = true,
-    dependencies = {
+    specs = {
       "AstroNvim/astrocore",
       opts = function(_, opts)
         local word_hops = function()
@@ -857,7 +857,7 @@ return {
       "MultipleCursorsJumpNextMatch",
       "MultipleCursorsLock",
     },
-    dependencies = {
+    specs = {
       "AstroNvim/astrocore",
       opts = function(_, opts)
         local maps = opts.mappings
@@ -894,7 +894,7 @@ return {
   {
     "Wansmer/treesj",
     cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -908,7 +908,7 @@ return {
   {
     "jbyuki/venn.nvim",
     cmd = "VBox",
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -984,6 +984,24 @@ return {
       "OverseerTaskAction ",
       "OverseerClearCache",
     },
+    specs = {
+      { "AstroNvim/astroui", opts = { icons = { Overseer = "" } } },
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          local prefix = "<Leader>o"
+          maps.n[prefix] = { desc = require("astroui").get_icon("Overseer", 1, true) .. "Overseer" }
+
+          maps.n[prefix .. "t"] = { "<Cmd>OverseerToggle<CR>", desc = "Toggle" }
+          maps.n[prefix .. "c"] = { "<Cmd>OverseerRunCmd<CR>", desc = "Run Command" }
+          maps.n[prefix .. "r"] = { "<Cmd>OverseerRun<CR>", desc = "Run Task" }
+          maps.n[prefix .. "q"] = { "<Cmd>OverseerQuickAction<CR>", desc = "Quick Action" }
+          maps.n[prefix .. "a"] = { "<Cmd>OverseerTaskAction<CR>", desc = "Task Action" }
+          maps.n[prefix .. "i"] = { "<Cmd>OverseerInfo<CR>", desc = "Info" }
+        end,
+      },
+    },
     ---@param opts overseer.Config
     opts = function(_, opts)
       local astrocore = require "astrocore"
@@ -1003,24 +1021,6 @@ return {
         },
       }
     end,
-    dependencies = {
-      { "AstroNvim/astroui", opts = { icons = { Overseer = "" } } },
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          local prefix = "<Leader>o"
-          maps.n[prefix] = { desc = require("astroui").get_icon("Overseer", 1, true) .. "Overseer" }
-
-          maps.n[prefix .. "t"] = { "<Cmd>OverseerToggle<CR>", desc = "Toggle" }
-          maps.n[prefix .. "c"] = { "<Cmd>OverseerRunCmd<CR>", desc = "Run Command" }
-          maps.n[prefix .. "r"] = { "<Cmd>OverseerRun<CR>", desc = "Run Task" }
-          maps.n[prefix .. "q"] = { "<Cmd>OverseerQuickAction<CR>", desc = "Quick Action" }
-          maps.n[prefix .. "a"] = { "<Cmd>OverseerTaskAction<CR>", desc = "Task Action" }
-          maps.n[prefix .. "i"] = { "<Cmd>OverseerInfo<CR>", desc = "Info" }
-        end,
-      },
-    },
   },
 
   {
@@ -1029,7 +1029,7 @@ return {
     opts = {
       winbar = true,
     },
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -1223,7 +1223,7 @@ return {
   {
     "kwkarlwang/bufjump.nvim",
     lazy = true,
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -1288,7 +1288,7 @@ return {
     lazy = true,
     version = "^1", -- use version <2.0.0 to avoid breaking changes
     build = ":UpdateRemotePlugins",
-    dependencies = {
+    specs = {
       "AstroNvim/astrocore",
       opts = function(_, opts)
         local prefix = "<leader>k"

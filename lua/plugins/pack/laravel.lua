@@ -4,13 +4,15 @@ return {
     "adalessa/laravel.nvim",
     fmt = { "php", "blade" },
     cmd = { "Composer", "Npm", "Yarn", "Laravel", "LaravelModel" },
+    specs = {
+      { "AstroNvim/astroui", opts = { icons = { Laravel = "󰫐", IdeHelper = "󱚌" } } },
+    },
     dependencies = {
       "nvim-telescope/telescope.nvim",
       "tpope/vim-dotenv",
       "MunifTanjim/nui.nvim",
       "nvimtools/none-ls.nvim",
       "Bleksak/laravel-ide-helper.nvim",
-      { "AstroNvim/astroui", opts = { icons = { Laravel = "󰫐", IdeHelper = "󱚌" } } },
       { "ricardoramirezr/blade-nav.nvim", dependencies = { "hrsh7th/nvim-cmp" } },
       {
         "AstroNvim/astrocore",

@@ -3,7 +3,7 @@
 return {
   "AstroNvim/astroui",
   version = false,
-  dependencies = {
+  specs = {
     {
       "AstroNvim/astrocore",
       opts = function(_, opts)

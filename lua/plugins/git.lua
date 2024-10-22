@@ -4,7 +4,7 @@ local enabled = vim.fn.executable "git" == 1
 return {
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -24,8 +24,7 @@ return {
     "superappkid/nvim-tinygit",
     lazy = true,
     enabled = enabled,
-    dependencies = {
-      "stevearc/dressing.nvim",
+    specs = {
       {
         "astronvim/astrocore",
         opts = function(_, opts)
@@ -60,6 +59,9 @@ return {
         end,
       },
     },
+    dependencies = {
+      "stevearc/dressing.nvim",
+    },
   },
 
   {
@@ -73,24 +75,6 @@ return {
       "DiffviewRefresh",
     },
     specs = {
-      {
-        "isakbm/gitgraph.nvim",
-        optional = true,
-        opts = {
-          hooks = {
-            on_select_commit = function(commit)
-              vim.cmd "bwipeout!"
-              vim.cmd.DiffviewOpen(commit.hash .. "^!")
-            end,
-            on_select_range_commit = function(from, to)
-              vim.cmd "bwipeout!"
-              vim.cmd.DiffviewOpen(from.hash .. "~1.." .. to.hash)
-            end,
-          },
-        },
-      },
-    },
-    dependencies = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -155,8 +139,7 @@ return {
     "linrongbin16/gitlinker.nvim",
     lazy = true,
     enabled = enabled,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -231,6 +214,9 @@ return {
         end,
       },
     },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
     opts = {
       router = {
         repo = {
@@ -243,7 +229,7 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     tag = "v0.8.1",
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -283,10 +269,7 @@ return {
     "pwntester/octo.nvim",
     cmd = { "Octo" },
     enabled = enabled,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-      "nvim-tree/nvim-web-devicons",
+    specs = {
       { "AstroNvim/astroui", opts = { icons = { Octo = "" } } },
       {
         "AstroNvim/astrocore",
@@ -356,6 +339,11 @@ return {
         end,
       },
     },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
     opts = {
       suppress_missing_scope = {
         projects_v2 = true,
@@ -370,7 +358,7 @@ return {
     cmd = "BlameToggle",
     enabled = enabled,
     config = true,
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrocore",
         ---@type AstroCoreOpts
@@ -392,13 +380,8 @@ return {
     "isakbm/gitgraph.nvim",
     lazy = true,
     enabled = enabled,
-    opts = {
-      format = {
-        timestamp = "%a %b %d, %Y at %H:%M",
-      },
-    },
-    dependencies = {
-      { -- mapping to open GitGraph
+    specs = {
+      {
         "AstroNvim/astrocore",
         opts = {
           autocmds = {
@@ -430,6 +413,24 @@ return {
             },
           },
         },
+      },
+    },
+    dependencies = {
+      { "sindrets/diffview.nvim" },
+    },
+    opts = {
+      format = {
+        timestamp = "%a %b %d, %Y at %H:%M",
+      },
+      hooks = {
+        on_select_commit = function(commit)
+          vim.cmd "bwipeout!"
+          vim.cmd.DiffviewOpen(commit.hash .. "^!")
+        end,
+        on_select_range_commit = function(from, to)
+          vim.cmd "bwipeout!"
+          vim.cmd.DiffviewOpen(from.hash .. "~1.." .. to.hash)
+        end,
       },
     },
   },

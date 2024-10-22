@@ -182,7 +182,7 @@ return {
     "superappkid/delimited.nvim",
     config = true,
     event = "User AstroFile",
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -377,9 +377,7 @@ return {
     "stevearc/conform.nvim",
     event = "User AstroFile",
     cmd = "ConformInfo",
-    dependencies = {
-      "williamboman/mason.nvim",
-      { "jay-babu/mason-null-ls.nvim", opts = { methods = { formatting = false } } },
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = {
@@ -441,6 +439,10 @@ return {
           },
         },
       },
+    },
+    dependencies = {
+      "williamboman/mason.nvim",
+      { "jay-babu/mason-null-ls.nvim", opts = { methods = { formatting = false } } },
       {
         "AstroNvim/astrolsp",
         opts = {
@@ -493,6 +495,20 @@ return {
   {
     "Wansmer/symbol-usage.nvim",
     lazy = true,
+    specs = {
+      {
+        "AstroNvim/astroui",
+        opts = function(_, opts)
+          local hl = function(name) return vim.api.nvim_get_hl(0, { name = name }) end
+          opts.highlights = require("astrocore").extend_tbl(opts.highlights, {
+            init = {
+              SymbolUsageRounding = { fg = hl("CursorLine").bg, italic = true },
+              SymbolUsageContent = { bg = hl("CursorLine").bg, fg = hl("Comment").fg, italic = true },
+            },
+          })
+        end,
+      },
+    },
     dependencies = {
       {
         "AstroNvim/astrolsp",
@@ -507,18 +523,6 @@ return {
               done = true
             end
           end
-        end,
-      },
-      {
-        "AstroNvim/astroui",
-        opts = function(_, opts)
-          local hl = function(name) return vim.api.nvim_get_hl(0, { name = name }) end
-          opts.highlights = require("astrocore").extend_tbl(opts.highlights, {
-            init = {
-              SymbolUsageRounding = { fg = hl("CursorLine").bg, italic = true },
-              SymbolUsageContent = { bg = hl("CursorLine").bg, fg = hl("Comment").fg, italic = true },
-            },
-          })
         end,
       },
     },

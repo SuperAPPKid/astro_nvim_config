@@ -41,7 +41,7 @@ return {
       { "f3fora/cmp-spell" },
       {
         "Exafunction/codeium.vim",
-        dependencies = {
+        specs = {
           {
             "AstroNvim/astrocore",
             opts = function(_, opts)
@@ -409,7 +409,7 @@ return {
 
   {
     "RRethy/vim-illuminate",
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)

@@ -28,8 +28,7 @@ return {
       require("chezmoi").setup(opts)
       require("telescope").load_extension "chezmoi"
     end,
-    dependencies = {
-      { "nvim-telescope/telescope.nvim" },
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = {
@@ -52,6 +51,9 @@ return {
           },
         },
       },
+    },
+    dependencies = {
+      { "nvim-telescope/telescope.nvim" },
     },
     opts = {
       edit = {

@@ -2,15 +2,17 @@ return {
   {
     "ryanmsnyder/toggleterm-manager.nvim",
     lazy = true,
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-      "nvim-lua/plenary.nvim",
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           opts.mappings.n["<Leader>fs"] = { "<Cmd>Telescope toggleterm_manager<CR>", desc = "Search Toggleterms" }
         end,
       },
+    },
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim",
     },
     config = function(_, opts)
       require("toggleterm-manager").setup(opts)
@@ -63,7 +65,7 @@ return {
 
   {
     "akinsho/toggleterm.nvim",
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)

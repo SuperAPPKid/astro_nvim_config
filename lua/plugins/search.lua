@@ -59,6 +59,48 @@ return {
     end,
     dependencies = {
       {
+        "folke/which-key.nvim",
+        optional = true,
+        opts = function(_, opts)
+          opts.triggers = require("astrocore").list_insert_unique(opts.triggers, { { "Z", mode = "n" } })
+        end,
+      },
+      {
+        "nvim-neo-tree/neo-tree.nvim",
+        optional = true,
+        opts = {
+          commands = {
+            grug_far_replace = function(state)
+              local node = state.tree:get_node()
+              grug_far_open {
+                prefills = {
+                  paths = node.type == "directory" and node:get_id() or vim.fn.fnamemodify(node:get_id(), ":h"),
+                },
+              }
+            end,
+          },
+          window = {
+            mappings = {
+              gS = "grug_far_replace",
+            },
+          },
+        },
+      },
+      {
+        "stevearc/oil.nvim",
+        optional = true,
+        opts = {
+          keymaps = {
+            gS = {
+              function() grug_far_open { prefills = { paths = require("oil").get_current_dir() } } end,
+              desc = "Search/Replace in directory",
+            },
+          },
+        },
+      },
+    },
+    specs = {
+      {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
@@ -98,45 +140,6 @@ return {
             desc = "Search / Replace (current file)",
           }
         end,
-      },
-    },
-    specs = {
-      {
-        "folke/which-key.nvim",
-        opts = function(_, opts)
-          opts.triggers = require("astrocore").list_insert_unique(opts.triggers, { { "Z", mode = "n" } })
-        end,
-      },
-      {
-        "nvim-neo-tree/neo-tree.nvim",
-        opts = {
-          commands = {
-            grug_far_replace = function(state)
-              local node = state.tree:get_node()
-              grug_far_open {
-                prefills = {
-                  paths = node.type == "directory" and node:get_id() or vim.fn.fnamemodify(node:get_id(), ":h"),
-                },
-              }
-            end,
-          },
-          window = {
-            mappings = {
-              gS = "grug_far_replace",
-            },
-          },
-        },
-      },
-      {
-        "stevearc/oil.nvim",
-        opts = {
-          keymaps = {
-            gS = {
-              function() grug_far_open { prefills = { paths = require("oil").get_current_dir() } } end,
-              desc = "Search/Replace in directory",
-            },
-          },
-        },
       },
     },
   },

@@ -12,7 +12,7 @@ return {
   { import = "astrocommunity.debugging.nvim-chainsaw" },
   {
     "chrisgrieser/nvim-chainsaw",
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -56,7 +56,7 @@ return {
   { import = "astrocommunity.editing-support.cloak-nvim" },
   {
     "laytan/cloak.nvim",
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -276,7 +276,7 @@ return {
   { import = "astrocommunity.motion.flash-nvim" },
   {
     "folke/flash.nvim",
-    dependencies = {
+    specs = {
       {
         "AstroNvim/astroui",
         opts = {
@@ -361,7 +361,7 @@ return {
   { import = "astrocommunity.utility.telescope-lazy-nvim" },
   {
     "tsakirist/telescope-lazy.nvim",
-    dependencies = {
+    spec = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts) opts.mappings.n["<Leader>pr"] = { "<Cmd>Telescope lazy<CR>", desc = "Plugins README" } end,

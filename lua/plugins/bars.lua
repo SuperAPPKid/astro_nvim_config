@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   {
     "rebelot/heirline.nvim",
@@ -202,14 +203,7 @@ return {
   {
     "Bekaboo/dropbar.nvim",
     enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
-    dependencies = {
-      {
-        "rebelot/heirline.nvim",
-        opts = function(_, opts)
-          if vim.fn.has "nvim-0.10" == 1 then opts.winbar = nil end
-        end,
-      },
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -219,6 +213,15 @@ return {
           }
         end,
       },
+    },
+    dependencies = {
+      {
+        "rebelot/heirline.nvim",
+        opts = function(_, opts)
+          if vim.fn.has "nvim-0.10" == 1 then opts.winbar = nil end
+        end,
+      },
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
     opts = function(_, opts)
       opts.general = {
