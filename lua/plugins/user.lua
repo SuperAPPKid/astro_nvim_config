@@ -36,7 +36,30 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
+          maps.n["<Leader>Sl"] = {
+            function() require("resession").load "Last Session" end,
+            desc = "Load last session",
           }
+          maps.n["<Leader>Ss"] = {
+            function() require("resession").save(vim.fn.getcwd(), { dir = "dirsession" }) end,
+            desc = "Save this dirsession",
+          }
+          maps.n["<Leader>Sd"] = {
+            function()
+              require("resession").delete(vim.fn.getcwd(), { dir = "dirsession" })
+              vim.api.nvim_del_augroup_by_name "resession_auto_save"
+              vim.cmd "qa"
+            end,
+            desc = "Delete this dirsession",
+          }
+          maps.n["<Leader>Sf"] = {
+            function() require("resession").load(nil, { dir = "dirsession" }) end,
+            desc = "Load a dirsession",
+          }
+          maps.n["<Leader>SS"] = false
+          maps.n["<Leader>St"] = false
+          maps.n["<Leader>SD"] = false
+          maps.n["<Leader>SF"] = false
 
           local autocmds = opts.autocmds
           local isStdIn = false
