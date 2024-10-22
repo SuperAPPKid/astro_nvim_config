@@ -10,17 +10,15 @@ return {
         config = function(_, _) require("telescope").load_extension "dap" end,
       },
       {
-        "LiadOz/nvim-dap-repl-highlights",
+        "nvim-treesitter/nvim-treesitter",
         dependencies = {
-          {
-            "nvim-treesitter/nvim-treesitter",
-            opts = function(_, opts)
-              if opts.ensure_installed ~= "all" then
-                opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "dap_repl" })
-              end
-            end,
-          },
+          { "LiadOz/nvim-dap-repl-highlights", config = true },
         },
+        opts = function(_, opts)
+          if opts.ensure_installed ~= "all" then
+            opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "dap_repl" })
+          end
+        end,
       },
     },
   },
