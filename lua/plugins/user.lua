@@ -1,40 +1,5 @@
 ---@type LazySpec
 return {
-  -- customize alpha options
-  {
-    "AckslD/nvim-neoclip.lua",
-    event = "UIEnter",
-    dependencies = {
-      { "nvim-telescope/telescope.nvim" },
-      { "kkharji/sqlite.lua" },
-    },
-    opts = function(_, opts)
-      local function is_whitespace(line) return vim.fn.match(line, [[^\s*$]]) ~= -1 end
-
-      local function all(tbl, check)
-        for _, entry in ipairs(tbl) do
-          if not check(entry) then return false end
-        end
-        return true
-      end
-
-      opts.filter = function(data) return not all(data.event.regcontents, is_whitespace) end
-      opts.enable_persistent_history = true
-      opts.keys = {
-        telescope = {
-          i = { paste_behind = false },
-        },
-      }
-    end,
-    config = function(_, opts)
-      require("neoclip").setup(opts)
-      require("telescope").load_extension "neoclip"
-    end,
-    keys = {
-      { "<Leader>fy", "<Cmd>Telescope neoclip<CR>", desc = "Find yanks (neoclip)" },
-    },
-  },
-
   {
     "gbprod/yanky.nvim",
     event = "UIEnter",
@@ -66,16 +31,11 @@ return {
   {
     "stevearc/resession.nvim",
     lazy = false,
-    dependencies = {
-      { "tiagovla/scope.nvim" },
-      { "nvim-telescope/telescope.nvim" },
+    specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-          maps.n["<Leader>fb"] = {
-            function() require("telescope").extensions.scope.buffers() end,
-            desc = "Open Scopes",
           }
 
           local autocmds = opts.autocmds
@@ -101,10 +61,9 @@ return {
         end,
       },
     },
-    config = function(_, opts)
-      require("resession").setup(opts)
-      require("telescope").load_extension "scope"
-    end,
+    dependencies = {
+      { "tiagovla/scope.nvim" },
+    },
     opts = function(_, opts)
       opts.buf_filter = function(bufnr)
         local buftype = vim.bo[bufnr].buftype
@@ -291,32 +250,6 @@ return {
       if core.is_available "leap.nvim" or core.is_available "hop.nvim" then
         opts.exclude = core.list_insert_unique(opts.exclude, { "ns", "nS" })
       end
-    end,
-  },
-
-  {
-    "johmsalas/text-case.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim" },
-    event = "User AstroFile",
-    config = function(_, opts)
-      local prefix = "<Leader>k"
-
-      opts.prefix = prefix
-      require("textcase").setup(opts)
-      require("telescope").load_extension "textcase"
-
-      local mapping = {}
-      mapping[prefix] = {
-        desc = " TextCase",
-      }
-      mapping[prefix .. "<Leader>"] = {
-        "<Cmd>TextCaseOpenTelescope<CR>",
-        desc = "Telescope",
-      }
-      require("astrocore").set_mappings {
-        n = mapping,
-        x = mapping,
-      }
     end,
   },
 
@@ -1358,7 +1291,7 @@ return {
     dependencies = {
       "AstroNvim/astrocore",
       opts = function(_, opts)
-        local prefix = "<leader>J"
+        local prefix = "<leader>k"
 
         opts.mappings.n[prefix] = {
           desc = require("astroui").get_icon("planet", 1, true) .. "Kernel",
