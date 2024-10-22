@@ -410,6 +410,10 @@ return {
   { import = "astrocommunity.pack.php" },
   { import = "astrocommunity.pack.proto" },
   { import = "astrocommunity.pack.python" },
+  {
+    "linux-cultist/venv-selector.nvim",
+    ft = "python",
+  },
   { import = "astrocommunity.pack.rust" },
   {
     "simrat39/rust-tools.nvim",
