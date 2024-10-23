@@ -208,7 +208,7 @@ return {
       {
         "<Leader>E",
         function() require("dropbar.api").pick(vim.v.count ~= 0 and vim.v.count or nil) end,
-        desc = "dropbar",
+        desc = "Expand Dropbar",
       },
     },
     dependencies = {

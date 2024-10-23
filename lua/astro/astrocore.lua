@@ -178,13 +178,6 @@ local mapping = {
   t = {},
 }
 
-if is_available "neo-tree.nvim" then
-  mapping.n["<Leader>e"] = { "<Cmd>Neotree toggle<CR>", desc = "Toggle Filesystem" }
-  mapping.n["<Leader>be"] = { "<Cmd>Neotree source=buffers toggle<CR>", desc = "Toggle Buffers (neo-tree)" }
-  mapping.n["<Leader>ge"] = { "<Cmd>Neotree source=git_status toggle<CR>", desc = "Toggle Git (neo-tree)" }
-  mapping.n["<Leader>le"] = { "<Cmd>Neotree source=diagnostics toggle<CR>", desc = "Toggle Diagnostics (neo-tree)" }
-end
-
 if is_available "nvim-dap-ui" then
   local function open_float(element)
     require("dapui").float_element(element, {

@@ -155,6 +155,20 @@ return {
       "mrbjarksen/neo-tree-diagnostics.nvim",
       "miversen33/netman.nvim",
     },
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          opts.mappings.n["<Leader>e"] = { "<Cmd>Neotree toggle<CR>", desc = "Toggle Filesystem" }
+          opts.mappings.n["<Leader>b<Leader>"] =
+            { "<Cmd>Neotree source=buffers toggle<CR>", desc = "Toggle Buffers (neo-tree)" }
+          opts.mappings.n["<Leader>g<Leader>"] =
+            { "<Cmd>Neotree source=git_status toggle<CR>", desc = "Toggle Git (neo-tree)" }
+          opts.mappings.n["<Leader>l<Leader>"] =
+            { "<Cmd>Neotree source=diagnostics toggle<CR>", desc = "Toggle Diagnostics (neo-tree)" }
+        end,
+      },
+    },
     opts = function(_, opts)
       local core = require "astrocore"
 
