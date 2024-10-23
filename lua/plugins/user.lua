@@ -175,6 +175,11 @@ return {
             if term then return term.direction == "vertical" end
           end,
         },
+        {
+          ft = "dbui",
+          title = "Database",
+          size = { width = 52 },
+        },
       },
     },
   },
