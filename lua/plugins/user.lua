@@ -368,70 +368,60 @@ return {
 
   {
     "monaqa/dial.nvim",
-    keys = function(_, _)
-      local prefix = "<Leader>i"
-      local prefix_additive = prefix .. "a"
-      local mapping = {}
-      mapping[prefix] = {
-        desc = "󱓉 incr/decr",
-      }
-      mapping[prefix_additive] = {
-        desc = "󱖢 additive",
-      }
-      require("astrocore").set_mappings {
-        n = mapping,
-        x = mapping,
-      }
+    lazy = true,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          local prefix = "<Leader>i"
+          local prefix_additive = prefix .. "a"
+          maps.n[prefix] = {
+            desc = require("astroui").get_icon("Dial", 1, true) .. "incr/decr",
+          }
+          maps.v[prefix] = maps.n[prefix]
 
-      return {
-        -- Visual mode mappings
-        {
-          prefix .. "i",
-          mode = { "v" },
-          function() require("dial.map").manipulate("increment", "visual", "visual") end,
-          desc = "Increment",
-        },
-        {
-          prefix .. "d",
-          mode = { "v" },
-          function() require("dial.map").manipulate("decrement", "visual", "visual") end,
-          desc = "Decrement",
-        },
-        {
-          prefix_additive .. "i",
-          mode = { "v" },
-          function() require("dial.map").manipulate("increment", "gvisual", "visual") end,
-          desc = "Increment",
-        },
-        {
-          prefix_additive .. "d",
-          mode = { "v" },
-          function() require("dial.map").manipulate("decrement", "gvisual", "visual") end,
-          desc = "Decrement",
-        },
-        -- Normal mode mappings
-        {
-          prefix .. "i",
-          function() require("dial.map").manipulate("increment", "normal", "normal") end,
-          desc = "Increment",
-        },
-        {
-          prefix .. "d",
-          function() require("dial.map").manipulate("decrement", "normal", "normal") end,
-          desc = "Decrement",
-        },
-        {
-          prefix_additive .. "i",
-          function() require("dial.map").manipulate("increment", "gnormal", "normal") end,
-          desc = "Increment",
-        },
-        {
-          prefix_additive .. "d",
-          function() require("dial.map").manipulate("decrement", "gnormal", "normal") end,
-          desc = "Decrement",
-        },
-      }
-    end,
+          maps.n[prefix_additive] = {
+            desc = require("astroui").get_icon("Dial_additive", 1, true) .. "additive",
+          }
+          maps.v[prefix_additive] = maps.n[prefix_additive]
+
+          maps.v[prefix .. "i"] = {
+            function() require("dial.map").manipulate("increment", "visual", "visual") end,
+            desc = "Increment",
+          }
+          maps.v[prefix .. "d"] = {
+            function() require("dial.map").manipulate("decrement", "visual", "visual") end,
+            desc = "Decrement",
+          }
+          maps.v[prefix_additive .. "i"] = {
+            function() require("dial.map").manipulate("increment", "gvisual", "visual") end,
+            desc = "Increment",
+          }
+          maps.v[prefix_additive .. "d"] = {
+            function() require("dial.map").manipulate("decrement", "gvisual", "visual") end,
+            desc = "Decrement",
+          }
+
+          maps.n[prefix .. "i"] = {
+            function() require("dial.map").manipulate("increment", "normal", "normal") end,
+            desc = "Increment",
+          }
+          maps.n[prefix .. "d"] = {
+            function() require("dial.map").manipulate("decrement", "normal", "normal") end,
+            desc = "Decrement",
+          }
+          maps.n[prefix_additive .. "i"] = {
+            function() require("dial.map").manipulate("increment", "gnormal", "normal") end,
+            desc = "Increment",
+          }
+          maps.n[prefix_additive .. "d"] = {
+            function() require("dial.map").manipulate("decrement", "gnormal", "normal") end,
+            desc = "Decrement",
+          }
+        end,
+      },
+    },
     config = function()
       local augend = require "dial.augend"
       local general_group = {
@@ -1021,7 +1011,6 @@ return {
       "OverseerClearCache",
     },
     specs = {
-      { "AstroNvim/astroui", opts = { icons = { Overseer = "" } } },
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
@@ -1158,53 +1147,48 @@ return {
   {
     "Vonr/align.nvim",
     branch = "v2",
-    keys = function(_, _)
-      local prefix = "<Leader>a"
-      require("astrocore").set_mappings {
-        x = {
-          [prefix] = {
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          local prefix = "<Leader>a"
+          maps.x[prefix] = {
             desc = "󱇂 Align",
-          },
-        },
-      }
-      return {
-        {
-          prefix .. "<CR>",
-          function()
-            require("align").align_to_char {
-              preview = false,
-            }
-          end,
-          mode = { "x" },
-          silent = true,
-          desc = "Aligns to char",
-        },
-        {
-          prefix .. "s",
-          function()
-            require("align").align_to_string {
-              preview = false,
-              regex = false,
-            }
-          end,
-          mode = { "x" },
-          silent = true,
-          desc = "Aligns to string",
-        },
-        {
-          prefix .. "r",
-          function()
-            require("align").align_to_string {
-              preview = false,
-              regex = true,
-            }
-          end,
-          mode = { "x" },
-          silent = true,
-          desc = "Aligns to a Vim regex",
-        },
-      }
-    end,
+          }
+
+          maps.x[prefix .. "<CR>"] = {
+            function()
+              require("align").align_to_char {
+                preview = false,
+              }
+            end,
+            silent = true,
+            desc = "Aligns to char",
+          }
+          maps.x[prefix .. "s"] = {
+            function()
+              require("align").align_to_string {
+                preview = false,
+                regex = false,
+              }
+            end,
+            silent = true,
+            desc = "Aligns to string",
+          }
+          maps.x[prefix .. "r"] = {
+            function()
+              require("align").align_to_string {
+                preview = false,
+                regex = true,
+              }
+            end,
+            silent = true,
+            desc = "Aligns to a Vim regex",
+          }
+        end,
+      },
+    },
   },
 
   {

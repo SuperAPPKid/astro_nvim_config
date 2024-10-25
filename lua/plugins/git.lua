@@ -270,7 +270,6 @@ return {
     cmd = { "Octo" },
     enabled = enabled,
     specs = {
-      { "AstroNvim/astroui", opts = { icons = { Octo = "" } } },
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)

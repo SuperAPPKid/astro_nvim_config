@@ -6,15 +6,6 @@ return {
     version = "^5",
     specs = {
       {
-        "AstroNvim/astroui",
-        opts = {
-          icons = {
-            Tests = "󰙨",
-            Watch = "󰂥",
-          },
-        },
-      },
-      {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
@@ -23,9 +14,8 @@ return {
           local get_project_path = function() return vim.fn.getcwd() end
 
           local prefix = "<Leader>T"
-
           maps.n[prefix] = {
-            desc = require("astroui").get_icon("Tests", 1, true) .. "Tests",
+            desc = require("astroui").get_icon("test", 1, true) .. "Tests",
           }
           maps.n[prefix .. "t"] = {
             function() require("neotest").run.run() end,
@@ -67,7 +57,7 @@ return {
           local watch_prefix = prefix .. "w"
 
           maps.n[watch_prefix] = {
-            desc = require("astroui").get_icon("Watch", 1, true) .. "Watch",
+            desc = require("astroui").get_icon("watch", 1, true) .. "Watch",
           }
           maps.n[watch_prefix .. "t"] = {
             function() require("neotest").watch.toggle() end,
@@ -128,9 +118,11 @@ return {
           local coverage_prefix = tests_prefix .. "C"
 
           -- INFO: Compatibility with `neotest` and `vim-test`
-          maps.n[tests_prefix] = { desc = astroui.get_icon("Tests", 1, true) .. "Tests" }
+          maps.n[tests_prefix] = {
+            desc = require("astroui").get_icon("test", 1, true) .. "Tests",
+          }
 
-          maps.n[coverage_prefix] = { desc = astroui.get_icon("Coverage", 1, true) .. "Coverage" }
+          maps.n[coverage_prefix] = { desc = astroui.get_icon("coverage", 1, true) .. "Coverage" }
           maps.n[coverage_prefix .. "t"] = { function() require("coverage").toggle() end, desc = "Toggle coverage" }
           maps.n[coverage_prefix .. "s"] =
             { function() require("coverage").summary() end, desc = "Show coverage summary" }
@@ -140,15 +132,6 @@ return {
             desc = "Load and show coverage",
           }
         end,
-      },
-      {
-        "AstroNvim/astroui",
-        opts = {
-          icons = {
-            Tests = "󰗇",
-            Coverage = "",
-          },
-        },
       },
     },
     dependencies = {

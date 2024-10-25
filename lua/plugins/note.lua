@@ -17,25 +17,23 @@ local M = {
   {
     "superappkid/global-note.nvim",
     lazy = true,
-    keys = function(_, _)
-      local prefix = "<Leader>M"
-
-      return {
-        { prefix, desc = require("astroui").get_icon("Notes", 0, true) .. "Notes" },
-        {
-          prefix .. "m",
-          function() require("global-note").toggle_note() end,
-          desc = "Toggle global note",
-        },
-        {
-          prefix .. "l",
-          function() require("global-note").toggle_note "project_local" end,
-          desc = "Toggle local note",
-        },
-      }
-    end,
     specs = {
-      { "AstroNvim/astroui", opts = { icons = { Notes = " " } } },
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          local prefix = "<Leader>M"
+          maps.n[prefix] = { desc = require("astroui").get_icon("note", 1, true) .. "Notes" }
+          maps.n[prefix .. "m"] = {
+            function() require("global-note").toggle_note() end,
+            desc = "Toggle global note",
+          }
+          maps.n[prefix .. "l"] = {
+            function() require("global-note").toggle_note "project_local" end,
+            desc = "Toggle local note",
+          }
+        end,
+      },
     },
     opts = {
       title = " Global note ",

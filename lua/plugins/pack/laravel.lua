@@ -4,9 +4,6 @@ return {
     "adalessa/laravel.nvim",
     fmt = { "php", "blade" },
     cmd = { "Composer", "Npm", "Yarn", "Laravel", "LaravelModel" },
-    specs = {
-      { "AstroNvim/astroui", opts = { icons = { Laravel = "󰫐", IdeHelper = "󱚌" } } },
-    },
     dependencies = {
       "nvim-telescope/telescope.nvim",
       "tpope/vim-dotenv",

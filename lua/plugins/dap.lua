@@ -26,6 +26,30 @@ return {
   {
     "superappkid/nvim-dap-ui",
     version = false,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+
+          local function open_float(element)
+            require("dapui").float_element(element, {
+              width = math.floor(vim.o.columns * 0.8),
+              enter = true,
+            })
+          end
+
+          maps.n["<Leader>dR"] = false
+          maps.n["<Leader>du"] = { function() require("dapui").toggle() end, desc = "Toggle REPL" }
+          maps.n["<Leader>dh"] = { function() require("dap.ui.widgets").hover() end, desc = "Debugger Hover" }
+          maps.n["<Leader>dH"] = { function() open_float "scopes" end, desc = "Open Scopes" }
+          maps.n["<Leader>dB"] = { function() open_float "breakpoints" end, desc = "Open Breakpoints" }
+          maps.n["<Leader>dd"] = { function() require("dap").clear_breakpoints() end, desc = "Clear Breakpoints" }
+          maps.n["<Leader>dS"] = { function() open_float "stacks" end, desc = "Open Stacks" }
+          maps.n["<Leader>dw"] = { function() open_float "watches" end, desc = "Open Watches" }
+        end,
+      },
+    },
     opts = function(_, opts)
       opts.expand_lines = false
       opts.layouts = {

@@ -48,6 +48,19 @@ return {
     },
     icons = {
       planet = "",
+      note = "",
+      project = "󰃥",
+      test = "󰙨",
+      watch = "󰂥",
+      misc = "",
+      tab = "",
+      Octo = "",
+      coverage = "",
+      Overseer = "",
+      Laravel = "󰫐", -- php
+      IdeHelper = "󱚌", -- php
+      Dial = "󱓉",
+      Dial_additive = "󱖢",
       LSPLoading1 = "⠋",
       LSPLoading2 = "⠙",
       LSPLoading3 = "⠹",
