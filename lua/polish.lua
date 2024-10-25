@@ -10,6 +10,7 @@ vim.filetype.add {
     Tiltfile = "tiltfile",
     api = "api",
     http = "http",
+    pg = "sql",
   },
   filename = {
     [".env"] = "dotenv",

@@ -139,6 +139,10 @@ return {
             if term then return term.direction == "horizontal" end
           end,
         },
+        {
+          ft = "dbout",
+          size = { height = 0.6 },
+        },
       },
       left = {
         {

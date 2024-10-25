@@ -420,7 +420,6 @@ return {
     optional = true,
     opts = { tools = { inlay_hints = { auto = false } } },
   },
-  { import = "astrocommunity.pack.sql" },
   { import = "astrocommunity.pack.svelte" },
   { import = "astrocommunity.pack.tailwindcss" },
   { import = "astrocommunity.pack.terraform" },
