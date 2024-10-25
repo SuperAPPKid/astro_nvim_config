@@ -550,7 +550,8 @@ return {
           },
           -- Conditionally redirect notifications to another backend
           redirect = function(msg, level, opts)
-            level = level or 0
+            if type(level) ~= "number" then level = 2 end
+            level = level or 2
             local title = opts and opts.title
             local should_redirect = true
 
