@@ -190,10 +190,18 @@ return {
 
   {
     "okuuva/auto-save.nvim",
-    cmd = "ASToggle", -- optional for lazy loading on command
+    -- cmd = "ASToggle", -- optional for lazy loading on command
     -- event = { "User AstroFile", "InsertEnter" },
-    event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
-    opts = function(_, _)
+    event = {
+      "BufLeave",
+      "FocusLost",
+      "InsertEnter",
+      "InsertLeave",
+      "TextChanged",
+    }, -- optional for lazy loading on trigger events
+    config = function(_, opts)
+      require("auto-save").setup(opts)
+
       local group = vim.api.nvim_create_augroup("autosave", {})
       vim.api.nvim_create_autocmd("User", {
         pattern = "AutoSaveWritePre",
@@ -201,7 +209,6 @@ return {
         callback = function(_)
           -- save global autoformat status
           vim.g.OLD_AUTOFORMAT = vim.g.autoformat
-
           vim.g.autoformat = false
           vim.g.OLD_AUTOFORMAT_BUFFERS = {}
           -- disable all manually enabled buffers
@@ -227,18 +234,22 @@ return {
           end
         end,
       })
-
-      return {
-        write_all_buffers = true,
-        condition = function(buf)
-          local fn = vim.fn
-
-          -- don't save for special-buffers
-          if fn.getbufvar(buf, "&buftype") ~= "" then return false end
-          return true
-        end,
-      }
     end,
+    opts = {
+      trigger_events = { -- See :h events
+        immediate_save = { "BufLeave", "FocusLost" }, -- vim events that trigger an immediate save
+        defer_save = { "InsertLeave", "TextChanged" }, -- vim events that trigger a deferred save (saves after `debounce_delay`)
+        cancel_deferred_save = { "InsertEnter" }, -- vim events that cancel a pending deferred save
+      },
+      write_all_buffers = true,
+      condition = function(bufnr)
+        local buftype = vim.bo[bufnr].buftype
+        if buftype == "help" then return true end
+        if buftype ~= "" and buftype ~= "acwrite" then return false end
+        if vim.api.nvim_buf_get_name(bufnr) == "" then return false end
+        return true
+      end,
+    },
   },
 
   {
