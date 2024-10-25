@@ -262,7 +262,7 @@ return {
           -- code action
           maps.n["<Leader>la"] =
             { "<Cmd>Lspsaga code_action<CR>", desc = "LSP code action", cond = "textDocument/codeAction" }
-          maps.x["<Leader>la"] =
+          maps.v["<Leader>la"] =
             { ":<C-U>Lspsaga code_action<CR>", desc = "LSP code action", cond = "textDocument/codeAction" }
 
           -- definition
