@@ -67,7 +67,16 @@ return {
             condition = condition.has_filetype,
           },
           filename = {
-            modify = ":p:.",
+            fallback = "",
+            fname = function(nr)
+              local path = vim.api.nvim_buf_get_name(nr)
+              path = vim.fn.fnamemodify(path, ":p:.")
+              if not require("heirline.conditions").width_percent_below(#path, 0.42) then
+                path = vim.fn.pathshorten(path)
+              end
+              return path
+            end,
+            modify = "",
           },
         },
         status.component.diagnostics {
