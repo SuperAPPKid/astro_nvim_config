@@ -469,7 +469,7 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-          maps.n["<Leader>zz"] = {
+          maps.n["<Leader>z<enter>"] = {
             "<Cmd>NeoZoomToggle<CR>",
             desc = "Toggle Zoom",
             silent = true,

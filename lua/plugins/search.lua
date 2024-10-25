@@ -1,3 +1,4 @@
+local command_key = "<Leader>zz"
 local default_opts = { instanceName = "main", transient = true }
 local function grug_far_open(opts, with_visual)
   local grug_far = require "grug-far"
@@ -36,35 +37,28 @@ return {
       opts.startInInsertMode = false
       opts.transient = true
       opts.keymaps = {
-        replace = { n = "Zr" },
-        qflist = { n = "Zq" },
-        syncLocations = { n = "Zs" },
-        syncLine = { n = "Zl" },
+        replace = { n = command_key .. "r" },
+        qflist = { n = command_key .. "q" },
+        syncLocations = { n = command_key .. "s" },
+        syncLine = { n = command_key .. "l" },
         close = { n = "q" },
-        historyOpen = { n = "Zt" },
-        historyAdd = { n = "Za" },
-        refresh = { n = "Zf" },
-        openLocation = { n = "Zo" },
+        historyOpen = { n = command_key .. "t" },
+        historyAdd = { n = command_key .. "a" },
+        refresh = { n = command_key .. "f" },
+        openLocation = { n = command_key .. "o" },
         openNextLocation = { n = "<Tab>" },
         openPrevLocation = { n = "<S-Tab>" },
         gotoLocation = { n = "<enter>" },
         pickHistoryEntry = { n = "<enter>" },
-        abort = { n = "Zb" },
+        abort = { n = command_key .. "b" },
         help = { n = "g?" },
-        toggleShowCommand = { n = "Zp" },
-        swapEngine = { n = "Ze" },
-        previewLocation = { n = "Zi" },
-        swapReplacementInterpreter = { n = "Zx" },
+        toggleShowCommand = { n = command_key .. "p" },
+        swapEngine = { n = command_key .. "e" },
+        previewLocation = { n = command_key .. "i" },
+        swapReplacementInterpreter = { n = command_key .. "x" },
       }
     end,
     dependencies = {
-      {
-        "folke/which-key.nvim",
-        optional = true,
-        opts = function(_, opts)
-          opts.triggers = require("astrocore").list_insert_unique(opts.triggers, { { "Z", mode = "n" } })
-        end,
-      },
       {
         "nvim-neo-tree/neo-tree.nvim",
         optional = true,
@@ -121,11 +115,11 @@ return {
             end,
             desc = "Search / Replace (current file)",
           }
-          maps.x["<Leader>zs"] = {
+          maps.v["<Leader>zs"] = {
             function() grug_far_open({ startCursorRow = 4 }, true) end,
             desc = "Search / Replace",
           }
-          maps.x["<Leader>zS"] = {
+          maps.v["<Leader>zS"] = {
             function()
               local ext = require("astrocore.buffer").is_valid() and vim.fn.expand "%:e" or ""
               local paths = require("astrocore.buffer").is_valid() and vim.fn.expand "%" or nil
@@ -139,6 +133,22 @@ return {
             end,
             desc = "Search / Replace (current file)",
           }
+          opts.autocmds = require("astrocore").extend_tbl(opts.autocmds, {
+            grugfar_settings = {
+              {
+                event = "FileType",
+                desc = "Add hint",
+                pattern = "grug-far",
+                callback = function(args)
+                  require("astrocore").set_mappings({
+                    n = {
+                      [command_key] = { desc = "Grugfar CMD" },
+                    },
+                  }, { buffer = args.buf })
+                end,
+              },
+            },
+          })
         end,
       },
     },
