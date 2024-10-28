@@ -230,7 +230,8 @@ return {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
     opts = function(_, opts)
-      opts.general = {
+      local bar = require "dropbar.bar"
+      opts.bar = {
         enable = function(buf, win, _)
           local b, w = vim.bo[buf], vim.wo[win]
           return vim.fn.win_gettype(win) == ""
@@ -242,12 +243,8 @@ return {
               or (buf and vim.api.nvim_buf_is_valid(buf) and (pcall(vim.treesitter.get_parser, buf)) and true or false)
             )
         end,
-      }
-
-      local bar = require "dropbar.bar"
-      opts.bar = {
         pick = {
-          pivots = "123456789",
+          pivots = "0123456789",
         },
         sources = function(buf, _)
           local sources = require "dropbar.sources"
