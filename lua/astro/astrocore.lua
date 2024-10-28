@@ -199,6 +199,11 @@ return {
           function() require("telescope.builtin").highlights() end,
           desc = "Find Highlight",
         },
+        ["<Leader>fm"] = false,
+        ["<Leader>fM"] = {
+          function() require("telescope.builtin").man_pages() end,
+          desc = "Find man",
+        },
 
         ["<Leader>lR"] = false,
         ["<Leader>gK"] = false,

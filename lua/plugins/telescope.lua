@@ -21,7 +21,7 @@ return {
       defaults.entry_prefix = " "
       defaults.selection_strategy = "reset"
       defaults.mappings.i["<C-L>"] = false
-      defaults.mappings.i["<M-getApiRecordCR>"] = false
+      defaults.mappings.i["<M-CR>"] = false
       defaults.mappings.n["<M-CR>"] = false
 
       opts.defaults = require("telescope.themes").get_ivy(defaults)
@@ -32,7 +32,6 @@ return {
 
   {
     "nvim-telescope/telescope-file-browser.nvim",
-    lazy = true,
     keys = {
       {
         prefix .. "e",
@@ -70,7 +69,6 @@ return {
   {
     "nvim-telescope/telescope-live-grep-args.nvim",
     enable = vim.fn.executable "rg" == 1,
-    lazy = true,
     keys = {
       {
         prefix .. "c",
@@ -129,7 +127,6 @@ return {
 
   {
     "tiagovla/scope.nvim",
-    lazy = true,
     keys = {
       { "<Leader>fb", function() require("telescope").extensions.scope.buffers() end, desc = "Open Scopes" },
     },
@@ -143,28 +140,10 @@ return {
   },
 
   {
-    "johmsalas/text-case.nvim",
-    lazy = true,
-    keys = {
-      { "<Leader>fK", "<Cmd>TextCaseOpenTelescope<CR>", desc = "select TextCase" },
-    },
-    dependencies = {
-      { "nvim-telescope/telescope.nvim" },
-    },
-    config = function(_, opts)
-      require("textcase").setup(opts)
-      require("telescope").load_extension "textcase"
-    end,
-    opts = {
-      default_keymappings_enabled = true,
-    },
-  },
-
-  {
     "AckslD/nvim-neoclip.lua",
-    lazy = true,
     keys = {
       { "<Leader>fy", "<Cmd>Telescope neoclip<CR>", desc = "Find yanks (neoclip)" },
+      { "<Leader>fm", "<Cmd>Telescope macroscope<CR>", desc = "Find macros (neoclip)" },
     },
     dependencies = {
       { "nvim-telescope/telescope.nvim" },
@@ -181,10 +160,36 @@ return {
       end
 
       opts.filter = function(data) return not all(data.event.regcontents, is_whitespace) end
+      opts.default_register = "*"
+      opts.default_register_macros = "q"
       opts.enable_persistent_history = true
-      opts.keys = {
-        telescope = {
-          i = { paste_behind = false },
+      opts.on_select = {
+        move_to_front = true,
+      }
+      opts.on_paste = {
+        move_to_front = true,
+      }
+      opts.on_replay = {
+        move_to_front = true,
+      }
+      opts.keys = opts.keys or {}
+      opts.keys.telescope = {
+        i = {
+          select = "<CR>",
+          paste = false,
+          paste_behind = false,
+          replay = "<C-q>", -- replay a macro
+          delete = "<C-d>", -- delete an entry
+          edit = "<C-e>", -- edit an entry
+        },
+        n = {
+          select = "<CR>",
+          paste = "p",
+          -- paste = { 'p', '<c-p>' }, -- It is possible to map to more than one key.
+          paste_behind = "P",
+          replay = "q",
+          delete = "d",
+          edit = "e",
         },
       }
     end,

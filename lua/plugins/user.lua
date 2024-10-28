@@ -1383,4 +1383,21 @@ return {
       },
     },
   },
+
+  {
+    "johmsalas/text-case.nvim",
+    keys = {
+      { "<Leader>zt", "<Cmd>TextCaseOpenTelescope<CR>", desc = "TextCase" },
+    },
+    dependencies = {
+      { "nvim-telescope/telescope.nvim" },
+    },
+    config = function(_, opts)
+      require("textcase").setup(opts)
+      require("telescope").load_extension "textcase"
+    end,
+    opts = {
+      default_keymappings_enabled = true,
+    },
+  },
 }
