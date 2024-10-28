@@ -1342,51 +1342,6 @@ return {
   },
 
   {
-    "Exafunction/codeium.vim",
-    init = function(_)
-      vim.g.codeium_disable_bindings = 1
-      vim.g.codeium_manual = 1
-    end,
-    keys = {
-      {
-        "<C-f>",
-        function() return vim.fn["codeium#Accept"]() end,
-        mode = "i",
-        expr = true,
-        silent = true,
-      },
-      {
-        "<A-l>",
-        function() return vim.fn["codeium#CycleCompletions"](1) end,
-        mode = "i",
-        expr = true,
-        silent = true,
-      },
-      {
-        "<A-h>",
-        function() return vim.fn["codeium#CycleCompletions"](-1) end,
-        mode = "i",
-        expr = true,
-        silent = true,
-      },
-      {
-        "<C-x>",
-        function() return vim.fn["codeium#Clear"]() end,
-        mode = "i",
-        expr = true,
-        silent = true,
-      },
-      {
-        "<C-e>",
-        function() return vim.fn["codeium#Complete"]() end,
-        mode = "i",
-        expr = true,
-        silent = true,
-      },
-    },
-  },
-
-  {
     "johmsalas/text-case.nvim",
     keys = {
       { "<Leader>zt", "<Cmd>TextCaseOpenTelescope<CR>", desc = "TextCase" },

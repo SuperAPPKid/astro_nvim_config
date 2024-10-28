@@ -77,6 +77,8 @@ return {
         YankyPut = { fg = palette.winterBlue, bg = palette.autumnGreen, bold = true },
         YankyYanked = { fg = palette.winterBlue, bg = palette.autumnGreen, bold = true },
 
+        CodeiumSuggestion = { fg = palette.katanaGray, italic = true, bold = true },
+
         Mono = { fg = palette.dragonWhite, bg = palette.sumiInk3, bold = true },
         RainbowRed = { fg = palette.dragonRed, bold = true },
         RainbowYellow = { fg = palette.dragonYellow, bold = true },
