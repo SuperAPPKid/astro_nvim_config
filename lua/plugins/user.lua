@@ -369,6 +369,8 @@ return {
     opts = function(_, opts)
       local get_icon = require("astroui").get_icon
       opts.columns = { { "icon", default_file = get_icon "DefaultFile", directory = get_icon "FolderClosed" } }
+      opts.delete_to_trash = true
+      opts.skip_confirm_for_simple_edits = true
       opts.view_options = {
         show_hidden = true,
       }
