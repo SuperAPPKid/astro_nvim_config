@@ -78,7 +78,6 @@ return {
     },
   },
   { import = "astrocommunity.editing-support.neogen" },
-  -- { import = "astrocommunity.editing-support.nvim-devdocs" },
   { import = "astrocommunity.editing-support.nvim-treesitter-endwise" },
   { import = "astrocommunity.editing-support.nvim-regexplainer" },
   { import = "astrocommunity.editing-support.nvim-origami" },

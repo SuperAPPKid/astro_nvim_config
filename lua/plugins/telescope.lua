@@ -198,4 +198,45 @@ return {
       require("telescope").load_extension "neoclip"
     end,
   },
+
+  {
+    "warpaint9299/nvim-devdocs",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
+    cmd = {
+      "DevdocsFetch",
+      "DevdocsInstall",
+      "DevdocsUninstall",
+      "DevdocsUpdate",
+      "DevdocsUpdateAll",
+      "DevdocsOpenFloat",
+      "DevdocsOpenCurrentFloat",
+    },
+    keys = {
+      { prefix .. "D", "<Cmd>DevdocsOpenFloat<CR>", desc = "Find Devdocs" },
+    },
+    opts = {
+      -- previewer_cmd = vim.fn.executable "glow" == 1 and "glow" or nil,
+      cmd_args = { "-s", "dark", "-w", "80" },
+      picker_cmd = true,
+      picker_cmd_args = { "-p" },
+      filetypes = {
+        typescript = { "node", "javascript", "typescript" },
+      },
+      float_win = { -- passed to nvim_open_win(), see :h api-floatwin
+        relative = "editor",
+        width = vim.o.columns,
+        height = vim.o.lines - 4,
+        border = "double",
+      },
+      wrap = true,
+      mappings = {
+        open_in_browser = "<CR>",
+      },
+      after_open = function()
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-n>", true, false, true), "n", true)
+      end,
+    },
+  },
 }
