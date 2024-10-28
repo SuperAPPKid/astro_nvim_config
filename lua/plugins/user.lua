@@ -509,7 +509,7 @@ return {
           local maps = opts.mappings
           maps.n["<Leader>zn"] = {
             "<Cmd>Fidget history<CR>",
-            desc = "fidget history",
+            desc = "Fidget history",
           }
         end,
       },
@@ -620,7 +620,7 @@ return {
           local maps = opts.mappings
           maps.n["<Leader>zh"] = {
             "<Cmd>LiveServer<CR>",
-            desc = "html preview",
+            desc = "HTML Preview",
           }
         end,
       },

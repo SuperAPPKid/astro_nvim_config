@@ -76,7 +76,7 @@ local M = {
     init = function() vim.g.mkdp_filetypes = { "markdown" } end,
     build = "cd app && npx --yes yarn install",
     keys = {
-      { "<Leader>zM", "<Cmd>MarkdownPreviewToggle<CR>", desc = "markdown preview(alter)" },
+      { "<Leader>zM", "<Cmd>MarkdownPreviewToggle<CR>", desc = "Markdown Preview(alter)" },
     },
   },
 
@@ -157,7 +157,7 @@ if vim.fn.executable(deno) == 1 then
               peek.open()
             end
           end,
-          desc = "markdown preview",
+          desc = "Markdown Preview",
         }
       end,
     },

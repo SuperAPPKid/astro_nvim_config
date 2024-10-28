@@ -63,7 +63,7 @@ return {
           local maps = opts.mappings
           maps.n["<Leader>zk"] = {
             "<Cmd>CloakToggle<CR>",
-            desc = "cloak",
+            desc = "Cloak",
           }
         end,
       },
