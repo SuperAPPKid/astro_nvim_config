@@ -333,8 +333,6 @@ return {
     },
   },
 
-  { import = "astrocommunity.terminal-integration.flatten-nvim" },
-
   { import = "astrocommunity.utility.mason-tool-installer-nvim" },
   {
     import = "astrocommunity.utility.neodim",
