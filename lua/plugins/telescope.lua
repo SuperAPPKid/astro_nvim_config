@@ -6,7 +6,18 @@ return {
     "nvim-telescope/telescope.nvim",
     branch = "master",
     version = false,
+    dependencies = {
+      { "stevearc/dressing.nvim" },
+    },
     config = function(plugin, opts)
+      require "astronvim.plugins.configs.telescope"(plugin, opts)
+      require("dressing").setup {
+        select = {
+          telescope = opts.defaults,
+        },
+      }
+    end,
+    opts = function(_, opts)
       local defaults = opts.defaults
       defaults.layout_config = {
         height = math.max(math.floor(vim.o.lines * 0.6), 25),
@@ -25,8 +36,6 @@ return {
       defaults.mappings.n["<M-CR>"] = false
 
       opts.defaults = require("telescope.themes").get_ivy(defaults)
-
-      require "astronvim.plugins.configs.telescope"(plugin, opts)
     end,
   },
 
