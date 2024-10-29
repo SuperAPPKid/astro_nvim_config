@@ -206,6 +206,7 @@ return {
           function() require("telescope.builtin").man_pages() end,
           desc = "Find man",
         },
+        ["<Leader>fg"] = false,
 
         ["<Leader>lR"] = false,
         ["<Leader>gK"] = false,

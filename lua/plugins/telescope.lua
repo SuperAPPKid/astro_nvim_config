@@ -240,6 +240,38 @@ return {
       end,
     },
   },
+  {
+    "aaronhallaert/advanced-git-search.nvim",
+    dependencies = {
+      {
+        "nvim-telescope/telescope.nvim",
+        opts = {
+          extensions = {
+            advanced_git_search = {
+              diff_plugin = "diffview", -- fugitive or diffview
+              keymaps = {
+                -- following keymaps can be overridden
+                toggle_date_author = "<C-w>",
+                open_commit_in_browser = "<C-o>",
+                copy_commit_hash = "<C-y>",
+                show_entire_commit = "<C-e>",
+              },
+            },
+          },
+        },
+      },
+    },
+    keys = {
+      { prefix .. "g", "<Cmd>AdvancedGitSearch<CR>", mode = { "n", "x" }, desc = "Search Git" },
+    },
+    config = function()
+      -- HACK: fix entry_default_author_or_date not working
+      require("advanced_git_search.utils.config").setup {
+        entry_default_author_or_date = "date", -- one of "author" or "date"
+      }
+      require("telescope").load_extension "advanced_git_search"
+    end,
+  },
 
   {
     "ryanmsnyder/toggleterm-manager.nvim",

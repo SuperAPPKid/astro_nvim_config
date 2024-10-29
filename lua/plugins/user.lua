@@ -550,7 +550,7 @@ return {
           },
           -- Conditionally redirect notifications to another backend
           redirect = function(msg, level, opts)
-            if type(level) ~= "number" then level = 2 end
+            if type(level) ~= "number" then level = nil end
             level = level or 2
             local title = opts and opts.title
             local should_redirect = true
@@ -559,7 +559,7 @@ return {
               should_redirect = (title and string.find(title, "tinygit") or 0) ~= 0
             end
 
-            if should_redirect and (title and (string.find(title, "Codeium") or 0) ~= 0 or false) then -- exclude Codeium
+            if should_redirect and (title and (string.find(title, "Codeium") or 0) ~= 0) then -- exclude Codeium
               should_redirect = false
             end
 
