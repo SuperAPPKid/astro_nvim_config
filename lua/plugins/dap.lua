@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   {
     "mfussenegger/nvim-dap",
@@ -83,6 +84,37 @@ return {
       opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
         -- add more arguments for adding more debuggers
       })
+    end,
+  },
+
+  {
+    "jbyuki/one-small-step-for-vimkind",
+    cmd = {
+      "OsvRunThis",
+    },
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          opts.commands.OsvRunThis = {
+            function(_) require("osv").run_this() end,
+            desc = "debug lua script",
+          }
+        end,
+      },
+    },
+    dependencies = {
+      { "mfussenegger/nvim-dap" },
+    },
+    config = function(_, _)
+      local dap = require "dap"
+      dap.adapters.nlua = function(callback, config)
+        callback {
+          type = "server",
+          host = config.host,
+          port = config.port,
+        }
+      end
     end,
   },
 }
