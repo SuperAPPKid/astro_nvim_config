@@ -145,9 +145,10 @@ return {
         opts = function(_, opts)
           local maps = opts.mappings
           local prefix = "<Leader>go"
+          local icon = require("astroui").get_icon("link", 1, true)
 
-          maps.n[prefix] = { desc = "Gitlinker" }
-          maps.v[prefix] = { desc = "Gitlinker" }
+          maps.n[prefix] = { desc = icon .. "Gitlinker" }
+          maps.v[prefix] = { desc = icon .. "Gitlinker" }
 
           -- repo
           maps.n[prefix .. "u"] = {

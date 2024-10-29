@@ -62,11 +62,11 @@ return {
           }
 
           -- textDocument/references
-          mappings.n["gR"] = {
+          mappings.n["gr"] = {
             function()
               if not is_float() then goto_preview.goto_preview_references {} end
             end,
-            desc = "Go to references of current symbol",
+            desc = "Goto references of current symbol",
             cond = "textDocument/references",
           }
 
@@ -268,7 +268,7 @@ return {
           -- definition
           maps.n["gD"] = {
             "<Cmd>Lspsaga goto_definition<CR>",
-            desc = "goto definition",
+            desc = "Goto definition",
             cond = "textDocument/definition",
           }
           maps.n["gd"] =
@@ -277,7 +277,7 @@ return {
           -- typeDefinition
           maps.n["gy"] = {
             "<Cmd>Lspsaga goto_type_definition<CR>",
-            desc = "goto type definition",
+            desc = "Goto type definition",
             cond = "textDocument/typeDefinition",
           }
 
@@ -286,14 +286,14 @@ return {
             { "<Cmd>Lspsaga outline<CR>", desc = "Symbols outline", cond = "textDocument/documentSymbol" }
 
           -- references
-          maps.n["gr"] = {
-            "<Cmd>Lspsaga finder<CR>",
-            desc = "Search references",
-            cond = function(client)
-              return client.supports_method "textDocument/references"
-                or client.supports_method "textDocument/implementation"
-            end,
-          }
+          -- maps.n["gR"] = {
+          --   "<Cmd>Lspsaga finder<CR>",
+          --   desc = "Search references",
+          --   cond = function(client)
+          --     return client.supports_method "textDocument/references"
+          --       or client.supports_method "textDocument/implementation"
+          --   end,
+          -- }
 
           -- rename
           maps.n["<Leader>lr"] =

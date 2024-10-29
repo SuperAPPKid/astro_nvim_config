@@ -60,6 +60,7 @@ return {
       Laravel = "󰫐", -- php
       IdeHelper = "󱚌", -- php
       Dial = "󱓉",
+      link = "",
       Dial_additive = "󱖢",
       LSPLoading1 = "⠋",
       LSPLoading2 = "⠙",

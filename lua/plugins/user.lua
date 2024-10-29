@@ -1357,4 +1357,42 @@ return {
       default_keymappings_enabled = true,
     },
   },
+
+  {
+    "chrishrb/gx.nvim",
+    cmd = { "Browse" },
+    dependencies = { "nvim-lua/plenary.nvim" }, -- Required for Neovim < 0.10.0
+    submodules = false, -- not needed, submodules are required only for tests
+    -- you can specify also another config if you want
+    config = function(_, opts) require("gx").setup(opts) end,
+    opts = {
+      handlers = {
+        cve = false,
+        jira = { -- custom handler to open Jira tickets (these have higher precedence than builtin handlers)
+          name = "jira", -- set name of handler
+          handle = function(mode, line, _)
+            local ticket = require("gx.helper").find(line, mode, "(%u+-%d+)")
+            if ticket and #ticket < 20 then return "http://jira.company.com/browse/" .. ticket end
+          end,
+        },
+        rust = { -- custom handler to open rust's cargo packages
+          name = "rust", -- set name of handler
+          filetype = { "toml" }, -- you can also set the required filetype for this handler
+          filename = "Cargo.toml", -- or the necessary filename
+          handle = function(mode, line, _)
+            local crate = require("gx.helper").find(line, mode, "(%w+)%s-=%s")
+
+            if crate then return "https://crates.io/crates/" .. crate end
+          end,
+        },
+      },
+      handler_options = {
+        select_for_search = false, -- if your cursor is e.g. on a link, the pattern for the link AND for the word will always match. This disables this behaviour for default so that the link is opened without the select option for the word AND link
+        git_remote_push = false, -- use the push url for git issue linking,
+      },
+    },
+    keys = {
+      { "gx", "<cmd>Browse<cr>", mode = { "n", "x" }, desc = "Goto link" },
+    },
+  },
 }

@@ -52,6 +52,7 @@ return {
         textwidth = 0,
         -- move_normal_option = 1,
         wrap = true,
+        netrw_nogx = 1, -- disable netrw gx
       },
     })
 
@@ -107,6 +108,7 @@ return {
         },
         gj = "j",
         gk = "k",
+        gx = false,
 
         -- navigate buffer tabs with `H` and `L`
         L = {
