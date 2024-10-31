@@ -47,8 +47,6 @@ return {
 
   -- { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
 
-  -- { import = "astrocommunity.diagnostics.error-lens-nvim" },
-  -- { import = "astrocommunity.diagnostics.lsp_lines-nvim" },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
 
   -- { import = "astrocommunity.editing-support.chatgpt-nvim" },
@@ -250,9 +248,7 @@ return {
       }
     end,
   },
-  { import = "astrocommunity.keybinding.nvcheatsheet-nvim" },
 
-  { import = "astrocommunity.lsp.lsplinks-nvim" },
   { import = "astrocommunity.lsp.nvim-java" },
   { import = "astrocommunity.lsp.nvim-lint" },
   { import = "astrocommunity.lsp.nvim-lsp-file-operations" },
