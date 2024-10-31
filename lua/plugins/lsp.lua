@@ -188,8 +188,8 @@ return {
         opts = function(_, opts)
           local maps = opts.mappings
           maps.n["<Leader>ld"] = { function() require("delimited").open_float() end, desc = "open diag" }
-          maps.n["[d"] = { function() require("delimited").goto_prev() end, desc = "prev diag" }
-          maps.n["]d"] = { function() require("delimited").goto_next() end, desc = "next diag" }
+          maps.n["[d"] = { function() require("delimited").goto_prev() end, desc = "Prev diag" }
+          maps.n["]d"] = { function() require("delimited").goto_next() end, desc = "Next diag" }
         end,
       },
       {

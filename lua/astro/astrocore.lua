@@ -20,6 +20,10 @@ return {
 
     -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
     opts.diagnostics = extend_tbl(opts.diagnostics, {
+      float = {
+        border = "double",
+        format = function(diagnostic) return string.format("%s [%s]", diagnostic.message, diagnostic.source) end,
+      },
       update_in_insert = false,
       virtual_text = true,
       underline = { severity = { vim.diagnostic.severity.ERROR } },
