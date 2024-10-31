@@ -75,6 +75,13 @@ return {
           { name = "buffer" },
         },
       })
+
+      local group = vim.api.nvim_create_augroup("cmp", {})
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "saga*",
+        group = group,
+        callback = function(_) cmp.setup.buffer { sources = {} } end,
+      })
     end,
     opts = function(_, opts)
       local cmp = require "cmp"
