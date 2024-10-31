@@ -104,9 +104,6 @@ return {
     },
   },
 
-  { import = "astrocommunity.git.gist-nvim" },
-  { import = "astrocommunity.git.neogit" },
-
   { import = "astrocommunity.indent.indent-rainbowline" },
 
   { import = "astrocommunity.keybinding.hydra-nvim" },

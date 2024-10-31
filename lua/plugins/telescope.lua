@@ -1,4 +1,5 @@
 local prefix = "<Leader>f"
+local git_prefix = "<Leader>g"
 
 ---@type LazySpec
 return {
@@ -9,6 +10,18 @@ return {
     dependencies = {
       { "stevearc/dressing.nvim" },
     },
+    keys = function(_, keys)
+      if vim.fn.executable "git" == 1 then
+        require("astrocore").list_insert_unique(keys, {
+          {
+            git_prefix .. "g",
+            "<Cmd>Telescope git_status<CR>",
+            desc = "Git Status",
+          },
+        })
+      end
+      return keys
+    end,
     config = function(plugin, opts)
       require "astronvim.plugins.configs.telescope"(plugin, opts)
       require("dressing").setup {
@@ -240,6 +253,7 @@ return {
       end,
     },
   },
+
   {
     "aaronhallaert/advanced-git-search.nvim",
     dependencies = {
@@ -261,9 +275,20 @@ return {
         },
       },
     },
-    keys = {
-      { prefix .. "g", "<Cmd>AdvancedGitSearch<CR>", mode = { "n", "x" }, desc = "Search Git" },
-    },
+    keys = function(_, keys)
+      if vim.fn.executable "git" == 1 then
+        require("astrocore").list_insert_unique(keys, {
+          { git_prefix .. "z", "<Cmd>AdvancedGitSearch<CR>", desc = "GitSearch" },
+          {
+            git_prefix .. "d",
+            "<Cmd>AdvancedGitSearch diff_commit_line<CR>",
+            mode = { "v" },
+            desc = "Git Range History",
+          },
+        })
+      end
+      return keys
+    end,
     config = function()
       -- HACK: fix entry_default_author_or_date not working
       require("advanced_git_search.utils.config").setup {

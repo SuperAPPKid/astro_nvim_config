@@ -61,6 +61,7 @@ return {
       IdeHelper = "󱚌", -- php
       Dial = "󱓉",
       link = "",
+      commit = "",
       Dial_additive = "󱖢",
       LSPLoading1 = "⠋",
       LSPLoading2 = "⠙",

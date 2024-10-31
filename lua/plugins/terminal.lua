@@ -35,6 +35,9 @@ return {
 
           local mappings = opts.mappings
           mappings.n["<C-t>"] = { "<Cmd>ToggleTerm<CR>" }
+          mappings.n["<Leader>tg"] = mappings.n["<Leader>tl"]
+          mappings.n["<Leader>g<CR>"] = mappings.n["<Leader>tl"]
+          mappings.n["<Leader>tl"] = false
 
           if vim.fn.executable "yazi" == 1 then
             mappings.n["<Leader>ty"] = {
@@ -80,13 +83,13 @@ return {
               end,
               desc = "ToggleTerm yazi",
             }
+          end
 
-            if vim.fn.executable "lazydocker" == 1 then
-              mappings.n["<Leader>td"] = {
-                function() require("astrocore").toggle_term_cmd { direction = "float", cmd = "lazydocker" } end,
-                desc = "ToggleTerm LazyDocker",
-              }
-            end
+          if vim.fn.executable "lazydocker" == 1 then
+            mappings.n["<Leader>td"] = {
+              function() require("astrocore").toggle_term_cmd { direction = "float", cmd = "lazydocker" } end,
+              desc = "ToggleTerm lazydocker",
+            }
           end
         end,
       },

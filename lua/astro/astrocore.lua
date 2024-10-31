@@ -209,6 +209,10 @@ return {
         ["<Leader>fg"] = false,
 
         ["<Leader>lR"] = false,
+        ["<Leader>gc"] = false,
+        ["<Leader>gC"] = false,
+        ["<Leader>gt"] = false,
+        ["<Leader>gg"] = false,
         ["<Leader>gK"] = false,
 
         ["<Leader>z"] = { desc = require("astroui").get_icon("misc", 1, true) .. "Misc" },

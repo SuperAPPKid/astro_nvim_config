@@ -3,24 +3,6 @@ local enabled = vim.fn.executable "git" == 1
 ---@type LazySpec
 return {
   {
-    "nvim-telescope/telescope.nvim",
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          if vim.fn.executable "git" == 1 then
-            local maps = opts.mappings
-            maps.v["<Leader>gc"] = {
-              function() require("telescope.builtin").git_bcommits_range() end,
-              desc = "Git commits (line)",
-            }
-          end
-        end,
-      },
-    },
-  },
-
-  {
     "superappkid/nvim-tinygit",
     lazy = true,
     enabled = enabled,
@@ -29,32 +11,51 @@ return {
         "astronvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-          local git_prefix = "<Leader>g"
+          local prefix = "<Leader>g"
 
-          local commit_prefix = git_prefix .. "M"
-          maps.n[commit_prefix] = {
-            desc = "Commit (tinygit)",
+          maps.n[prefix .. "a"] = {
+            function() require("tinygit").smartCommit { pushIfClean = false, pullBeforePush = true } end,
+            desc = "Git SmartCommit",
           }
-          maps.n[commit_prefix .. "a"] = {
-            function() require("tinygit").smartCommit() end,
-            desc = "New",
+          maps.n[prefix .. "A"] = {
+            function() require("tinygit").amendNoEdit { forcePushIfDiverged = false, stageAllIfNothingStaged = true } end,
+            desc = "Git AmendNoEdit",
           }
-          maps.n[commit_prefix .. "e"] = {
-            function() require("tinygit").amendOnlyMsg() end,
-            desc = "Edit",
+          maps.n[prefix .. "e"] = {
+            function() require("tinygit").amendOnlyMsg { forcePushIfDiverged = false } end,
+            desc = "Git Edit Message",
           }
-
-          maps.n[git_prefix .. "P"] = {
-            function() require("tinygit").push() end,
-            desc = "Push (tinygit)",
+          maps.n[prefix .. "F"] = {
+            function()
+              require("tinygit").fixupCommit {
+                selectFromLastXCommits = 15,
+                squashInstead = false,
+                autoRebase = true,
+              }
+            end,
+            desc = "Git Fixup",
           }
-          maps.n[git_prefix .. "I"] = {
+          maps.n[prefix .. "P"] = {
+            function()
+              require("tinygit").push {
+                pullBefore = false,
+                forceWithLease = false,
+                createGitHubPr = false,
+              }
+            end,
+            desc = "Git Push",
+          }
+          maps.n[prefix .. "i"] = {
             function() require("tinygit").stashPush() end,
-            desc = "Stash Push (tinygit)",
+            desc = "Git Stash Push",
           }
-          maps.n[git_prefix .. "O"] = {
+          maps.n[prefix .. "o"] = {
             function() require("tinygit").stashPop() end,
-            desc = "Stash Pop (tinygit)",
+            desc = "Git Stash Pop",
+          }
+          maps.n[prefix .. "U"] = {
+            function() require("tinygit").undoLastCommitOrAmend() end,
+            desc = "Git Undo Commit",
           }
         end,
       },
@@ -236,29 +237,29 @@ return {
         opts = function(_, opts)
           local maps = opts.mappings
           maps.n["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")
-          maps.n["<Leader>gl"] = { function() require("gitsigns").blame_line() end, desc = "View Git blame" }
-          maps.n["<Leader>gr"] = { function() require("gitsigns").reset_hunk() end, desc = "Reset Git hunk" }
-          maps.n["<Leader>gR"] = { function() require("gitsigns").reset_buffer() end, desc = "Reset Git buffer" }
-          maps.n["<Leader>gp"] = { function() require("gitsigns").preview_hunk_inline() end, desc = "Preview Git hunk" }
-          maps.n["<Leader>gs"] = { function() require("gitsigns").stage_hunk() end, desc = "Stage Git hunk" }
-          maps.n["<Leader>gS"] = { function() require("gitsigns").stage_buffer() end, desc = "Stage Git buffer" }
-          maps.n["<Leader>gu"] = { function() require("gitsigns").undo_stage_hunk() end, desc = "Unstage Git hunk" }
-          maps.n["<Leader>gh"] = { function() require("gitsigns").select_hunk() end, desc = "select Git hunk" }
+          maps.n["<Leader>gl"] = { function() require("gitsigns").blame_line() end, desc = "Git Blame line" }
+          maps.n["<Leader>gr"] = { function() require("gitsigns").reset_hunk() end, desc = "Git Reset hunk" }
+          maps.n["<Leader>gR"] = { function() require("gitsigns").reset_buffer() end, desc = "Git Reset buffer" }
+          maps.n["<Leader>gp"] = { function() require("gitsigns").preview_hunk_inline() end, desc = "Git Preview hunk" }
+          maps.n["<Leader>gs"] = { function() require("gitsigns").stage_hunk() end, desc = "Git Stage hunk" }
+          maps.n["<Leader>gS"] = { function() require("gitsigns").stage_buffer() end, desc = "Git Stage buffer" }
+          maps.n["<Leader>gu"] = { function() require("gitsigns").undo_stage_hunk() end, desc = "Git Unstage hunk" }
+          maps.n["<Leader>gh"] = { function() require("gitsigns").select_hunk() end, desc = "Git Select hunk" }
           maps.n["]g"] = { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }
           maps.n["[g"] = { function() require("gitsigns").prev_hunk() end, desc = "Previous Git hunk" }
 
           maps.v["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")
           maps.v["<Leader>gr"] = {
             function() require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" } end,
-            desc = "Reset Git hunk",
+            desc = "Git Reset hunk",
           }
           maps.v["<Leader>gs"] = {
             function() require("gitsigns").stage_hunk { vim.fn.line ".", vim.fn.line "v" } end,
-            desc = "Stage Git hunk",
+            desc = "Git Stage hunk",
           }
           maps.v["<Leader>gu"] = {
             function() require("gitsigns").undo_stage_hunk { vim.fn.line ".", vim.fn.line "v" } end,
-            desc = "Unstage Git hunk",
+            desc = "Git Unstage hunk",
           }
         end,
       },
@@ -367,7 +368,7 @@ return {
             n = {
               ["<Leader>gL"] = {
                 "<Cmd>BlameToggle<CR>",
-                desc = "Toggle git blame",
+                desc = "Git Blame",
               },
             },
           },
