@@ -222,14 +222,14 @@ return {
               ["<Leader>lA"] = {
                 function() require("actions-preview").code_actions() end,
                 desc = "LSP code action",
-                cond = "testDocument/codeAction",
+                cond = "textDocument/codeAction",
               },
             },
             v = {
               ["<Leader>lA"] = {
                 function() require("actions-preview").code_actions() end,
                 desc = "LSP code action",
-                cond = "testDocument/codeAction",
+                cond = "textDocument/codeAction",
               },
             },
           },
@@ -251,7 +251,6 @@ return {
         "AstroNvim/astrolsp",
         opts = function(_, opts)
           local maps = opts.mappings
-          maps.n["K"] = { "<Cmd>Lspsaga hover_doc<CR>", desc = "Hover symbol details", cond = "textDocument/hover" }
 
           -- call hierarchy
           maps.n["<Leader>lc"] =
@@ -318,7 +317,6 @@ return {
             shuttle = "<Tab>",
           },
         },
-        code_action = { extend_gitsigns = require("astrocore").is_available "gitsigns.nvim" },
         definition = {
           save_pos = true,
           keys = {
