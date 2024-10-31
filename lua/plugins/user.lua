@@ -52,6 +52,11 @@ return {
             end,
             desc = "Delete this dirsession",
           }
+          maps.n["<Leader>SD"] = {
+            function() require("resession").delete(nil, { dir = "dirsession" }) end,
+            desc = "Delete a dirsession",
+          }
+
           maps.n["<Leader>Sf"] = {
             function() require("resession").load(nil, { dir = "dirsession" }) end,
             desc = "Load a dirsession",
