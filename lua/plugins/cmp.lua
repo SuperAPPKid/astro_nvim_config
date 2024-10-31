@@ -170,9 +170,15 @@ return {
         end,
       }
 
-      opts.window = {
-        completion = cmp.config.window.bordered { border = "double" },
-        documentation = cmp.config.window.bordered { border = "double" },
+      opts.mapping["<C-E>"] = cmp.mapping(function()
+        require("cmp").abort()
+        require("codeium.virtual_text").complete()
+      end, { "i", "c" })
+
+      opts.window.completion.border = "double"
+      opts.window.documentation.border = "double"
+      opts.view = {
+        docs = { auto_open = false },
       }
 
       return opts
