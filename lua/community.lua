@@ -326,7 +326,6 @@ return {
     },
   },
 
-  { import = "astrocommunity.utility.mason-tool-installer-nvim" },
   {
     import = "astrocommunity.utility.neodim",
     enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
