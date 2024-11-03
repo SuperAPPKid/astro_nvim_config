@@ -1213,51 +1213,33 @@ return {
   },
 
   {
-    "lewis6991/hover.nvim",
-    lazy = true,
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = {
-          mappings = {
-            n = {
-              K = { function(...) require("hover").hover(...) end, desc = "Hover cursor" },
-              gK = { function(...) require("hover").hover_select(...) end, desc = "Hover selection" },
-              ["]h"] = { function() require("hover").hover_switch "next" end, desc = "Next hover source" },
-              ["[h"] = { function() require("hover").hover_switch "previous" end, desc = "Previous hover source" },
-            },
-          },
-        },
-      },
-      {
-        "AstroNvim/astrolsp",
-        opts = {
-          mappings = {
-            n = {
-              K = false,
-              gK = false,
-            },
-          },
-        },
-      },
+    "superappkid/hover.nvim",
+    keys = {
+      { "K", function() require("hover").hover() end, desc = "Hover cursor" },
     },
     opts = {
       init = function()
         -- Require providers
-        require "hover.providers.lsp"
+        require "hover.providers.dap"
+        require "hover.providers.diagnostic"
+        require "hover.providers.dictionary"
+        require "hover.providers.fold_preview"
         -- require "hover.providers.gh"
         -- require "hover.providers.gh_user"
         -- require "hover.providers.jira"
-        require "hover.providers.dap"
-        require "hover.providers.fold_preview"
-        require "hover.providers.diagnostic"
+        require "hover.providers.lsp"
         require "hover.providers.man"
-        require "hover.providers.dictionary"
       end,
       preview_opts = {
         border = "double",
       },
-      preview_window = true,
+      -- What to do if hover() is called when a hover popup is already open:
+      -- "cycle_providers" - cycle to the next enabled provider
+      -- "focus" - move the cursor into the popup
+      -- "preview_window" - move the popup contents to a :h preview-window
+      -- "close" - close the popup
+      -- "ignore" - do nothing
+      multiple_hover = "focus",
     },
   },
 
