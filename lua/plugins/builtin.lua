@@ -41,12 +41,9 @@ return {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           opts.mappings.n["<Leader>e"] = { "<Cmd>Neotree toggle<CR>", desc = "Toggle Filesystem" }
-          opts.mappings.n["<Leader>b<Leader>"] =
-            { "<Cmd>Neotree source=buffers toggle<CR>", desc = "Toggle Buffers (neo-tree)" }
-          opts.mappings.n["<Leader>g<Leader>"] =
-            { "<Cmd>Neotree source=git_status toggle<CR>", desc = "Toggle Git (neo-tree)" }
-          opts.mappings.n["<Leader>l<Leader>"] =
-            { "<Cmd>Neotree source=diagnostics toggle<CR>", desc = "Toggle Diagnostics (neo-tree)" }
+          opts.mappings.n["<Leader>B"] = { "<Cmd>Neotree source=buffers toggle<CR>", desc = "Toggle Buffers" }
+          opts.mappings.n["<Leader>G"] = { "<Cmd>Neotree source=git_status toggle<CR>", desc = "Toggle Git" }
+          opts.mappings.n["<Leader>D"] = { "<Cmd>Neotree source=diagnostics toggle<CR>", desc = "Toggle Diagnostics" }
         end,
       },
     },

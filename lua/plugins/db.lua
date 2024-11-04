@@ -99,7 +99,7 @@ return {
       })
     end,
     keys = {
-      { "<Leader>D", "<Cmd>DBUIToggle<CR>", desc = "Toggle DB-UI" },
+      { "<Leader>zd", "<Cmd>DBUIToggle<CR>", desc = "Toggle DB-UI" },
     },
   },
 }
