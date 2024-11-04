@@ -36,7 +36,7 @@ return {
           local mappings = opts.mappings
           mappings.n["<C-t>"] = { "<Cmd>ToggleTerm<CR>" }
           mappings.n["<Leader>tg"] = mappings.n["<Leader>tl"]
-          mappings.n["<Leader>g<CR>"] = mappings.n["<Leader>tl"]
+          mappings.n["<Leader>gg"] = mappings.n["<Leader>tl"]
           mappings.n["<Leader>tl"] = false
 
           if vim.fn.executable "yazi" == 1 then

@@ -13,11 +13,11 @@ return {
           local maps = opts.mappings
           local prefix = "<Leader>g"
 
-          maps.n[prefix .. "a"] = {
+          maps.n[prefix .. "c"] = {
             function() require("tinygit").smartCommit { pushIfClean = false, pullBeforePush = true } end,
             desc = "Git SmartCommit",
           }
-          maps.n[prefix .. "A"] = {
+          maps.n[prefix .. "C"] = {
             function() require("tinygit").amendNoEdit { forcePushIfDiverged = false, stageAllIfNothingStaged = true } end,
             desc = "Git AmendNoEdit",
           }
@@ -241,8 +241,8 @@ return {
           maps.n["<Leader>gr"] = { function() require("gitsigns").reset_hunk() end, desc = "Git Reset hunk" }
           maps.n["<Leader>gR"] = { function() require("gitsigns").reset_buffer() end, desc = "Git Reset buffer" }
           maps.n["<Leader>gp"] = { function() require("gitsigns").preview_hunk_inline() end, desc = "Git Preview hunk" }
-          maps.n["<Leader>gs"] = { function() require("gitsigns").stage_hunk() end, desc = "Git Stage hunk" }
-          maps.n["<Leader>gS"] = { function() require("gitsigns").stage_buffer() end, desc = "Git Stage buffer" }
+          maps.n["<Leader>ga"] = { function() require("gitsigns").stage_hunk() end, desc = "Git Stage hunk" }
+          maps.n["<Leader>gA"] = { function() require("gitsigns").stage_buffer() end, desc = "Git Stage buffer" }
           maps.n["<Leader>gu"] = { function() require("gitsigns").undo_stage_hunk() end, desc = "Git Unstage hunk" }
           maps.n["<Leader>gh"] = { function() require("gitsigns").select_hunk() end, desc = "Git Select hunk" }
           maps.n["]g"] = { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }

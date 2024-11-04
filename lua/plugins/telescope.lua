@@ -14,7 +14,7 @@ return {
       if vim.fn.executable "git" == 1 then
         require("astrocore").list_insert_unique(keys, {
           {
-            git_prefix .. "g",
+            git_prefix .. "s",
             "<Cmd>Telescope git_status<CR>",
             desc = "Git Status",
           },
@@ -278,7 +278,7 @@ return {
     keys = function(_, keys)
       if vim.fn.executable "git" == 1 then
         require("astrocore").list_insert_unique(keys, {
-          { git_prefix .. "z", "<Cmd>AdvancedGitSearch<CR>", desc = "GitSearch" },
+          { git_prefix .. "S", "<Cmd>AdvancedGitSearch<CR>", desc = "GitSearch" },
           {
             git_prefix .. "d",
             "<Cmd>AdvancedGitSearch diff_commit_line<CR>",
