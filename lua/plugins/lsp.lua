@@ -236,9 +236,15 @@ return {
         },
       },
     },
-    opts = {
-      telescope = {},
-    },
+    opts = function(_, opts)
+      local hl = require "actions-preview.highlight"
+      opts.telescope = {}
+      opts.highlight_command = {
+        hl.delta "delta --no-gitconfig --paging=never --hunk-header-style=omit --file-style=omit --features=no-line-numbers",
+        hl.diff_so_fancy(),
+        hl.diff_highlight(),
+      }
+    end,
   },
 
   {
