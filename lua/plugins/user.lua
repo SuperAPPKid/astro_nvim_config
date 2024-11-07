@@ -56,14 +56,12 @@ return {
             function() require("resession").delete(nil, { dir = "dirsession" }) end,
             desc = "Delete a dirsession",
           }
-
           maps.n["<Leader>Sf"] = {
             function() require("resession").load(nil, { dir = "dirsession" }) end,
             desc = "Load a dirsession",
           }
           maps.n["<Leader>SS"] = false
           maps.n["<Leader>St"] = false
-          maps.n["<Leader>SD"] = false
           maps.n["<Leader>SF"] = false
 
           local autocmds = opts.autocmds
@@ -98,7 +96,7 @@ return {
         if buftype == "help" then return true end
         if buftype ~= "" and buftype ~= "acwrite" then return false end
         if vim.api.nvim_buf_get_name(bufnr) == "" then return false end
-        return true
+        return require("astrocore.buffer").is_valid(bufnr)
       end
       opts.extensions = require("astrocore").extend_tbl(opts.extensions, { scope = {}, overseer = {} })
     end,
