@@ -4,7 +4,7 @@
 --- redis: brew install redis
 return {
   {
-    "kristijanhusak/vim-dadbod-ui",
+    "superappkid/vim-dadbod-ui",
     specs = {
       {
         "AstroNvim/astrocore",
@@ -55,8 +55,6 @@ return {
                 desc = "dbui query mappings",
                 pattern = { "mysql", "plsql", "sql" },
                 callback = function(args)
-                  vim.api.nvim_set_option_value("buflisted", true, { buf = arg.buf })
-
                   require("astrocore").set_mappings({
                     n = {
                       ["<Leader>zz"] = { desc = "DBUI CMD" },
@@ -66,7 +64,7 @@ return {
                     },
                     v = {
                       ["<Leader>zz"] = { desc = "DBUI CMD" },
-                      ["<Leader>zz<CR>"] = { "<Plug>(DBUI_ExecuteQuery)" },
+                      ["<Leader>zz<CR>"] = { "<Plug>(DBUI_ExecuteQuery)", desc = "DBUI: Execute Query" },
                     },
                   }, {
                     buffer = args.buf,
@@ -92,6 +90,7 @@ return {
       vim.g.db_ui_show_help = 0
       vim.g.db_ui_disable_mappings = 1
       vim.g.db_ui_use_nvim_notify = 1
+      vim.g.db_ui_execute_on_save = 0
       require("cmp").setup.filetype({ "sql", "mysql", "plsql" }, {
         sources = {
           { name = "vim-dadbod-completion" },
