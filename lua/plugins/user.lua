@@ -104,10 +104,14 @@ return {
 
   {
     "folke/edgy.nvim",
+    init = function()
+      vim.opt.laststatus = 3
+      vim.opt.splitkeep = "screen"
+    end,
     event = "VeryLazy",
     opts = {
       animate = { enabled = false },
-      exit_when_last = true,
+      exit_when_last = false,
       wo = {
         winhighlight = "",
         winbar = false,
