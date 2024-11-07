@@ -34,11 +34,16 @@ return {
     opts = {
       auto_update = true,
       ensure_installed = {
+        "dart-debug-adapter",
         "prettier",
         "stylua",
         "golangci-lint",
         "lua-language-server",
         "nginx-language-server",
+
+        -- ruby
+        "solargraph",
+        "standardrb",
       },
       integrations = { ["mason-lspconfig"] = false, ["mason-null-ls"] = false, ["mason-nvim-dap"] = false },
     },
