@@ -249,9 +249,11 @@ return {
       write_all_buffers = true,
       condition = function(bufnr)
         local buftype = vim.bo[bufnr].buftype
+        local filetype = vim.bo[bufnr].filetype
         if buftype == "help" then return true end
         if buftype ~= "" and buftype ~= "acwrite" then return false end
         if vim.api.nvim_buf_get_name(bufnr) == "" then return false end
+        if filetype == "harpoon" then return false end
         return true
       end,
     },
