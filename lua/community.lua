@@ -369,9 +369,9 @@ return {
     "p00f/clangd_extensions.nvim",
     opts = { extensions = { autoSetHints = false } },
   },
-  { import = "astrocommunity.pack.cs" },
+  { import = "astrocommunity.pack.cs-omnisharp" },
   {
-    "Decodetalkers/csharpls-extended-lsp.nvim",
+    "Hoffs/omnisharp-extended-lsp.nvim",
     ft = { "cs", "csproj", "cshtml" },
   },
   { import = "astrocommunity.pack.docker" },
@@ -414,6 +414,7 @@ return {
   { import = "astrocommunity.pack.terraform" },
   { import = "astrocommunity.pack.templ" },
   { import = "astrocommunity.pack.toml" },
+
   { import = "astrocommunity.pack.typescript-all-in-one" },
   { import = "astrocommunity.pack.vue" },
   { import = "astrocommunity.pack.wgsl" },
