@@ -598,43 +598,4 @@ return {
       end,
     },
   },
-
-  {
-    "rachartier/tiny-inline-diagnostic.nvim",
-    event = "LspAttach",
-    opts = {
-      signs = {
-        left = "▕",
-        right = "",
-        diag = "■",
-        arrow = "",
-        up_arrow = "",
-        vertical = " █",
-        vertical_end = " █",
-      },
-      options = {
-        -- Throttle the update of the diagnostic when moving cursor, in milliseconds.
-        -- You can increase it if you have performance issues.
-        -- Or set it to 0 to have better visuals.
-        throttle = 0,
-
-        -- The minimum length of the message, otherwise it will be on a new line.
-        softwrap = 0,
-
-        -- If multiple diagnostics are under the cursor, display all of them.
-        multiple_diag_under_cursor = true,
-
-        -- Enable diagnostic message on all lines.
-        multilines = true,
-
-        overflow = {
-          -- Manage the overflow of the message.
-          --    - wrap: when the message is too long, it is then displayed on multiple lines.
-          --    - none: the message will not be truncated.
-          --    - oneline: message will be displayed entirely on one line.
-          mode = "wrap",
-        },
-      },
-    },
-  },
 }
