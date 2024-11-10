@@ -248,7 +248,6 @@ return {
   },
 
   { import = "astrocommunity.lsp.nvim-java" },
-  { import = "astrocommunity.lsp.nvim-lint" },
   { import = "astrocommunity.lsp.nvim-lsp-file-operations" },
 
   { import = "astrocommunity.media.codesnap-nvim" },
