@@ -1,3 +1,74 @@
+local lsp_rooter, prettierrc_rooter
+
+local has_prettier = function(bufnr)
+  local function check_json_key_exists(json, ...) return vim.tbl_get(json, ...) ~= nil end
+  local function decode_json(filename)
+    -- Open the file in read mode
+    local file = io.open(filename, "r")
+    if not file then
+      return false -- File doesn't exist or cannot be opened
+    end
+
+    -- Read the contents of the file
+    local content = file:read "*all"
+    file:close()
+
+    -- Parse the JSON content
+    local json_parsed, json = pcall(vim.fn.json_decode, content)
+    if not json_parsed or type(json) ~= "table" then
+      return false -- Invalid JSON format
+    end
+    return json
+  end
+
+  if type(bufnr) ~= "number" then bufnr = vim.api.nvim_get_current_buf() end
+  local rooter = require "astrocore.rooter"
+  if not lsp_rooter then
+    lsp_rooter = rooter.resolve("lsp", {
+      ignore = {
+        servers = function(client)
+          return not vim.tbl_contains({ "eslint", "ts_ls", "typescript-tools", "volar", "vtsls" }, client.name)
+        end,
+      },
+    })
+  end
+  if not prettierrc_rooter then
+    prettierrc_rooter = rooter.resolve {
+      ".prettierrc",
+      ".prettierrc.json",
+      ".prettierrc.yml",
+      ".prettierrc.yaml",
+      ".prettierrc.json5",
+      ".prettierrc.js",
+      ".prettierrc.cjs",
+      "prettier.config.js",
+      ".prettierrc.mjs",
+      "prettier.config.mjs",
+      "prettier.config.cjs",
+      ".prettierrc.toml",
+    }
+  end
+  local prettier_dependency = false
+  for _, root in ipairs(require("astrocore").list_insert_unique(lsp_rooter(bufnr), { vim.fn.getcwd() })) do
+    local package_json = decode_json(root .. "/package.json")
+    if
+      package_json
+      and (
+        check_json_key_exists(package_json, "dependencies", "prettier")
+        or check_json_key_exists(package_json, "devDependencies", "prettier")
+      )
+    then
+      prettier_dependency = true
+      break
+    end
+  end
+  return prettier_dependency or next(prettierrc_rooter(bufnr))
+end
+
+local conform_formatter = function(bufnr)
+  return has_prettier(bufnr) and { "prettierd", "prettier", stop_after_first = true } or {}
+end
+
 ---@type LazySpec
 return {
   {
@@ -91,9 +162,33 @@ return {
     },
     opts = {
       formatters_by_ft = {
-        json = { "prettierd", "prettier", stop_after_first = true },
-        ruby = { "standardrb" },
-        toml = { "taplo" },
+        ["blade"] = { "blade-formatter" },
+        ["css"] = conform_formatter,
+        ["helm"] = conform_formatter,
+        ["html"] = conform_formatter,
+        ["go"] = { "goimports", lsp_format = "last" },
+        ["javascript"] = conform_formatter,
+        ["javascriptreact"] = conform_formatter,
+        ["json"] = conform_formatter,
+        ["less"] = conform_formatter,
+        ["lua"] = { "stylua" },
+        ["markdown"] = conform_formatter,
+        ["php"] = { "php_cs_fixer" },
+        ["postcss"] = conform_formatter,
+        ["proto"] = { "buf" },
+        ["python"] = { "isort", "black" },
+        ["ruby"] = { "standardrb" },
+        ["scss"] = conform_formatter,
+        ["sh"] = { "shfmt" },
+        ["terraform"] = { "terraform_fmt" },
+        ["terraform-vars"] = { "terraform_fmt" },
+        ["tf"] = { "terraform_fmt" },
+        ["toml"] = { "taplo" },
+        ["typescript"] = conform_formatter,
+        ["typescriptreact"] = conform_formatter,
+        ["yaml"] = conform_formatter,
+        ["yaml.ansible"] = conform_formatter,
+        ["yaml.docker-compose"] = conform_formatter,
       },
       notify_on_error = false,
       default_format_opts = { lsp_format = "fallback" },

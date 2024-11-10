@@ -1,102 +1,53 @@
-local chezmoi_enabled = vim.fn.executable "chezmoi" == 1
-
 ---@type LazySpec
 return {
-  -- chezmoi
+  { import = "plugins/packs" },
+
+  -- csharp
   {
-    "alker0/chezmoi.vim",
-    enabled = chezmoi_enabled,
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = {
-          options = {
-            g = {
-              ["chezmoi#use_tmp_buffer"] = 1,
-              ["chezmoi#source_dir_path"] = os.getenv "HOME" .. "/.local/share/chezmoi",
-            },
-          },
-        },
-      },
-    },
-  },
-  {
-    "xvzc/chezmoi.nvim",
-    enabled = chezmoi_enabled,
-    lazy = true,
-    config = function(_, opts)
-      require("chezmoi").setup(opts)
-      require("telescope").load_extension "chezmoi"
-    end,
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = {
-          autocmds = {
-            chezmoi = {
-              {
-                event = { "BufRead", "BufNewFile" },
-                pattern = { os.getenv "HOME" .. "/.local/share/chezmoi/*" },
-                callback = function() vim.schedule(require("chezmoi.commands.__edit").watch) end,
-              },
-            },
-          },
-          mappings = {
-            n = {
-              ["<Leader>f."] = {
-                function() require("telescope").extensions.chezmoi.find_files() end,
-                desc = "Find chezmoi config",
-              },
-            },
-          },
-        },
-      },
-    },
-    dependencies = {
-      { "nvim-telescope/telescope.nvim" },
-    },
-    opts = {
-      edit = {
-        watch = false,
-        force = false,
-      },
-      notification = {
-        on_open = true,
-        on_apply = true,
-        on_watch = false,
-      },
-      telescope = {
-        select = { "<CR>" },
-      },
-    },
+    "Hoffs/omnisharp-extended-lsp.nvim",
+    ft = { "cs", "csproj", "cshtml" },
   },
 
-  -- dart
+  -- godot
   {
-    "akinsho/flutter-tools.nvim",
-    dependencies = {
-      { "nvim-telescope/telescope.nvim" },
-    },
-    ft = "dart",
-    config = function(_, opts)
-      require("flutter-tools").setup(opts)
-      require("telescope").load_extension "flutter"
-    end,
-    opts = function(_, opts)
-      local astrolsp_avail, astrolsp = pcall(require, "astrolsp")
-      if astrolsp_avail then opts.lsp = astrolsp.lsp_opts "dartls" end
-      opts.debugger = { enabled = true }
-    end,
+    "QuickGD/quickgd.nvim",
+    ft = { "gdshader", "gdshaderinc" },
+    cmd = { "GodotRun", "GodotRunLast", "GodotStart" },
+    config = true,
   },
+
+  -- json, yaml
   {
-    "nvim-treesitter/nvim-treesitter",
-    optional = true,
-    opts = function(_, opts)
-      -- HACK: Disables the select treesitter textobjects because the Dart treesitter parser is very inefficient. Hopefully this gets fixed and this block can be removed in the future.
-      -- Reference: https://github.com/AstroNvim/AstroNvim/issues/2707
-      local select = vim.tbl_get(opts, "textobjects", "select")
-      if select then select.disable = require("astrocore").list_insert_unique(select.disable, { "dart" }) end
-    end,
+    "b0o/SchemaStore.nvim",
+    lazy = true,
+    dependencies = {
+      {
+        "AstroNvim/astrolsp",
+        ---@type AstroLSPOpts
+        opts = {
+          ---@diagnostic disable: missing-fields
+          config = {
+            jsonls = {
+              on_new_config = function(config)
+                if not config.settings.json.schemas then config.settings.json.schemas = {} end
+                vim.list_extend(config.settings.json.schemas, require("schemastore").json.schemas())
+              end,
+              settings = { json = { validate = { enable = true } } },
+            },
+            yamlls = {
+              on_new_config = function(config)
+                config.settings.yaml.schemas = vim.tbl_deep_extend(
+                  "force",
+                  config.settings.yaml.schemas or {},
+                  require("schemastore").yaml.schemas()
+                )
+              end,
+              settings = { yaml = { schemaStore = { enable = false, url = "" } } },
+            },
+          },
+        },
+      },
+    },
   },
 
   -- larvel

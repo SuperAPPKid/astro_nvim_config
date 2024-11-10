@@ -5,7 +5,6 @@
 return {
   "AstroNvim/astrolsp",
   version = false,
-  ---@type AstroLSPOpts
   opts = function(_, opts)
     local register_capability_handler = vim.lsp.handlers["client/registerCapability"]
 
@@ -47,38 +46,160 @@ return {
       -- customize language server configuration options passed to `lspconfig`
       ---@diagnostic disable: missing-fields
       config = {
+        basedpyright = {
+          before_init = function(_, c)
+            if not c.settings then c.settings = {} end
+            if not c.settings.python then c.settings.python = {} end
+            c.settings.python.pythonPath = vim.fn.exepath "python"
+          end,
+          settings = {
+            basedpyright = {
+              analysis = {
+                typeCheckingMode = "basic",
+                autoImportCompletions = true,
+                diagnosticSeverityOverrides = {
+                  reportUnusedImport = "information",
+                  reportUnusedFunction = "information",
+                  reportUnusedVariable = "information",
+                  reportGeneralTypeIssues = "none",
+                  reportOptionalMemberAccess = "none",
+                  reportOptionalSubscript = "none",
+                  reportPrivateImportUsage = "none",
+                },
+              },
+            },
+          },
+        },
         clangd = {
           filetypes = { "c", "cpp", "objc", "objcpp" },
           capabilities = {
             offsetEncoding = "utf-8",
           },
         },
+        csharp_ls = {
+          handlers = {
+            ["textDocument/definition"] = function(...) require("omnisharp_extended").definition_handler(...) end,
+            ["textDocument/typeDefinition"] = function(...) require("omnisharp_extended").type_definition_handler(...) end,
+            ["textDocument/references"] = function(...) require("omnisharp_extended").references_handler(...) end,
+            ["textDocument/implementation"] = function(...) require("omnisharp_extended").implementation_handler(...) end,
+          },
+        },
+        cssls = { init_options = { provideFormatter = false } },
+        denols = {
+          root_dir = function(...) return require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")(...) end,
+        },
         gopls = {
           settings = {
             gopls = {
               analyses = {
+                ST1003 = true,
                 deprecated = false,
+                fieldalignment = false,
+                fillreturns = true,
+                nilness = true,
+                nonewvars = true,
+                shadow = true,
+                undeclaredname = true,
+                unreachable = true,
+                unusedparams = true,
+                unusedwrite = true,
+                useany = true,
               },
               codelenses = {
+                gc_details = true, -- Show a code lens toggling the display of gc's choices.
+                generate = true, -- show the `go generate` lens.
+                regenerate_cgo = true,
                 test = false,
+                tidy = true,
+                upgrade_dependency = true,
+                vendor = true,
               },
-              usePlaceholders = false,
               hints = {
+                assignVariableTypes = true,
                 compositeLiteralFields = false,
                 compositeLiteralTypes = false,
+                constantValues = true,
                 functionTypeParameters = false,
+                parameterNames = true,
+                rangeVariableTypes = true,
               },
+              buildFlags = { "-tags", "integration" },
+              completeUnimported = true,
+              diagnosticsDelay = "500ms",
+              gofumpt = true,
+              matcher = "Fuzzy",
+              semanticTokens = true,
+              staticcheck = true,
+              symbolMatcher = "fuzzy",
+              usePlaceholders = false,
             },
           },
         },
+        html = { init_options = { provideFormatter = false } },
         lua_ls = {
           settings = {
             Lua = {
               completion = {
                 autoRequire = false,
               },
+              hint = {
+                enable = true,
+                arrayIndex = "Disable",
+              },
             },
           },
+        },
+        rust_analyzer = {
+          settings = {
+            ["rust-analyzer"] = {
+              check = {
+                command = "clippy",
+                extraArgs = {
+                  "--no-deps",
+                },
+              },
+            },
+          },
+        },
+        svelte = {
+          settings = {
+            typescript = {
+              updateImportsOnFileMove = { enabled = "always" },
+              inlayHints = {
+                parameterNames = { enabled = "all" },
+                parameterTypes = { enabled = true },
+                variableTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                enumMemberValues = { enabled = true },
+              },
+            },
+            javascript = {
+              updateImportsOnFileMove = { enabled = "always" },
+              inlayHints = {
+                parameterNames = { enabled = "literals" },
+                parameterTypes = { enabled = true },
+                variableTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                enumMemberValues = { enabled = true },
+              },
+            },
+          },
+        },
+        tailwindcss = {
+          root_dir = function(fname)
+            local root_pattern = require("lspconfig").util.root_pattern(
+              "tailwind.config.mjs",
+              "tailwind.config.cjs",
+              "tailwind.config.js",
+              "tailwind.config.ts",
+              "postcss.config.js",
+              "config/tailwind.config.js",
+              "assets/tailwind.config.js"
+            )
+            return root_pattern(fname)
+          end,
         },
         tsserver = {
           settings = {
@@ -106,6 +227,75 @@ return {
               },
             },
           },
+        },
+        volar = {
+          init_options = {
+            vue = {
+              hybridMode = true,
+            },
+          },
+        },
+        vtsls = {
+          filetypes = require("astrocore").list_insert_unique(vim.tbl_get(opts, "config", "vtsls", "filetypes") or {
+            "javascript",
+            "javascriptreact",
+            "javascript.jsx",
+            "typescript",
+            "typescriptreact",
+            "typescript.tsx",
+          }, { "vue" }),
+          settings = {
+            typescript = {
+              updateImportsOnFileMove = { enabled = "always" },
+              inlayHints = {
+                parameterNames = { enabled = "all" },
+                parameterTypes = { enabled = true },
+                variableTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                enumMemberValues = { enabled = true },
+              },
+            },
+            javascript = {
+              updateImportsOnFileMove = { enabled = "always" },
+              inlayHints = {
+                parameterNames = { enabled = "literals" },
+                parameterTypes = { enabled = true },
+                variableTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                enumMemberValues = { enabled = true },
+              },
+            },
+            vtsls = {
+              enableMoveToFileCodeAction = true,
+              tsserver = {
+                globalPlugins = {},
+              },
+            },
+          },
+          before_init = function(_, config)
+            local registry_ok, registry = pcall(require, "mason-registry")
+            if not registry_ok then return end
+            local vuels = registry.get_package "vue-language-server"
+
+            if vuels:is_installed() then
+              local volar_install_path = vuels:get_install_path() .. "/node_modules/@vue/language-server"
+
+              local vue_plugin_config = {
+                name = "@vue/typescript-plugin",
+                location = volar_install_path,
+                languages = { "vue" },
+                configNamespace = "typescript",
+                enableForWorkspaceTypeScriptVersions = true,
+              }
+
+              require("astrocore").list_insert_unique(
+                config.settings.vtsls.tsserver.globalPlugins,
+                { vue_plugin_config }
+              )
+            end
+          end,
         },
       },
       -- customize how language servers are attached
@@ -139,9 +329,9 @@ return {
         end,
 
         -- the key is the server that is being setup with `lspconfig`
-        -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
         -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
         dartls = false,
+        rust_analyzer = false,
       },
       -- Configure buffer local auto commands to add when attaching a language server
       autocmds = {

@@ -4,20 +4,30 @@
 
 vim.filetype.add {
   extension = {
+    api = "api",
     conf = "conf",
     env = "dotenv",
+    gdshaderinc = "gdshaderinc",
+    gotmpl = "helm",
+    http = "http",
+    pcss = "postcss",
+    postcss = "postcss",
+    pg = "sql",
+    templ = "templ",
     tiltfile = "tiltfile",
     Tiltfile = "tiltfile",
-    api = "api",
-    http = "http",
-    pg = "sql",
   },
   filename = {
     [".env"] = "dotenv",
+    ["Chart.yaml"] = "yaml",
+    ["Chart.lock"] = "yaml",
+    ["docker-compose.yaml"] = "yaml.docker-compose",
     ["tsconfig.json"] = "jsonc",
     [".yamlfmt"] = "yaml",
   },
   pattern = {
+    [".*%.blade%.php"] = "blade",
     ["%.env%.[%w_.-]+"] = "dotenv",
+    ["helmfile.*%.ya?ml"] = "helm",
   },
 }

@@ -84,8 +84,12 @@ return {
       },
     },
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-neotest/nvim-nio",
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-neotest/nvim-nio" },
+      { "nvim-neotest/neotest-jest", config = function() end },
+      { "Issafalcon/neotest-dotnet", config = function() end },
+      { "nvim-neotest/neotest-go", config = function() end },
+      { "nvim-neotest/neotest-python", config = function() end },
     },
     config = function(_, opts)
       vim.diagnostic.config({
@@ -97,6 +101,15 @@ return {
         },
       }, vim.api.nvim_create_namespace "neotest")
       require("neotest").setup(opts)
+    end,
+    opts = function(_, opts)
+      if not opts.adapters then opts.adapters = {} end
+      require("astrocore").list_insert_unique(opts.adapters, {
+        require "neotest-jest"(require("astrocore").plugin_opts "neotest-jest"),
+        require "neotest-dotnet"(require("astrocore").plugin_opts "neotest-dotnet"),
+        require "neotest-go"(require("astrocore").plugin_opts "neotest-go"),
+        require "neotest-python"(require("astrocore").plugin_opts "neotest-python"),
+      })
     end,
   },
 

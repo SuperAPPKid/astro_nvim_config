@@ -2,6 +2,7 @@
 -- Configuration documentation can be found with `:h astrocore`
 
 local extend_tbl = require("astrocore").extend_tbl
+local save_file = { "<Cmd>w<CR><Esc>", desc = "Save file" }
 
 ---@type LazySpec
 return {
@@ -62,7 +63,6 @@ return {
 
     -- Mappings can be configured through AstroCore as well.
     -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
-    local save_file = { "<Cmd>w<CR><Esc>", desc = "Save file" }
     opts.mappings = extend_tbl(opts.mappings, {
       -- first key is the mode
       n = {
@@ -252,8 +252,6 @@ return {
       t = {},
     })
 
-    opts.autocmds.alpha_autostart = false
-
     -- configure functions on key press
     opts.on_keys = extend_tbl(opts.on_keys, {
       -- first key is the namespace
@@ -267,5 +265,8 @@ return {
         end,
       },
     })
+
+    -- autocmds
+    opts.autocmds.alpha_autostart = false
   end,
 }

@@ -34,16 +34,106 @@ return {
     opts = {
       auto_update = true,
       ensure_installed = {
+        "angular-language-server",
+        "blade-formatter",
+        "codelldb",
         "dart-debug-adapter",
-        "prettier",
-        "stylua",
-        "golangci-lint",
-        "lua-language-server",
+        "helm-ls",
+        "json-lsp",
+        "lemminx", -- xml
+        "marksman", -- markdown
         "nginx-language-server",
+        "prettier",
+        "prettierd",
+        "svelte-language-server",
+        "taplo", -- toml
+        "tailwindcss-language-server",
+        "vue-language-server",
+
+        -- ansible
+        "ansible-lint",
+        "ansible-language-server",
+
+        -- bash
+        "bash-language-server",
+        "shellcheck",
+        "shfmt",
+        "bash-debug-adapter",
+
+        -- buf
+        --"buf-ls",  FIX: uncomment after https://github.com/williamboman/mason-lspconfig.nvim/pull/485 merged
+        "buf",
+
+        -- csharp
+        "omnisharp",
+        "csharpier",
+        "netcoredbg",
+
+        -- docker
+        "docker-compose-language-service",
+        "dockerfile-language-server",
+        "hadolint",
+
+        -- go
+        "delve",
+        "goimports",
+        "golangci-lint",
+        "gopls",
+        "gotests",
+        "gomodifytags",
+        "iferr",
+        "impl",
+        "templ",
+
+        -- html
+        "html-lsp",
+        "css-lsp",
+        "emmet-ls",
+
+        -- java
+        "java-debug-adapter",
+        "java-test",
+        "jdtls",
+
+        -- kotlin
+        "kotlin-language-server",
+        "ktlint",
+        "kotlin-debug-adapter",
+
+        -- lua
+        "lua-language-server",
+        "stylua",
+        "selene",
+
+        -- php
+        "phpactor",
+        "php-debug-adapter",
+        "php-cs-fixer",
+
+        -- python
+        "basedpyright",
+        "black",
+        "debugpy",
+        "isort",
 
         -- ruby
         "solargraph",
         "standardrb",
+
+        -- terraform
+        "terraform-ls",
+        "tflint",
+        "tfsec",
+
+        -- typescript
+        "deno",
+        "eslint-lsp",
+        "js-debug-adapter",
+        "vtsls",
+
+        -- yaml
+        "yaml-language-server",
+        "yamllint",
       },
       integrations = { ["mason-lspconfig"] = false, ["mason-null-ls"] = false, ["mason-nvim-dap"] = false },
     },
@@ -57,7 +147,15 @@ return {
       {
         "jay-babu/mason-nvim-dap.nvim",
         init = function() end,
-        config = function(_, opts) setup_without_ensure_installed("mason-nvim-dap", opts) end,
+        config = function(_, opts)
+          local providers = require("dap").providers
+          providers.configs = {
+            [0] = providers.configs["dap.launch.json"],
+            [1] = providers.configs["dap.global"],
+          }
+
+          setup_without_ensure_installed("mason-nvim-dap", opts)
+        end,
       },
       {
         "williamboman/mason-lspconfig.nvim",

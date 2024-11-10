@@ -247,7 +247,6 @@ return {
     end,
   },
 
-  { import = "astrocommunity.lsp.nvim-java" },
   { import = "astrocommunity.lsp.nvim-lsp-file-operations" },
 
   { import = "astrocommunity.media.codesnap-nvim" },
@@ -356,65 +355,4 @@ return {
   },
 
   -- { import = "astrocommunity.worflow.hardtime-nvim" },
-
-  { import = "astrocommunity.pack.angular" },
-  { import = "astrocommunity.pack.ansible" },
-  { import = "astrocommunity.pack.bash" },
-  { import = "astrocommunity.pack.blade" },
-  { import = "astrocommunity.pack.cpp" },
-  {
-    "p00f/clangd_extensions.nvim",
-    opts = { extensions = { autoSetHints = false } },
-  },
-  { import = "astrocommunity.pack.cs-omnisharp" },
-  {
-    "Hoffs/omnisharp-extended-lsp.nvim",
-    ft = { "cs", "csproj", "cshtml" },
-  },
-  { import = "astrocommunity.pack.docker" },
-  { import = "astrocommunity.pack.go" },
-  {
-    "leoluz/nvim-dap-go",
-    ft = { "go", "gomod", "gosum", "gowork" },
-  },
-  {
-    "leoluz/nvim-dap-go",
-    config = function(_, opts)
-      require("dap").configurations.go = {}
-      require("dap-go").setup(opts)
-    end,
-  },
-  { import = "astrocommunity.pack.godot" },
-  { import = "astrocommunity.pack.helm" },
-  { import = "astrocommunity.pack.html-css" },
-  -- { import = "astrocommunity.pack.java" },
-  { import = "astrocommunity.pack.json" },
-  { import = "astrocommunity.pack.kotlin" },
-  { import = "astrocommunity.pack.lua" },
-  { import = "astrocommunity.pack.markdown" },
-  { import = "astrocommunity.pack.nix" },
-  { import = "astrocommunity.pack.php" },
-  { import = "astrocommunity.pack.proto" },
-  { import = "astrocommunity.pack.python" },
-  {
-    "linux-cultist/venv-selector.nvim",
-    ft = "python",
-  },
-  { import = "astrocommunity.pack.rust" },
-  {
-    "simrat39/rust-tools.nvim",
-    optional = true,
-    opts = { tools = { inlay_hints = { auto = false } } },
-  },
-  { import = "astrocommunity.pack.svelte" },
-  { import = "astrocommunity.pack.tailwindcss" },
-  { import = "astrocommunity.pack.terraform" },
-  { import = "astrocommunity.pack.templ" },
-  { import = "astrocommunity.pack.toml" },
-
-  { import = "astrocommunity.pack.typescript-all-in-one" },
-  { import = "astrocommunity.pack.vue" },
-  { import = "astrocommunity.pack.wgsl" },
-  { import = "astrocommunity.pack.xml" },
-  { import = "astrocommunity.pack.yaml" },
 }

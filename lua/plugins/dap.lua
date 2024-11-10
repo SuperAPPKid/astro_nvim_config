@@ -70,24 +70,6 @@ return {
   },
 
   {
-    "jay-babu/mason-nvim-dap.nvim",
-    config = function(_, opts)
-      local providers = require("dap").providers
-      providers.configs = {
-        [0] = providers.configs["dap.launch.json"],
-        [1] = providers.configs["dap.global"],
-      }
-
-      require("mason-nvim-dap").setup(opts)
-    end,
-    opts = function(_, opts)
-      opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
-        -- add more arguments for adding more debuggers
-      })
-    end,
-  },
-
-  {
     "jbyuki/one-small-step-for-vimkind",
     cmd = {
       "OsvRunThis",

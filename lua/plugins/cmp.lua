@@ -60,7 +60,6 @@ return {
     dependencies = {
       -- { "chrisgrieser/cmp-nerdfont" },
       { "hrsh7th/cmp-emoji" },
-      { "js-everts/cmp-tailwind-colors", enabled = false },
       { "hrsh7th/cmp-nvim-lua" },
       { "hrsh7th/cmp-calc" },
       { "f3fora/cmp-spell" },

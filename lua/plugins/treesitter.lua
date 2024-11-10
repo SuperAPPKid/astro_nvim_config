@@ -54,6 +54,14 @@ return {
       },
       branch = "master",
     }
+    parser_config.blade = {
+      install_info = {
+        url = "https://github.com/EmranMR/tree-sitter-blade",
+        files = { "src/parser.c" },
+        branch = "main",
+      },
+      filetype = "blade",
+    }
 
     opts.textobjects.select.enable = false
     opts.incremental_selection.enable = false
@@ -61,18 +69,61 @@ return {
 
     -- add more things to the ensure_installed table protecting against community packs modifying it
     opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
+      "angular",
+      "bash",
+      "blade",
+      "c",
+      "c_sharp",
+      "cpp",
+      "css",
+      "cuda",
       "dart",
-      "ruby",
-      "swift",
-      "objc",
-      "vim",
-      "tmux",
+      "dockerfile",
+      "gdscript",
+      "glsl",
+      "godot_resource",
+      "go",
+      "gomod",
+      "gosum",
+      "gowork",
       "git_config",
       "git_rebase",
       "gitattributes",
       "gitcommit",
       "gitignore",
+      "helm",
+      "html",
+      "java",
+      "javascript",
+      "jsdoc",
+      "json",
+      "jsonc",
+      "kotlin",
+      "lua",
+      "luap",
+      "markdown",
+      "markdown_inline",
+      "nix",
+      "objc",
+      "php",
+      "phpdoc",
+      "proto",
+      "python",
+      "ruby",
+      "scss",
       "sql",
+      "swift",
+      "svelte",
+      "tmux",
+      "templ",
+      "terraform",
+      "toml",
+      "tsx",
+      "typescript",
+      "vue",
+      "vim",
+      "xml",
+      "yaml",
     })
 
     opts.textobjects.move.goto_next_start = {
@@ -101,5 +152,7 @@ return {
 
     vim.treesitter.language.register("bash", "dotenv")
     vim.treesitter.language.register("go", "api")
+    vim.treesitter.language.register("scss", "less")
+    vim.treesitter.language.register("scss", "postcss")
   end,
 }
