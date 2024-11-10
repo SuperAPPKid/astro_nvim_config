@@ -343,16 +343,6 @@ return {
       },
     },
   },
-  { import = "astrocommunity.utility.telescope-lazy-nvim" },
-  {
-    "tsakirist/telescope-lazy.nvim",
-    spec = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts) opts.mappings.n["<Leader>pr"] = { "<Cmd>Telescope lazy<CR>", desc = "Plugins README" } end,
-      },
-    },
-  },
 
   -- { import = "astrocommunity.worflow.hardtime-nvim" },
 }

@@ -1,5 +1,6 @@
 local prefix = "<Leader>f"
 local git_prefix = "<Leader>g"
+local plugin_prefix = "<Leader>p"
 
 ---@type LazySpec
 return {
@@ -362,5 +363,13 @@ return {
         },
       }
     end,
+  },
+
+  {
+    "tsakirist/telescope-lazy.nvim",
+    keys = {
+      { plugin_prefix .. "R", "<Cmd>Telescope lazy<CR>", desc = "Plugins README" },
+    },
+    config = function(_, _) require("telescope").load_extension "lazy" end,
   },
 }
