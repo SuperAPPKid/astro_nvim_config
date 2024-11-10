@@ -25,7 +25,7 @@ return {
         format = function(diagnostic) return string.format("%s [%s]", diagnostic.message, diagnostic.source) end,
       },
       update_in_insert = false,
-      virtual_text = false,
+      virtual_text = true,
       underline = { severity = { vim.diagnostic.severity.ERROR } },
     })
 
