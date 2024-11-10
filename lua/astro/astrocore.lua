@@ -211,6 +211,13 @@ return {
           desc = "Find man",
         },
         ["<Leader>fg"] = false,
+        ["<Leader>ft"] = false,
+        ["<Leader>fT"] = {
+          function() require("telescope.builtin").colorscheme { enable_preview = true } end,
+          desc = "Find themes",
+        },
+        ["<Leader>xq"] = false,
+        ["<Leader>xl"] = false,
 
         ["<Leader>lR"] = false,
         ["<Leader>gc"] = false,

@@ -111,16 +111,12 @@ return {
     event = "VeryLazy",
     opts = {
       animate = { enabled = false },
-      exit_when_last = false,
+      exit_when_last = true,
       wo = {
         winhighlight = "",
         winbar = false,
       },
       bottom = {
-        {
-          ft = "Trouble",
-          size = { height = 10 },
-        },
         {
           ft = "qf",
           size = { height = 10 },
@@ -802,7 +798,7 @@ return {
           desc = "Toggle quick menu",
         },
         {
-          "<Leader>f<Leader>",
+          "<Leader><Leader><CR>",
           function()
             require("telescope").extensions.harpoon.marks {
               finder = gen_finder(),
@@ -813,7 +809,7 @@ return {
               end,
             }
           end,
-          desc = "Show marks in Telescope",
+          desc = "Harpoon marks",
         },
       }
     end,
@@ -1385,5 +1381,75 @@ return {
     keys = {
       { "gx", "<cmd>Browse<cr>", mode = { "n", "x" }, desc = "Goto link" },
     },
+  },
+
+  {
+    "folke/trouble.nvim",
+    cmd = "Trouble",
+    specs = {
+      { "lewis6991/gitsigns.nvim", optional = true, opts = { trouble = true } },
+    },
+    keys = function(_, keys)
+      local prefix = "<Leader>x"
+      keys = require("astrocore").list_insert_unique(keys, {
+        -- { prefix .. "<CR>", "<Cmd>Trouble <CR>", desc = "Trouble modes" },
+        { prefix .. "X", "<Cmd>Trouble diagnostics toggle<CR>", desc = "Trouble Workspace Diagnostics" },
+        { prefix .. "x", "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "Trouble Document Diagnostics" },
+        { prefix .. "L", "<Cmd>Trouble loclist toggle<CR>", desc = "Trouble Location List" },
+        { prefix .. "Q", "<Cmd>Trouble quickfix toggle<CR>", desc = "Trouble Quickfix List" },
+        { prefix .. "s", "<Cmd>Trouble symbols toggle<CR>", desc = "Trouble Symbols" },
+        { prefix .. "l", "<Cmd>Trouble lsp toggle<CR>", desc = "Trouble LSP" },
+      })
+      if require("astrocore").is_available "todo-comments.nvim" then
+        keys = require("astrocore").list_insert_unique(keys, {
+          { prefix .. "t", "<Cmd>Trouble todo<CR>", desc = "Trouble Todo" },
+          { prefix .. "T", "<Cmd>Trouble todo filter={tag={TODO,FIX,FIXME}}<CR>", desc = "Trouble Todo/Fix/Fixme" },
+        })
+      end
+      return keys
+    end,
+    opts = function(_, opts)
+      local get_icon = require("astroui").get_icon
+      local lspkind_avail, lspkind = pcall(require, "lspkind")
+
+      opts.keys = {
+        ["<ESC>"] = "close",
+        ["q"] = "close",
+        ["<C-E>"] = "close",
+      }
+      opts.win = {
+        type = "split",
+        position = "right",
+        size = 0.5,
+      }
+      opts.preview = {
+        wo = {
+          foldcolumn = "0",
+          foldenable = false,
+          foldlevel = 99,
+          foldmethod = "manual",
+          number = true,
+        },
+        type = "split",
+        relative = "win",
+        position = "bottom",
+        size = 0.4,
+      }
+      opts.focus = true
+      opts.icons = {
+        indent = {
+          fold_open = get_icon "FoldOpened",
+          fold_closed = get_icon "FoldClosed",
+        },
+        folder_closed = get_icon "FolderClosed",
+        folder_open = get_icon "FolderOpen",
+        kinds = lspkind_avail and lspkind.symbol_map,
+      }
+      opts.modes = opts.modes or {}
+      opts.config = function(cfg)
+        cfg.modes.symbols.focus = nil
+        cfg.modes.symbols.win = nil
+      end
+    end,
   },
 }

@@ -63,6 +63,7 @@ return {
       link = "",
       commit = "",
       Dial_additive = "󱖢",
+      Trouble = "󱍼",
       LSPLoading1 = "⠋",
       LSPLoading2 = "⠙",
       LSPLoading3 = "⠹",

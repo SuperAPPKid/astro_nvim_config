@@ -241,19 +241,9 @@ return {
     "folke/todo-comments.nvim",
     keys = {
       {
-        "<Leader>xt",
-        "<Cmd>TodoTrouble<CR>",
-        desc = "Todo (Trouble)",
-      },
-      {
         "<Leader>ft",
         "<Cmd>TodoTelescope<CR>",
         desc = "Find todo",
-      },
-      {
-        "<Leader>fT",
-        function() require("telescope.builtin").colorscheme { enable_preview = true } end,
-        desc = "Find themes",
       },
     },
   },
