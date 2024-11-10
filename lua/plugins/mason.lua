@@ -92,7 +92,7 @@ return {
 
         -- java
         "java-debug-adapter",
-        "java-test",
+        { "java-test", auto_update = false },
         "jdtls",
 
         -- kotlin
@@ -103,7 +103,7 @@ return {
         -- lua
         "lua-language-server",
         "stylua",
-        "selene",
+        { "selene", auto_update = false },
 
         -- php
         "phpactor",
