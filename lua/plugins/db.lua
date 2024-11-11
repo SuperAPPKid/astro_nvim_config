@@ -18,7 +18,7 @@ return {
                 callback = function(args)
                   require("astrocore").set_mappings({
                     n = {
-                      ["q"] = { function() vim.cmd "bdelete!" end },
+                      ["q"] = { function() require("astrocore.buffer").close() end },
                       ["<Leader>zz"] = { desc = "DBUI CMD" },
                       ["<Leader>zzH"] = { "<Plug>(DBUI_YankHeader)", desc = "DBUI: Copy Header" },
                       ["<Leader>zzc"] = { "<Plug>(DBUI_ToggleResultLayout)", desc = "DBUI: Toggle Column" },
@@ -34,6 +34,7 @@ return {
                 callback = function(args)
                   require("astrocore").set_mappings({
                     n = {
+                      ["q"] = { "<Cmd>DBUIClose<CR>" },
                       ["<CR>"] = { "<Plug>(DBUI_SelectLine)" },
                       ["d"] = { "<Plug>(DBUI_DeleteLine)" },
                       ["a"] = { "<Plug>(DBUI_AddConnection)" },
@@ -53,8 +54,10 @@ return {
               {
                 event = "FileType",
                 desc = "dbui query mappings",
-                pattern = { "mysql", "plsql", "sql" },
+                pattern = { "mysql", "plsql", "sql", "javascript" },
                 callback = function(args)
+                  if not vim.b[args.buf].dbui_db_key_name then return end
+
                   require("astrocore").set_mappings({
                     n = {
                       ["<Leader>zz"] = { desc = "DBUI CMD" },
@@ -69,6 +72,33 @@ return {
                   }, {
                     buffer = args.buf,
                   })
+                end,
+              },
+              {
+                event = { "FileType", "BufEnter" },
+                desc = "db sidebar autoclose",
+                callback = function(args)
+                  if vim.b[args.buf].dbui_db_key_name or vim.bo[args.buf].filetype == "dbout" then
+                    vim.cmd "DBUIClose"
+                    vim.bo[args.buf].buflisted = false
+                  end
+                end,
+              },
+              {
+                event = { "BufEnter" },
+                desc = "dbout autofocus",
+                callback = function(args)
+                  if vim.bo[args.buf].filetype == "dbout" then
+                    local wins = vim.api.nvim_tabpage_list_wins(0)
+                    if #wins <= 1 then return end
+                    for _, winid in ipairs(wins) do
+                      if vim.api.nvim_win_is_valid(winid) then
+                        if vim.api.nvim_win_get_buf(winid) == args.buf then
+                          vim.schedule(function() vim.api.nvim_set_current_win(winid) end)
+                        end
+                      end
+                    end
+                  end
                 end,
               },
             },
@@ -91,6 +121,8 @@ return {
       vim.g.db_ui_disable_mappings = 1
       vim.g.db_ui_use_nvim_notify = 1
       vim.g.db_ui_execute_on_save = 0
+      vim.g.db_ui_win_position = "right"
+      vim.g.db_ui_winwidth = 52
       require("cmp").setup.filetype({ "sql", "mysql", "plsql" }, {
         sources = {
           { name = "vim-dadbod-completion" },

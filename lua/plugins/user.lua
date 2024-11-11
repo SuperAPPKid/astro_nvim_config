@@ -108,10 +108,10 @@ return {
       vim.opt.laststatus = 3
       vim.opt.splitkeep = "screen"
     end,
-    event = "VeryLazy",
+    event = "User AstroFile",
     opts = {
       animate = { enabled = false },
-      exit_when_last = true,
+      exit_when_last = false,
       wo = {
         winhighlight = "",
         winbar = false,
@@ -179,11 +179,6 @@ return {
             local _, term = require("toggleterm.terminal").identify(vim.api.nvim_buf_get_name(buf))
             if term then return term.direction == "vertical" end
           end,
-        },
-        {
-          ft = "dbui",
-          title = "Database",
-          size = { width = 52 },
         },
       },
     },
