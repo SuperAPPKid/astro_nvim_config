@@ -346,7 +346,7 @@ return {
                   local argc = vim.fn.argc()
                   if not should_skip and argc > 0 then
                     local opened = vim.fn.expand "%:p"
-                    local stat = vim.loop.fs_stat(opened)
+                    local stat = (vim.uv or vim.loop).fs_stat(opened)
                     if stat and stat.type == "directory" then dir = opened end
                     for _, arg in pairs(vim.v.argv) do
                       if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
@@ -632,14 +632,16 @@ return {
   {
     "echasnovski/mini.surround",
     keys = function(plugin, _)
-      local opts = plugin.opts()
-      return {
-        { opts.mappings.add, desc = "Add surrounding", mode = { "n", "v" } },
-        { opts.mappings.delete, desc = "Delete surrounding" },
-        { opts.mappings.replace, desc = "Replace surrounding" },
-        { opts.mappings.find, desc = "Find right surrounding" },
-        { opts.mappings.find_left, desc = "Find left surrounding" },
-      }
+      local opts = type(plugin.opts) == "function" and plugin.opts(plugin, {}) or plugin.opts or {}
+      local mappings = opts.mappings or {}
+      local insert = require("astrocore").list_insert_unique
+      local keys = {}
+      if mappings.add then insert(keys, { { mappings.add, desc = "Add surrounding", mode = { "n", "v" } } }) end
+      if mappings.delete then insert(keys, { { mappings.delete, desc = "Delete surrounding" } }) end
+      if mappings.replace then insert(keys, { { mappings.replace, desc = "Replace surrounding" } }) end
+      if mappings.find then insert(keys, { { mappings.find, desc = "Find right surrounding" } }) end
+      if mappings.find_left then insert(keys, { { mappings.find_left, desc = "Find left surrounding" } }) end
+      return keys
     end,
     opts = function(_, _)
       local prefix = "<Leader>s"
@@ -1043,7 +1045,6 @@ return {
         end,
       },
     },
-    ---@param opts overseer.Config
     opts = function(_, opts)
       local astrocore = require "astrocore"
       if astrocore.is_available "toggleterm.nvim" then opts.strategy = "toggleterm" end
