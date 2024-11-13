@@ -46,8 +46,6 @@ return {
       defaults.entry_prefix = " "
       defaults.selection_strategy = "reset"
       defaults.mappings.i["<C-L>"] = false
-      defaults.mappings.i["<M-CR>"] = false
-      defaults.mappings.n["<M-CR>"] = false
 
       opts.defaults = require("telescope.themes").get_ivy(defaults)
     end,

@@ -1382,6 +1382,17 @@ return {
   {
     "folke/trouble.nvim",
     cmd = "Trouble",
+    dependencies = {
+      {
+        "nvim-telescope/telescope.nvim",
+        opts = function(_, opts)
+          local defaults = opts.defaults
+          local open_with_trouble = require("trouble.sources.telescope").open
+          defaults.mappings.n["<C-\\>"] = open_with_trouble
+          defaults.mappings.i["<C-\\>"] = open_with_trouble
+        end,
+      },
+    },
     specs = {
       { "lewis6991/gitsigns.nvim", optional = true, opts = { trouble = true } },
     },
@@ -1389,6 +1400,7 @@ return {
       local prefix = "<Leader>x"
       keys = require("astrocore").list_insert_unique(keys, {
         -- { prefix .. "<CR>", "<Cmd>Trouble <CR>", desc = "Trouble modes" },
+        { "<Leader>X", "<Cmd>Trouble diagnostics close<CR>", desc = "Close Trouble" },
         { prefix .. "X", "<Cmd>Trouble diagnostics toggle<CR>", desc = "Trouble Workspace Diagnostics" },
         { prefix .. "x", "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "Trouble Document Diagnostics" },
         { prefix .. "L", "<Cmd>Trouble loclist toggle<CR>", desc = "Trouble Location List" },
