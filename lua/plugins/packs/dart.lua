@@ -2,10 +2,11 @@
 return {
   {
     "akinsho/flutter-tools.nvim",
+    ft = "dart",
     dependencies = {
       { "nvim-telescope/telescope.nvim" },
+      { "AstroNvim/astrolsp", opts = function(_, opts) opts.handlers.dartls = false end },
     },
-    ft = "dart",
     config = function(_, opts)
       require("flutter-tools").setup(opts)
       require("telescope").load_extension "flutter"

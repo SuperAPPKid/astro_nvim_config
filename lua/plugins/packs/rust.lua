@@ -21,15 +21,8 @@ return {
     "mrcjkb/rustaceanvim",
     version = "^5",
     ft = "rust",
-    specs = {
-      {
-        "AstroNvim/astrolsp",
-        optional = true,
-        ---@type AstroLSPOpts
-        opts = {
-          handlers = { rust_analyzer = false }, -- disable setup of `rust_analyzer`
-        },
-      },
+    dependencies = {
+      { "AstroNvim/astrolsp", opts = function(_, opts) opts.handlers.rust_analyzer = false end },
     },
     opts = function()
       local adapter
