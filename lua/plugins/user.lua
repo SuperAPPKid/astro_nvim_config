@@ -206,15 +206,15 @@ return {
           -- save global autoformat status
           vim.g.OLD_AUTOFORMAT = vim.g.autoformat
           vim.g.autoformat = false
-          vim.g.OLD_AUTOFORMAT_BUFFERS = {}
+          local old_autoformat_buffers = {}
           -- disable all manually enabled buffers
           for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
             if vim.b[bufnr].autoformat then
-              vim.g.OLD_AUTOFORMAT_BUFFERS =
-                require("astrocore").list_insert_unique(vim.g.OLD_AUTOFORMAT_BUFFERS, { bufnr })
+              vim.g.OLD_AUTOFORMAT_BUFFERS = require("astrocore").list_insert_unique(old_autoformat_buffers, { bufnr })
               vim.b[bufnr].autoformat = false
             end
           end
+          vim.g.OLD_AUTOFORMAT_BUFFERS = old_autoformat_buffers
         end,
       })
 
