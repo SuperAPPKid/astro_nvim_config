@@ -93,4 +93,18 @@ return {
     },
     config = true,
   },
+
+  -- java
+  {
+    "nvim-java/nvim-java",
+    ft = "java",
+    dependencies = {
+      { "AstroNvim/astrolsp", opts = function(_, opts) opts.handlers.jdtls = false end },
+    },
+    config = function(_, opts)
+      require("java").setup(opts)
+      local lsp_opts = require("astrolsp").lsp_opts "jdtls"
+      require("lspconfig").jdtls.setup(lsp_opts)
+    end,
+  },
 }
