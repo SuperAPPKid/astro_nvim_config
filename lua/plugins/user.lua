@@ -615,17 +615,8 @@ return {
     "aurum77/live-server.nvim",
     build = function() require("live_server.util").install() end,
     ft = "html",
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          maps.n["<Leader>zh"] = {
-            "<Cmd>LiveServer<CR>",
-            desc = "HTML Preview",
-          }
-        end,
-      },
+    keys = {
+      { "<Leader>zh", "<Cmd>LiveServer<CR>", desc = "HTML Preview" },
     },
   },
 
@@ -938,13 +929,8 @@ return {
   {
     "Wansmer/treesj",
     cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          opts.mappings.n["<Leader>j"] = { "<Cmd>TSJToggle<CR>", desc = "Toggle Treesitter Join" }
-        end,
-      },
+    keys = {
+      { "<Leader>j", "<Cmd>TSJToggle<CR>", desc = "Toggle Treesitter Join" },
     },
     opts = { use_default_keymaps = false },
   },
