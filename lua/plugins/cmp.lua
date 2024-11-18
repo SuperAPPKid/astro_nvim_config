@@ -64,6 +64,7 @@ return {
       { "hrsh7th/cmp-calc" },
       { "f3fora/cmp-spell" },
       { "Exafunction/codeium.nvim" },
+      { "kdheepak/cmp-latex-symbols" },
     },
     config = function(_, opts)
       local cmp = require "cmp"
@@ -89,21 +90,31 @@ return {
         { name = "nvim_lsp", priority = 1000 },
         { name = "nvim_lua", priority = 900 },
         { name = "luasnip", priority = 800 },
-        { name = "nerdfont", priority = 800 },
-        { name = "emoji", priority = 800 },
-        { name = "codeium", priority = 700 },
-        -- { name = "buffer", priority = 600 },
-        { name = "path", priority = 600 },
+        -- { name = "nerdfont", priority = 800 },
+        { name = "emoji", priority = 700 },
+        {
+          name = "latex_symbols",
+          priority = 700,
+          option = {
+            -- 0 mixed Show the command and insert the symbol
+            -- 1 julia Show and insert the symbol
+            -- 2 latex Show and insert the command
+            strategy = 0,
+          },
+        },
+        { name = "codeium", priority = 600 },
+        -- { name = "buffer", priority = 500 },
+        { name = "path", priority = 500 },
         {
           name = "spell",
-          priority = 400,
+          priority = 500,
           option = {
             keep_all_entries = false,
             enable_in_context = function() return true end,
             preselect_correct_word = true,
           },
         },
-        { name = "calc", priority = 300 },
+        { name = "calc", priority = 400 },
       }
 
       local kind_icons = {

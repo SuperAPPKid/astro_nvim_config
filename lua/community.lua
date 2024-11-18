@@ -8,6 +8,7 @@ return {
 
   { import = "astrocommunity.completion.cmp-cmdline" },
   { import = "astrocommunity.completion.cmp-git" },
+  { import = "astrocommunity.completion.cmp-under-comparator" },
 
   { import = "astrocommunity.debugging.nvim-chainsaw" },
   {
