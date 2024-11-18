@@ -414,12 +414,17 @@ return {
         opts = function(_, opts)
           -- HACK: fix initial buffer symbols not show
           local old_on_attach = opts.on_attach
-          local done = false
+          local init_done = false
           opts.on_attach = function(client, bufnr)
             if type(old_on_attach) == "function" then old_on_attach(client, bufnr) end
-            if not done then
-              require("symbol-usage").refresh()
-              done = true
+            if not init_done then
+              init_done = true
+              vim.api.nvim_create_autocmd("LspAttach", {
+                group = vim.api.nvim_create_augroup("symbol-usage", {}),
+                callback = vim.schedule_wrap(function() require("symbol-usage").refresh() end),
+                buffer = bufnr,
+                once = true,
+              })
             end
           end
         end,
