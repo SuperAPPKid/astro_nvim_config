@@ -262,41 +262,6 @@ return {
     },
   },
 
-  { import = "astrocommunity.motion.flash-nvim" },
-  {
-    "folke/flash.nvim",
-    specs = {
-      {
-        "AstroNvim/astroui",
-        opts = {
-          highlights = {
-            init = {
-              FlashCursor = { link = "Normal" },
-            },
-          },
-        },
-      },
-    },
-    opts = {
-      labels = "sjkluioyhnmpadftgv;JKLUIOYHNMPTGVRFED",
-      label = {
-        uppercase = false,
-        current = false,
-      },
-      modes = {
-        search = {
-          enabled = false,
-        },
-        treesitter = {
-          labels = "abcdefghijklmnopqrstuvwxyz",
-        },
-      },
-      prompt = {
-        enabled = false,
-      },
-    },
-  },
-
   { import = "astrocommunity.neovim-lua-development.helpview-nvim" },
   { import = "astrocommunity.neovim-lua-development.lazydev-nvim" },
 

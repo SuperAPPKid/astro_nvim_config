@@ -1446,4 +1446,84 @@ return {
       end
     end,
   },
+
+  {
+    "folke/flash.nvim",
+    event = "User AstroFile",
+    keys = {
+      {
+        "s",
+        function()
+          require("flash").jump { jump = {
+            pos = "end",
+            offset = 0,
+          } }
+        end,
+        mode = { "n", "x", "o" },
+        desc = "Flash",
+      },
+      { "S", function() require("flash").treesitter() end, mode = { "n", "x", "o" }, desc = "Flash Treesitter" },
+      { "R", function() require("flash").treesitter_search() end, mode = { "x" }, desc = "Treesitter Search" },
+      {
+        "R",
+        function() require("flash").treesitter_search { remote_op = { restore = true, motion = true } } end,
+        mode = { "o" },
+        desc = "Treesitter Search",
+      },
+      { "r", function() require("flash").remote() end, mode = { "o" }, desc = "Remote Flash" },
+    },
+    specs = {
+      {
+        "AstroNvim/astroui",
+        opts = {
+          highlights = {
+            init = {
+              FlashCursor = { link = "Normal" },
+            },
+          },
+        },
+      },
+    },
+    opts = {
+      labels = "sjkluioyhnmpadftgv;JKLUIOYHNMPTGVRFED",
+      label = {
+        uppercase = false,
+        current = false,
+      },
+      modes = {
+        search = {
+          enabled = false,
+        },
+        char = {
+          jump_labels = true,
+          labels = "abcdefghijklmnopqrstuvwxyz",
+          label = {
+            uppercase = true,
+            style = "overlay", ---@type "eol" | "overlay" | "right_align" | "inline"
+            exclude = "hjklaicdmrv",
+          },
+          highlight = {
+            backdrop = false,
+            matches = false,
+          },
+          keys = { "f", "F", "t", "T" },
+          char_actions = function(motion)
+            return {
+              [motion] = "next",
+              [motion:match "%l" and motion:upper() or motion:lower()] = "prev",
+            }
+          end,
+        },
+        treesitter = {
+          labels = "abcdefghijklmnopqrstuvwxyz",
+        },
+        treesitter_search = {
+          labels = "abcdefghijklmnopqrstuvwxyz",
+        },
+      },
+      prompt = {
+        enabled = false,
+      },
+    },
+  },
 }
