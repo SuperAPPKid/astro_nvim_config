@@ -189,6 +189,8 @@ return {
         ["<C-W><C-D>"] = { "" },
         ["<Leader>f'"] = false,
         ["<Leader>fr"] = false,
+        ["<Leader>f`"] = { function() require("telescope.builtin").marks() end, desc = "Find marks" },
+        ['<Leader>f"'] = { function() require("telescope.builtin").registers() end, desc = "Find registers" },
         ["gl"] = false,
         ["<Leader>lD"] = false,
         ["<Leader>fd"] = {
