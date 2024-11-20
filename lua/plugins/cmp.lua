@@ -184,6 +184,13 @@ return {
         require("cmp").abort()
         require("codeium.virtual_text").complete()
       end, { "i", "c" })
+      opts.mapping["<C-Y>"] = cmp.mapping(function()
+        if cmp.visible_docs() then
+          cmp.close_docs()
+        else
+          cmp.open_docs()
+        end
+      end, { "i" })
 
       opts.window.completion.border = "double"
       opts.window.documentation.border = "double"
