@@ -36,6 +36,8 @@ return {
 
       opts.startInInsertMode = false
       opts.transient = true
+      opts.resultsHighlight = false
+      opts.wrap = false
       opts.keymaps = {
         replace = { n = command_key .. "r" },
         qflist = { n = command_key .. "q" },
@@ -57,6 +59,11 @@ return {
         previewLocation = { n = command_key .. "i" },
         swapReplacementInterpreter = { n = command_key .. "x" },
       }
+      opts.resultLocation = { showNumberLabel = false }
+      opts.folding = { enabled = false }
+      opts.helpWindow = { border = "double" }
+      opts.historyWindow = { border = "double" }
+      opts.previewWindow = { border = "double" }
     end,
     dependencies = {
       {
