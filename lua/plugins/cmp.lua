@@ -78,7 +78,7 @@ return {
 
       local group = vim.api.nvim_create_augroup("cmp", {})
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = "saga*",
+        pattern = { "saga*", "oil" },
         group = group,
         callback = function(_) cmp.setup.buffer { sources = {} } end,
       })
