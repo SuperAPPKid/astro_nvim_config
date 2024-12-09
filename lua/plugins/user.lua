@@ -244,7 +244,9 @@ return {
         if buftype == "help" then return true end
         if buftype ~= "" and buftype ~= "acwrite" then return false end
         if vim.api.nvim_buf_get_name(bufnr) == "" then return false end
-        if filetype == "harpoon" then return false end
+        for _, value in pairs { "harpoon", "oil" } do
+          if filetype == value then return false end
+        end
         return true
       end,
     },
@@ -368,16 +370,24 @@ return {
     },
     opts = function(_, opts)
       local get_icon = require("astroui").get_icon
-      opts.columns = { { "icon", default_file = get_icon "DefaultFile", directory = get_icon "FolderClosed" } }
-      opts.delete_to_trash = true
-      opts.skip_confirm_for_simple_edits = true
-      opts.view_options = {
-        show_hidden = true,
+      opts.columns = {
+        { "icon", default_file = get_icon "DefaultFile", directory = get_icon "FolderClosed" },
+        "permissions",
+        "size",
       }
+      opts.delete_to_trash = true
+      opts.watch_for_changes = true
+      opts.skip_confirm_for_simple_edits = true
       opts.keymaps = {
         ["<C-s>"] = false,
         ["<C-h>"] = false,
       }
+      opts.view_options = {
+        show_hidden = true,
+      }
+      opts.confirmation = { border = "double" }
+      opts.ssh = { border = "double" }
+      opts.keymaps_help = { border = "double" }
     end,
   },
 
