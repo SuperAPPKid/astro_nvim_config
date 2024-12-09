@@ -60,8 +60,6 @@ return {
         "shfmt",
         "bash-debug-adapter",
 
-        -- buf
-        --"buf-ls",  FIX: uncomment after https://github.com/williamboman/mason-lspconfig.nvim/pull/485 merged
         "buf",
 
         -- csharp
