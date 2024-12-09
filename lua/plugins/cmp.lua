@@ -7,7 +7,10 @@ return {
     dependencies = {
       { "nvim-lua/plenary.nvim" },
     },
-    config = function(_, opts) require("codeium").setup(opts) end,
+    config = function(_, opts)
+      vim.env.DEBUG_CODEIUM = "fatal"
+      require("codeium").setup(opts)
+    end,
     opts = {
       enable_chat = false,
       enable_cmp_source = true,
