@@ -1500,7 +1500,7 @@ return {
           label = {
             uppercase = true,
             style = "overlay", ---@type "eol" | "overlay" | "right_align" | "inline"
-            exclude = "hjklaAiIcCdDmMrRvV",
+            exclude = "hjklaAiIcCdDmMrRvVyYxX",
           },
           highlight = {
             backdrop = false,
