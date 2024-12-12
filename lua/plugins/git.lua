@@ -245,6 +245,8 @@ return {
           maps.n["<Leader>gA"] = { function() require("gitsigns").stage_buffer() end, desc = "Git Stage buffer" }
           maps.n["<Leader>gu"] = { function() require("gitsigns").undo_stage_hunk() end, desc = "Git Unstage hunk" }
           maps.n["<Leader>gh"] = { function() require("gitsigns").select_hunk() end, desc = "Git Select hunk" }
+          maps.n["[G"] = { function() require("gitsigns").nav_hunk "first" end, desc = "First Git hunk" }
+          maps.n["]G"] = { function() require("gitsigns").nav_hunk "last" end, desc = "Last Git hunk" }
           maps.n["]g"] = { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }
           maps.n["[g"] = { function() require("gitsigns").prev_hunk() end, desc = "Previous Git hunk" }
 
