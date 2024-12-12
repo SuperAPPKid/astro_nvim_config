@@ -76,7 +76,7 @@ return {
             offsetEncoding = "utf-8",
           },
         },
-        csharp_ls = {
+        omnisharp = {
           handlers = {
             ["textDocument/definition"] = function(...) require("omnisharp_extended").definition_handler(...) end,
             ["textDocument/typeDefinition"] = function(...) require("omnisharp_extended").type_definition_handler(...) end,
