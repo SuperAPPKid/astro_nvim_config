@@ -602,9 +602,11 @@ return {
       opts = function(_, opts)
         local word_hops = function()
           local neowords = require "neowords"
+          local general_words = "[:digit:][:lower:][:upper:]\\u0800-\\uffff"
           return neowords.get_word_hops(
             neowords.pattern_presets.hex_color,
-            "\\v[-]@![[:digit:][:lower:][:upper:]\\u0800-\\uffff]+", -- utf-8 words
+            string.format("\\v[-]@![%s]+", general_words), -- utf-8 words
+            string.format("\\v([%s]|_)@<!_", general_words), -- leading _
             "\\V\\[{[(}\\])]\\+", -- brackets {}[]()
             "\\v(``)|(\"\")|''" -- quotes '"
           )
