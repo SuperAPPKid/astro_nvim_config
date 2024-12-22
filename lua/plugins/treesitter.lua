@@ -83,6 +83,7 @@ return {
       "glsl",
       "godot_resource",
       "go",
+      "goctl",
       "gomod",
       "gosum",
       "gowork",
@@ -151,7 +152,6 @@ return {
     }
 
     vim.treesitter.language.register("bash", "dotenv")
-    vim.treesitter.language.register("go", "api")
     vim.treesitter.language.register("scss", "less")
     vim.treesitter.language.register("scss", "postcss")
   end,

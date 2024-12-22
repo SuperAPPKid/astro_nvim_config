@@ -24,7 +24,7 @@ return {
     "numToStr/Comment.nvim",
     config = function(_, opts)
       local ft = require "Comment.ft"
-      ft({ "api" }, ft.get "go")
+      ft({ "goctl" }, ft.get "go")
       ft({ "gowork" }, ft.get "gomod")
       require("Comment").setup(opts)
     end,

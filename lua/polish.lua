@@ -4,7 +4,7 @@
 
 vim.filetype.add {
   extension = {
-    api = "api",
+    api = "goctl",
     conf = "conf",
     env = "dotenv",
     gdshaderinc = "gdshaderinc",
