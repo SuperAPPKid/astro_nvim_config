@@ -89,6 +89,7 @@ local M = {
     },
     opts = {
       render_modes = { "n", "v", "i", "c" },
+      filetypes = { "markdown", "Avante" },
       heading = {
         -- position = "inline",
         left_pad = 1,

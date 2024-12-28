@@ -244,7 +244,7 @@ return {
         if buftype == "help" then return true end
         if buftype ~= "" and buftype ~= "acwrite" then return false end
         if vim.api.nvim_buf_get_name(bufnr) == "" then return false end
-        for _, value in pairs { "harpoon", "oil" } do
+        for _, value in pairs { "harpoon", "oil", "AvanteInput" } do
           if filetype == value then return false end
         end
         return true

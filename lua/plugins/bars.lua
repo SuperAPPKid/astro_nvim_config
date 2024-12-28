@@ -164,6 +164,7 @@ return {
           "NvimTree",
           "TelescopePrompt",
           "alpha",
+          "Avante*",
           "sagaoutline",
           "leetcode.nvim",
           "blame",

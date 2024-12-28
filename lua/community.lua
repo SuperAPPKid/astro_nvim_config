@@ -48,8 +48,7 @@ return {
 
   -- { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
 
-  -- { import = "astrocommunity.editing-support.chatgpt-nvim" },
-  -- { import = "astrocommunity.editing-support.bigfile-nvim" },
+  { import = "astrocommunity.editing-support.copilotchat-nvim" },
   { import = "astrocommunity.editing-support.cloak-nvim" },
   {
     "laytan/cloak.nvim",
