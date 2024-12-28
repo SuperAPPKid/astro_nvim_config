@@ -94,6 +94,7 @@ return {
     opts = {
       formatters_by_ft = {
         ["blade"] = { "blade-formatter" },
+        ["cs"] = { "csharpier" },
         ["css"] = prettier_formatter,
         ["helm"] = prettier_formatter,
         ["html"] = prettier_formatter,
