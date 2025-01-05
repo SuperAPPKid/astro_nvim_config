@@ -311,7 +311,11 @@ return {
         end,
       },
     },
-    opts = function(_, opts) opts.on_attach = nil end,
+    opts = function(_, opts)
+      opts.attach_to_untracked = true
+      opts.on_attach = nil
+      opts.preview_config = { border = "double" }
+    end,
   },
 
   {
