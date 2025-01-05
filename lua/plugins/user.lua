@@ -529,6 +529,7 @@ return {
     dependencies = {
       {
         "rcarriga/nvim-notify",
+        version = "*",
         config = function(_, opts)
           local notify = require "notify"
           notify.setup(opts)
@@ -563,17 +564,18 @@ return {
             if type(level) ~= "number" then level = nil end
             level = level or 2
             local title = opts and opts.title
-            local should_redirect = true
+            local should_redirect = level >= vim.log.levels.ERROR
 
-            if type(level) == "number" and level < vim.log.levels.ERROR then
-              should_redirect = (title and string.find(title, "tinygit") or 0) ~= 0
-            end
-
-            if should_redirect and (title and (string.find(title, "Codeium") or 0) ~= 0) then -- exclude Codeium
-              should_redirect = false
+            if title then
+              if should_redirect then
+                should_redirect = (string.find(title, "Codeium") or 0) == 0 -- don't redirect Codeium messages
+              else
+                should_redirect = (string.find(title, "tinygit") or 0) ~= 0 -- redirect tinygit messages
+              end
             end
 
             if should_redirect then
+              opts = require("astrocore").extend_tbl(opts, { title = title })
               return require("fidget.integration.nvim-notify").delegate(msg, level, opts) --
             end
 
