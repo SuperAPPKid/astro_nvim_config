@@ -1064,7 +1064,7 @@ return {
   },
 
   {
-    "mistweaverco/kulala.nvim",
+    "superappkid/kulala.nvim",
     ft = "http",
     opts = {
       winbar = true,
