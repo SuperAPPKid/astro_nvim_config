@@ -47,6 +47,9 @@ return {
         end,
       },
     },
+    init = function()
+      require("utils").git_broadcast = function() require("neo-tree.events").fire_event "git_event" end
+    end,
     opts = function(_, opts)
       local core = require "astrocore"
 

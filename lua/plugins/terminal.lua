@@ -35,9 +35,27 @@ return {
 
           local mappings = opts.mappings
           mappings.n["<C-t>"] = { "<Cmd>ToggleTerm<CR>" }
-          mappings.n["<Leader>tg"] = mappings.n["<Leader>tl"]
-          mappings.n["<Leader>gg"] = mappings.n["<Leader>tl"]
-          mappings.n["<Leader>tl"] = false
+
+          if vim.fn.executable "lazygit" == 1 then
+            mappings.n["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")
+            local lazygit = {
+              callback = function()
+                local worktree = require("astrocore").file_worktree()
+                local flags = worktree and (" --work-tree=%s --git-dir=%s"):format(worktree.toplevel, worktree.gitdir)
+                  or ""
+                require("astrocore").toggle_term_cmd {
+                  cmd = "lazygit " .. flags,
+                  direction = "float",
+                  on_exit = function() require("utils").git_broadcast() end,
+                }
+              end,
+              desc = "ToggleTerm lazygit",
+            }
+
+            mappings.n["<Leader>tg"] = { lazygit.callback, desc = lazygit.desc }
+            mappings.n["<Leader>gg"] = { lazygit.callback, desc = lazygit.desc }
+            mappings.n["<Leader>tl"] = false
+          end
 
           if vim.fn.executable "yazi" == 1 then
             mappings.n["<Leader>ty"] = {

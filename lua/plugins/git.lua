@@ -238,30 +238,75 @@ return {
           local maps = opts.mappings
           maps.n["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")
           maps.n["<Leader>gl"] = { function() require("gitsigns").blame_line() end, desc = "Git Blame line" }
-          maps.n["<Leader>gr"] = { function() require("gitsigns").reset_hunk() end, desc = "Git Reset hunk" }
-          maps.n["<Leader>gR"] = { function() require("gitsigns").reset_buffer() end, desc = "Git Reset buffer" }
-          maps.n["<Leader>gp"] = { function() require("gitsigns").preview_hunk() end, desc = "Git Preview hunk" }
-          maps.n["<Leader>ga"] = { function() require("gitsigns").stage_hunk() end, desc = "Git Stage hunk" }
-          maps.n["<Leader>gA"] = { function() require("gitsigns").stage_buffer() end, desc = "Git Stage buffer" }
-          maps.n["<Leader>gu"] = { function() require("gitsigns").undo_stage_hunk() end, desc = "Git Unstage hunk" }
+          maps.n["<Leader>gr"] = {
+            function()
+              require("gitsigns").reset_hunk()
+              require("utils").git_broadcast()
+            end,
+            desc = "Git Reset hunk",
+          }
+          maps.n["<Leader>gR"] = {
+            function()
+              require("gitsigns").reset_buffer()
+              require("utils").git_broadcast()
+            end,
+            desc = "Git Reset buffer",
+          }
+          maps.n["<Leader>gp"] = {
+            function()
+              require("gitsigns").preview_hunk()
+              vim.cmd.wincmd "w"
+            end,
+            desc = "Git Preview hunk",
+          }
+          maps.n["<Leader>gH"] = {
+            function()
+              require("gitsigns").stage_hunk()
+              require("utils").git_broadcast()
+            end,
+            desc = "Git Stage hunk",
+          }
+          maps.n["<Leader>gA"] = {
+            function()
+              require("gitsigns").stage_buffer()
+              require("utils").git_broadcast()
+            end,
+            desc = "Git Stage buffer",
+          }
+          maps.n["<Leader>gu"] = {
+            function()
+              require("gitsigns").undo_stage_hunk()
+              require("utils").git_broadcast()
+            end,
+            desc = "Git Undo Stage",
+          }
           maps.n["<Leader>gh"] = { function() require("gitsigns").select_hunk() end, desc = "Git Select hunk" }
           maps.n["[G"] = { function() require("gitsigns").nav_hunk "first" end, desc = "First Git hunk" }
           maps.n["]G"] = { function() require("gitsigns").nav_hunk "last" end, desc = "Last Git hunk" }
-          maps.n["]g"] = { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }
-          maps.n["[g"] = { function() require("gitsigns").prev_hunk() end, desc = "Previous Git hunk" }
+          maps.n["]g"] = { function() require("gitsigns").nav_hunk "next" end, desc = "Next Git hunk" }
+          maps.n["[g"] = { function() require("gitsigns").nav_hunk "prev" end, desc = "Previous Git hunk" }
 
           maps.v["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")
           maps.v["<Leader>gr"] = {
-            function() require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" } end,
+            function()
+              require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" }
+              require("utils").git_broadcast()
+            end,
             desc = "Git Reset hunk",
           }
-          maps.v["<Leader>gs"] = {
-            function() require("gitsigns").stage_hunk { vim.fn.line ".", vim.fn.line "v" } end,
+          maps.v["<Leader>gH"] = {
+            function()
+              require("gitsigns").stage_hunk { vim.fn.line ".", vim.fn.line "v" }
+              require("utils").git_broadcast()
+            end,
             desc = "Git Stage hunk",
           }
           maps.v["<Leader>gu"] = {
-            function() require("gitsigns").undo_stage_hunk { vim.fn.line ".", vim.fn.line "v" } end,
-            desc = "Git Unstage hunk",
+            function()
+              require("gitsigns").undo_stage_hunk()
+              require("utils").git_broadcast()
+            end,
+            desc = "Git Undo Stage",
           }
         end,
       },
