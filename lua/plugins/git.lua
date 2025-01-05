@@ -3,7 +3,7 @@ local enabled = vim.fn.executable "git" == 1
 ---@type LazySpec
 return {
   {
-    "superappkid/nvim-tinygit",
+    "chrisgrieser/nvim-tinygit",
     lazy = true,
     enabled = enabled,
     specs = {
