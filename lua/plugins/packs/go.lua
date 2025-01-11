@@ -1,4 +1,5 @@
 ---@type LazySpec
+---@diagnostic disable: inject-field
 return {
   {
     "leoluz/nvim-dap-go",
@@ -7,6 +8,12 @@ return {
     config = function(_, opts)
       require("dap").configurations.go = {}
       require("dap-go").setup(opts)
+
+      local old_adaptor = require("dap").adapters.go
+      require("dap").adapters.go = function(callback, config)
+        config.outputMode = "remote"
+        old_adaptor(callback, config)
+      end
     end,
   },
 
