@@ -1576,4 +1576,12 @@ return {
       },
     },
   },
+
+  {
+    "chrisgrieser/nvim-early-retirement",
+    event = "User AstroFile",
+    opts = {
+      deleteBufferWhenFileDeleted = true,
+    },
+  },
 }
