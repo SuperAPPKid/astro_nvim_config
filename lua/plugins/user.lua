@@ -1508,12 +1508,7 @@ return {
     keys = {
       {
         "s",
-        function()
-          require("flash").jump { jump = {
-            pos = "end",
-            offset = 0,
-          } }
-        end,
+        function() require("flash").jump { jump = { pos = "end", offset = 0 } } end,
         mode = { "n", "x", "o" },
         desc = "Flash",
       },

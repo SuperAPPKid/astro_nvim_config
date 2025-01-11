@@ -1,6 +1,7 @@
 -- Customize Treesitter
 
 ---@type LazySpec
+---@diagnostic disable: inject-field
 return {
   "nvim-treesitter/nvim-treesitter",
   dependencies = {
@@ -43,6 +44,7 @@ return {
       desc = "Jumping to context",
       silent = true,
     })
+    return keys
   end,
   opts = function(_, opts)
     local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
