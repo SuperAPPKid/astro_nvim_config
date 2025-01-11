@@ -1584,4 +1584,52 @@ return {
       deleteBufferWhenFileDeleted = true,
     },
   },
+
+  {
+    "superappkid/nvim-recorder",
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["q"] = { "<Nop>" }
+        end,
+      },
+    },
+    keys = function(plugin, _)
+      local opts = type(plugin.opts) == "function" and plugin.opts(plugin, {}) or plugin.opts or {}
+      local mapping = opts.mapping or {}
+      local insert = require("astrocore").list_insert_unique
+      local keys = {}
+      if mapping.startStopRecording then
+        insert(keys, { { mapping.startStopRecording, desc = "Start/Stop Recording" } })
+      end
+      if mapping.playMacro then insert(keys, { { mapping.playMacro, desc = "Play Recording" } }) end
+      if mapping.switchSlot then insert(keys, { { mapping.switchSlot, desc = "Switch Macro Slot" } }) end
+      if mapping.editMacro then insert(keys, { { mapping.editMacro, desc = "Edit Macro" } }) end
+      if mapping.deleteAllMacros then insert(keys, { { mapping.deleteAllMacros, desc = "Delete All Macros" } }) end
+      if mapping.yankMacro then insert(keys, { { mapping.yankMacro, desc = "Yank Macro" } }) end
+      if mapping.addBreakPoint then insert(keys, { { mapping.addBreakPoint, desc = "Insert Macro Breakpoint" } }) end
+      return keys
+    end,
+    opts = function(_, _)
+      local prefix = "<Leader>q"
+      local mapping = {}
+      mapping[prefix] = { desc = " Recording" }
+      require("astrocore").set_mappings { n = mapping }
+
+      return {
+        slots = { "a", "b", "c", "d", "e" },
+        mapping = {
+          startStopRecording = "Q",
+          playMacro = "<Leader>q<CR>",
+          switchSlot = "<Leader>qc",
+          editMacro = "<Leader>qe",
+          deleteAllMacros = "<Leader>qD",
+          yankMacro = "<Leader>qy",
+        },
+      }
+    end,
+  },
+
 }
