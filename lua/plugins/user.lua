@@ -1632,4 +1632,36 @@ return {
     end,
   },
 
+  {
+    "superappkid/nvim-scissors",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "L3MON4D3/LuaSnip",
+    },
+    keys = function()
+      local prefix = "<Leader>s"
+      return {
+        { prefix, desc = " Snippet" },
+        { prefix .. "<CR>", function() require("scissors").editSnippet() end, desc = "Find custom snippet" },
+        {
+          prefix .. "n",
+          function() require("scissors").addNewSnippet() end,
+          mode = { "n", "v" },
+          desc = "Create snippet",
+        },
+      }
+    end,
+    opts = function(_, opts)
+      local snippetDir = vim.fn.stdpath "data" .. "/nvim-scissors"
+      opts.snippetDir = snippetDir
+      opts.editSnippetPopup = {
+        height = 0.8,
+        width = 0.8,
+        border = "double",
+      }
+      require("luasnip.loaders.from_vscode").lazy_load {
+        paths = { snippetDir },
+      }
+    end,
+  },
 }
