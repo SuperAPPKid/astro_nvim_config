@@ -113,6 +113,10 @@ return {
         gj = "j",
         gk = "k",
         gx = false,
+        gl = false,
+        gra = false,
+        grn = false,
+        grr = false,
 
         -- navigate buffer tabs with `H` and `L`
         L = {
@@ -133,9 +137,6 @@ return {
           end,
           desc = "Pick to close",
         },
-
-        -- quick save
-        ["<C-s>"] = save_file,
 
         --tabs
         ["<Leader><Tab>"] = { desc = require("astroui").get_icon("tab", 1, true) .. "Tabs" },
@@ -185,14 +186,15 @@ return {
           desc = "Close Tab",
         },
 
+        ["<C-s>"] = save_file,
+        ["<C-q>"] = { "<Cmd>confirm qall<CR>", desc = "Force quit" },
         ["<C-W>d"] = { "" },
         ["<C-W><C-D>"] = { "" },
+
         ["<Leader>f'"] = false,
         ["<Leader>fr"] = false,
         ["<Leader>f`"] = { function() require("telescope.builtin").marks() end, desc = "Find marks" },
         ['<Leader>f"'] = { function() require("telescope.builtin").registers() end, desc = "Find registers" },
-        ["gl"] = false,
-        ["<Leader>lD"] = false,
         ["<Leader>fd"] = {
           function() require("telescope.builtin").diagnostics() end,
           desc = "Search diagnostics",
@@ -218,23 +220,25 @@ return {
           function() require("telescope.builtin").colorscheme { enable_preview = true } end,
           desc = "Find themes",
         },
-        ["<Leader>xq"] = false,
-        ["<Leader>xl"] = false,
 
-        ["<Leader>lR"] = false,
         ["<Leader>gc"] = false,
         ["<Leader>gC"] = false,
         ["<Leader>gt"] = false,
         ["<Leader>gg"] = false,
         ["<Leader>gK"] = false,
 
+        ["<Leader>lD"] = false,
+        ["<Leader>lR"] = false,
+
+        ["<Leader>n"] = false,
+        ["<Leader>q"] = false,
+        ["<Leader>Q"] = false,
+
+        ["<Leader>w"] = false,
+        ["<Leader>xq"] = false,
+        ["<Leader>xl"] = false,
+
         ["<Leader>z"] = { desc = require("astroui").get_icon("misc", 1, true) .. "Misc" },
-
-        ["<C-q>"] = { "<Cmd>qa!<CR>", desc = "Force quit" },
-
-        gra = false,
-        grn = false,
-        grr = false,
       },
       i = {
         -- quick save

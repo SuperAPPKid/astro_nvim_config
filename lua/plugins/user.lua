@@ -381,6 +381,7 @@ return {
       opts.keymaps = {
         ["<C-s>"] = false,
         ["<C-h>"] = false,
+        ["q"] = { callback = function() require("astrocore.buffer").close() end },
       }
       opts.view_options = {
         show_hidden = true,
@@ -649,7 +650,7 @@ return {
       return keys
     end,
     opts = function(_, _)
-      local prefix = "<Leader>s"
+      local prefix = "<Leader>r"
       local mapping = {}
       mapping[prefix] = {
         desc = "󰅪 Surround",
