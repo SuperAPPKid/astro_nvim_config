@@ -82,7 +82,7 @@ local M = {
 
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    ft = { "markdown", "markdown.mdx" },
+    ft = { "markdown", "markdown.mdx", "Avante" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",

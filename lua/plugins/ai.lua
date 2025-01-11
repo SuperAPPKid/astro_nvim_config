@@ -8,29 +8,37 @@ return {
 
   {
     "yetone/avante.nvim",
+    event = "User AstroFile",
     build = vim.fn.has "win32" == 1 and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
       or "make",
-    cmd = {
-      "AvanteAsk",
-      "AvanteBuild",
-      "AvanteEdit",
-      "AvanteRefresh",
-      "AvanteSwitchProvider",
-      "AvanteChat",
-      "AvanteToggle",
-      "AvanteClear",
-    },
     dependencies = {
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
+      "zbirenbaum/copilot.lua", -- for providers='copilot'
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+          },
+        },
+      },
+      "MeanderingProgrammer/render-markdown.nvim",
     },
     keys = function(_, _)
       local prefix = "<Leader>A"
       return {
         {
           prefix,
-          function() require "avante" end,
+          function() end,
           mode = { "n", "v" },
           desc = " Avante",
         },
@@ -92,7 +100,6 @@ return {
     end,
     opts = {
       provider = "copilot",
-      auto_suggestions_provider = "copilot",
       behaviour = {
         auto_set_keymaps = false,
       },
