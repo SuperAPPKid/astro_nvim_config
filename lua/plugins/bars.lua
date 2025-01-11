@@ -170,6 +170,7 @@ return {
           "blame",
           "grug-far",
           "toggleterm",
+          "Overseer*",
         },
         segments = {
           {

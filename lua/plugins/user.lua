@@ -88,7 +88,8 @@ return {
       },
     },
     dependencies = {
-      { "tiagovla/scope.nvim" },
+      "tiagovla/scope.nvim",
+      "stevearc/overseer.nvim",
     },
     opts = function(_, opts)
       opts.buf_filter = function(bufnr)
@@ -164,7 +165,12 @@ return {
         },
         {
           ft = "neotest-summary",
-          size = { width = 36 },
+          size = { width = 52 },
+        },
+        {
+          ft = "OverseerList",
+          size = { width = 52 },
+          filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == "" end,
         },
         {
           ft = "grug-far",
@@ -244,7 +250,7 @@ return {
         if buftype == "help" then return true end
         if buftype ~= "" and buftype ~= "acwrite" then return false end
         if vim.api.nvim_buf_get_name(bufnr) == "" then return false end
-        for _, value in pairs { "harpoon", "oil", "AvanteInput" } do
+        for _, value in pairs { "harpoon", "oil", "AvanteInput", "OverseerForm" } do
           if filetype == value then return false end
         end
         return true
@@ -573,6 +579,8 @@ return {
               else
                 should_redirect = (string.find(title, "tinygit") or 0) ~= 0 -- redirect tinygit messages
               end
+            else
+              should_redirect = false
             end
 
             if should_redirect then
@@ -1037,30 +1045,84 @@ return {
           local prefix = "<Leader>o"
           maps.n[prefix] = { desc = require("astroui").get_icon("Overseer", 1, true) .. "Overseer" }
 
-          maps.n[prefix .. "t"] = { "<Cmd>OverseerToggle<CR>", desc = "Toggle" }
-          maps.n[prefix .. "c"] = { "<Cmd>OverseerRunCmd<CR>", desc = "Run Command" }
-          maps.n[prefix .. "r"] = { "<Cmd>OverseerRun<CR>", desc = "Run Task" }
-          maps.n[prefix .. "q"] = { "<Cmd>OverseerQuickAction<CR>", desc = "Quick Action" }
-          maps.n[prefix .. "a"] = { "<Cmd>OverseerTaskAction<CR>", desc = "Task Action" }
+          maps.n[prefix .. "e"] = { "<Cmd>OverseerToggle<CR>", desc = "Toggle" }
+          maps.n[prefix .. "a"] = { "<Cmd>OverseerRunCmd<CR>", desc = "Add Command" }
+          maps.n[prefix .. "A"] = { "<Cmd>OverseerRun<CR>", desc = "Add Task" }
+          maps.n[prefix .. "<CR>"] = { "<Cmd>OverseerTaskAction<CR>", desc = "Task Actions" }
           maps.n[prefix .. "i"] = { "<Cmd>OverseerInfo<CR>", desc = "Info" }
         end,
       },
     },
     opts = function(_, opts)
-      local astrocore = require "astrocore"
-      if astrocore.is_available "toggleterm.nvim" then opts.strategy = "toggleterm" end
+      opts.form = { border = "double" }
+      opts.confirm = { border = "double" }
+      opts.task_win = { border = "double" }
+      opts.help_win = { border = "double" }
+      opts.bundles = {
+        autostart_on_load = false,
+      }
+      opts.actions = {
+        ["save"] = false,
+        ["open"] = false,
+        ["open float"] = false,
+        ["open hsplit"] = false,
+        ["open vsplit"] = false,
+        ["open tab"] = false,
+        ["ensure"] = false,
+      }
+      opts.component_aliases = {
+        -- Most tasks are initialized with the default components
+        default = {
+          { "display_duration", detail_level = 2 },
+          "on_complete_notify",
+          "on_output_summarize",
+          "on_exit_set_status",
+          -- { "on_complete_dispose", require_view = { "SUCCESS", "FAILURE" } },
+          { "on_result_diagnostics", remove_on_restart = true, signs = false, underline = false, virtual_text = true },
+          "unique",
+        },
+      }
       opts.task_list = {
-        direction = "bottom",
+        direction = "right",
         bindings = {
+          ["a"] = "<Cmd>OverseerRunCmd<CR>",
+          ["A"] = "<Cmd>OverseerRun<CR>",
+          ["s"] = "<Cmd>OverseerQuickAction start<CR>",
+          ["e"] = "Edit",
+          ["d"] = "Dispose",
+          ["o"] = "OpenQuickFix",
+          ["L"] = "IncreaseDetail",
+          ["H"] = "DecreaseDetail",
+          ["K"] = "ScrollOutputUp",
+          ["J"] = "ScrollOutputDown",
+
+          ["<C-e>"] = false,
+          ["<C-v>"] = false,
+          ["<C-s>"] = false,
+          ["<C-f>"] = false,
+          ["<C-q>"] = false,
+          ["["] = false,
+          ["]"] = false,
           ["<C-l>"] = false,
           ["<C-h>"] = false,
           ["<C-k>"] = false,
           ["<C-j>"] = false,
-          q = "<Cmd>close<CR>",
-          K = "IncreaseDetail",
-          J = "DecreaseDetail",
-          ["<C-p>"] = "ScrollOutputUp",
-          ["<C-n>"] = "ScrollOutputDown",
+        },
+      }
+      opts.task_launcher = {
+        bindings = {
+          i = {
+            ["<C-c>"] = false,
+            ["<C-q>"] = "Cancel",
+          },
+        },
+      }
+      opts.task_editor = {
+        bindings = {
+          i = {
+            ["<C-c>"] = false,
+            ["<C-q>"] = "Cancel",
+          },
         },
       }
     end,
