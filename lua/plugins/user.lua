@@ -658,7 +658,7 @@ return {
       return keys
     end,
     opts = function(_, _)
-      local prefix = "<Leader>r"
+      local prefix = "<Leader>s"
       local mapping = {}
       mapping[prefix] = {
         desc = "󰅪 Surround",
@@ -806,7 +806,7 @@ return {
         {
           prefix .. "e",
           function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end,
-          desc = "Toggle quick menu",
+          desc = "Edit quick menu",
         },
         {
           "<Leader><Leader><CR>",
@@ -1045,7 +1045,7 @@ return {
           local prefix = "<Leader>o"
           maps.n[prefix] = { desc = require("astroui").get_icon("Overseer", 1, true) .. "Overseer" }
 
-          maps.n[prefix .. "e"] = { "<Cmd>OverseerToggle<CR>", desc = "Toggle" }
+          maps.n[prefix .. "u"] = { "<Cmd>OverseerToggle<CR>", desc = "Toggle" }
           maps.n[prefix .. "a"] = { "<Cmd>OverseerRunCmd<CR>", desc = "Add Command" }
           maps.n[prefix .. "A"] = { "<Cmd>OverseerRun<CR>", desc = "Add Task" }
           maps.n[prefix .. "<CR>"] = { "<Cmd>OverseerTaskAction<CR>", desc = "Task Actions" }
@@ -1138,7 +1138,11 @@ return {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
-          opts.mappings.n["<Leader>zr"] = {
+          local prefix = "<Leader>r"
+          opts.mappings.n[prefix] = {
+            desc = require("astroui").get_icon("req", 1, false) .. "Request",
+          }
+          opts.mappings.n[prefix .. "<CR>"] = {
             function() require("kulala").scratchpad() end,
             desc = "Create temp request",
           }
@@ -1151,18 +1155,37 @@ return {
                 callback = function(args)
                   require("astrocore").set_mappings({
                     n = {
-                      ["<Leader>zR"] = { desc = "Request" },
-                      ["<Leader>zR<CR>"] = {
+                      [prefix .. "<CR>"] = {
                         function() require("kulala").run() end,
                         desc = "Run current",
                       },
-                      ["<Leader>zRr"] = {
+                      [prefix .. "u"] = {
+                        function() require("kulala.ui").show_headers_body() end,
+                        desc = "Show response",
+                      },
+                      [prefix .. "e"] = {
+                        function() require("kulala").set_selected_env() end,
+                        desc = "Select env",
+                      },
+                      [prefix .. "R"] = {
                         function() require("kulala").replay() end,
                         desc = "Replay last",
                       },
-                      ["<Leader>zRc"] = {
+                      [prefix .. "i"] = {
+                        function() require("kulala").inspect() end,
+                        desc = "Inspect current",
+                      },
+                      [prefix .. "y"] = {
                         function() require("kulala").copy() end,
                         desc = "Copy as cURL",
+                      },
+                      [prefix .. "P"] = {
+                        function() require("kulala").from_curl() end,
+                        desc = "Paste cURL from clipboard",
+                      },
+                      [prefix .. "l"] = {
+                        function() require("kulala").search() end,
+                        desc = "Search request",
                       },
                       ["]R"] = {
                         function() require("kulala").jump_next() end,
@@ -1602,14 +1625,29 @@ return {
       local insert = require("astrocore").list_insert_unique
       local keys = {}
       if mapping.startStopRecording then
-        insert(keys, { { mapping.startStopRecording, desc = "Start/Stop Recording" } })
+        insert(
+          keys,
+          { { mapping.startStopRecording, require("recorder").toggleRecording, desc = "Start/Stop Recording" } }
+        )
       end
-      if mapping.playMacro then insert(keys, { { mapping.playMacro, desc = "Play Recording" } }) end
-      if mapping.switchSlot then insert(keys, { { mapping.switchSlot, desc = "Switch Macro Slot" } }) end
-      if mapping.editMacro then insert(keys, { { mapping.editMacro, desc = "Edit Macro" } }) end
-      if mapping.deleteAllMacros then insert(keys, { { mapping.deleteAllMacros, desc = "Delete All Macros" } }) end
-      if mapping.yankMacro then insert(keys, { { mapping.yankMacro, desc = "Yank Macro" } }) end
-      if mapping.addBreakPoint then insert(keys, { { mapping.addBreakPoint, desc = "Insert Macro Breakpoint" } }) end
+      if mapping.playMacro then
+        insert(keys, { { mapping.playMacro, require("recorder").playRecording, desc = "Play Recording" } })
+      end
+      if mapping.switchSlot then
+        insert(keys, { { mapping.switchSlot, require("recorder").switchMacroSlot, desc = "Switch Macro Slot" } })
+      end
+      if mapping.editMacro then
+        insert(keys, { { mapping.editMacro, require("recorder").editMacro, desc = "Edit Macro" } })
+      end
+      if mapping.deleteAllMacros then
+        insert(keys, { { mapping.deleteAllMacros, require("recorder").deleteAllMacros, desc = "Delete All Macros" } })
+      end
+      if mapping.yankMacro then
+        insert(keys, { { mapping.yankMacro, require("recorder").yankMacro, desc = "Yank Macro" } })
+      end
+      if mapping.addBreakPoint then
+        insert(keys, { { mapping.addBreakPoint, require("recorder").addBreakPoint, desc = "Insert Macro Breakpoint" } })
+      end
       return keys
     end,
     opts = function(_, _)
@@ -1639,10 +1677,10 @@ return {
       "L3MON4D3/LuaSnip",
     },
     keys = function()
-      local prefix = "<Leader>s"
+      local prefix = "<Leader>I"
       return {
-        { prefix, desc = " Snippet" },
-        { prefix .. "<CR>", function() require("scissors").editSnippet() end, desc = "Find custom snippet" },
+        { prefix, function() end, desc = " Snippet" },
+        { prefix .. "<CR>", function() require("scissors").editSnippet() end, desc = "Find snippet" },
         {
           prefix .. "n",
           function() require("scissors").addNewSnippet() end,

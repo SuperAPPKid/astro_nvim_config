@@ -55,6 +55,7 @@ return {
       planet = "",
       project = "󰃥",
       refactoring = "󰣪",
+      req = "󱗆",
       tab = "",
       test = "󰙨",
       watch = "󰂥",

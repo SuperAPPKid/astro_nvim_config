@@ -136,4 +136,70 @@ return {
     lazy = false,
     priority = 99999,
   },
+
+  {
+    "ryanmsnyder/toggleterm-manager.nvim",
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          opts.mappings.n["<Leader>fs"] = { "<Cmd>Telescope toggleterm_manager<CR>", desc = "Search Toggleterms" }
+        end,
+      },
+    },
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim",
+    },
+    keys = {
+      { "<Leader>tl", "<Cmd>Telescope toggleterm_manager<CR>", desc = "Search Toggleterms" },
+    },
+    config = function(_, opts)
+      require("toggleterm-manager").setup(opts)
+      require("telescope").load_extension "toggleterm_manager"
+    end,
+    opts = function(_, opts)
+      local term_icon = require("astroui").get_icon "Terminal"
+      opts.titles = { prompt = term_icon .. " Terminals" }
+      opts.results = { term_icon = term_icon }
+      opts.mappings = {
+        n = {
+          ["<CR>"] = { -- toggles terminal open/closed
+            action = function(...) require("toggleterm-manager").actions.toggle_term(...) end,
+            exit_on_action = true,
+          },
+          ["<C-r>"] = { -- provides a prompt to rename a terminal
+            action = function(...) require("toggleterm-manager").actions.rename_term(...) end,
+            exit_on_action = false,
+          },
+          ["<C-d>"] = { -- deletes a terminal buffer
+            action = function(...) require("toggleterm-manager").actions.delete_term(...) end,
+            exit_on_action = false,
+          },
+          ["<C-n>"] = { -- creates a new terminal buffer
+            action = function(...) require("toggleterm-manager").actions.create_term(...) end,
+            exit_on_action = false,
+          },
+        },
+        i = {
+          ["<CR>"] = { -- toggles terminal open/closed
+            action = function(...) require("toggleterm-manager").actions.toggle_term(...) end,
+            exit_on_action = true,
+          },
+          ["<C-r>"] = { -- provides a prompt to rename a terminal
+            action = function(...) require("toggleterm-manager").actions.rename_term(...) end,
+            exit_on_action = false,
+          },
+          ["<C-d>"] = { -- deletes a terminal buffer
+            action = function(...) require("toggleterm-manager").actions.delete_term(...) end,
+            exit_on_action = false,
+          },
+          ["<C-n>"] = { -- creates a new terminal buffer
+            action = function(...) require("toggleterm-manager").actions.create_term(...) end,
+            exit_on_action = false,
+          },
+        },
+      }
+    end,
+  },
 }
