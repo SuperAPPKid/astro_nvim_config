@@ -11,7 +11,7 @@ return {
 
       local old_adaptor = require("dap").adapters.go
       require("dap").adapters.go = function(callback, config)
-        config.outputMode = "remote"
+        if not config.outputMode then config.outputMode = "remote" end
         old_adaptor(callback, config)
       end
     end,
