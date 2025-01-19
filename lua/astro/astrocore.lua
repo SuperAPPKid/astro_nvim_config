@@ -2,7 +2,18 @@
 -- Configuration documentation can be found with `:h astrocore`
 
 local extend_tbl = require("astrocore").extend_tbl
-local save_file = { "<Cmd>w<CR><Esc>", desc = "Save file" }
+local save_file = {
+  function()
+    if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "" then
+      return "<Cmd>w<CR><Esc>"
+    else
+      return "<Esc>"
+    end
+  end,
+  desc = "Save file",
+  silent = true,
+  expr = true,
+}
 
 ---@type LazySpec
 return {
