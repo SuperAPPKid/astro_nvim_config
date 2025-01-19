@@ -101,6 +101,7 @@ return {
       "jsdoc",
       "json",
       "jsonc",
+      "kdl",
       "kotlin",
       "lua",
       "luap",
