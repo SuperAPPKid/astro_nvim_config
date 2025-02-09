@@ -5,7 +5,30 @@ return {
   -- csharp
   {
     "Hoffs/omnisharp-extended-lsp.nvim",
-    ft = { "cs", "csproj", "cshtml" },
+    lazy = true,
+    dependencies = {
+      {
+        "AstroNvim/astrolsp",
+        ---@type AstroLSPOpts
+        opts = {
+          ---@diagnostic disable: missing-fields
+          config = {
+            omnisharp = {
+              handlers = {
+                ["textDocument/definition"] = function(...) require("omnisharp_extended").definition_handler(...) end,
+                ["textDocument/typeDefinition"] = function(...)
+                  require("omnisharp_extended").type_definition_handler(...)
+                end,
+                ["textDocument/references"] = function(...) require("omnisharp_extended").references_handler(...) end,
+                ["textDocument/implementation"] = function(...)
+                  require("omnisharp_extended").implementation_handler(...)
+                end,
+              },
+            },
+          },
+        },
+      },
+    },
   },
 
   -- godot
@@ -92,6 +115,25 @@ return {
       "mfussenegger/nvim-dap",
     },
     config = true,
+  },
+
+  -- sql
+  {
+    "nanotee/sqls.nvim",
+    lazy = true,
+    dependencies = {
+      {
+        "AstroNvim/astrolsp",
+        opts = function(_, opts)
+          opts.handlers.sqls = function(_, lsp_opts)
+            lsp_opts = require("astrocore").extend_tbl(lsp_opts, {
+              on_attach = function(client, bufnr) require("sqls").on_attach(client, bufnr) end,
+            })
+            opts.handlers[1]("sqls", lsp_opts)
+          end
+        end,
+      },
+    },
   },
 
   -- java

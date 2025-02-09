@@ -1,5 +1,17 @@
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
+local function decode_json_file(filename)
+  local file = io.open(filename, "r")
+  if file then
+    local content = file:read "*all"
+    file:close()
+
+    local ok, data = pcall(vim.fn.json_decode, content)
+    if ok and type(data) == "table" then return data end
+  end
+end
+
+local function has_nested_key(json, ...) return vim.tbl_get(json, ...) ~= nil end
 
 ---@type LazySpec
 return {
@@ -76,14 +88,6 @@ return {
             offsetEncoding = "utf-8",
           },
         },
-        omnisharp = {
-          handlers = {
-            ["textDocument/definition"] = function(...) require("omnisharp_extended").definition_handler(...) end,
-            ["textDocument/typeDefinition"] = function(...) require("omnisharp_extended").type_definition_handler(...) end,
-            ["textDocument/references"] = function(...) require("omnisharp_extended").references_handler(...) end,
-            ["textDocument/implementation"] = function(...) require("omnisharp_extended").implementation_handler(...) end,
-          },
-        },
         cssls = { init_options = { provideFormatter = false } },
         denols = {
           root_dir = function(...) return require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")(...) end,
@@ -152,6 +156,13 @@ return {
         rust_analyzer = {
           settings = {
             ["rust-analyzer"] = {
+              files = {
+                excludeDirs = {
+                  ".direnv",
+                  ".git",
+                  "target",
+                },
+              },
               check = {
                 command = "clippy",
                 extraArgs = {
@@ -189,7 +200,10 @@ return {
         },
         tailwindcss = {
           root_dir = function(fname)
-            local root_pattern = require("lspconfig").util.root_pattern(
+            local root_pattern = require("lspconfig").util.root_pattern
+
+            -- First, check for common Tailwind config files
+            local root = root_pattern(
               "tailwind.config.mjs",
               "tailwind.config.cjs",
               "tailwind.config.js",
@@ -197,8 +211,24 @@ return {
               "postcss.config.js",
               "config/tailwind.config.js",
               "assets/tailwind.config.js"
-            )
-            return root_pattern(fname)
+            )(fname)
+            -- If not found, check for package.json dependencies
+            if not root then
+              local package_root = root_pattern "package.json"(fname)
+              if package_root then
+                local package_data = decode_json_file(package_root .. "/package.json")
+                if
+                  package_data
+                  and (
+                    has_nested_key(package_data, "dependencies", "tailwindcss")
+                    or has_nested_key(package_data, "devDependencies", "tailwindcss")
+                  )
+                then
+                  root = package_root
+                end
+              end
+            end
+            return root
           end,
         },
         tsserver = {
