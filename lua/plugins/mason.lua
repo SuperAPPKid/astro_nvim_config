@@ -45,6 +45,7 @@ return {
         "nginx-language-server",
         "prettier",
         "prettierd",
+        "rust-analyzer",
         "svelte-language-server",
         "taplo", -- toml
         "tailwindcss-language-server",
@@ -117,6 +118,10 @@ return {
         -- ruby
         "solargraph",
         "standardrb",
+
+        -- sql
+        "sqlfluff",
+        "sqls",
 
         -- terraform
         "terraform-ls",
