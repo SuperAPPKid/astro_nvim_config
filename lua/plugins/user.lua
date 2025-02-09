@@ -575,9 +575,15 @@ return {
 
             if title then
               if should_redirect then
-                should_redirect = (string.find(title, "Codeium") or 0) == 0 -- don't redirect Codeium messages
+                should_redirect = string.find(title, "Codeium") == nil -- don't redirect Codeium messages
               else
-                should_redirect = (string.find(title, "tinygit") or 0) ~= 0 -- redirect tinygit messages
+                local allow_titles = { "tinygit", "Debug" } -- redirect messages
+                for _, allow_title in pairs(allow_titles) do
+                  if string.find(title, allow_title) ~= nil then
+                    should_redirect = true
+                    break
+                  end
+                end
               end
             else
               should_redirect = false

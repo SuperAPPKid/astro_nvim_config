@@ -69,6 +69,7 @@ return {
           filename = {
             fallback = "",
             fname = function(nr)
+              if vim.bo.buftype == "terminal" then return vim.fn.expand "%:t" end
               local path = vim.api.nvim_buf_get_name(nr)
               path = vim.fn.fnamemodify(path, ":p:.")
               if not require("heirline.conditions").width_percent_below(#path, 0.42) then
@@ -278,9 +279,10 @@ return {
 
           return {
             sources.path,
-            require("dropbar.utils").source.fallback {
-              sources.lsp,
-            },
+            -- require("dropbar.utils").source.fallback {
+            --   sources.lsp,
+            --   sources.treesitter,
+            -- },
           }
         end,
       }

@@ -22,7 +22,7 @@ return {
   opts = function(_, opts)
     -- Configure core features of AstroNvim
     opts.features = extend_tbl(opts.features, {
-      large_buf = { size = 1024 * 500, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
+      large_buf = { size = 1024 * 1000, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
       diagnostics_mode = 3, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
@@ -37,7 +37,20 @@ return {
         format = function(diagnostic) return string.format("%s [%s]", diagnostic.message, diagnostic.source) end,
       },
       update_in_insert = false,
-      virtual_text = true,
+      virtual_text = {
+        replace = "replace",
+        prefix = function(_, index, total)
+          if total > 1 then
+            if index == total then
+              return string.format("[%d/%d]", index, total)
+            else
+              return ""
+            end
+          else
+            return "■"
+          end
+        end,
+      },
       underline = { severity = { vim.diagnostic.severity.ERROR } },
     })
 
