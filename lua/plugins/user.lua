@@ -1352,26 +1352,22 @@ return {
 
   {
     "vyfor/cord.nvim",
-    build = vim.fn.has "win32" == 0 and "./build" or ".\\build",
+    version = "^2",
+    build = ":Cord update",
     event = "VeryLazy",
     opts = {
-      log_level = "off", -- One of 'trace', 'debug', 'info', 'warn', 'error', 'off'
+      log_level = vim.log.levels.OFF,
       editor = {
-        image = "hidden", -- Image ID or URL in case a custom client id is provided
-        client = "neovim", -- vim, neovim, lunarvim, nvchad, astronvim or your application's client id
-        tooltip = "", -- Text to display when hovering over the editor's image
-      },
-      display = {
-        show_repository = true, -- Display 'View repository' button linked to repository url, if any
+        icon = true,
       },
       text = {
-        viewing = "Viewing...", -- Text to display when viewing a readonly file
-        editing = "Editing...", -- Text to display when editing a file
-        file_browser = "", -- Text to display when browsing files (Empty string to disable)
-        plugin_manager = "", -- Text to display when managing plugins (Empty string to disable)
-        lsp_manager = "", -- Text to display when managing LSP servers (Empty string to disable)
-        vcs = "", -- Text to display when using Git or Git-related plugin (Empty string to disable)
-        workspace = "{}", -- Text to display when in a workspace (Empty string to disable)
+        workspace = "",
+        viewing = "Viewing...",
+        editing = "Editing...",
+        diagnostics = function(opts)
+          return #vim.diagnostics.get(vim.api.nvim_get_current_buf()) > 0 and "Fixing problems in " .. opts.tooltip
+            or true
+        end,
       },
     },
   },
