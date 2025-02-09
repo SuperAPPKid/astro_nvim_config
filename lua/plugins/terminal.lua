@@ -62,7 +62,7 @@ return {
               function()
                 local edit_cmd = ""
                 local file_path = vim.fn.expand "%:p"
-                local fm_tmpfile = vim.fn.tempname()
+                local fm_tmpfile = vim.fn.getcwd() .. ".tmp"
                 local feedkeys = function(keys)
                   local key_termcode = vim.api.nvim_replace_termcodes(keys, true, true, true)
                   vim.api.nvim_feedkeys(key_termcode, "n", false)
