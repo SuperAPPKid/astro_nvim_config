@@ -38,11 +38,13 @@ return {
     linters_by_ft = {
       ["ansible"] = { "ansible_lint" },
       ["bash"] = { "bash" },
-      ["docker-compose"] = { "hadolint" },
+      ["dockerfile"] = { "hadolint" },
       ["go"] = { "golangcilint" },
-      ["proto"] = { "buf_lint" },
       ["lua"] = { "selene" },
       ["kotlin"] = { "ktlint" },
+      ["proto"] = { "buf_lint" },
+      ["sh"] = { "shellcheck" },
+      ["sql"] = { "sqlfluff" },
       ["tf"] = { "tflint", "tfsec" },
       ["terraform"] = { "tflint", "tfsec" },
       ["terraform-vars"] = { "tflint", "tfsec" },
@@ -50,6 +52,17 @@ return {
     },
     linters = {
       selene = { condition = function(ctx) return selene_configured(ctx.filename) end },
+      sqlfluff = {
+        args = {
+          "lint",
+          "-n",
+          "-d",
+          "ansi",
+          "-f",
+          "json",
+          "--disable-progress-bar",
+        },
+      },
     },
   },
   config = function(_, opts)
