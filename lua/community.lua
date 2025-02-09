@@ -261,7 +261,6 @@ return {
   },
 
   { import = "astrocommunity.neovim-lua-development.helpview-nvim" },
-  { import = "astrocommunity.neovim-lua-development.lazydev-nvim" },
 
   -- { import = "astrocommunity.programming-language-support.csv-vim" },
   -- { import = "astrocommunity.programming-language-support.nvim-jqx" },
