@@ -178,6 +178,7 @@ return {
   {
     "folke/which-key.nvim",
     opts = {
+      delay = 0,
       preset = "modern",
       filter = function(mapping)
         if (mapping.desc or "") == "" then return false end
