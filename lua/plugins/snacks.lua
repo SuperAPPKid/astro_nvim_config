@@ -13,6 +13,12 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = { features = { large_buf = false } } --[[@as AstroCoreOpts]],
+      },
+    },
     init = function()
       _G.dd = function(...) require("snacks.debug").inspect(...) end
       _G.bt = function() require("snacks.debug").backtrace() end
@@ -20,7 +26,7 @@ return {
       vim.print = _G.dd
     end,
     ---@type snacks.Config
-    opts = {},
+    opts = { bigfile = { enabled = true } },
     keys = {},
   },
 }
