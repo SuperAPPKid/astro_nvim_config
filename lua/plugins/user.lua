@@ -1130,9 +1130,6 @@ return {
   {
     "superappkid/kulala.nvim",
     ft = "http",
-    opts = {
-      winbar = true,
-    },
     specs = {
       {
         "AstroNvim/astrocore",
@@ -1202,6 +1199,9 @@ return {
           })
         end,
       },
+    },
+    opts = {
+      winbar = true,
     },
   },
 
