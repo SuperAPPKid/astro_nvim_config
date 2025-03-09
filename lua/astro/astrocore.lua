@@ -293,8 +293,5 @@ return {
         end,
       },
     })
-
-    -- autocmds
-    opts.autocmds.alpha_autostart = false
   end,
 }

@@ -5,17 +5,45 @@
 return {
   {
     "goolord/alpha-nvim",
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = {
+          autocmds = { alpha_autostart = false },
+        },
+      },
+    },
+    dependencies = {
+      {
+        "MaximilianLloyd/ascii.nvim",
+        dependencies = {
+          "MunifTanjim/nui.nvim",
+        },
+        lazy = true,
+      },
+    },
     opts = function(_, opts)
       local dashboard = require "alpha.themes.dashboard"
-      -- customize the dashboard header
-      dashboard.section.header.val = {
-        "███    ██ ██    ██ ██ ███    ███",
-        "████   ██ ██    ██ ██ ████  ████",
-        "██ ██  ██ ██    ██ ██ ██ ████ ██",
-        "██  ██ ██  ██  ██  ██ ██  ██  ██",
-        "██   ████   ████   ██ ██      ██",
-      }
+      local stats = require("lazy").stats()
+
       dashboard.config.opts.noautocmd = false
+      dashboard.section.header.val = require("ascii").art.text.neovim.delta_corps_priest1
+      dashboard.section.footer.val = {
+        "loaded " .. stats.loaded .. "/" .. stats.count .. " plugins " .. require("astroui").get_icon(
+          "Package",
+          1,
+          true
+        ) .. "in " .. math.floor(stats.startuptime * 100 + 0.5) / 100 .. "ms",
+      }
+
+      dashboard.config.layout = {
+        { type = "padding", val = 5 },
+        dashboard.section.header,
+        { type = "padding", val = 3 },
+        dashboard.section.buttons,
+        { type = "padding", val = 3 },
+        dashboard.section.footer,
+      }
       return opts
     end,
   },
