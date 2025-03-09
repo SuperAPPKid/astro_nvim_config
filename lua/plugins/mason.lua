@@ -102,7 +102,6 @@ return {
         -- lua
         "lua-language-server",
         "stylua",
-        { "selene", auto_update = false },
 
         -- php
         "phpactor",
