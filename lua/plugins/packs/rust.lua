@@ -29,7 +29,7 @@ return {
       local success, package = pcall(function() return require("mason-registry").get_package "codelldb" end)
       local cfg = require "rustaceanvim.config"
       if success then
-        local package_path = package:get_install_path()
+        local package_path = vim.fn.expand "$MASON/packages/codelldb"
         local codelldb_path = package_path .. "/codelldb"
         local liblldb_path = package_path .. "/extension/lldb/lib/liblldb"
         local this_os = vim.loop.os_uname().sysname
@@ -64,7 +64,11 @@ return {
         end,
       }
       local final_server = require("astrocore").extend_tbl(astrolsp_opts, server)
-      return { server = final_server, dap = { adapter = adapter }, tools = { enable_clippy = false } }
+      return {
+        server = final_server,
+        dap = { adapter = adapter, load_rust_types = true },
+        tools = { enable_clippy = false },
+      }
     end,
     config = function(_, opts) vim.g.rustaceanvim = require("astrocore").extend_tbl(opts, vim.g.rustaceanvim) end,
   },
