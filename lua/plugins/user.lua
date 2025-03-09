@@ -1059,6 +1059,7 @@ return {
       opts.bundles = {
         autostart_on_load = false,
       }
+      opts.dap = false
       opts.actions = {
         ["save"] = false,
         ["open"] = false,
