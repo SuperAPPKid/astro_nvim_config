@@ -72,15 +72,6 @@ local M = {
   },
 
   {
-    "iamcco/markdown-preview.nvim",
-    init = function() vim.g.mkdp_filetypes = { "markdown" } end,
-    build = "cd app && npx --yes yarn install",
-    keys = {
-      { "<Leader>zM", "<Cmd>MarkdownPreviewToggle<CR>", desc = "Markdown Preview(alter)" },
-    },
-  },
-
-  {
     "MeanderingProgrammer/render-markdown.nvim",
     ft = { "markdown", "markdown.mdx", "Avante" },
     dependencies = {
