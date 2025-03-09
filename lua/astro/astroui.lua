@@ -39,7 +39,6 @@ return {
     },
   },
   opts = {
-    colorscheme = "kanagawa",
     highlights = {
       init = {}, -- this table overrides highlights in all themes
       astrotheme = { -- a table of overrides/changes when applying the astrotheme theme

@@ -2,6 +2,14 @@
 return {
   {
     "rebelot/kanagawa.nvim",
+    specs = {
+      {
+        "AstroNvim/astroui",
+        opts = {
+          colorscheme = "kanagawa",
+        },
+      },
+    },
     opts = {
       compile = false, -- enable compiling the colorscheme
       undercurl = true, -- enable undercurls
@@ -89,6 +97,11 @@ return {
           RainbowGreen = { fg = palette.dragonGreen, bold = true },
           RainbowViolet = { fg = palette.dragonViolet, bold = true },
           RainbowCyan = { fg = palette.dragonAqua, bold = true },
+
+          ModesCopy = { bg = palette.roninYellow },
+          ModesDelete = { bg = palette.samuraiRed },
+          ModesInsert = { bg = palette.springGreen },
+          ModesVisual = { bg = palette.crystalBlue },
         }
       end,
       theme = "dragon", -- Load "wave" theme when 'background' option is not set
