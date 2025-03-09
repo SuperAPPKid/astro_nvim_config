@@ -1373,12 +1373,16 @@ return {
       editor = {
         icon = true,
       },
+      display = {
+        theme = "atom",
+        flavor = "accent",
+      },
       text = {
         workspace = "",
         viewing = "Viewing...",
         editing = "Editing...",
         diagnostics = function(opts)
-          return #vim.diagnostics.get(vim.api.nvim_get_current_buf()) > 0 and "Fixing problems in " .. opts.tooltip
+          return #vim.diagnostic.get(vim.api.nvim_get_current_buf()) > 0 and "Fixing problems in " .. opts.tooltip
             or true
         end,
       },
