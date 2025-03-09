@@ -272,7 +272,7 @@ return {
             end,
             desc = "Git Stage hunk",
           }
-          maps.n["<Leader>gA"] = {
+          maps.n["<Leader>gB"] = {
             function()
               require("gitsigns").stage_buffer()
               require("utils").git_broadcast()
@@ -436,41 +436,30 @@ return {
 
   {
     "isakbm/gitgraph.nvim",
-    lazy = true,
     enabled = enabled,
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = {
-          autocmds = {
-            gitgraph_settings = {
-              {
-                event = "FileType",
-                desc = "Add quit keymap for gitgraph",
-                pattern = "gitgraph",
-                callback = function(args)
-                  require("astrocore").set_mappings({
-                    n = {
-                      q = {
-                        "<Cmd>bwipeout!<CR>",
-                        noremap = true,
-                        silent = true,
-                      },
-                    },
-                  }, { buffer = args.buf })
-                end,
-              },
-            },
-          },
-          mappings = {
+    init = function(_)
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("gitgraph_settings", { clear = true }),
+        desc = "Add quit keymap for gitgraph",
+        pattern = "gitgraph",
+        callback = function(args)
+          require("astrocore").set_mappings({
             n = {
-              ["<Leader>g|"] = {
-                function() require("gitgraph").draw({}, { all = true, max_count = 5000 }) end,
-                desc = "GitGraph",
+              q = {
+                "<Cmd>bwipeout!<CR>",
+                noremap = true,
+                silent = true,
               },
             },
-          },
-        },
+          }, { buffer = args.buf })
+        end,
+      })
+    end,
+    keys = {
+      {
+        "<Leader>g|",
+        function() require("gitgraph").draw({}, { all = true, max_count = 5000 }) end,
+        desc = "GitGraph",
       },
     },
     dependencies = {

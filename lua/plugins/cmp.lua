@@ -79,7 +79,7 @@ return {
         },
       })
 
-      local group = vim.api.nvim_create_augroup("cmp", {})
+      local group = vim.api.nvim_create_augroup("cmp", { clear = true })
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "saga*", "oil" },
         group = group,

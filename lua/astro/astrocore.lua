@@ -259,8 +259,6 @@ return {
         ["<Leader>Q"] = false,
 
         ["<Leader>w"] = false,
-        ["<Leader>xq"] = false,
-        ["<Leader>xl"] = false,
 
         ["<Leader>z"] = { desc = require("astroui").get_icon("misc", 1, true) .. "Misc" },
       },

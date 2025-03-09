@@ -145,23 +145,20 @@ if vim.fn.executable(deno) == 1 then
   table.insert(M, {
     "toppair/peek.nvim",
     build = deno .. " task --quiet build:fast",
-    opts = function(_, opts)
-      require("astrocore").set_mappings {
-        n = {
-          ["<Leader>zm"] = {
-            function()
-              local peek = require "peek"
-              if peek.is_open() then
-                peek.close()
-              else
-                peek.open()
-              end
-            end,
-            desc = "Markdown Preview",
-          },
-        },
-      }
-    end,
+    keys = {
+      {
+        "<Leader>zm",
+        function()
+          local peek = require "peek"
+          if peek.is_open() then
+            peek.close()
+          else
+            peek.open()
+          end
+        end,
+        desc = "Markdown Preview",
+      },
+    },
   })
 end
 

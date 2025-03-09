@@ -420,7 +420,7 @@ return {
             if not init_done then
               init_done = true
               vim.api.nvim_create_autocmd("LspAttach", {
-                group = vim.api.nvim_create_augroup("symbol-usage", {}),
+                group = vim.api.nvim_create_augroup("symbol-usage", { clear = true }),
                 callback = vim.schedule_wrap(function() require("symbol-usage").refresh() end),
                 buffer = bufnr,
                 once = true,

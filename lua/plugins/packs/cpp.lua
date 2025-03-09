@@ -22,40 +22,37 @@ return {
   {
     "p00f/clangd_extensions.nvim",
     lazy = true,
-    specs = {
-      "AstroNvim/astrocore",
-      opts = {
-        autocmds = {
-          clangd_extensions = {
-            {
-              event = "LspAttach",
-              desc = "Load clangd_extensions with clangd",
-              callback = function(args)
-                if assert(vim.lsp.get_client_by_id(args.data.client_id)).name == "clangd" then
-                  require "clangd_extensions"
-                  vim.api.nvim_del_augroup_by_name "clangd_extensions"
-                end
-              end,
-            },
-          },
-          clangd_extension_mappings = {
-            {
-              event = "LspAttach",
-              desc = "Load clangd_extensions with clangd",
-              callback = function(args)
-                if assert(vim.lsp.get_client_by_id(args.data.client_id)).name == "clangd" then
-                  require("astrocore").set_mappings({
-                    n = {
-                      ["<Leader>lw"] = { "<Cmd>ClangdSwitchSourceHeader<CR>", desc = "Switch source/header file" },
-                    },
-                  }, { buffer = args.buf })
-                end
-              end,
-            },
-          },
-        },
-      },
-    },
+    init = function(_)
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("clangd_extensions", { clear = true }),
+        desc = "clangd_extensions setup",
+        callback = function(args)
+          if assert(vim.lsp.get_client_by_id(args.data.client_id)).name == "clangd" then
+            require "clangd_extensions"
+            vim.api.nvim_del_augroup_by_name "clangd_extensions"
+
+            require("astrocore").set_mappings({
+              n = {
+                ["<Leader>lw"] = { "<Cmd>ClangdSwitchSourceHeader<CR>", desc = "Switch source/header file" },
+              },
+            }, { buffer = args.buf })
+          end
+        end,
+      })
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("clangd_extension_mappings", { clear = true }),
+        desc = "clangd_extensions setup mappings",
+        callback = function(args)
+          if assert(vim.lsp.get_client_by_id(args.data.client_id)).name == "clangd" then
+            require("astrocore").set_mappings({
+              n = {
+                ["<Leader>lw"] = { "<Cmd>ClangdSwitchSourceHeader<CR>", desc = "Switch source/header file" },
+              },
+            }, { buffer = args.buf })
+          end
+        end,
+      })
+    end,
   },
 
   {

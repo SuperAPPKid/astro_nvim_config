@@ -19,7 +19,49 @@ end
 return {
   {
     "MagicDuck/grug-far.nvim",
-    lazy = true,
+    keys = {
+      {
+        "<Leader>zs",
+        function() grug_far_open() end,
+        desc = "Search / Replace",
+      },
+      {
+        "<Leader>zS",
+        function()
+          local ext = require("astrocore.buffer").is_valid() and vim.fn.expand "%:e" or ""
+          local paths = require("astrocore.buffer").is_valid() and vim.fn.expand "%" or nil
+          grug_far_open {
+            prefills = {
+              paths = paths,
+              filesFilter = ext ~= "" and "*." .. ext or nil,
+            },
+          }
+        end,
+        desc = "Search / Replace (current file)",
+      },
+      {
+        "<Leader>zs",
+        function() grug_far_open({ startCursorRow = 4 }, true) end,
+        desc = "Search / Replace",
+        mode = "v",
+      },
+      {
+        "<Leader>zS",
+        function()
+          local ext = require("astrocore.buffer").is_valid() and vim.fn.expand "%:e" or ""
+          local paths = require("astrocore.buffer").is_valid() and vim.fn.expand "%" or nil
+          grug_far_open({
+            startCursorRow = 4,
+            prefills = {
+              paths = paths,
+              filesFilter = ext ~= "" and "*." .. ext or nil,
+            },
+          }, true)
+        end,
+        desc = "Search / Replace (current file)",
+        mode = "v",
+      },
+    },
     ---@param opts GrugFarOptionsOverride
     opts = function(_, opts)
       opts.icons = opts.icons or {}
@@ -98,65 +140,6 @@ return {
             },
           },
         },
-      },
-    },
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          maps.n["<Leader>zs"] = {
-            function() grug_far_open() end,
-            desc = "Search / Replace",
-          }
-          maps.n["<Leader>zS"] = {
-            function()
-              local ext = require("astrocore.buffer").is_valid() and vim.fn.expand "%:e" or ""
-              local paths = require("astrocore.buffer").is_valid() and vim.fn.expand "%" or nil
-              grug_far_open {
-                prefills = {
-                  paths = paths,
-                  filesFilter = ext ~= "" and "*." .. ext or nil,
-                },
-              }
-            end,
-            desc = "Search / Replace (current file)",
-          }
-          maps.v["<Leader>zs"] = {
-            function() grug_far_open({ startCursorRow = 4 }, true) end,
-            desc = "Search / Replace",
-          }
-          maps.v["<Leader>zS"] = {
-            function()
-              local ext = require("astrocore.buffer").is_valid() and vim.fn.expand "%:e" or ""
-              local paths = require("astrocore.buffer").is_valid() and vim.fn.expand "%" or nil
-              grug_far_open({
-                startCursorRow = 4,
-                prefills = {
-                  paths = paths,
-                  filesFilter = ext ~= "" and "*." .. ext or nil,
-                },
-              }, true)
-            end,
-            desc = "Search / Replace (current file)",
-          }
-          opts.autocmds = require("astrocore").extend_tbl(opts.autocmds, {
-            grugfar_settings = {
-              {
-                event = "FileType",
-                desc = "Add hint",
-                pattern = "grug-far",
-                callback = function(args)
-                  require("astrocore").set_mappings({
-                    n = {
-                      [command_key] = { desc = "Grugfar CMD" },
-                    },
-                  }, { buffer = args.buf })
-                end,
-              },
-            },
-          })
-        end,
       },
     },
   },

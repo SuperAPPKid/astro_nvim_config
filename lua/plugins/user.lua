@@ -204,7 +204,7 @@ return {
     config = function(_, opts)
       require("auto-save").setup(opts)
 
-      local group = vim.api.nvim_create_augroup("autosave", {})
+      local group = vim.api.nvim_create_augroup("autosave", { clear = true })
       vim.api.nvim_create_autocmd("User", {
         pattern = "AutoSaveWritePre",
         group = group,
@@ -302,77 +302,70 @@ return {
 
   {
     "stevearc/oil.nvim",
+    init = function(_)
+      local augroup = vim.api.nvim_create_augroup("oil_settings", { clear = true })
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = augroup,
+        desc = "Disable view saving for oil buffers",
+        pattern = "oil",
+        callback = function(args) vim.b[args.buf].view_activated = false end,
+      })
+
+      vim.api.nvim_create_autocmd("User", {
+        group = augroup,
+        desc = "Close buffers when files are deleted in Oil",
+        pattern = "OilActionsPost",
+        callback = function(args)
+          if args.data.err then return end
+          for _, action in ipairs(args.data.actions) do
+            if action.type == "delete" then
+              local _, path = require("oil.util").parse_url(action.url)
+              local bufnr = vim.fn.bufnr(path)
+              if bufnr ~= -1 then require("astrocore.buffer").wipe(bufnr, true) end
+            end
+          end
+        end,
+      })
+
+      vim.api.nvim_create_autocmd("VimEnter", {
+        group = augroup,
+        desc = "Start Oil when vim is opened with no arguments",
+        callback = vim.schedule_wrap(function()
+          local should_skip = false
+          local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)
+          if
+            #lines > 1 -- don't open if current buffer has more than 1 line
+            or (#lines == 1 and lines[1]:len() > 0) -- don't open the current buffer if it has anything on the first line
+            or #vim.tbl_filter(function(bufnr) return vim.bo[bufnr].buflisted end, vim.api.nvim_list_bufs()) > 1 -- don't open if any listed buffers
+            or not vim.o.modifiable -- don't open if not modifiable
+          then
+            should_skip = true
+          end
+
+          local dir
+          local argc = vim.fn.argc()
+          if not should_skip and argc > 0 then
+            local opened = vim.fn.expand "%:p"
+            local stat = (vim.uv or vim.loop).fs_stat(opened)
+            if stat and stat.type == "directory" then dir = opened end
+            for _, arg in pairs(vim.v.argv) do
+              if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
+                should_skip = true
+                break
+              end
+            end
+
+            if not dir then should_skip = true end
+          end
+
+          if not should_skip then require("oil").open(dir) end
+        end),
+      })
+    end,
     cmd = "Oil",
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = {
-          mappings = {
-            n = {
-              ["<Leader>O"] = { function() require("oil").open() end, desc = "Open folder in Oil" },
-            },
-          },
-          autocmds = {
-            oil_settings = {
-              {
-                event = "FileType",
-                desc = "Disable view saving for oil buffers",
-                pattern = "oil",
-                callback = function(args) vim.b[args.buf].view_activated = false end,
-              },
-              {
-                event = "User",
-                pattern = "OilActionsPost",
-                desc = "Close buffers when files are deleted in Oil",
-                callback = function(args)
-                  if args.data.err then return end
-                  for _, action in ipairs(args.data.actions) do
-                    if action.type == "delete" then
-                      local _, path = require("oil.util").parse_url(action.url)
-                      local bufnr = vim.fn.bufnr(path)
-                      if bufnr ~= -1 then require("astrocore.buffer").wipe(bufnr, true) end
-                    end
-                  end
-                end,
-              },
-              {
-                event = "VimEnter",
-                desc = "Start Oil when vim is opened with no arguments",
-                callback = vim.schedule_wrap(function()
-                  local should_skip = false
-                  local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)
-                  if
-                    #lines > 1 -- don't open if current buffer has more than 1 line
-                    or (#lines == 1 and lines[1]:len() > 0) -- don't open the current buffer if it has anything on the first line
-                    or #vim.tbl_filter(function(bufnr) return vim.bo[bufnr].buflisted end, vim.api.nvim_list_bufs()) > 1 -- don't open if any listed buffers
-                    or not vim.o.modifiable -- don't open if not modifiable
-                  then
-                    should_skip = true
-                  end
-
-                  local dir
-                  local argc = vim.fn.argc()
-                  if not should_skip and argc > 0 then
-                    local opened = vim.fn.expand "%:p"
-                    local stat = (vim.uv or vim.loop).fs_stat(opened)
-                    if stat and stat.type == "directory" then dir = opened end
-                    for _, arg in pairs(vim.v.argv) do
-                      if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
-                        should_skip = true
-                        break
-                      end
-                    end
-
-                    if not dir then should_skip = true end
-                  end
-
-                  if not should_skip then require("oil").open(dir) end
-                end),
-              },
-            },
-          },
-        },
-      },
+    keys = {
+      { "<Leader>O", function() require("oil").open() end, desc = "Open folder in Oil" },
     },
     opts = function(_, opts)
       local get_icon = require("astroui").get_icon
@@ -904,7 +897,6 @@ return {
 
   {
     "kevinhwang91/nvim-hlslens",
-    -- dependencies = { "AstroNvim/astrocore", opts = { on_keys = { auto_hlsearch = false } } },
     event = "BufRead",
     config = true,
   },
@@ -1454,8 +1446,8 @@ return {
         opts = function(_, opts)
           local defaults = opts.defaults
           local open_with_trouble = require("trouble.sources.telescope").open
-          defaults.mappings.n["<C-\\>"] = open_with_trouble
-          defaults.mappings.i["<C-\\>"] = open_with_trouble
+          defaults.mappings.n["<C-x>"] = open_with_trouble
+          defaults.mappings.i["<C-x>"] = open_with_trouble
         end,
       },
     },
@@ -1467,12 +1459,20 @@ return {
       keys = require("astrocore").list_insert_unique(keys, {
         -- { prefix .. "<CR>", "<Cmd>Trouble <CR>", desc = "Trouble modes" },
         { "<Leader>X", "<Cmd>Trouble diagnostics close<CR>", desc = "Close Trouble" },
-        { prefix .. "X", "<Cmd>Trouble diagnostics toggle<CR>", desc = "Trouble Workspace Diagnostics" },
-        { prefix .. "x", "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "Trouble Document Diagnostics" },
-        { prefix .. "L", "<Cmd>Trouble loclist toggle<CR>", desc = "Trouble Location List" },
-        { prefix .. "Q", "<Cmd>Trouble quickfix toggle<CR>", desc = "Trouble Quickfix List" },
-        { prefix .. "s", "<Cmd>Trouble symbols toggle<CR>", desc = "Trouble Symbols" },
-        { prefix .. "l", "<Cmd>Trouble lsp toggle<CR>", desc = "Trouble LSP" },
+        { prefix .. "X", "<Cmd>Trouble diagnostics toggle<CR>", desc = "Workspace Diagnostics (Trouble)" },
+        { prefix .. "x", "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "Document Diagnostics (Trouble)" },
+        { prefix .. "L", "<Cmd>Trouble loclist toggle<CR>", desc = "Location List (Trouble)" },
+        { prefix .. "Q", "<Cmd>Trouble quickfix toggle<CR>", desc = "Quickfix List (Trouble)" },
+        { prefix .. "s", "<Cmd>Trouble symbols toggle<CR>", desc = "Symbols (Trouble)" },
+        { prefix .. "f", "<Cmd>Trouble telescope toggle<CR>", desc = "Telescope Result (Trouble)" },
+        { prefix .. "g", "<Nop>", desc = "LSP" },
+        { prefix .. "gd", "<Cmd>Trouble lsp_definitions toggle<CR>", desc = "LSP Definition (Trouble)" },
+        { prefix .. "gd", "<Cmd>Trouble lsp_references toggle<CR>", desc = "LSP Reference (Trouble)" },
+        { prefix .. "gv", "<Cmd>Trouble lsp_declarations toggle<CR>", desc = "LSP Type Declaration (Trouble)" },
+        { prefix .. "gy", "<Cmd>Trouble lsp_type_definitions toggle<CR>", desc = "LSP Type Definition (Trouble)" },
+        { prefix .. "gI", "<Cmd>Trouble lsp_implementations toggle<CR>", desc = "LSP Implementation (Trouble)" },
+        { prefix .. "gc", "<Cmd>Trouble lsp_incoming_calls toggle<CR>", desc = "LSP Incoming Call (Trouble)" },
+        { prefix .. "gC", "<Cmd>Trouble lsp_outgoing_calls toggle<CR>", desc = "LSP Outgoing Call (Trouble)" },
       })
       if require("astrocore").is_available "todo-comments.nvim" then
         keys = require("astrocore").list_insert_unique(keys, {
@@ -1512,11 +1512,11 @@ return {
       opts.focus = true
       opts.icons = {
         indent = {
-          fold_open = get_icon "FoldOpened",
-          fold_closed = get_icon "FoldClosed",
+          fold_open = get_icon "FoldOpened" .. " ",
+          fold_closed = get_icon "FoldClosed" .. " ",
         },
-        folder_closed = get_icon "FolderClosed",
-        folder_open = get_icon "FolderOpen",
+        folder_closed = get_icon "FolderClosed" .. " ",
+        folder_open = get_icon "FolderOpen" .. " ",
         kinds = lspkind_avail and lspkind.symbol_map,
       }
       opts.modes = opts.modes or {}
@@ -1612,20 +1612,19 @@ return {
 
   {
     "superappkid/nvim-recorder",
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          maps.n["q"] = { "<Nop>" }
-        end,
-      },
-    },
     keys = function(plugin, _)
+      require("astrocore").set_mappings {
+        n = {
+          ["q"] = { "<Nop>" },
+          ["<Leader>q"] = { desc = " Recording" },
+        },
+      }
+
       local opts = type(plugin.opts) == "function" and plugin.opts(plugin, {}) or plugin.opts or {}
       local mapping = opts.mapping or {}
       local insert = require("astrocore").list_insert_unique
       local keys = {}
+
       if mapping.startStopRecording then
         insert(
           keys,
@@ -1652,24 +1651,17 @@ return {
       end
       return keys
     end,
-    opts = function(_, _)
-      local prefix = "<Leader>q"
-      local mapping = {}
-      mapping[prefix] = { desc = " Recording" }
-      require("astrocore").set_mappings { n = mapping }
-
-      return {
-        slots = { "a", "b", "c", "d", "e" },
-        mapping = {
-          startStopRecording = "Q",
-          playMacro = "<Leader>q<CR>",
-          switchSlot = "<Leader>qc",
-          editMacro = "<Leader>qe",
-          deleteAllMacros = "<Leader>qD",
-          yankMacro = "<Leader>qy",
-        },
-      }
-    end,
+    opts = {
+      slots = { "a", "b", "c", "d", "e" },
+      mapping = {
+        startStopRecording = "Q",
+        playMacro = "<Leader>q<CR>",
+        switchSlot = "<Leader>qc",
+        editMacro = "<Leader>qe",
+        deleteAllMacros = "<Leader>qD",
+        yankMacro = "<Leader>qy",
+      },
+    },
   },
 
   {
@@ -1678,18 +1670,29 @@ return {
       "nvim-telescope/telescope.nvim",
       "L3MON4D3/LuaSnip",
     },
-    keys = function()
+    keys = function(_, keys)
+      keys = {}
       local prefix = "<Leader>I"
-      return {
-        { prefix, function() end, desc = " Snippet" },
-        { prefix .. "<CR>", function() require("scissors").editSnippet() end, desc = "Find snippet" },
-        {
-          prefix .. "n",
-          function() require("scissors").addNewSnippet() end,
-          mode = { "n", "v" },
-          desc = "Create snippet",
+      require("astrocore").set_mappings {
+        n = {
+          [prefix] = { desc = " Snippet" },
+          [prefix .. "<CR>"] = {
+            function() require("scissors").editSnippet() end,
+            desc = "Find snippet",
+          },
+          [prefix .. "n"] = {
+            function() require("scissors").addNewSnippet() end,
+            desc = "Create snippet",
+          },
+        },
+        v = {
+          [prefix] = {
+            function() require("scissors").addNewSnippet() end,
+            desc = "Create snippet",
+          },
         },
       }
+      return keys
     end,
     opts = function(_, opts)
       local snippetDir = vim.fn.stdpath "data" .. "/nvim-scissors"

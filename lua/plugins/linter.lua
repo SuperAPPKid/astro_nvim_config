@@ -10,29 +10,6 @@ return {
   dependencies = { "williamboman/mason.nvim" },
   specs = {
     { "jay-babu/mason-null-ls.nvim", optional = true, opts = { methods = { diagnostics = false } } },
-    {
-      "AstroNvim/astrocore",
-      ---@param opts AstroCoreOpts
-      opts = function(_, opts)
-        local timer = (vim.uv or vim.loop).new_timer()
-        if not opts.autocmds then opts.autocmds = {} end
-        opts.autocmds.auto_lint = {
-          {
-            event = { "BufWritePost", "BufReadPost", "InsertLeave", "TextChanged" },
-            desc = "Automatically lint with nvim-lint",
-            callback = function()
-              -- only run autocommand when nvim-lint is loaded
-              if lint then
-                timer:start(100, 0, function()
-                  timer:stop()
-                  vim.schedule(lint.try_lint)
-                end)
-              end
-            end,
-          },
-        }
-      end,
-    },
   },
   opts = {
     linters_by_ft = {
@@ -98,5 +75,25 @@ return {
     end)
 
     lint.try_lint()
+
+    -- register autocmd to auto-lint
+    local timer = (vim.uv or vim.loop).new_timer()
+    vim.api.nvim_create_autocmd({
+      "BufWritePost",
+      "BufReadPost",
+      "InsertLeave",
+      "TextChanged",
+    }, {
+      group = vim.api.nvim_create_augroup("auto_lint", { clear = true }),
+      callback = function(_)
+        -- only run autocommand when nvim-lint is loaded
+        if timer and lint then
+          timer:start(100, 0, function()
+            timer:stop()
+            vim.schedule(lint.try_lint)
+          end)
+        end
+      end,
+    })
   end,
 }

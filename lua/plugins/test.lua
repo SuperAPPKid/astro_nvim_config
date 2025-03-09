@@ -155,110 +155,102 @@ return {
   {
     "ThePrimeagen/refactoring.nvim",
     event = "User AstroFile",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
+    specs = {
       {
         "AstroNvim/astrocore",
-        ---@param opts AstroCoreOpts
         opts = function(_, opts)
           local get_icon = require("astroui").get_icon
           local prefix = "<Leader>R"
-          return require("astrocore").extend_tbl(opts, {
-            mappings = {
-              n = {
-                [prefix] = { desc = get_icon("refactoring", 1, true) .. "Refactor" },
-                [prefix .. "b"] = {
-                  function() require("refactoring").refactor "Extract Block" end,
-                  desc = "Extract Block",
-                },
-                [prefix .. "i"] = {
-                  function() require("refactoring").refactor "Inline Variable" end,
-                  desc = "Inline Variable",
-                },
-                [prefix .. "p"] = {
-                  function() require("refactoring").debug.printf { below = false } end,
-                  desc = "Debug: Print Function",
-                },
-                [prefix .. "c"] = {
-                  function() require("refactoring").debug.cleanup {} end,
-                  desc = "Debug: Clean Up",
-                },
-                [prefix .. "d"] = {
-                  function() require("refactoring").debug.print_var { below = false } end,
-                  desc = "Debug: Print Variable",
-                },
-                [prefix .. "bf"] = {
-                  function() require("refactoring").refactor "Extract Block To File" end,
-                  desc = "Extract Block To File",
-                },
-              },
-              x = {
-                [prefix .. ""] = { desc = get_icon("refactoring", 1, true) .. "Refactor" },
-                [prefix .. "e"] = {
-                  function() require("refactoring").refactor "Extract Function" end,
-                  desc = "Extract Function",
-                },
-                [prefix .. "f"] = {
-                  function() require("refactoring").refactor "Extract Function To File" end,
-                  desc = "Extract Function To File",
-                },
-                [prefix .. "v"] = {
-                  function() require("refactoring").refactor "Extract Variable" end,
-                  desc = "Extract Variable",
-                },
-                [prefix .. "i"] = {
-                  function() require("refactoring").refactor "Inline Variable" end,
-                  desc = "Inline Variable",
-                },
-              },
-              v = {
-                [prefix .. ""] = { desc = get_icon("refactoring", 1, true) .. "Refactor" },
-                [prefix .. "e"] = {
-                  function() require("refactoring").refactor "Extract Function" end,
-                  desc = "Extract Function",
-                },
-                [prefix .. "f"] = {
-                  function() require("refactoring").refactor "Extract Function To File" end,
-                  desc = "Extract Function To File",
-                },
-                [prefix .. "v"] = {
-                  function() require("refactoring").refactor "Extract Variable" end,
-                  desc = "Extract Variable",
-                },
-                [prefix .. "i"] = {
-                  function() require("refactoring").refactor "Inline Variable" end,
-                  desc = "Inline Variable",
-                },
-                [prefix .. "b"] = {
-                  function() require("refactoring").refactor "Extract Block" end,
-                  desc = "Extract Block",
-                },
-                [prefix .. "bf"] = {
-                  function() require("refactoring").refactor "Extract Block To File" end,
-                  desc = "Extract Block To File",
-                },
-                [prefix .. "r"] = {
-                  function() require("refactoring").select_refactor() end,
-                  desc = "Select Refactor",
-                },
-                [prefix .. "p"] = {
-                  function() require("refactoring").debug.printf { below = false } end,
-                  desc = "Debug: Print Function",
-                },
-                [prefix .. "c"] = {
-                  function() require("refactoring").debug.cleanup {} end,
-                  desc = "Debug: Clean Up",
-                },
-                [prefix .. "d"] = {
-                  function() require("refactoring").debug.print_var { below = false } end,
-                  desc = "Debug: Print Variable",
-                },
-              },
-            },
-          } --[[@as AstroCoreOpts]])
+          local maps = opts.mappings
+          maps.n[prefix] = { desc = get_icon("refactoring", 1, true) .. "Refactor" }
+          maps.v[prefix] = { desc = get_icon("refactoring", 1, true) .. "Refactor" }
+
+          maps.n[prefix .. "i"] = {
+            function() require("refactoring").refactor "Inline Variable" end,
+            desc = "Inline Variable",
+          }
+          maps.n[prefix .. "p"] = {
+            function() require("refactoring").debug.printf { below = false } end,
+            desc = "Debug: Print Function",
+          }
+          maps.n[prefix .. "c"] = {
+            function() require("refactoring").debug.cleanup {} end,
+            desc = "Debug: Clean Up",
+          }
+          maps.n[prefix .. "d"] = {
+            function() require("refactoring").debug.print_var { below = false } end,
+            desc = "Debug: Print Variable",
+          }
+          maps.n[prefix .. "b"] = {
+            function() require("refactoring").refactor "Extract Block" end,
+            desc = "Extract Block",
+          }
+          maps.n[prefix .. "B"] = {
+            function() require("refactoring").refactor "Extract Block To File" end,
+            desc = "Extract Block To File",
+          }
+          maps.x[prefix .. "e"] = {
+            function() require("refactoring").refactor "Extract Function" end,
+            desc = "Extract Function",
+          }
+          maps.x[prefix .. "f"] = {
+            function() require("refactoring").refactor "Extract Function To File" end,
+            desc = "Extract Function To File",
+          }
+          maps.x[prefix .. "v"] = {
+            function() require("refactoring").refactor "Extract Variable" end,
+            desc = "Extract Variable",
+          }
+          maps.x[prefix .. "i"] = {
+            function() require("refactoring").refactor "Inline Variable" end,
+            desc = "Inline Variable",
+          }
+          maps.v[prefix .. "e"] = {
+            function() require("refactoring").refactor "Extract Function" end,
+            desc = "Extract Function",
+          }
+          maps.v[prefix .. "f"] = {
+            function() require("refactoring").refactor "Extract Function To File" end,
+            desc = "Extract Function To File",
+          }
+          maps.v[prefix .. "v"] = {
+            function() require("refactoring").refactor "Extract Variable" end,
+            desc = "Extract Variable",
+          }
+          maps.v[prefix .. "i"] = {
+            function() require("refactoring").refactor "Inline Variable" end,
+            desc = "Inline Variable",
+          }
+          maps.v[prefix .. "b"] = {
+            function() require("refactoring").refactor "Extract Block" end,
+            desc = "Extract Block",
+          }
+          maps.v[prefix .. "B"] = {
+            function() require("refactoring").refactor "Extract Block To File" end,
+            desc = "Extract Block To File",
+          }
+          maps.v[prefix .. "r"] = {
+            function() require("refactoring").select_refactor() end,
+            desc = "Select Refactor",
+          }
+          maps.v[prefix .. "p"] = {
+            function() require("refactoring").debug.printf { below = false } end,
+            desc = "Debug: Print Function",
+          }
+          maps.v[prefix .. "c"] = {
+            function() require("refactoring").debug.cleanup {} end,
+            desc = "Debug: Clean Up",
+          }
+          maps.v[prefix .. "d"] = {
+            function() require("refactoring").debug.print_var { below = false } end,
+            desc = "Debug: Print Variable",
+          }
         end,
       },
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
     },
     config = true,
   },

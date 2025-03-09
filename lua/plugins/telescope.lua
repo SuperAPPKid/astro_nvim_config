@@ -11,18 +11,21 @@ return {
     dependencies = {
       { "stevearc/dressing.nvim" },
     },
-    keys = function(_, keys)
-      if vim.fn.executable "git" == 1 then
-        require("astrocore").list_insert_unique(keys, {
-          {
-            git_prefix .. "s",
-            "<Cmd>Telescope git_status<CR>",
-            desc = "Git Status",
-          },
-        })
-      end
-      return keys
-    end,
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          local astro = require "astrocore"
+          maps.n["<Leader>f<CR>"] =
+            { function() require("telescope.builtin").pickers() end, desc = "Opens cached pickers" }
+
+          if vim.fn.executable "git" == 1 then
+            maps.n[git_prefix .. "s"] = { "<Cmd>Telescope git_status<CR>", desc = "Git Status" }
+          end
+        end,
+      },
+    },
     config = function(plugin, opts)
       require "astronvim.plugins.configs.telescope"(plugin, opts)
       require("dressing").setup {
@@ -42,10 +45,19 @@ return {
         preview = { "─", "│", "─", "│", "╭", "┤", "┘", "└" },
       }
       defaults.prompt_prefix = " "
-      defaults.selection_caret = " "
       defaults.entry_prefix = " "
+      defaults.selection_caret = " "
       defaults.selection_strategy = "reset"
-      defaults.mappings.i["<C-L>"] = false
+      defaults.cache_picker = {
+        num_pickers = -1,
+        ignore_empty_prompt = true,
+      }
+
+      defaults.mappings.i["<C-l>"] = false
+      defaults.mappings.n["<C-v>"] = false
+      defaults.mappings.i["<C-v>"] = false
+      defaults.mappings.n["<C-\\>"] = "select_vertical"
+      defaults.mappings.i["<C-\\>"] = "select_vertical"
 
       opts.defaults = require("telescope.themes").get_ivy(defaults)
     end,
@@ -124,7 +136,7 @@ return {
               auto_quoting = true, -- enable/disable auto-quoting
               mappings = { -- extend mappings
                 i = {
-                  ["<C-q>"] = function(...)
+                  ["<C-w>"] = function(...)
                     local quote_prompt = require("telescope-live-grep-args.actions").quote_prompt { postfix = " " }
                     return quote_prompt(...)
                   end,

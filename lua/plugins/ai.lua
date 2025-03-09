@@ -33,70 +33,59 @@ return {
       },
       "MeanderingProgrammer/render-markdown.nvim",
     },
-    keys = function(_, _)
+    keys = function(_, keys)
+      keys = {}
       local prefix = "<Leader>A"
-      return {
-        {
-          prefix,
-          function() end,
-          mode = { "n", "v" },
-          desc = " Avante",
+      require("astrocore").set_mappings {
+        n = {
+          [prefix] = { desc = " Avante" },
+          [prefix .. "<CR>"] = {
+            function() require("avante.api").focus() end,
+            desc = "avante: ask",
+          },
+          [prefix .. "r"] = {
+            function() require("avante.api").refresh() end,
+            desc = "avante: refresh",
+          },
+          [prefix .. "M"] = {
+            function() require("avante.api").select_model() end,
+            desc = "avante: select model",
+          },
+          [prefix .. "R"] = {
+            function() require("avante.repo_map").show() end,
+            desc = "avante: display repo map",
+          },
+          [prefix .. "u"] = { desc = "Toggle" },
+          [prefix .. "u<CR>"] = {
+            function() require("avante").toggle() end,
+            desc = "avante: toggle",
+          },
+          [prefix .. "ud"] = {
+            function() require("avante").toggle.debug() end,
+            desc = "avante: toggle debug",
+          },
+          [prefix .. "uh"] = {
+            function() require("avante").toggle.hint() end,
+            desc = "avante: toggle hint",
+          },
+          [prefix .. "us"] = {
+            function() require("avante").toggle.suggestion() end,
+            desc = "avante: toggle suggestion",
+          },
         },
-        {
-          prefix .. "<CR>",
-          function() require("avante.api").ask() end,
-          mode = { "n", "v" },
-          desc = "avante: ask",
-        },
-        {
-          prefix .. "e",
-          function() require("avante.api").edit() end,
-          mode = "v",
-          desc = "avante: edit",
-        },
-        {
-          prefix .. "r",
-          function() require("avante.api").refresh() end,
-          desc = "avante: refresh",
-        },
-        {
-          prefix .. "f",
-          function() require("avante.api").focus() end,
-          desc = "avante: focus",
-        },
-        {
-          prefix .. "u",
-          function() end,
-          desc = "Toggle",
-        },
-        {
-          prefix .. "u<CR>",
-          function() require("avante").toggle() end,
-          desc = "avante: toggle",
-        },
-        {
-          prefix .. "ud",
-          function() require("avante").toggle.debug() end,
-          desc = "avante: toggle debug",
-        },
-        {
-          prefix .. "uh",
-          function() require("avante").toggle.hint() end,
-          desc = "avante: toggle hint",
-        },
-        {
-          prefix .. "us",
-          function() require("avante").toggle.suggestion() end,
-          desc = "avante: toggle suggestion",
-        },
-        {
-          prefix .. "ur",
-          function() require("avante.repo_map").show() end,
-          desc = "avante: display repo map",
-          noremap = true,
-          silent = true,
+        v = {
+          [prefix] = { desc = " Avante" },
+          [prefix .. "<CR>"] = {
+            function() require("avante.api").focus() end,
+            desc = "avante: ask",
+          },
+          [prefix .. "e"] = {
+            function() require("avante.api").edit() end,
+            desc = "avante: edit",
+          },
         },
       }
+      return keys
     end,
     opts = {
       provider = "copilot",
