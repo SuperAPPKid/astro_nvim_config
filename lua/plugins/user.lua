@@ -104,7 +104,7 @@ return {
   },
 
   {
-    "folke/edgy.nvim",
+    "superappkid/edgy.nvim",
     init = function()
       vim.opt.laststatus = 3
       vim.opt.splitkeep = "screen"
