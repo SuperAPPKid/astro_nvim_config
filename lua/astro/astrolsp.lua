@@ -332,14 +332,16 @@ return {
       handlers = {
         -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
         function(server, handler_opts)
-          for _, handler_opt in pairs(handler_opts) do
-            -- HACK: workaround for https://github.com/neovim/neovim/issues/28058
-            if type(handler_opt) == "table" and handler_opt.workspace then
-              handler_opt.workspace.didChangeWatchedFiles = {
-                dynamicRegistration = true,
-                relativePatternSupport = false,
-              }
-              break
+          if vim.fn.has "nvim-0.11" ~= 1 then
+            for _, handler_opt in pairs(handler_opts) do
+              -- HACK: workaround for https://github.com/neovim/neovim/issues/28058
+              if type(handler_opt) == "table" and handler_opt.workspace then
+                handler_opt.workspace.didChangeWatchedFiles = {
+                  dynamicRegistration = true,
+                  relativePatternSupport = false,
+                }
+                break
+              end
             end
           end
 

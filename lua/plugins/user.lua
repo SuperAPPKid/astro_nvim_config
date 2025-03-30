@@ -1732,4 +1732,15 @@ return {
       }
     end,
   },
+
+  {
+    "chrisgrieser/nvim-origami",
+    event = "BufReadPost",
+    opts = {
+      keepFoldsAcrossSessions = false,
+      foldKeymaps = {
+        hOnlyOpensOnFirstColumn = true,
+      },
+    },
+  },
 }
