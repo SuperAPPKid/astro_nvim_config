@@ -37,20 +37,31 @@ return {
           mappings.n["<C-T>"] = { "<Cmd>ToggleTerm<CR>" }
 
           if vim.fn.executable "lazygit" == 1 then
-            mappings.n["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")
-            local lazygit = {
-              callback = function()
-                local worktree = require("astrocore").file_worktree()
-                local flags = worktree and (" --work-tree=%s --git-dir=%s"):format(worktree.toplevel, worktree.gitdir)
-                  or ""
-                require("astrocore").toggle_term_cmd {
-                  cmd = "lazygit " .. flags,
-                  direction = "float",
-                  on_exit = function() require("utils").git_broadcast() end,
-                }
-              end,
-              desc = "ToggleTerm lazygit",
+            local show_lazygit = function()
+              local worktree = require("astrocore").file_worktree()
+              local flags = worktree and (" --work-tree=%s --git-dir=%s"):format(worktree.toplevel, worktree.gitdir)
+                or ""
+              require("astrocore").toggle_term_cmd {
+                cmd = "lazygit " .. flags,
+                direction = "float",
+                on_exit = function() require("utils").git_broadcast() end,
+              }
+            end
+
+            opts.autocmds.lazygit_commit = {
+              {
+                event = "BufDelete",
+                callback = function(args)
+                  local path = vim.api.nvim_buf_get_name(args.buf)
+                  local last_dir = vim.fn.fnamemodify(path, ":h:t")
+                  local fname = vim.fn.fnamemodify(path, ":t")
+                  if last_dir .. "/" .. fname == ".git/COMMIT_EDITMSG" then vim.schedule(show_lazygit) end
+                end,
+              },
             }
+
+            mappings.n["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")
+            local lazygit = { callback = show_lazygit, desc = "ToggleTerm lazygit" }
 
             mappings.n["<Leader>tg"] = { lazygit.callback, desc = lazygit.desc }
             mappings.n["<Leader>gg"] = { lazygit.callback, desc = lazygit.desc }
