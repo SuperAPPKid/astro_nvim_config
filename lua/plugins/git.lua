@@ -68,59 +68,16 @@ return {
   {
     "sindrets/diffview.nvim",
     enabled = enabled,
-    cmd = {
-      "DiffviewFileHistory",
-      "DiffviewOpen",
-      "DiffviewToggleFiles",
-      "DiffviewFocusFiles",
-      "DiffviewRefresh",
-    },
-    specs = {
+    keys = {
       {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local last_tabpage = vim.api.nvim_get_current_tabpage()
-          local find_target_tab = function(cmd, range_args)
-            local lib = require "diffview.lib"
-            local view = lib.get_current_view()
-            if view then
-              -- Current tabpage is a Diffview: go to previous tabpage
-              vim.api.nvim_set_current_tabpage(last_tabpage)
-            else
-              for _, v in ipairs(lib.views) do
-                local tabn = vim.api.nvim_tabpage_get_number(v.tabpage)
-                vim.cmd.tabclose(tabn)
-              end
-
-              last_tabpage = vim.api.nvim_get_current_tabpage()
-
-              if range_args then
-                range_args.cmd = cmd
-                vim.api.nvim_cmd(range_args, { output = false })
-              else
-                vim.cmd(cmd)
-              end
-            end
-          end
-
-          local maps = opts.mappings
-          local prefix = "<Leader>g"
-          maps.n[prefix .. "d"] = {
-            function() find_target_tab "DiffviewOpen -uno -- %" end,
-            desc = "Open File Diff",
-          }
-          maps.n[prefix .. "D"] = {
-            function() find_target_tab "DiffviewFileHistory %" end,
-            desc = "Open File History",
-          }
-          maps.v[prefix .. "D"] = {
-            function()
-              local line = vim.api.nvim_win_get_cursor(0)[1]
-              find_target_tab("DiffviewFileHistory", { range = { line, line } })
-            end,
-            desc = "Open File History(Line)",
-          }
-        end,
+        "<Leader>gd",
+        "<Nop>",
+        desc = "Git Diff",
+      },
+      {
+        "<Leader>gd<CR>",
+        "<Cmd>DiffviewOpen -uno -- %<CR>",
+        desc = "Diff Changes",
       },
     },
     opts = {
@@ -230,28 +187,25 @@ return {
 
   {
     "lewis6991/gitsigns.nvim",
-    tag = "v0.8.1",
     specs = {
+      {
+        "echasnovski/mini.ai",
+        opts = {
+          custom_textobjects = {
+            ["g"] = function()
+              require("gitsigns").select_hunk()
+              return false
+            end,
+          },
+        },
+      },
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
           maps.n["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")
           maps.n["<Leader>gl"] = { function() require("gitsigns").blame_line() end, desc = "Git Blame line" }
-          maps.n["<Leader>gr"] = {
-            function()
-              require("gitsigns").reset_hunk()
-              require("utils").git_broadcast()
-            end,
-            desc = "Git Reset hunk",
-          }
-          maps.n["<Leader>gR"] = {
-            function()
-              require("gitsigns").reset_buffer()
-              require("utils").git_broadcast()
-            end,
-            desc = "Git Reset buffer",
-          }
+          maps.n["<Leader>gL"] = { function() require("gitsigns").blame() end, desc = "Git Blame" }
           maps.n["<Leader>gp"] = {
             function()
               require("gitsigns").preview_hunk()
@@ -265,54 +219,60 @@ return {
             end,
             desc = "Git Preview hunk",
           }
-          maps.n["<Leader>gH"] = {
+          maps.n["<Leader>gD"] = {
+            function() require("gitsigns").preview_hunk_inline() end,
+            desc = "Git Toggle deleted",
+          }
+
+          maps.n["<Leader>gh"] = {
             function()
               require("gitsigns").stage_hunk()
               require("utils").git_broadcast()
             end,
             desc = "Git Stage hunk",
           }
-          maps.n["<Leader>gB"] = {
+          maps.n["<Leader>gH"] = {
+            function()
+              require("gitsigns").reset_hunk()
+              require("utils").git_broadcast()
+            end,
+            desc = "Git Reset hunk",
+          }
+          maps.n["<Leader>gb"] = {
             function()
               require("gitsigns").stage_buffer()
               require("utils").git_broadcast()
             end,
             desc = "Git Stage buffer",
           }
-          maps.n["<Leader>gu"] = {
+          maps.n["<Leader>gB"] = {
             function()
-              require("gitsigns").undo_stage_hunk()
+              require("gitsigns").reset_buffer()
               require("utils").git_broadcast()
             end,
-            desc = "Git Undo Stage",
+            desc = "Git Reset buffer",
           }
-          maps.n["<Leader>gh"] = { function() require("gitsigns").select_hunk() end, desc = "Git Select hunk" }
+          maps.n["<Leader>gq"] = { require("gitsigns").setqflist, desc = "Quickfix hunk (current)" }
+          maps.n["<Leader>gQ"] = { function() require("gitsigns").setqflist "all" end, desc = "Quickfix hunk (all)" }
           maps.n["[G"] = { function() require("gitsigns").nav_hunk "first" end, desc = "First Git hunk" }
           maps.n["]G"] = { function() require("gitsigns").nav_hunk "last" end, desc = "Last Git hunk" }
           maps.n["]g"] = { function() require("gitsigns").nav_hunk "next" end, desc = "Next Git hunk" }
           maps.n["[g"] = { function() require("gitsigns").nav_hunk "prev" end, desc = "Previous Git hunk" }
 
           maps.v["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")
-          maps.v["<Leader>gr"] = {
-            function()
-              require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" }
-              require("utils").git_broadcast()
-            end,
-            desc = "Git Reset hunk",
-          }
-          maps.v["<Leader>gH"] = {
+          maps.v["<Leader>gh"] = {
             function()
               require("gitsigns").stage_hunk { vim.fn.line ".", vim.fn.line "v" }
               require("utils").git_broadcast()
             end,
             desc = "Git Stage hunk",
           }
-          maps.v["<Leader>gu"] = {
+          maps.v["<Leader>gH"] = {
             function()
-              require("gitsigns").undo_stage_hunk()
+              require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" }
               require("utils").git_broadcast()
             end,
-            desc = "Git Undo Stage",
+            desc = "Git Reset hunk",
           }
         end,
       },
@@ -408,77 +368,6 @@ return {
       },
       use_diagnostic_signs = true,
       mappings = {},
-    },
-  },
-
-  {
-    "FabijanZulj/blame.nvim",
-    cmd = "BlameToggle",
-    enabled = enabled,
-    config = true,
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        ---@type AstroCoreOpts
-        opts = {
-          mappings = {
-            n = {
-              ["<Leader>gL"] = {
-                "<Cmd>BlameToggle<CR>",
-                desc = "Git Blame",
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-
-  {
-    "isakbm/gitgraph.nvim",
-    enabled = enabled,
-    init = function(_)
-      vim.api.nvim_create_autocmd("FileType", {
-        group = vim.api.nvim_create_augroup("gitgraph_settings", { clear = true }),
-        desc = "Add quit keymap for gitgraph",
-        pattern = "gitgraph",
-        callback = function(args)
-          require("astrocore").set_mappings({
-            n = {
-              q = {
-                "<Cmd>bwipeout!<CR>",
-                noremap = true,
-                silent = true,
-              },
-            },
-          }, { buffer = args.buf })
-        end,
-      })
-    end,
-    keys = {
-      {
-        "<Leader>g|",
-        function() require("gitgraph").draw({}, { all = true, max_count = 5000 }) end,
-        desc = "GitGraph",
-      },
-    },
-    dependencies = {
-      { "sindrets/diffview.nvim" },
-    },
-    opts = {
-      format = {
-        timestamp = "%a %b %d, %Y at %H:%M",
-      },
-      hooks = {
-        on_select_commit = function(commit)
-          vim.cmd "bwipeout!"
-          vim.cmd.DiffviewOpen(commit.hash .. "^!")
-        end,
-        on_select_range_commit = function(from, to)
-          vim.cmd "bwipeout!"
-          vim.cmd.DiffviewOpen(from.hash .. "~1.." .. to.hash)
-        end,
-      },
     },
   },
 }
