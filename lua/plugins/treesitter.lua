@@ -120,7 +120,6 @@ return {
       "sql",
       "swift",
       "svelte",
-      "tmux",
       "templ",
       "terraform",
       "toml",
