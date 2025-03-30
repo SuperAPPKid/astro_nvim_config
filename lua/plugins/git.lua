@@ -13,15 +13,15 @@ return {
           local maps = opts.mappings
           local prefix = "<Leader>g"
 
-          maps.n[prefix .. "c"] = {
+          maps.n[prefix .. "C"] = {
             function() require("tinygit").smartCommit { pushIfClean = false, pullBeforePush = true } end,
             desc = "Git SmartCommit",
           }
-          maps.n[prefix .. "C"] = {
+          maps.n[prefix .. "A"] = {
             function() require("tinygit").amendNoEdit { forcePushIfDiverged = false, stageAllIfNothingStaged = true } end,
             desc = "Git AmendNoEdit",
           }
-          maps.n[prefix .. "e"] = {
+          maps.n[prefix .. "E"] = {
             function() require("tinygit").amendOnlyMsg { forcePushIfDiverged = false } end,
             desc = "Git Edit Message",
           }
@@ -49,7 +49,7 @@ return {
             function() require("tinygit").stashPush() end,
             desc = "Git Stash Push",
           }
-          maps.n[prefix .. "o"] = {
+          maps.n[prefix .. "I"] = {
             function() require("tinygit").stashPop() end,
             desc = "Git Stash Pop",
           }

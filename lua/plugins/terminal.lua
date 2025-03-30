@@ -11,19 +11,19 @@ return {
               event = "TermOpen",
               pattern = "term://*toggleterm#*",
               callback = function(args)
-                vim.keymap.set("t", "<C-n>", [[<C-\><C-n>]], {
+                vim.keymap.set("t", "<C-N>", [[<C-\><C-n>]], {
                   desc = "Normal mode",
                   noremap = true,
                   silent = true,
                   buffer = args.buf,
                 })
-                vim.keymap.set({ "n", "t" }, "<C-q>", function() require("astrocore.buffer").close() end, {
+                vim.keymap.set({ "n", "t" }, "<C-Q>", function() require("astrocore.buffer").close() end, {
                   desc = "Close buffer",
                   noremap = true,
                   silent = true,
                   buffer = args.buf,
                 })
-                vim.keymap.set({ "n", "t" }, "<C-t>", function() vim.cmd "hide" end, {
+                vim.keymap.set({ "n", "t" }, "<C-T>", function() vim.cmd "hide" end, {
                   desc = "Toggle buffer",
                   noremap = true,
                   silent = true,
@@ -34,7 +34,7 @@ return {
           }
 
           local mappings = opts.mappings
-          mappings.n["<C-t>"] = { "<Cmd>ToggleTerm<CR>" }
+          mappings.n["<C-T>"] = { "<Cmd>ToggleTerm<CR>" }
 
           if vim.fn.executable "lazygit" == 1 then
             mappings.n["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")

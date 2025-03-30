@@ -23,7 +23,7 @@ return {
     },
     keys = {
       {
-        "<C-f>",
+        "<C-F>",
         function() return require("codeium.virtual_text").accept() end,
         mode = "i",
         silent = true,
@@ -32,25 +32,25 @@ return {
         nowait = true,
       },
       {
-        "<A-l>",
+        "<A-L>",
         function() require("codeium.virtual_text").cycle_completions(1) end,
         mode = "i",
         silent = true,
       },
       {
-        "<A-h>",
+        "<A-H>",
         function() require("codeium.virtual_text").cycle_completions(-1) end,
         mode = "i",
         silent = true,
       },
       {
-        "<C-x>",
+        "<C-X>",
         function() require("codeium.virtual_text").clear() end,
         mode = "i",
         silent = true,
       },
       {
-        "<C-e>",
+        "<C-E>",
         function() require("codeium.virtual_text").complete() end,
         mode = "i",
         silent = true,
@@ -183,11 +183,11 @@ return {
         end,
       }
 
-      opts.mapping["<C-E>"] = cmp.mapping(function()
+      opts.mapping["<C-e>"] = cmp.mapping(function()
         require("cmp").abort()
         require("codeium.virtual_text").complete()
       end, { "i", "c" })
-      opts.mapping["<C-Y>"] = cmp.mapping(function()
+      opts.mapping["<C-y>"] = cmp.mapping(function()
         if cmp.visible_docs() then
           cmp.close_docs()
         else

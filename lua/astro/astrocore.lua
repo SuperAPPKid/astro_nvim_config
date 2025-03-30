@@ -210,8 +210,8 @@ return {
           desc = "Close Tab",
         },
 
-        ["<C-s>"] = save_file,
-        ["<C-q>"] = { "<Cmd>confirm qall<CR>", desc = "Force quit" },
+        ["<C-S>"] = save_file,
+        ["<C-Q>"] = { "<Cmd>confirm qall<CR>", desc = "Force quit" },
         ["<C-W>d"] = { "" },
         ["<C-W><C-D>"] = { "" },
 
@@ -245,6 +245,7 @@ return {
           desc = "Find themes",
         },
 
+        ["<Leader>gb"] = false,
         ["<Leader>gc"] = false,
         ["<Leader>gC"] = false,
         ["<Leader>gt"] = false,
@@ -264,18 +265,18 @@ return {
       },
       i = {
         -- quick save
-        ["<C-s>"] = save_file,
-        ["<C-l>"] = "<Right>",
-        ["<C-h>"] = "<Left>",
+        ["<C-S>"] = save_file,
+        ["<C-L>"] = "<Right>",
+        ["<C-H>"] = "<Left>",
       },
       x = {
         ["<Leader>z"] = { desc = " Misc" },
-        ["<C-s>"] = save_file,
+        ["<C-S>"] = save_file,
         gra = false,
       },
       s = {
         -- save file
-        ["<C-s>"] = save_file,
+        ["<C-S>"] = save_file,
       },
       t = {},
     })

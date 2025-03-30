@@ -19,6 +19,20 @@ end
 return {
   {
     "MagicDuck/grug-far.nvim",
+    init = function(_)
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("grugfar_settings", { clear = true }),
+        desc = "Add hint for grug-far",
+        pattern = "grug-far",
+        callback = function(args)
+          require("astrocore").set_mappings({
+            n = {
+              [command_key] = { desc = "Grugfar CMD" },
+            },
+          }, { buffer = args.buf })
+        end,
+      })
+    end,
     keys = {
       {
         "<Leader>zs",

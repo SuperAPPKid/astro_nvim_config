@@ -98,7 +98,7 @@ return {
           prev = "[c",
         },
         files = {
-          add_current = "<Leader>zz.",
+          add_current = "<Leader>zz" .. ".",
         },
       },
       hints = { enabled = false },

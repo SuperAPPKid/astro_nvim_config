@@ -21,7 +21,26 @@ return {
             { function() require("telescope.builtin").pickers() end, desc = "Opens cached pickers" }
 
           if vim.fn.executable "git" == 1 then
-            maps.n[git_prefix .. "s"] = { "<Cmd>Telescope git_status<CR>", desc = "Git Status" }
+            maps.n["<Leader>gr"] = {
+              function() require("telescope.builtin").git_branches { use_file_path = true } end,
+              desc = "Git Branches",
+            }
+            maps.n["<Leader>gc"] = {
+              "<Nop>",
+              desc = "Git Commits",
+            }
+            maps.n["<Leader>gcc"] = {
+              function() require("telescope.builtin").git_bcommits { use_file_path = true } end,
+              desc = "Git Commits (current file)",
+            }
+            maps.n["<Leader>gcC"] = {
+              function() require("telescope.builtin").git_commits { use_file_path = true } end,
+              desc = "Git Commits (repository)",
+            }
+            maps.n["<Leader>gs"] = {
+              function() require("telescope.builtin").git_status { use_file_path = true } end,
+              desc = "Git Status",
+            }
           end
         end,
       },

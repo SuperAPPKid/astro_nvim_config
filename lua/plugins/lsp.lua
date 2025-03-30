@@ -269,7 +269,7 @@ return {
           maps.n["<Leader>la"] =
             { "<Cmd>Lspsaga code_action<CR>", desc = "LSP code action", cond = "textDocument/codeAction" }
           maps.v["<Leader>la"] =
-            { ":<C-U>Lspsaga code_action<CR>", desc = "LSP code action", cond = "textDocument/codeAction" }
+            { ":<C-u>Lspsaga code_action<CR>", desc = "LSP code action", cond = "textDocument/codeAction" }
 
           -- definition
           maps.n["gD"] = {
@@ -320,7 +320,7 @@ return {
             split = "\\",
             tabe = "t",
             quit = "q",
-            close = "<C-q>",
+            close = "<C-Q>",
             shuttle = "<Tab>",
           },
         },
@@ -333,7 +333,7 @@ return {
             tabe = "t",
             tabnew = "T",
             quit = "q",
-            close = "<C-q>",
+            close = "<C-Q>",
           },
         },
         finder = {
@@ -363,7 +363,7 @@ return {
         rename = {
           in_select = false,
           keys = {
-            quit = "<C-q>",
+            quit = "<C-Q>",
           },
         },
         ui = {

@@ -644,12 +644,25 @@ return {
 
   {
     "echasnovski/mini.surround",
+    dependencies = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local plugin = require("lazy.core.config").spec.plugins["mini.surround"]
+          local plugin_opts = require("lazy.core.plugin").values(plugin, "opts", false)
+          opts.mappings.n[plugin_opts.mappings.prefix] = {
+            desc = require("astroui").get_icon("bracket", 1, false) .. "Surround",
+          }
+        end,
+      },
+    },
     keys = function(plugin, _)
       local opts = type(plugin.opts) == "function" and plugin.opts(plugin, {}) or plugin.opts or {}
       local mappings = opts.mappings or {}
       local insert = require("astrocore").list_insert_unique
-      local keys = {}
-      if mappings.add then insert(keys, { { mappings.add, desc = "Add surrounding", mode = { "n", "v" } } }) end
+      local keys = {
+        { mappings.prefix, [[:<C-u>lua MiniSurround.add('visual')<CR>]], mode = "x", desc = "Add surrounding" },
+      }
       if mappings.delete then insert(keys, { { mappings.delete, desc = "Delete surrounding" } }) end
       if mappings.replace then insert(keys, { { mappings.replace, desc = "Replace surrounding" } }) end
       if mappings.find then insert(keys, { { mappings.find, desc = "Find right surrounding" } }) end
@@ -658,27 +671,20 @@ return {
     end,
     opts = function(_, _)
       local prefix = "<Leader>s"
-      local mapping = {}
-      mapping[prefix] = {
-        desc = "󰅪 Surround",
-      }
-      require("astrocore").set_mappings {
-        n = mapping,
-        x = mapping,
-      }
 
       return {
         use_nvim_treesitter = false,
         n_lines = 1500,
         search_method = "cover",
         mappings = {
-          add = prefix .. "s", -- Add surrounding in Normal and Visual modes
+          prefix = prefix,
           delete = prefix .. "d", -- Delete surrounding
           replace = prefix .. "c", -- Replace surrounding
 
           find = prefix .. "f", -- Find surrounding (to the right)
           find_left = prefix .. "F", -- Find surrounding (to the left)
 
+          add = "", -- manually add mapping
           highlight = "", -- Highlight surrounding
           update_n_lines = "", -- Update n_lines
           suffix_last = "", -- Suffix to search with "prev" method
@@ -800,8 +806,8 @@ return {
 
       return {
         { prefix .. "a", function() require("harpoon"):list():add() end, desc = "Add file" },
-        { "<C-p>", function() require("harpoon"):list():prev { ui_nav_wrap = true } end, desc = "Goto previous mark" },
-        { "<C-n>", function() require("harpoon"):list():next { ui_nav_wrap = true } end, desc = "Goto next mark" },
+        { "<C-P>", function() require("harpoon"):list():prev { ui_nav_wrap = true } end, desc = "Goto previous mark" },
+        { "<C-N>", function() require("harpoon"):list():next { ui_nav_wrap = true } end, desc = "Goto next mark" },
         {
           prefix .. "e",
           function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end,
@@ -1208,9 +1214,9 @@ return {
   {
     "echasnovski/mini.ai",
     event = "User AstroFile",
-    opts = function(_, _)
+    opts = function(_, opts)
       local gen_spec = require("mini.ai").gen_spec
-      return {
+      opts = require("astrocore").extend_tbl(opts, {
         use_nvim_treesitter = false,
         n_lines = 1500,
         search_method = "cover",
@@ -1220,7 +1226,7 @@ return {
             i = { "@conditional.inner", "@loop.inner" },
           },
           ["f"] = gen_spec.treesitter { a = "@function.outer", i = "@function.inner" },
-          ["g"] = function()
+          ["G"] = function()
             local from = { line = 1, col = 1 }
             local to = {
               line = vim.fn.line "$",
@@ -1262,7 +1268,8 @@ return {
           goto_right = "",
         },
         silent = true,
-      }
+      })
+      return opts
     end,
   },
 
@@ -1351,8 +1358,8 @@ return {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
-          opts.mappings.n["<C-o>"] = { function() require("bufjump").backward_same_buf() end }
-          opts.mappings.n["<C-i>"] = { function() require("bufjump").forward_same_buf() end }
+          opts.mappings.n["<C-O>"] = { function() require("bufjump").backward_same_buf() end }
+          opts.mappings.n["<C-I>"] = { function() require("bufjump").forward_same_buf() end }
         end,
       },
     },
@@ -1512,9 +1519,9 @@ return {
       local lspkind_avail, lspkind = pcall(require, "lspkind")
 
       opts.keys = {
-        ["<ESC>"] = "close",
+        ["<esc>"] = "cancel",
         ["q"] = "close",
-        ["<C-E>"] = "close",
+        ["<c-e>"] = "close",
       }
       opts.win = {
         type = "split",

@@ -170,7 +170,7 @@ return {
     -- end,
     opts = {
       fast_wrap = {
-        map = "<C-r>",
+        map = "<C-R>",
       },
     },
   },
