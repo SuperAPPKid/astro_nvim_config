@@ -152,6 +152,14 @@ return {
             },
           },
         },
+        phpactor = {
+          init_options = {
+            ["language_server_reference_reference_finder.reference_timeout"] = 180,
+          },
+          handlers = {
+            ["window/showMessage"] = function(_, _) end,
+          },
+        },
         rust_analyzer = {
           settings = {
             ["rust-analyzer"] = {
