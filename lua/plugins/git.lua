@@ -94,6 +94,109 @@ return {
   },
 
   {
+    "aaronhallaert/advanced-git-search.nvim",
+    enabled = enabled,
+    dependencies = {
+      { "sindrets/diffview.nvim" },
+      {
+        "nvim-telescope/telescope.nvim",
+        opts = {
+          extensions = {
+            advanced_git_search = {
+              diff_plugin = "diffview", -- fugitive or diffview
+              keymaps = {
+                -- following keymaps can be overridden
+                toggle_date_author = "<C-w>",
+                open_commit_in_browser = "<C-o>",
+                copy_commit_hash = "<C-y>",
+                show_entire_commit = "<C-e>",
+              },
+            },
+          },
+        },
+      },
+    },
+    keys = {
+      {
+        "<Leader>gdb",
+        "<Cmd>AdvancedGitSearch changed_on_branch<CR>",
+        desc = "Branch Changed",
+      },
+      {
+        "<Leader>gdB",
+        "<Cmd>AdvancedGitSearch diff_branch_file<CR>",
+        desc = "Diff Branch",
+      },
+      {
+        "<Leader>gdf",
+        "<Cmd>AdvancedGitSearch diff_commit_file<CR>",
+        desc = "Diff File Commit",
+      },
+      {
+        "<Leader>gd",
+        "<Cmd>AdvancedGitSearch diff_commit_line<CR>",
+        mode = "v",
+        desc = "Git Diff Range Commit",
+      },
+    },
+    config = function()
+      -- HACK: fix entry_default_author_or_date not working
+      require("advanced_git_search.utils.config").setup {
+        entry_default_author_or_date = "date", -- one of "author" or "date"
+      }
+      require("telescope").load_extension "advanced_git_search"
+    end,
+  },
+
+  {
+    "isakbm/gitgraph.nvim",
+    enabled = enabled,
+    init = function(_)
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("gitgraph_settings", { clear = true }),
+        desc = "Add quit keymap for gitgraph",
+        pattern = "gitgraph",
+        callback = function(args)
+          require("astrocore").set_mappings({
+            n = {
+              q = {
+                "<Cmd>bwipeout!<CR>",
+                noremap = true,
+                silent = true,
+              },
+            },
+          }, { buffer = args.buf })
+        end,
+      })
+    end,
+    keys = {
+      {
+        "<Leader>g|",
+        function() require("gitgraph").draw({}, { all = true, max_count = 5000 }) end,
+        desc = "GitGraph",
+      },
+    },
+    dependencies = {
+      { "sindrets/diffview.nvim" },
+    },
+    opts = {
+      format = {
+        timestamp = "%a %b %d, %Y at %H:%M",
+      },
+      hooks = {
+        on_select_commit = function(commit)
+          vim.cmd "bwipeout!"
+          vim.cmd.DiffviewOpen(commit.hash .. "^!")
+        end,
+        on_select_range_commit = function(from, to)
+          vim.cmd "bwipeout!"
+          vim.cmd.DiffviewOpen(from.hash .. "~1.." .. to.hash)
+        end,
+      },
+    },
+  },
+
+  {
     "linrongbin16/gitlinker.nvim",
     lazy = true,
     enabled = enabled,

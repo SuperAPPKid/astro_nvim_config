@@ -285,50 +285,6 @@ return {
   },
 
   {
-    "aaronhallaert/advanced-git-search.nvim",
-    dependencies = {
-      {
-        "nvim-telescope/telescope.nvim",
-        opts = {
-          extensions = {
-            advanced_git_search = {
-              diff_plugin = "diffview", -- fugitive or diffview
-              keymaps = {
-                -- following keymaps can be overridden
-                toggle_date_author = "<C-w>",
-                open_commit_in_browser = "<C-o>",
-                copy_commit_hash = "<C-y>",
-                show_entire_commit = "<C-e>",
-              },
-            },
-          },
-        },
-      },
-    },
-    keys = function(_, keys)
-      if vim.fn.executable "git" == 1 then
-        require("astrocore").list_insert_unique(keys, {
-          { git_prefix .. "S", "<Cmd>AdvancedGitSearch<CR>", desc = "GitSearch" },
-          {
-            git_prefix .. "d",
-            "<Cmd>AdvancedGitSearch diff_commit_line<CR>",
-            mode = { "v" },
-            desc = "Git Range History",
-          },
-        })
-      end
-      return keys
-    end,
-    config = function()
-      -- HACK: fix entry_default_author_or_date not working
-      require("advanced_git_search.utils.config").setup {
-        entry_default_author_or_date = "date", -- one of "author" or "date"
-      }
-      require("telescope").load_extension "advanced_git_search"
-    end,
-  },
-
-  {
     "tsakirist/telescope-lazy.nvim",
     keys = {
       { plugin_prefix .. "R", "<Cmd>Telescope lazy<CR>", desc = "Plugins README" },
