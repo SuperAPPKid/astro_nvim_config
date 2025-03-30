@@ -46,6 +46,7 @@ return {
       },
     },
     icons = {
+      bracket = "󰅪",
       commit = "",
       coverage = "",
       link = "",
