@@ -27,14 +27,6 @@ return {
     },
   },
 
-  -- godot
-  {
-    "QuickGD/quickgd.nvim",
-    ft = { "gdshader", "gdshaderinc" },
-    cmd = { "GodotRun", "GodotRunLast", "GodotStart" },
-    config = true,
-  },
-
   -- json, yaml
   {
     "b0o/SchemaStore.nvim",
