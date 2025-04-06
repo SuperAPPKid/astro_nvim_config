@@ -120,7 +120,6 @@ return {
 
         -- sql
         "sqlfluff",
-        "sqls",
 
         -- terraform
         "terraform-ls",

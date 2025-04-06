@@ -117,25 +117,6 @@ return {
     config = true,
   },
 
-  -- sql
-  {
-    "nanotee/sqls.nvim",
-    lazy = true,
-    dependencies = {
-      {
-        "AstroNvim/astrolsp",
-        opts = function(_, opts)
-          opts.handlers.sqls = function(_, lsp_opts)
-            lsp_opts = require("astrocore").extend_tbl(lsp_opts, {
-              on_attach = function(client, bufnr) require("sqls").on_attach(client, bufnr) end,
-            })
-            opts.handlers[1]("sqls", lsp_opts)
-          end
-        end,
-      },
-    },
-  },
-
   -- java
   {
     "nvim-java/nvim-java",
