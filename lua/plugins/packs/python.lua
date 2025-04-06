@@ -25,7 +25,6 @@ return {
     cmd = "VenvSelect",
     ft = "python",
     enabled = vim.fn.executable "fd" == 1 or vim.fn.executable "fdfind" == 1 or vim.fn.executable "fd-find" == 1,
-    dependencies = "nvim-telescope/telescope.nvim",
     opts = function(_, _)
       require("astrocore").set_mappings {
         n = {

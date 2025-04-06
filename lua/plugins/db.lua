@@ -110,12 +110,8 @@ return {
     end,
     dependencies = {
       { "tpope/vim-dadbod" },
-      {
-        "hrsh7th/nvim-cmp",
-        dependencies = {
-          { "kristijanhusak/vim-dadbod-completion" },
-        },
-      },
+      { "kristijanhusak/vim-dadbod-completion" },
+      { "hrsh7th/nvim-cmp" },
     },
     config = function(_, _)
       vim.g.db_use_nerd_fonts = vim.g.icons_enabled and 1 or nil
@@ -127,7 +123,7 @@ return {
       vim.g.db_ui_winwidth = 52
       require("cmp").setup.filetype({ "sql", "mysql", "plsql" }, {
         sources = {
-          { name = "vim-dadbod-completion" },
+          { name = "vim-dadbod-completion", priority = 800 },
         },
       })
     end,

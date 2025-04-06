@@ -119,18 +119,18 @@ return {
     keys = {
       {
         "<Leader>gdb",
-        "<Cmd>AdvancedGitSearch changed_on_branch<CR>",
-        desc = "Branch Changed",
-      },
-      {
-        "<Leader>gdB",
         "<Cmd>AdvancedGitSearch diff_branch_file<CR>",
         desc = "Diff Branch",
       },
       {
+        "<Leader>gdB",
+        "<Cmd>AdvancedGitSearch changed_on_branch<CR>",
+        desc = "Branch Changed",
+      },
+      {
         "<Leader>gdf",
         "<Cmd>AdvancedGitSearch diff_commit_file<CR>",
-        desc = "Diff File Commit",
+        desc = "Diff Commit (File)",
       },
       {
         "<Leader>gd",
