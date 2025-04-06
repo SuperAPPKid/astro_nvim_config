@@ -65,11 +65,8 @@ return {
       filetype = "blade",
     }
 
-    opts.textobjects.select.enable = false
-    opts.incremental_selection.enable = false
-    opts.matchup = { enable = true }
-
     -- add more things to the ensure_installed table protecting against community packs modifying it
+    opts.auto_install = false
     opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
       "angular",
       "bash",
@@ -130,6 +127,10 @@ return {
       "xml",
       "yaml",
     })
+
+    opts.textobjects.select.enable = false
+    opts.incremental_selection.enable = false
+    opts.matchup = { enable = true }
 
     opts.textobjects.move.goto_next_start = {
       ["]f"] = { query = "@function.outer", desc = "Next function start" },
