@@ -49,6 +49,21 @@ return {
         dashboard_opts.enabled = false
         dashboard_opts.preset.header = table.concat(require("ascii").art.text.neovim.delta_corps_priest1, "\n")
       end
+
+      local old_indent_filter = opts.indent.filter
+      opts.indent.config = function(indent_opts, _)
+        indent_opts.indent.char = "│"
+        indent_opts.scope.char = "┃"
+        indent_opts.filter = function(buf)
+          local excluded_filetypes = { "markdown" }
+          if vim.tbl_contains(excluded_filetypes, vim.bo[buf].filetype) then return false end
+          return old_indent_filter(buf)
+        end
+      end
+
+      opts.scope.config = function(scope_opts, default)
+        if default.keys then scope_opts.keys.textobject = {} end
+      end
     end,
   },
 }

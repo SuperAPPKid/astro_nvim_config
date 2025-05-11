@@ -186,33 +186,8 @@ return {
   },
 
   {
-    "lukas-reineke/indent-blankline.nvim",
-    opts = function(_, opts)
-      opts.indent = {
-        char = "│",
-      }
-      opts.scope = {
-        char = "┃",
-        include = {
-          node_type = { ["*"] = { "*" } },
-        },
-      }
-      opts.exclude = {
-        filetypes = {
-          "markdown",
-        },
-      }
-    end,
-  },
-
-  {
     "neovim/nvim-lspconfig",
     opts = function(_, _) require("lspconfig.ui.windows").default_options.border = "double" end,
-  },
-
-  {
-    "kevinhwang91/nvim-ufo",
-    version = false,
   },
 
   {

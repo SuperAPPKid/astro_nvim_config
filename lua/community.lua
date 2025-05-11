@@ -50,8 +50,6 @@ return {
     },
   },
 
-  { import = "astrocommunity.indent.indent-rainbowline" },
-
   { import = "astrocommunity.keybinding.hydra-nvim" },
   {
     "nvimtools/hydra.nvim",
