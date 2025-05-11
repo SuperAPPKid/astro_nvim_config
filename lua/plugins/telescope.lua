@@ -1,5 +1,4 @@
 local prefix = "<Leader>f"
-local git_prefix = "<Leader>g"
 local plugin_prefix = "<Leader>p"
 
 ---@type LazySpec
@@ -8,17 +7,129 @@ return {
     "nvim-telescope/telescope.nvim",
     branch = "master",
     version = false,
-    dependencies = {
-      { "stevearc/dressing.nvim" },
-    },
     specs = {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
           local maps = opts.mappings
-          local astro = require "astrocore"
           maps.n["<Leader>f<CR>"] =
             { function() require("telescope.builtin").pickers() end, desc = "Opens cached pickers" }
+          maps.n["<Leader>f`"] = { function() require("telescope.builtin").marks() end, desc = "Find marks" }
+          maps.n['<Leader>f"'] = { function() require("telescope.builtin").registers() end, desc = "Find registers" }
+          maps.n["<Leader>fd"] = {
+            function() require("telescope.builtin").diagnostics() end,
+            desc = "Search diagnostics",
+          }
+          maps.n["<Leader>fF"] = {
+            function()
+              require("telescope.builtin").find_files { hidden = true, no_ignore = true, file_ignore_patterns = {} }
+            end,
+            desc = "Find all files",
+          }
+          maps.n["<Leader>fH"] = {
+            function() require("telescope.builtin").highlights() end,
+            desc = "Find Highlight",
+          }
+          maps.n["<Leader>fM"] = {
+            function() require("telescope.builtin").man_pages() end,
+            desc = "Find man",
+          }
+          maps.n["<Leader>fT"] = {
+            function() require("telescope.builtin").colorscheme { enable_preview = true } end,
+            desc = "Find themes",
+          }
+          maps.n["<Leader>fn"] = {
+            function()
+              local notifs = {}
+              for _, item in ipairs(Snacks.notifier.get_history { reverse = true }) do
+                notifs[#notifs + 1] = {
+                  text = Snacks.picker.util.text(item, { "level", "title", "msg" }),
+                  item = item,
+                  severity = item.level,
+                  preview = {
+                    text = item.msg,
+                    ft = "markdown",
+                  },
+                }
+              end
+
+              local entry_display = require "telescope.pickers.entry_display"
+              local pickers = require "telescope.pickers"
+              local finders = require "telescope.finders"
+              local config = require "telescope.config"
+              local actions = require "telescope.actions"
+              local action_state = require "telescope.actions.state"
+              local previewers = require "telescope.previewers"
+
+              local finder_tbl = {
+                results = notifs,
+                entry_maker = function(notif)
+                  return {
+                    value = notif,
+                    display = function()
+                      local align = Snacks.picker.util.align
+                      local ret = {} ---@type snacks.picker.Highlight[]
+                      local item = notif.item ---@type snacks.notifier.Notif
+                      local date = os.date("%R", item.added)
+
+                      ret[#ret + 1] = { align(tostring(date), 5), "SnacksPickerTime" }
+
+                      local severity = notif.severity
+                      severity = type(severity) == "number" and vim.diagnostic.severity[severity] or severity
+                      if severity then
+                        local lower = severity:lower()
+                        local cap = severity:sub(1, 1):upper() .. lower:sub(2)
+                        ret[#ret + 1] = { lower:upper(), "Diagnostic" .. cap, virtual = true }
+                      end
+
+                      ret[#ret + 1] = { align(item.title or "", 15), "SnacksNotifierHistoryTitle" }
+
+                      Snacks.picker.highlight.markdown(ret)
+
+                      return entry_display.create {
+                        separator = " ",
+                        items = ret,
+                      }(ret)
+                    end,
+                    ordinal = notif.text,
+                  }
+                end,
+              }
+
+              local previewer = {
+                define_preview = function(self, entry, status)
+                  local txts = vim.split(entry.value.preview.text, "\n")
+                  vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, txts)
+
+                  vim.api.nvim_set_option_value("filetype", entry.value.preview.ft, { buf = self.state.bufnr })
+                  vim.api.nvim_set_option_value("wrap", true, { win = status.preview_win })
+                end,
+              }
+
+              pickers
+                .new({
+                  results_title = "Notifications",
+                  prompt_title = "Filter Notifications",
+                  finder = finders.new_table(finder_tbl),
+                  sorter = config.values.generic_sorter(),
+                  attach_mappings = function(prompt_buf, _)
+                    actions.select_default:replace(function()
+                      actions.close(prompt_buf)
+                      local selection = action_state.get_selected_entry()
+                      if selection == nil then return end
+                      local notif = selection.value
+                      Snacks.notifier.show_history {
+                        filter = function(item) return item.id == notif.item.id end,
+                      }
+                    end)
+                    return true
+                  end,
+                  previewer = previewers.new_buffer_previewer(previewer),
+                }, {})
+                :find()
+            end,
+            desc = "Find notifications",
+          }
 
           if vim.fn.executable "git" == 1 then
             maps.n["<Leader>gr"] = {
@@ -45,14 +156,6 @@ return {
         end,
       },
     },
-    config = function(plugin, opts)
-      require "astronvim.plugins.configs.telescope"(plugin, opts)
-      require("dressing").setup {
-        select = {
-          telescope = opts.defaults,
-        },
-      }
-    end,
     opts = function(_, opts)
       local defaults = opts.defaults
       defaults.layout_config = {
@@ -185,6 +288,7 @@ return {
 
   {
     "AckslD/nvim-neoclip.lua",
+    event = "User AstroFile",
     keys = {
       { "<Leader>fy", "<Cmd>Telescope neoclip<CR>", desc = "Find yanks (neoclip)" },
       { "<Leader>fm", "<Cmd>Telescope macroscope<CR>", desc = "Find macros (neoclip)" },

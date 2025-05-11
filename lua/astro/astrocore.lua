@@ -211,35 +211,10 @@ return {
         ["<C-W>d"] = { "" },
         ["<C-W><C-D>"] = { "" },
 
-        ["<Leader>f'"] = false,
         ["<Leader>fr"] = false,
-        ["<Leader>f`"] = { function() require("telescope.builtin").marks() end, desc = "Find marks" },
-        ['<Leader>f"'] = { function() require("telescope.builtin").registers() end, desc = "Find registers" },
-        ["<Leader>fd"] = {
-          function() require("telescope.builtin").diagnostics() end,
-          desc = "Search diagnostics",
-        },
-        ["<Leader>fF"] = {
-          function()
-            require("telescope.builtin").find_files { hidden = true, no_ignore = true, file_ignore_patterns = {} }
-          end,
-          desc = "Find all files",
-        },
-        ["<Leader>fH"] = {
-          function() require("telescope.builtin").highlights() end,
-          desc = "Find Highlight",
-        },
         ["<Leader>fm"] = false,
-        ["<Leader>fM"] = {
-          function() require("telescope.builtin").man_pages() end,
-          desc = "Find man",
-        },
         ["<Leader>fg"] = false,
         ["<Leader>ft"] = false,
-        ["<Leader>fT"] = {
-          function() require("telescope.builtin").colorscheme { enable_preview = true } end,
-          desc = "Find themes",
-        },
 
         ["<Leader>gb"] = false,
         ["<Leader>gc"] = false,

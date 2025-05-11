@@ -39,6 +39,8 @@ return {
   { import = "astrocommunity.editing-support.vim-move" },
   { import = "astrocommunity.editing-support.wildfire-nvim" },
 
+  { import = "astrocommunity.fuzzy-finder.telescope-nvim" },
+
   { import = "astrocommunity.game.leetcode-nvim" },
   {
     "kawre/leetcode.nvim",

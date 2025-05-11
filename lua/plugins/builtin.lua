@@ -251,13 +251,6 @@ return {
   },
 
   {
-    "stevearc/dressing.nvim",
-    opts = {
-      input = { default_prompt = "" },
-    },
-  },
-
-  {
     "neovim/nvim-lspconfig",
     opts = function(_, _) require("lspconfig.ui.windows").default_options.border = "double" end,
   },

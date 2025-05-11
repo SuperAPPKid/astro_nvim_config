@@ -15,7 +15,7 @@ return {
     build = vim.fn.has "win32" == 1 and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
       or "make",
     dependencies = {
-      "stevearc/dressing.nvim",
+      "folke/snacks.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       "zbirenbaum/copilot.lua", -- for providers='copilot'
@@ -96,6 +96,9 @@ return {
     end,
     opts = {
       provider = "copilot",
+      selector = {
+        provider = "snacks",
+      },
       behaviour = {
         auto_set_keymaps = false,
       },
