@@ -82,6 +82,9 @@ return {
             },
           },
         },
+        bashls = {
+          filetypes = { "sh", "bash", "zsh" },
+        },
         clangd = {
           filetypes = { "c", "cpp", "objc", "objcpp" },
           capabilities = {
