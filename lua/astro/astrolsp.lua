@@ -92,6 +92,18 @@ return {
         denols = {
           root_dir = function(...) return require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")(...) end,
         },
+        golangci_lint_ls = {
+          init_options = {
+            command = {
+              "golangci-lint",
+              "run",
+              "--output.json.path",
+              "stdout",
+              "--show-stats=false",
+              "--issues-exit-code=1",
+            },
+          },
+        },
         gopls = {
           settings = {
             gopls = {
