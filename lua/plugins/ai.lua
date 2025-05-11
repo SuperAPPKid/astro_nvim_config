@@ -3,7 +3,10 @@ return {
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
-    config = true,
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+    },
   },
 
   {
@@ -46,6 +49,10 @@ return {
           [prefix .. "r"] = {
             function() require("avante.api").refresh() end,
             desc = "avante: refresh",
+          },
+          [prefix .. "c"] = {
+            "<Cmd>AvanteClear<CR>",
+            desc = "avante: clear",
           },
           [prefix .. "M"] = {
             function() require("avante.api").select_model() end,
@@ -99,6 +106,7 @@ return {
         },
         files = {
           add_current = "<Leader>zz" .. ".",
+          add_all_buffers = "<Leader>zz" .. "B",
         },
       },
       hints = { enabled = false },
