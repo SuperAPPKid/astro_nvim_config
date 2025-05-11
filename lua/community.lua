@@ -6,10 +6,6 @@
 return {
   "AstroNvim/astrocommunity",
 
-  { import = "astrocommunity.completion.cmp-cmdline" },
-  { import = "astrocommunity.completion.cmp-git" },
-  { import = "astrocommunity.completion.cmp-under-comparator" },
-
   { import = "astrocommunity.editing-support.copilotchat-nvim" },
   { import = "astrocommunity.editing-support.cloak-nvim" },
   {
@@ -43,6 +39,8 @@ return {
   { import = "astrocommunity.editing-support.vim-move" },
   { import = "astrocommunity.editing-support.wildfire-nvim" },
 
+  { import = "astrocommunity.fuzzy-finder.telescope-nvim" },
+
   { import = "astrocommunity.game.leetcode-nvim" },
   {
     "kawre/leetcode.nvim",
@@ -51,8 +49,6 @@ return {
       lang = "golang",
     },
   },
-
-  { import = "astrocommunity.indent.indent-rainbowline" },
 
   { import = "astrocommunity.keybinding.hydra-nvim" },
   {
@@ -225,20 +221,11 @@ return {
   { import = "astrocommunity.scrolling.mini-animate" },
   {
     "echasnovski/mini.animate",
-    specs = {
-      {
-        "goolord/alpha-nvim",
-        config = function(plugin, opts)
-          require "astronvim.plugins.configs.alpha"(plugin, opts)
-          vim.g.minianimate_disable = true
-        end,
-      },
-    },
     init = function(_)
-      vim.api.nvim_create_autocmd("FileType", {
+      vim.api.nvim_create_autocmd("BufEnter", {
         group = vim.api.nvim_create_augroup("mini.animate_ignore_filetypes", { clear = true }),
         desc = "disable mini.animate for filetypes",
-        callback = function(args) vim.g.minianimate_disable = vim.bo[args.buf].ft == "alpha" end,
+        callback = function(args) vim.g.minianimate_disable = vim.bo[args.buf].ft == "snacks_dashboard" end,
       })
     end,
     opts = {

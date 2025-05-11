@@ -526,19 +526,6 @@ return {
         end,
       },
     },
-    dependencies = {
-      {
-        "rcarriga/nvim-notify",
-        version = "*",
-        config = function(_, opts)
-          local notify = require "notify"
-          notify.setup(opts)
-        end,
-        opts = {
-          max_width = 36,
-        },
-      },
-    },
     event = "User AstroFile",
     config = function(_, opts)
       local fidget = require "fidget"
@@ -584,7 +571,8 @@ return {
 
             if should_redirect then
               opts = require("astrocore").extend_tbl(opts, { title = title })
-              return require("fidget.integration.nvim-notify").delegate(msg, level, opts) --
+              Snacks.notifier.notify(msg, level, opts)
+              return true
             end
 
             return false
@@ -1234,24 +1222,23 @@ return {
             }
             return { from = from, to = to }
           end,
-          ["i"] = function()
-            local buf = vim.api.nvim_get_current_buf()
-            local scp = require "ibl.scope"
-            local config = require("ibl.config").get_config(buf)
-            local scope = scp.get(buf, config)
-            if scope and scope:start() >= 0 then
-              local scope_start = scope:start()
-              local scope_end = scope:end_()
-              local from = {
-                line = scope_start + 1,
-                col = 1,
+          ["i"] = function(ai_type, _, _)
+            local params
+            if ai_type == "i" then
+              params = {
+                min_size = 2, -- minimum size of the scope
+                edge = false, -- inner scope
+                cursor = false,
+                treesitter = { blocks = { enabled = false } },
               }
-              local to = {
-                line = scope_end + 1,
-                col = math.max(vim.fn.getline(scope_end + 1):len(), 1),
+            elseif ai_type == "a" then
+              params = {
+                cursor = false,
+                min_size = 2, -- minimum size of the scope
+                treesitter = { blocks = { enabled = false } },
               }
-              return { from = from, to = to }
             end
+            if params then Snacks.scope.textobject(params) end
             return false
           end,
           ["o"] = gen_spec.treesitter { a = "@loop.outer", i = "@loop.inner" },
@@ -1516,7 +1503,6 @@ return {
     end,
     opts = function(_, opts)
       local get_icon = require("astroui").get_icon
-      local lspkind_avail, lspkind = pcall(require, "lspkind")
 
       opts.keys = {
         ["<esc>"] = "cancel",
@@ -1549,7 +1535,6 @@ return {
         },
         folder_closed = get_icon "FolderClosed" .. " ",
         folder_open = get_icon "FolderOpen" .. " ",
-        kinds = lspkind_avail and lspkind.symbol_map,
       }
       opts.modes = opts.modes or {}
       opts.config = function(cfg)

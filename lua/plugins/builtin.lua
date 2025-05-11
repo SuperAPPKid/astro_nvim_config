@@ -3,57 +3,18 @@
 
 ---@type LazySpec
 return {
+
   {
-    "goolord/alpha-nvim",
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = {
-          autocmds = { alpha_autostart = false },
-        },
-      },
-    },
-    dependencies = {
-      {
-        "MaximilianLloyd/ascii.nvim",
-        dependencies = {
-          "MunifTanjim/nui.nvim",
-        },
-        lazy = true,
-      },
-    },
-    opts = function(_, opts)
-      local dashboard = require "alpha.themes.dashboard"
-      local stats = require("lazy").stats()
-
-      dashboard.config.opts.noautocmd = false
-      dashboard.section.header.val = require("ascii").art.text.neovim.delta_corps_priest1
-      dashboard.section.footer.val = {
-        "loaded " .. stats.loaded .. "/" .. stats.count .. " plugins " .. require("astroui").get_icon(
-          "Package",
-          1,
-          true
-        ) .. "in " .. math.floor(stats.startuptime * 100 + 0.5) / 100 .. "ms",
-      }
-
-      dashboard.config.layout = {
-        { type = "padding", val = 5 },
-        dashboard.section.header,
-        { type = "padding", val = 3 },
-        dashboard.section.buttons,
-        { type = "padding", val = 3 },
-        dashboard.section.footer,
-      }
-      return opts
-    end,
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    enabled = true,
   },
 
   {
     "numToStr/Comment.nvim",
+    enabled = true,
     config = function(_, opts)
       local ft = require "Comment.ft"
       ft({ "goctl" }, ft.get "go")
-      ft({ "gowork" }, ft.get "gomod")
       require("Comment").setup(opts)
     end,
   },
@@ -225,40 +186,8 @@ return {
   },
 
   {
-    "lukas-reineke/indent-blankline.nvim",
-    opts = function(_, opts)
-      opts.indent = {
-        char = "│",
-      }
-      opts.scope = {
-        char = "┃",
-        include = {
-          node_type = { ["*"] = { "*" } },
-        },
-      }
-      opts.exclude = {
-        filetypes = {
-          "markdown",
-        },
-      }
-    end,
-  },
-
-  {
-    "stevearc/dressing.nvim",
-    opts = {
-      input = { default_prompt = "" },
-    },
-  },
-
-  {
     "neovim/nvim-lspconfig",
     opts = function(_, _) require("lspconfig.ui.windows").default_options.border = "double" end,
-  },
-
-  {
-    "kevinhwang91/nvim-ufo",
-    version = false,
   },
 
   {
@@ -293,11 +222,6 @@ return {
   },
 
   {
-    "b0o/SchemaStore.nvim",
-    enabled = false,
-  },
-
-  {
     "max397574/better-escape.nvim",
     opts = function(_, opts)
       opts.mappings = {
@@ -311,21 +235,44 @@ return {
   },
 
   {
-    "nvim-tree/nvim-web-devicons",
-    opts = function(_, opts)
-      opts.override_by_extension = opts.override_by_extension or {}
-      opts.override_by_extension["blade.php"] = {
-        icon = "󰫐",
-        color = "#f05340",
-        cterm_color = "203",
-        name = "Blade",
-      }
-      opts.override_by_extension["php"] = {
-        icon = "󰟆",
-        color = "#a074c4",
-        cterm_color = "140",
-        name = "Php",
-      }
-    end,
+    "echasnovski/mini.icons",
+    opts = {
+      lsp = {
+        text = { glyph = "" },
+        method = { glyph = "m" },
+        ["function"] = { glyph = "󰊕" },
+        constructor = { glyph = "" },
+        field = { glyph = "" },
+        variable = { glyph = "󰆧" },
+        class = { glyph = "󰌗" },
+        interface = { glyph = "" },
+        module = { glyph = "" },
+        property = { glyph = "" },
+        unit = { glyph = "" },
+        value = { glyph = "󰎠" },
+        enum = { glyph = "" },
+        keyword = { glyph = "󰌋" },
+        snippet = { glyph = "" },
+        color = { glyph = "󰏘" },
+        file = { glyph = "󰈙" },
+        reference = { glyph = "" },
+        folder = { glyph = "󰉋" },
+        enumMember = { glyph = "" },
+        constant = { glyph = "󰇽" },
+        struct = { glyph = "󱥒" },
+        event = { glyph = "" },
+        operator = { glyph = "󰆕" },
+        typeParameter = { glyph = "󰊄" },
+      },
+      filetype = {
+        php = { glyph = "󰟆" },
+        go = { glyph = "" },
+        godoc = { glyph = "" },
+        gomod = { glyph = "" },
+        gosum = { glyph = "" },
+        gowork = { glyph = "" },
+      },
+      use_file_extension = function() return false end,
+    },
   },
 }

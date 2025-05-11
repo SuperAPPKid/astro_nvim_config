@@ -72,7 +72,7 @@ return {
       "MunifTanjim/nui.nvim",
       "nvimtools/none-ls.nvim",
       "Bleksak/laravel-ide-helper.nvim",
-      { "ricardoramirezr/blade-nav.nvim", dependencies = { "hrsh7th/nvim-cmp" } },
+      { "ricardoramirezr/blade-nav.nvim" },
       {
         "AstroNvim/astrocore",
         ---@param opts AstroCoreOpts
@@ -92,7 +92,17 @@ return {
         end,
       },
     },
-    config = true,
+    opts = function(_, opts)
+      local is_available = require("astrocore").is_available
+      opts.features = {
+        pickers = {
+          enable = true,
+          provider = (is_available "telescope.nvim" and "telescope")
+            or (is_available "snacks.nvim" and "snacks")
+            or "ui.select",
+        },
+      }
+    end,
   },
 
   -- ruby

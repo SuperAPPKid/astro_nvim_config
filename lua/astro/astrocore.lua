@@ -25,7 +25,7 @@ return {
       large_buf = { size = 1024 * 1024 * 1.5, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
-      diagnostics_mode = 3, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
+      diagnostics = { virtual_text = true, virtual_lines = false }, -- diagnostic settings on startup
       highlighturl = true, -- highlight URLs at start
       notifications = true, -- enable notifications at start
     })
@@ -74,7 +74,6 @@ return {
         -- This can be found in the `lua/lazy_setup.lua` file
         autoformat = true, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
         autopairs_enabled = true, -- enable autopairs at start
-        diagnostics_mode = 3, -- set the visibility of diagnostics in the UI (0=off, 1=only show in status line, 2=virtual text off, 3=all on)
         icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available, requires :PackerSync after changing)
         ui_notifications_enabled = true, -- disable notifications when toggling UI elements
         inlay_hints_enabled = true, -- enable or disable LSP inlay hints on startup (Neovim v0.10 only)
@@ -212,35 +211,10 @@ return {
         ["<C-W>d"] = { "" },
         ["<C-W><C-D>"] = { "" },
 
-        ["<Leader>f'"] = false,
         ["<Leader>fr"] = false,
-        ["<Leader>f`"] = { function() require("telescope.builtin").marks() end, desc = "Find marks" },
-        ['<Leader>f"'] = { function() require("telescope.builtin").registers() end, desc = "Find registers" },
-        ["<Leader>fd"] = {
-          function() require("telescope.builtin").diagnostics() end,
-          desc = "Search diagnostics",
-        },
-        ["<Leader>fF"] = {
-          function()
-            require("telescope.builtin").find_files { hidden = true, no_ignore = true, file_ignore_patterns = {} }
-          end,
-          desc = "Find all files",
-        },
-        ["<Leader>fH"] = {
-          function() require("telescope.builtin").highlights() end,
-          desc = "Find Highlight",
-        },
         ["<Leader>fm"] = false,
-        ["<Leader>fM"] = {
-          function() require("telescope.builtin").man_pages() end,
-          desc = "Find man",
-        },
         ["<Leader>fg"] = false,
         ["<Leader>ft"] = false,
-        ["<Leader>fT"] = {
-          function() require("telescope.builtin").colorscheme { enable_preview = true } end,
-          desc = "Find themes",
-        },
 
         ["<Leader>gb"] = false,
         ["<Leader>gc"] = false,
