@@ -10,44 +10,6 @@ return {
   { import = "astrocommunity.completion.cmp-git" },
   { import = "astrocommunity.completion.cmp-under-comparator" },
 
-  { import = "astrocommunity.debugging.nvim-chainsaw" },
-  {
-    "chrisgrieser/nvim-chainsaw",
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          local prefix = "<Leader>L"
-          local plugin = require "chainsaw"
-          maps.n[prefix] = { desc = "󱂅 Logging" }
-          maps.n[prefix .. "L"] = {
-            function() plugin.variableLog() end,
-            desc = "log the name and value for current variable",
-          }
-          maps.n[prefix .. "A"] = {
-            function() plugin.assertLog() end,
-            desc = "assertion statement under the cursor",
-          }
-          maps.n[prefix .. "l"] = {
-            function() plugin.messageLog() end,
-            desc = "create log under the cursor",
-          }
-          maps.n[prefix .. "t"] = {
-            function() plugin.timelog() end,
-            desc = "create time log",
-          }
-          maps.n[prefix .. "d"] = {
-            function() plugin.removeLogs() end,
-            desc = "remove all log created by chainsaw",
-          }
-        end,
-      },
-    },
-  },
-
-  -- { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
-
   { import = "astrocommunity.editing-support.copilotchat-nvim" },
   { import = "astrocommunity.editing-support.cloak-nvim" },
   {
@@ -65,7 +27,6 @@ return {
       },
     },
   },
-  { import = "astrocommunity.editing-support.comment-box-nvim" },
   { import = "astrocommunity.editing-support.hypersonic-nvim" },
   {
     "tomiis4/Hypersonic.nvim",
@@ -108,19 +69,19 @@ return {
         },
       }
       opts["Options"] = {
-        hint = [[
-  ^ ^        Options
-  ^
-  _v_ %{ve} virtual edit
-  _i_ %{list} invisible characters  
-  _s_ %{spell} spell
-  _w_ %{wrap} wrap
-  _c_ %{cul} cursor line
-  _n_ %{nu} number
-  _r_ %{rnu} relative number
-  ^
-       ^^^^                _<Esc>_
-]],
+        hint = table.concat({
+          "  ^ ^        Options",
+          "  ^",
+          "  _v_ %{ve} virtual edit",
+          "  _i_ %{list} invisible characters  ",
+          "  _s_ %{spell} spell",
+          "  _w_ %{wrap} wrap",
+          "  _c_ %{cul} cursor line",
+          "  _n_ %{nu} number",
+          "  _r_ %{rnu} relative number",
+          "  ^",
+          "       ^^^^                _<Esc>_",
+        }, "\n"),
         config = {
           color = "amaranth",
           invoke_on_body = true,
@@ -254,17 +215,9 @@ return {
 
   { import = "astrocommunity.neovim-lua-development.helpview-nvim" },
 
-  -- { import = "astrocommunity.programming-language-support.csv-vim" },
-  -- { import = "astrocommunity.programming-language-support.nvim-jqx" },
-  -- { import = "astrocommunity.programming-language-support.rest-nvim" },
-
   { import = "astrocommunity.quickfix.nvim-bqf" },
 
   { import = "astrocommunity.recipes.cache-colorscheme" },
-  {
-    import = "astrocommunity.recipes.heirline-vscode-winbar",
-    enabled = function() return vim.fn.has "nvim-0.10" ~= 1 end,
-  },
   { import = "astrocommunity.recipes.astrolsp-no-insert-inlay-hints" },
   { import = "astrocommunity.recipes.vscode" },
 
@@ -292,28 +245,4 @@ return {
       scroll = { enable = false },
     },
   },
-
-  {
-    import = "astrocommunity.utility.neodim",
-    enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
-  },
-  {
-    "zbirenbaum/neodim",
-    event = "LspAttach",
-    opts = {
-      alpha = 0.75,
-      blend_color = "#000000",
-      update_in_insert = {
-        enable = true,
-        delay = 100,
-      },
-      hide = {
-        virtual_text = false,
-        signs = false,
-        underline = false,
-      },
-    },
-  },
-
-  -- { import = "astrocommunity.worflow.hardtime-nvim" },
 }
