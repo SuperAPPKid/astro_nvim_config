@@ -111,7 +111,23 @@ return {
     dependencies = {
       { "tpope/vim-dadbod" },
       { "kristijanhusak/vim-dadbod-completion" },
-      { "hrsh7th/nvim-cmp" },
+      {
+        "Saghen/blink.cmp",
+        opts = {
+          sources = {
+            per_filetype = {
+              sql = { "dadbod", "buffer" },
+            },
+            providers = {
+              dadbod = {
+                name = "Dadbod",
+                module = "vim_dadbod_completion.blink",
+                score_offset = 1000,
+              },
+            },
+          },
+        },
+      },
     },
     config = function(_, _)
       vim.g.db_use_nerd_fonts = vim.g.icons_enabled and 1 or nil
@@ -121,11 +137,6 @@ return {
       vim.g.db_ui_execute_on_save = 0
       vim.g.db_ui_win_position = "right"
       vim.g.db_ui_winwidth = 52
-      require("cmp").setup.filetype({ "sql", "mysql", "plsql" }, {
-        sources = {
-          { name = "vim-dadbod-completion", priority = 800 },
-        },
-      })
     end,
     keys = {
       { "<Leader>zd", "<Cmd>DBUIToggle<CR>", desc = "Toggle DB-UI" },

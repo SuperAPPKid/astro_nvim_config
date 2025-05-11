@@ -6,10 +6,6 @@
 return {
   "AstroNvim/astrocommunity",
 
-  { import = "astrocommunity.completion.cmp-cmdline" },
-  { import = "astrocommunity.completion.cmp-git" },
-  { import = "astrocommunity.completion.cmp-under-comparator" },
-
   { import = "astrocommunity.editing-support.copilotchat-nvim" },
   { import = "astrocommunity.editing-support.cloak-nvim" },
   {

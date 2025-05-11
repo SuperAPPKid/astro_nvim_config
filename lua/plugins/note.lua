@@ -84,8 +84,8 @@ local M = {
     end,
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "hrsh7th/nvim-cmp",
       "nvim-telescope/telescope.nvim",
+      "Saghen/blink.cmp",
     },
     config = function(_, opts)
       require("obsidian").setup(opts)
@@ -109,7 +109,10 @@ local M = {
       dir = vim.env.HOME .. "/Documents/Obsidian", -- specify the vault location. no need to call 'vim.fn.expand' here
       use_advanced_uri = true,
       finder = "telescope.nvim",
-
+      completion = {
+        nvim_cmp = false,
+        blink = true,
+      },
       templates = {
         subdir = "templates",
         date_format = "%Y-%m-%d-%a",
