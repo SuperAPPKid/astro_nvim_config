@@ -102,6 +102,15 @@ return {
           ModesDelete = { bg = palette.samuraiRed },
           ModesInsert = { bg = palette.springGreen },
           ModesVisual = { bg = palette.crystalBlue },
+
+          GitSignsAdd = { fg = palette.springGreen },
+          GitSignsChange = { fg = palette.roninYellow },
+          GitSignsDelete = { fg = palette.samuraiRed },
+          GitSignsChangedelete = { fg = palette.crystalBlue },
+          GitSignsStagedAdd = { fg = palette.winterGreen },
+          GitSignsStagedChange = { fg = palette.winterYellow },
+          GitSignsStagedDelete = { fg = palette.winterRed },
+          GitSignsStagedChangedelete = { fg = palette.winterBlue },
         }
       end,
       theme = "dragon", -- Load "wave" theme when 'background' option is not set
