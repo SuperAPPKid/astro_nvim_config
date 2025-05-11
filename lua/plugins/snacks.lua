@@ -25,8 +25,11 @@ return {
       _G.p = function(...) require("snacks.debug").profile(...) end
       vim.print = _G.dd
     end,
-    ---@type snacks.Config
-    opts = { bigfile = { enabled = true } },
     keys = {},
+    config = function(_, opts)
+      require("snacks").setup(opts)
+      vim.ui.select = Snacks.picker.select
+    end,
+    opts = function(_, opts) opts.bigfile = {} end,
   },
 }

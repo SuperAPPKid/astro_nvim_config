@@ -3,6 +3,12 @@
 
 ---@type LazySpec
 return {
+
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    enabled = true,
+  },
+
   {
     "goolord/alpha-nvim",
     specs = {
@@ -50,10 +56,10 @@ return {
 
   {
     "numToStr/Comment.nvim",
+    enabled = true,
     config = function(_, opts)
       local ft = require "Comment.ft"
       ft({ "goctl" }, ft.get "go")
-      ft({ "gowork" }, ft.get "gomod")
       require("Comment").setup(opts)
     end,
   },
@@ -290,11 +296,6 @@ return {
         end,
       },
     },
-  },
-
-  {
-    "b0o/SchemaStore.nvim",
-    enabled = false,
   },
 
   {
