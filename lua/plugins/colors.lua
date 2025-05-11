@@ -122,22 +122,6 @@ return {
   },
 
   {
-    "rachartier/tiny-devicons-auto-colors.nvim",
-    init = function(plugin) require("astrocore").on_load("nvim-web-devicons", plugin.name) end,
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = function()
-      local theme_colors = require("kanagawa.colors").setup()
-      require("tiny-devicons-auto-colors").setup {
-        colors = theme_colors.palette,
-      }
-    end,
-  },
-
-  { "NvChad/nvim-colorizer.lua", enabled = false },
-
-  {
     "uga-rosa/ccc.nvim",
     tag = "v1.7.2",
     event = "User AstroFile",
@@ -161,17 +145,9 @@ return {
 
   {
     "brenoprata10/nvim-highlight-colors",
-    event = "User AstroFile",
-    keys = {
-      {
-        "<Leader>uC",
-        function() vim.cmd.HighlightColors "Toggle" end,
-        desc = "Toggle color highlight",
-      },
-    },
     opts = {
       render = "virtual",
-      virtual_symbol = "󰚍",
+      enabled_named_colors = true,
       enable_tailwind = true,
     },
   },

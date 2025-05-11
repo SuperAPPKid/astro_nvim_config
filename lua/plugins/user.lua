@@ -1503,7 +1503,6 @@ return {
     end,
     opts = function(_, opts)
       local get_icon = require("astroui").get_icon
-      local lspkind_avail, lspkind = pcall(require, "lspkind")
 
       opts.keys = {
         ["<esc>"] = "cancel",
@@ -1536,7 +1535,6 @@ return {
         },
         folder_closed = get_icon "FolderClosed" .. " ",
         folder_open = get_icon "FolderOpen" .. " ",
-        kinds = lspkind_avail and lspkind.symbol_map,
       }
       opts.modes = opts.modes or {}
       opts.config = function(cfg)

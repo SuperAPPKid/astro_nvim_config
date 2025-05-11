@@ -205,8 +205,8 @@ return {
           local prefix = "<Leader>go"
           local icon = require("astroui").get_icon("link", 1, true)
 
-          maps.n[prefix] = { desc = icon .. "Gitlinker" }
-          maps.v[prefix] = { desc = icon .. "Gitlinker" }
+          maps.n[prefix] = { "<Nop>", desc = icon .. "Gitlinker" }
+          maps.v[prefix] = { "<Nop>", desc = icon .. "Gitlinker" }
 
           -- repo
           maps.n[prefix .. "u"] = {
@@ -460,7 +460,6 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
-      "nvim-tree/nvim-web-devicons",
     },
     opts = {
       suppress_missing_scope = {

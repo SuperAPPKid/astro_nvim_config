@@ -235,21 +235,44 @@ return {
   },
 
   {
-    "nvim-tree/nvim-web-devicons",
-    opts = function(_, opts)
-      opts.override_by_extension = opts.override_by_extension or {}
-      opts.override_by_extension["blade.php"] = {
-        icon = "󰫐",
-        color = "#f05340",
-        cterm_color = "203",
-        name = "Blade",
-      }
-      opts.override_by_extension["php"] = {
-        icon = "󰟆",
-        color = "#a074c4",
-        cterm_color = "140",
-        name = "Php",
-      }
-    end,
+    "echasnovski/mini.icons",
+    opts = {
+      lsp = {
+        text = { glyph = "" },
+        method = { glyph = "m" },
+        ["function"] = { glyph = "󰊕" },
+        constructor = { glyph = "" },
+        field = { glyph = "" },
+        variable = { glyph = "󰆧" },
+        class = { glyph = "󰌗" },
+        interface = { glyph = "" },
+        module = { glyph = "" },
+        property = { glyph = "" },
+        unit = { glyph = "" },
+        value = { glyph = "󰎠" },
+        enum = { glyph = "" },
+        keyword = { glyph = "󰌋" },
+        snippet = { glyph = "" },
+        color = { glyph = "󰏘" },
+        file = { glyph = "󰈙" },
+        reference = { glyph = "" },
+        folder = { glyph = "󰉋" },
+        enumMember = { glyph = "" },
+        constant = { glyph = "󰇽" },
+        struct = { glyph = "󱥒" },
+        event = { glyph = "" },
+        operator = { glyph = "󰆕" },
+        typeParameter = { glyph = "󰊄" },
+      },
+      filetype = {
+        php = { glyph = "󰟆" },
+        go = { glyph = "" },
+        godoc = { glyph = "" },
+        gomod = { glyph = "" },
+        gosum = { glyph = "" },
+        gowork = { glyph = "" },
+      },
+      use_file_extension = function() return false end,
+    },
   },
 }
