@@ -31,4 +31,7 @@ require("lazy").setup({
       },
     },
   },
+  git = {
+    timeout = 300, -- kill processes that take more than 5 minutes
+  },
 } --[[@as LazyConfig]])
