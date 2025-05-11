@@ -64,7 +64,7 @@ return {
       },
     },
     dependencies = {
-      "williamboman/mason.nvim",
+      "mason-org/mason.nvim",
       { "jay-babu/mason-null-ls.nvim", opts = { methods = { formatting = false } } },
       {
         "AstroNvim/astrolsp",

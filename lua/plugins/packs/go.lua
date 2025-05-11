@@ -29,7 +29,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "williamboman/mason.nvim",
+      "mason-org/mason.nvim",
     },
     config = true,
   },

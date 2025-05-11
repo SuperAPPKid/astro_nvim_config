@@ -7,7 +7,7 @@ end
 return {
   "mfussenegger/nvim-lint",
   event = "User AstroFile",
-  dependencies = { "williamboman/mason.nvim" },
+  dependencies = { "mason-org/mason.nvim" },
   specs = {
     { "jay-babu/mason-null-ls.nvim", optional = true, opts = { methods = { diagnostics = false } } },
   },

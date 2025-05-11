@@ -8,13 +8,28 @@ end
 ---@type LazySpec
 return {
   {
+    "mason-org/mason.nvim",
+    version = "^1.0.0",
+    opts = {
+      ui = {
+        border = "double",
+      },
+    },
+  },
+
+  {
+    "mason-org/mason-lspconfig.nvim",
+    version = "^1.0.0",
+  },
+
+  {
     "zapling/mason-lock.nvim",
     lazy = true,
     cmd = {
       "MasonLock",
       "MasonLockRestore",
     },
-    dependencies = { "williamboman/mason.nvim" },
+    dependencies = { "mason-org/mason.nvim" },
     init = function(plugin) require("astrocore").on_load("mason.nvim", plugin.name) end,
     config = true,
   },
@@ -28,7 +43,7 @@ return {
       "MasonToolsUpdateSync",
       "MasonToolsClean",
     },
-    dependencies = { "williamboman/mason.nvim" },
+    dependencies = { "mason-org/mason.nvim" },
     init = function(plugin) require("astrocore").on_load("mason.nvim", plugin.name) end,
     opts_extend = { "ensure_installed" },
     opts = {
@@ -159,7 +174,7 @@ return {
         end,
       },
       {
-        "williamboman/mason-lspconfig.nvim",
+        "mason-org/mason-lspconfig.nvim",
         init = function() end,
         config = function(_, opts) setup_without_ensure_installed("mason-lspconfig", opts) end,
       },
