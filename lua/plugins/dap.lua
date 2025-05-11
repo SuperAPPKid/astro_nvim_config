@@ -25,7 +25,7 @@ return {
   },
 
   {
-    "superappkid/nvim-dap-ui",
+    "rcarriga/nvim-dap-ui",
     version = false,
     specs = {
       {
