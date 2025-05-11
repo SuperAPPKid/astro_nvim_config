@@ -5,6 +5,22 @@ return {
   {
     "rmagatti/goto-preview",
     event = "LspAttach",
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = function(_, opts)
+          local mappings = opts.mappings
+          if vim.fn.has "nvim-0.11" == 1 then
+            mappings.n["gra"] = "<Nop>"
+            mappings.n["gri"] = "<Nop>"
+            mappings.n["grn"] = "<Nop>"
+            mappings.n["grr"] = "<Nop>"
+            mappings.n["gO"] = "<Nop>"
+            mappings.x["gra"] = "<Nop>"
+          end
+        end,
+      },
+    },
     dependencies = {
       {
         "AstroNvim/astrolsp",
@@ -69,12 +85,6 @@ return {
             desc = "Goto references of current symbol",
             cond = "textDocument/references",
           }
-
-          -- opts.on_attach = function(client, bufnr)
-          --   if client.supports_method "textDocument/references" then
-          --     vim.keymap.del("n", "<Leader>lR", { buffer = bufnr })
-          --   end
-          -- end
         end,
       },
     },
@@ -162,20 +172,6 @@ return {
     "zeioth/garbage-day.nvim",
     dependencies = "neovim/nvim-lspconfig",
     event = "LspAttach",
-  },
-
-  {
-    "ray-x/lsp_signature.nvim",
-    event = "LspAttach",
-    opts = function(_, opts)
-      opts.cursorhold_update = false
-      opts.doc_lines = 0
-      opts.wrap = true
-      opts.hint_enable = false
-      opts.handler_opts = {
-        border = "double", -- double, rounded, single, shadow, none, or a table of borders
-      }
-    end,
   },
 
   {

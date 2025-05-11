@@ -138,9 +138,6 @@ return {
         gk = "k",
         gx = false,
         gl = false,
-        gra = false,
-        grn = false,
-        grr = false,
 
         -- navigate buffer tabs with `H` and `L`
         L = {
@@ -252,12 +249,9 @@ return {
         ["<Leader>gg"] = false,
         ["<Leader>gK"] = false,
 
+        ["<Leader>l"] = false,
         ["<Leader>lD"] = false,
         ["<Leader>lR"] = false,
-
-        ["<Leader>n"] = false,
-        ["<Leader>q"] = false,
-        ["<Leader>Q"] = false,
 
         ["<Leader>w"] = false,
 
@@ -272,7 +266,6 @@ return {
       x = {
         ["<Leader>z"] = { desc = " Misc" },
         ["<C-S>"] = save_file,
-        gra = false,
       },
       s = {
         -- save file
