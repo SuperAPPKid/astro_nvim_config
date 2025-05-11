@@ -526,19 +526,6 @@ return {
         end,
       },
     },
-    dependencies = {
-      {
-        "rcarriga/nvim-notify",
-        version = "*",
-        config = function(_, opts)
-          local notify = require "notify"
-          notify.setup(opts)
-        end,
-        opts = {
-          max_width = 36,
-        },
-      },
-    },
     event = "User AstroFile",
     config = function(_, opts)
       local fidget = require "fidget"
@@ -584,7 +571,8 @@ return {
 
             if should_redirect then
               opts = require("astrocore").extend_tbl(opts, { title = title })
-              return require("fidget.integration.nvim-notify").delegate(msg, level, opts) --
+              Snacks.notifier.notify(msg, level, opts)
+              return true
             end
 
             return false

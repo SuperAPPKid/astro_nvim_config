@@ -64,6 +64,13 @@ return {
       opts.scope.config = function(scope_opts, default)
         if default.keys then scope_opts.keys.textobject = {} end
       end
+
+      opts.styles = {
+        notification_history = {
+          border = "double",
+          minimal = true,
+        },
+      }
     end,
   },
 }
