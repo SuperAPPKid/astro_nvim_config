@@ -10,7 +10,6 @@ require("lazy").setup({
       pin_plugins = false, -- Default will pin plugins when tracking `version` of AstroNvim, set to true/false to override
     },
   },
-  { import = "utils" },
   { import = "community" },
   { import = "astro" },
   { import = "plugins" },
