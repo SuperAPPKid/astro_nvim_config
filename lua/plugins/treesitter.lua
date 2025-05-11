@@ -86,7 +86,6 @@ return {
       "goctl",
       "gomod",
       "gosum",
-      "gowork",
       "git_config",
       "git_rebase",
       "gitattributes",
@@ -159,5 +158,6 @@ return {
     vim.treesitter.language.register("bash", "dotenv")
     vim.treesitter.language.register("scss", "less")
     vim.treesitter.language.register("scss", "postcss")
+    vim.treesitter.language.register("gomod", "gowork")
   end,
 }
