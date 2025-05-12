@@ -34,10 +34,11 @@ return {
           local maps = opts.mappings
 
           local function open_float(element)
-            require("dapui").float_element(element, {
+            local params = {
               width = math.floor(vim.o.columns * 0.8),
               enter = true,
-            })
+            }
+            require("dapui").float_element(element, params)
           end
 
           maps.n["<Leader>dR"] = false

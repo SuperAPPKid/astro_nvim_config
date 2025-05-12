@@ -140,7 +140,7 @@ return {
       {
         "jay-babu/mason-nvim-dap.nvim",
         init = function() end,
-        config = function(_, opts)
+        config = function(_, _)
           local providers = require("dap").providers
           providers.configs = {
             [0] = providers.configs["dap.launch.json"],
