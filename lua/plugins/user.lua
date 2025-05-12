@@ -1753,4 +1753,33 @@ return {
       },
     },
   },
+
+  {
+    "Isrothy/neominimap.nvim",
+    lazy = false,
+    config = function() end,
+    init = function()
+      vim.g.neominimap = {
+        -- auto_enable = false,
+        git = {
+          mode = "icon",
+        },
+        search = {
+          enabled = true,
+        },
+        buf_filter = function(bufnr) return require("astrocore.buffer").is_valid(bufnr) end,
+        winopt = function(opt, _)
+          opt.signcolumn = "yes"
+          opt.statuscolumn = "%s"
+        end,
+      }
+    end,
+    keys = {
+      {
+        "<Leader>um",
+        "<Cmd>Neominimap Toggle<CR>",
+        desc = "Toggle minimap",
+      },
+    },
+  },
 }
