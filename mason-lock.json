@@ -50,7 +50,7 @@
   "phpactor": "2025.04.17.0",
   "prettier": "3.5.3",
   "prettierd": "0.26.1",
-  "rust-analyzer": "2025-05-05",
+  "rust-analyzer": "2025-05-12",
   "shellcheck": "v0.10.0",
   "shfmt": "v3.11.0",
   "solargraph": "0.54.2",
