@@ -10,7 +10,7 @@ return {
   },
 
   {
-    "zapling/mason-lock.nvim",
+    "superappkid/mason-lock.nvim",
     lazy = true,
     cmd = {
       "MasonLock",
