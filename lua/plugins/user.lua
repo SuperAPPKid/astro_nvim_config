@@ -920,18 +920,37 @@ return {
           maps.i[lhs] = map
         end
 
+        -- HACK: fix <Esc> not working
+        local quit_whichkey_wrapper = function(f)
+          return function()
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
+            vim.schedule(f)
+          end
+        end
         local prefix = "<Leader>m"
         maps.n[prefix] = { desc = " MultiCursor" }
         maps.x[prefix] = { desc = " MultiCursor" }
         for lhs, map in pairs {
-          [prefix .. "a"] = { "<Cmd>MultipleCursorsAddMatches<CR>", desc = "Add cursor matches" },
+          [prefix .. "a"] = {
+            quit_whichkey_wrapper(function() vim.cmd "MultipleCursorsAddMatches" end),
+            desc = "Add cursor matches",
+          },
           [prefix .. "A"] = {
-            "<Cmd>MultipleCursorsAddMatchesV<CR>",
+            quit_whichkey_wrapper(function() vim.cmd "MultipleCursorsAddMatchesV" end),
             desc = "Add cursor matches in previous visual area",
           },
-          [prefix .. "j"] = { "<Cmd>MultipleCursorsAddJumpNextMatch<CR>", desc = "Add cursor and jump to next match" },
-          [prefix .. "J"] = { "<Cmd>MultipleCursorsJumpNextMatch<CR>", desc = "Move cursor to next match" },
-          [prefix .. "l"] = { "<Cmd>MultipleCursorsLock<CR>", desc = "Lock virtual cursors" },
+          [prefix .. "j"] = {
+            quit_whichkey_wrapper(function() vim.cmd "MultipleCursorsAddJumpNextMatch" end),
+            desc = "Add cursor and jump to next match",
+          },
+          [prefix .. "J"] = {
+            quit_whichkey_wrapper(function() vim.cmd "MultipleCursorsJumpNextMatch" end),
+            desc = "Move cursor to next match",
+          },
+          [prefix .. "l"] = {
+            quit_whichkey_wrapper(function() vim.cmd "MultipleCursorsLock" end),
+            desc = "Lock virtual cursors",
+          },
         } do
           maps.n[lhs] = map
           maps.x[lhs] = map
