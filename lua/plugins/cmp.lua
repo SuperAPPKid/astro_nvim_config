@@ -104,7 +104,7 @@ return {
       cmdline = {
         completion = {
           menu = {
-            auto_show = function(ctx) return vim.fn.getcmdtype() == ":" end,
+            auto_show = function(_) return vim.fn.getcmdtype() == ":" end,
           },
         },
         keymap = {
