@@ -1,8 +1,4 @@
 local lint -- cache for the nvim-lint package
-local function selene_configured(path)
-  return #vim.fs.find("selene.toml", { path = path, upward = true, type = "file" }) > 0
-end
-
 ---@type LazySpec
 return {
   "mfussenegger/nvim-lint",
@@ -17,7 +13,6 @@ return {
       ["bash"] = { "bash" },
       ["dockerfile"] = { "hadolint" },
       ["go"] = { "golangcilint" },
-      ["lua"] = { "selene" },
       ["kotlin"] = { "ktlint" },
       ["proto"] = { "buf_lint" },
       ["sh"] = { "shellcheck" },
@@ -28,7 +23,6 @@ return {
       ["yaml"] = { "yamllint" },
     },
     linters = {
-      selene = { condition = function(ctx) return selene_configured(ctx.filename) end },
       sqlfluff = {
         args = {
           "lint",
