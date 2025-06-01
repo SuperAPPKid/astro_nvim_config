@@ -1801,4 +1801,19 @@ return {
       },
     },
   },
+
+  {
+    "HakonHarnes/img-clip.nvim",
+    event = "User AstroFile",
+    opts = {
+      default = {
+        verbose = false,
+        embed_image_as_base64 = false,
+        prompt_for_file_name = false,
+        drag_and_drop = {
+          insert_mode = true,
+        },
+      },
+    },
+  },
 }
