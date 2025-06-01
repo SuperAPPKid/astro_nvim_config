@@ -30,7 +30,15 @@ return {
           [prefix] = { desc = " Avante" },
           [prefix .. "<CR>"] = {
             function() require("avante.api").focus() end,
-            desc = "avante: ask",
+            desc = "avante: focus",
+          },
+          [prefix .. "n"] = {
+            function() require("avante.api").ask { new_chat = true } end,
+            desc = "avante: new",
+          },
+          [prefix .. "s"] = {
+            function() require("avante.api").stop() end,
+            desc = "avante: stop",
           },
           [prefix .. "r"] = {
             function() require("avante.api").refresh() end,
