@@ -36,7 +36,20 @@ return {
     },
     config = function(_, opts)
       require("snacks").setup(opts)
-      vim.ui.select = Snacks.picker.select
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.select = function(items, select_opts, on_choice)
+        if
+          select_opts
+          and select_opts.prompt
+          and type(select_opts.prompt) == "string"
+          and string.match(select_opts.prompt, [[^You've reached.*limit.*Upgrade.*$]]) -- ...
+        then
+          vim.notify("Copilot: " .. select_opts.prompt, vim.log.levels.ERROR) --you can also delete this notify
+          vim.cmd "Copilot disable"
+        else
+          return Snacks.picker.select(items, select_opts, on_choice)
+        end
+      end
     end,
     opts = function(_, opts)
       opts.bigfile = {}
