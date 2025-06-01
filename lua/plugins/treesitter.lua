@@ -115,6 +115,7 @@ return {
       "rust",
       "scss",
       "sql",
+      "styled",
       "swift",
       "svelte",
       "templ",
