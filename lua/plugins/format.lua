@@ -101,6 +101,7 @@ return {
         ["less"] = prettier_formatter,
         ["lua"] = { "stylua" },
         ["markdown"] = prettier_formatter,
+        ["nginx"] = { "nginxfmt" },
         ["php"] = { "php_cs_fixer" },
         ["postcss"] = prettier_formatter,
         ["proto"] = { "buf" },

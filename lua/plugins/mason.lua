@@ -10,7 +10,7 @@ return {
   },
 
   {
-    "superappkid/mason-lock.nvim",
+    "zapling/mason-lock.nvim",
     lazy = true,
     cmd = {
       "MasonLock",
@@ -35,6 +35,7 @@ return {
         "kulala-fmt",
         "lemminx", -- xml
         "marksman", -- markdown
+        "nginx-config-formatter",
         "nginx-language-server",
         "prettier",
         "prettierd",
