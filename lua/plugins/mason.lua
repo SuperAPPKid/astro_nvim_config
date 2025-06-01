@@ -40,6 +40,7 @@ return {
         "prettier",
         "prettierd",
         "rust-analyzer",
+        "sonarlint-language-server",
         "svelte-language-server",
         "taplo", -- toml
         "tailwindcss-language-server",
