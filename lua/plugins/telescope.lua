@@ -272,19 +272,6 @@ return {
     config = function(_, _) require("telescope").load_extension "live_grep_args" end,
   },
 
-  {
-    "tiagovla/scope.nvim",
-    keys = {
-      { "<Leader>fb", function() require("telescope").extensions.scope.buffers() end, desc = "Open Scopes" },
-    },
-    dependencies = {
-      { "nvim-telescope/telescope.nvim" },
-    },
-    config = function(_, opts)
-      require("scope").setup(opts)
-      require("telescope").load_extension "scope"
-    end,
-  },
 
   {
     "AckslD/nvim-neoclip.lua",

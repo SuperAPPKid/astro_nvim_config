@@ -88,7 +88,6 @@ return {
       },
     },
     dependencies = {
-      "tiagovla/scope.nvim",
       "stevearc/overseer.nvim",
     },
     opts = function(_, opts)
@@ -97,9 +96,10 @@ return {
         if buftype == "help" then return true end
         if buftype ~= "" and buftype ~= "acwrite" then return false end
         if vim.api.nvim_buf_get_name(bufnr) == "" then return false end
-        return require("astrocore.buffer").is_valid(bufnr)
+        return require("astrocore.buffer").is_restorable(bufnr)
       end
-      opts.extensions = require("astrocore").extend_tbl(opts.extensions, { scope = {}, overseer = {} })
+      opts.extensions = { overseer = {} }
+      -- opts.extensions = require("astrocore").extend_tbl(opts.extensions, { overseer = {} })
     end,
   },
 
