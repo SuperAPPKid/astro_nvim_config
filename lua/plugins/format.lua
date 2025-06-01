@@ -93,6 +93,7 @@ return {
         ["css"] = prettier_formatter,
         ["helm"] = prettier_formatter,
         ["html"] = prettier_formatter,
+        ["http"] = { "kulala-fmt" },
         ["go"] = { "goimports", lsp_format = "last" },
         ["javascript"] = prettier_formatter,
         ["javascriptreact"] = prettier_formatter,

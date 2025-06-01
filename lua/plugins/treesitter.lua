@@ -93,6 +93,7 @@ return {
       "gitignore",
       "helm",
       "html",
+      "http",
       "java",
       "javascript",
       "jsdoc",

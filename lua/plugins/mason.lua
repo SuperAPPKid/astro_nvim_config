@@ -32,6 +32,7 @@ return {
         "dart-debug-adapter",
         "helm-ls",
         "json-lsp",
+        "kulala-fmt",
         "lemminx", -- xml
         "marksman", -- markdown
         "nginx-language-server",
