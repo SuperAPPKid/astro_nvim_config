@@ -98,8 +98,7 @@ return {
         if vim.api.nvim_buf_get_name(bufnr) == "" then return false end
         return require("astrocore.buffer").is_restorable(bufnr)
       end
-      opts.extensions = { overseer = {} }
-      -- opts.extensions = require("astrocore").extend_tbl(opts.extensions, { overseer = {} })
+      opts.extensions = require("astrocore").extend_tbl(opts.extensions, { overseer = {} })
     end,
   },
 
