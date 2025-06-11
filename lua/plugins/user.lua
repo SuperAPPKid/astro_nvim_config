@@ -1140,7 +1140,7 @@ return {
   },
 
   {
-    "mistweaverco/kulala.nvim",
+    "superappkid/kulala.nvim",
     ft = "http",
     specs = {
       {
@@ -1216,6 +1216,12 @@ return {
       ui = {
         display_mode = "float",
         formatter = true,
+        win_opts = {
+          bo = {
+            buflisted = false,
+            swapfile = false,
+          },
+        },
       },
     },
   },
