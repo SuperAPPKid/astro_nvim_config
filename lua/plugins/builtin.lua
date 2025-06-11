@@ -192,6 +192,16 @@ return {
 
   {
     "folke/todo-comments.nvim",
+    specs = {
+      "AstroNvim/astrocore",
+      opts = {
+        mappings = {
+          n = {
+            ["<Leader>ft"] = false,
+          },
+        },
+      },
+    },
     keys = {
       {
         "<Leader>ft",

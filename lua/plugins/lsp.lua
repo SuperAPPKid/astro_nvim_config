@@ -247,6 +247,16 @@ return {
     "superappkid/lspsaga.nvim",
     event = "LspAttach",
     cmd = "Lspsaga",
+    specs = {
+      "AstroNvim/astrocore",
+      opts = {
+        mappings = {
+          n = {
+            ["<Leader>lR"] = false,
+          },
+        },
+      },
+    },
     dependencies = {
       { "nvim-treesitter/nvim-treesitter" },
       {

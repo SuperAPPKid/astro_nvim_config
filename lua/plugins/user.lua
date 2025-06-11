@@ -1444,6 +1444,16 @@ return {
     "chrishrb/gx.nvim",
     cmd = { "Browse" },
     dependencies = { "nvim-lua/plenary.nvim" }, -- Required for Neovim < 0.10.0
+    specs = {
+      "AstroNvim/astrocore",
+      opts = {
+        mappings = {
+          n = {
+            ["gx"] = false,
+          },
+        },
+      },
+    },
     submodules = false, -- not needed, submodules are required only for tests
     -- you can specify also another config if you want
     config = function(_, opts) require("gx").setup(opts) end,
@@ -1651,11 +1661,21 @@ return {
 
   {
     "superappkid/nvim-recorder",
+    specs = {
+      "AstroNvim/astrocore",
+      opts = {
+        mappings = {
+          n = {
+            ["<Leader>q"] = false,
+          },
+        },
+      },
+    },
     keys = function(plugin, _)
       require("astrocore").set_mappings {
         n = {
           ["q"] = { "<Nop>" },
-          ["<Leader>q"] = { desc = " Recording" },
+          ["<Leader>q"] = { "<Nop>", desc = " Recording" },
         },
       }
 

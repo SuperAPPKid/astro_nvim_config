@@ -109,11 +109,19 @@ return {
         },
         keymap = {
           ["<CR>"] = { "accept", "fallback" },
-          ["<ESC>"] = { "hide", "fallback" },
+          ["<ESC>"] = {
+            "hide",
+            function(_)
+              local ctrl_c = vim.api.nvim_replace_termcodes("<C-c>", true, false, true)
+              vim.api.nvim_feedkeys(ctrl_c, "n", true)
+            end,
+          },
           ["<C-J>"] = { "select_next", "fallback" },
           ["<C-K>"] = { "select_prev", "fallback" },
           ["<Up>"] = { "select_prev", "fallback" },
           ["<Down>"] = { "select_next", "fallback" },
+          ["<Right>"] = { "fallback" },
+          ["<Left>"] = { "fallback" },
         },
       },
       fuzzy = {
@@ -130,14 +138,14 @@ return {
         },
       },
       keymap = {
-        ["<C-e>"] = {
+        ["<C-E>"] = {
           function()
             require("blink.cmp").hide()
             require("codeium.virtual_text").complete()
             return true
           end,
         },
-        ["<C-y>"] = { "show_documentation", "hide_documentation" },
+        ["<C-Y>"] = { "show_documentation", "hide_documentation" },
       },
       signature = {
         enabled = true,

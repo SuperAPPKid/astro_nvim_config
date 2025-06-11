@@ -135,7 +135,6 @@ return {
         },
         gj = "j",
         gk = "k",
-        gx = false,
         gl = false,
 
         -- navigate buffer tabs with `H` and `L`
@@ -212,20 +211,13 @@ return {
         ["<C-W><C-D>"] = { "" },
 
         ["<Leader>fr"] = false,
-        ["<Leader>fm"] = false,
         ["<Leader>fg"] = false,
-        ["<Leader>ft"] = false,
 
-        ["<Leader>gb"] = false,
-        ["<Leader>gc"] = false,
-        ["<Leader>gC"] = false,
         ["<Leader>gt"] = false,
-        ["<Leader>gg"] = false,
         ["<Leader>gK"] = false,
 
         ["<Leader>l"] = false,
         ["<Leader>lD"] = false,
-        ["<Leader>lR"] = false,
 
         ["<Leader>w"] = false,
 
@@ -246,6 +238,12 @@ return {
         ["<C-S>"] = save_file,
       },
       t = {},
+      c = {
+        ["<C-B>"] = "<S-Left>",
+        ["<C-F>"] = "<S-Right>",
+        ["<C-L>"] = "<Right>",
+        ["<C-H>"] = "<Left>",
+      },
     })
 
     -- configure functions on key press

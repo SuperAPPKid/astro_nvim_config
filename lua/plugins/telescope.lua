@@ -272,17 +272,26 @@ return {
     config = function(_, _) require("telescope").load_extension "live_grep_args" end,
   },
 
-
   {
     "AckslD/nvim-neoclip.lua",
     event = "User AstroFile",
-    keys = {
-      { "<Leader>fy", "<Cmd>Telescope neoclip<CR>", desc = "Find yanks (neoclip)" },
-      { "<Leader>fm", "<Cmd>Telescope macroscope<CR>", desc = "Find macros (neoclip)" },
-    },
     dependencies = {
       { "nvim-telescope/telescope.nvim" },
       { "kkharji/sqlite.lua" },
+    },
+    specs = {
+      "AstroNvim/astrocore",
+      opts = {
+        mappings = {
+          n = {
+            ["<Leader>fm"] = false,
+          },
+        },
+      },
+    },
+    keys = {
+      { "<Leader>fy", "<Cmd>Telescope neoclip<CR>", desc = "Find yanks (neoclip)" },
+      { "<Leader>fm", "<Cmd>Telescope macroscope<CR>", desc = "Find macros (neoclip)" },
     },
     opts = function(_, opts)
       local function is_whitespace(line) return vim.fn.match(line, [[^\s*$]]) ~= -1 end
