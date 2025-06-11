@@ -152,6 +152,7 @@ return {
         relculright = true,
         ft_ignore = {
           "dapui_.*",
+          "dbui",
           "dap-repl",
           "terminal",
           "lspinfo",
