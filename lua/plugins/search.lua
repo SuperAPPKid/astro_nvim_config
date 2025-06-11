@@ -10,7 +10,7 @@ local function grug_far_open(opts, with_visual)
       if not opts.prefills then opts.prefills = {} end
       opts.prefills.search = grug_far.get_current_visual_selection()
     end
-    grug_far.open_instance(opts.instanceName)
+    grug_far.get_instance(opts.instanceName):open()
     if opts.prefills then grug_far.update_instance_prefills(opts.instanceName, opts.prefills, false) end
   end
 end
@@ -65,6 +65,7 @@ return {
           local ext = require("astrocore.buffer").is_valid() and vim.fn.expand "%:e" or ""
           local paths = require("astrocore.buffer").is_valid() and vim.fn.expand "%" or nil
           grug_far_open({
+            visualSelectionUsage = "operate-within-range",
             startCursorRow = 4,
             prefills = {
               paths = paths,
@@ -76,7 +77,6 @@ return {
         mode = "v",
       },
     },
-    ---@param opts GrugFarOptionsOverride
     opts = function(_, opts)
       opts.icons = opts.icons or {}
       opts.icons.enabled = vim.g.icons_enabled
