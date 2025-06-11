@@ -28,6 +28,7 @@ return {
       ensure_installed = {
         "angular-language-server",
         "blade-formatter",
+        "buf",
         "codelldb",
         "dart-debug-adapter",
         "helm-ls",
@@ -55,8 +56,6 @@ return {
         "shellcheck",
         "shfmt",
         "bash-debug-adapter",
-
-        "buf",
 
         -- csharp
         "omnisharp",
@@ -126,6 +125,10 @@ return {
         "eslint-lsp",
         "js-debug-adapter",
         "vtsls",
+
+        -- web dev
+        "biome",
+        "eslint-lsp",
 
         -- yaml
         "yaml-language-server",

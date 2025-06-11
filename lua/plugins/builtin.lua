@@ -274,6 +274,24 @@ return {
         operator = { glyph = "󰆕" },
         typeParameter = { glyph = "󰊄" },
       },
+      file = {
+        -- ESLint <=8 (Deprecated)
+        [".eslintignore"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+        [".eslintrc"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+        [".eslintrc.cjs"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+        [".eslintrc.js"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+        [".eslintrc.json"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+        [".eslintrc.yaml"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+        [".eslintrc.yml"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+
+        -- ESLint >=9
+        ["eslint.config.cjs"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+        ["eslint.config.cts"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+        ["eslint.config.js"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+        ["eslint.config.mjs"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+        ["eslint.config.mts"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+        ["eslint.config.ts"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+      },
       filetype = {
         php = { glyph = "󰟆" },
         go = { glyph = "" },
