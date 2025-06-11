@@ -7,6 +7,9 @@ return {
   dependencies = {
     {
       "nvim-treesitter/nvim-treesitter-context",
+      cmd = {
+        "TSContext",
+      },
       opts = {
         max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
         multiline_threshold = 1, -- Maximum number of lines to show for a single context
@@ -31,11 +34,6 @@ return {
         vim.g.matchup_matchparen_hi_surround_always = 1
       end,
     },
-  },
-  cmd = {
-    "TSContextEnable",
-    "TSContextDisable",
-    "TSContextToggle",
   },
   keys = function(_, keys)
     table.insert(keys, {
