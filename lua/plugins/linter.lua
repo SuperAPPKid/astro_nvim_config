@@ -70,13 +70,11 @@ return {
           or linter
       end
 
-      local valid_linters = function(ctx, linters)
+      local valid_linters = function(_, linters)
         if not linters then return {} end
         return vim.tbl_filter(function(name)
-          local linter = lint.linters[name]
-          return linter
-            and vim.fn.executable(linter.cmd) == 1
-            and not (type(linter) == "table" and linter.condition and not linter.condition(ctx))
+          local linter = type(name) ~= "function" and lint.linters[name] or lint.linters[name]()
+          return linter and vim.fn.executable(linter.cmd) == 1
         end, linters)
       end
 
