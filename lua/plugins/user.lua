@@ -1844,4 +1844,9 @@ return {
       },
     },
   },
+
+  {
+    "darfink/vim-plist",
+    config = function() vim.g.plist_display_format = "json" end,
+  },
 }
