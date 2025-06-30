@@ -108,9 +108,10 @@ return {
           },
         },
         gopls = {
-          settings = {
+          settings = { -- check https://github.com/golang/tools/blob/master/gopls/doc/settings.md
             gopls = {
               analyses = {
+                ST1000 = false,
                 ST1003 = true,
                 deprecated = false,
                 fieldalignment = false,

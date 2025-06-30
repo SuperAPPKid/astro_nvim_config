@@ -62,9 +62,6 @@ return {
         spell = false, -- sets vim.opt.spell
         wrap = true, -- sets vim.opt.wrap
         autoread = true,
-        tabstop = 4,
-        shiftwidth = 4,
-        softtabstop = 4,
         swapfile = false,
       },
 
