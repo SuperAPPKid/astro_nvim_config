@@ -1514,7 +1514,7 @@ return {
       local prefix = "<Leader>x"
       keys = require("astrocore").list_insert_unique(keys, {
         -- { prefix .. "<CR>", "<Cmd>Trouble <CR>", desc = "Trouble modes" },
-        { "<Leader>X", "<Cmd>Trouble diagnostics close<CR>", desc = "Close Trouble" },
+        { "<Leader>X", "<Cmd>Trouble close<CR>", desc = "Close Trouble" },
         { prefix .. "X", "<Cmd>Trouble diagnostics toggle<CR>", desc = "Workspace Diagnostics (Trouble)" },
         { prefix .. "x", "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "Document Diagnostics (Trouble)" },
         { prefix .. "L", "<Cmd>Trouble loclist toggle<CR>", desc = "Location List (Trouble)" },
@@ -1532,7 +1532,7 @@ return {
       })
       if require("astrocore").is_available "todo-comments.nvim" then
         keys = require("astrocore").list_insert_unique(keys, {
-          { prefix .. "t", "<Cmd>Trouble todo<CR>", desc = "Trouble Todo" },
+          { prefix .. "t", "<Cmd>Trouble todo<CR>", desc = "Trouble Todo ALL" },
           { prefix .. "T", "<Cmd>Trouble todo filter={tag={TODO,FIX,FIXME}}<CR>", desc = "Trouble Todo/Fix/Fixme" },
         })
       end
