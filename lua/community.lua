@@ -37,7 +37,6 @@ return {
   { import = "astrocommunity.editing-support.telescope-undo-nvim" },
   { import = "astrocommunity.editing-support.vim-exchange" },
   { import = "astrocommunity.editing-support.vim-move" },
-  { import = "astrocommunity.editing-support.wildfire-nvim" },
 
   { import = "astrocommunity.fuzzy-finder.telescope-nvim" },
 
