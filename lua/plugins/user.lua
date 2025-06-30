@@ -1776,7 +1776,9 @@ return {
     "chrisgrieser/nvim-origami",
     event = "BufReadPost",
     opts = {
-      keepFoldsAcrossSessions = false,
+      autoFold = {
+        enabled = false,
+      },
       foldKeymaps = {
         hOnlyOpensOnFirstColumn = true,
       },
