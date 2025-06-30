@@ -88,7 +88,7 @@ return {
       { "nvim-neotest/nvim-nio" },
       { "nvim-neotest/neotest-jest", config = function() end },
       { "Issafalcon/neotest-dotnet", config = function() end },
-      { "nvim-neotest/neotest-go", config = function() end },
+      { "fredrikaverpil/neotest-golang" },
       { "nvim-neotest/neotest-python", config = function() end },
     },
     config = function(_, opts)
@@ -107,7 +107,7 @@ return {
       require("astrocore").list_insert_unique(opts.adapters, {
         require "neotest-jest"(require("astrocore").plugin_opts "neotest-jest"),
         require "neotest-dotnet"(require("astrocore").plugin_opts "neotest-dotnet"),
-        require "neotest-go"(require("astrocore").plugin_opts "neotest-go"),
+        require "neotest-golang"(require("astrocore").plugin_opts "neotest-golang"),
         require "neotest-python"(require("astrocore").plugin_opts "neotest-python"),
       })
     end,
