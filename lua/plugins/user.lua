@@ -1809,7 +1809,11 @@ return {
     config = function() end,
     init = function()
       vim.g.neominimap = {
-        -- auto_enable = false,
+        auto_enable = false,
+        layout = "split",
+        split = {
+          close_if_last_window = true,
+        },
         git = {
           mode = "icon",
         },
