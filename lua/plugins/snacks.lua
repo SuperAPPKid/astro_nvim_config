@@ -10,7 +10,7 @@ return {
   },
 
   {
-    "folke/snacks.nvim",
+    "superappkid/snacks.nvim",
     priority = 1000,
     lazy = false,
     specs = {
