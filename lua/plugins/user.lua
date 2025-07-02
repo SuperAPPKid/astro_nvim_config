@@ -273,11 +273,13 @@ return {
   },
 
   {
-    "superappkid/modes.nvim",
+    "mvllow/modes.nvim",
     event = "User AstroFile",
     opts = {
+      set_number = true,
+      set_signcolumn = false,
       line_opacity = 0.3,
-      ignore_filetypes = {
+      ignore = {
         "neo-tree",
         "neo-tree-popup",
         "neo-tree-preview",

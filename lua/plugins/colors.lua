@@ -102,6 +102,7 @@ return {
           ModesDelete = { bg = palette.samuraiRed },
           ModesInsert = { bg = palette.springGreen },
           ModesVisual = { bg = palette.crystalBlue },
+          ModesReplace = { bg = palette.oniViolet },
 
           GitSignsAdd = { fg = palette.springGreen },
           GitSignsChange = { fg = palette.roninYellow },
