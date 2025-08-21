@@ -92,7 +92,7 @@ return {
         ["css"] = { "biome" },
         ["helm"] = { "prettierd", "prettier", stop_after_first = true },
         ["html"] = { "prettierd", "prettier", stop_after_first = true },
-        ["http"] = { "kulala-fmt" },
+        -- ["http"] = { "kulala-fmt" }, INFO: wait kulala-fmt fix issue: https://github.com/mistweaverco/kulala-fmt/issues/52
         ["go"] = { "goimports", lsp_format = "last" },
         ["graphql"] = { "biome" },
         ["javascript"] = { "biome" },
