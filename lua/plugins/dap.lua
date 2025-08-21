@@ -22,6 +22,20 @@ return {
         end,
       },
     },
+    config = function()
+      local dap = require "dap"
+      local log = require("dap.log").create_logger "dap.log"
+      local repl = require "dap.repl"
+      dap.defaults.fallback.on_output = function(_, body)
+        if body.category == "telemetry" then
+          log:info("Telemetry", msg)
+        else
+          local msg = body.output
+          local cleaned = msg:gsub("\27%[[0-9;]*m", "")
+          repl.append(cleaned, "$", { newline = false })
+        end
+      end
+    end,
   },
 
   {
