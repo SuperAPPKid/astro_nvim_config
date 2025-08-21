@@ -273,7 +273,7 @@ return {
   },
 
   {
-    "mvllow/modes.nvim",
+    "superappkid/modes.nvim",
     event = "User AstroFile",
     opts = {
       set_number = true,
@@ -1105,6 +1105,7 @@ return {
       },
     },
     opts = {
+      lsp = { on_attach = function(...) return require("astrolsp").on_attach(...) end },
       ui = {
         display_mode = "float",
         formatter = true,
@@ -1637,6 +1638,7 @@ return {
     "chrisgrieser/nvim-origami",
     event = "BufReadPost",
     opts = {
+      useLspFoldsWithTreesitterFallback = false,
       autoFold = {
         enabled = false,
       },

@@ -80,7 +80,11 @@ local M = {
     init = function(plugin)
       -- create dir if opts.dir not exist
       local plugin_opts = require("lazy.core.plugin").values(plugin, "opts", false)
-      if not (vim.uv or vim.loop).fs_stat(plugin_opts.dir) then vim.fn.mkdir(plugin_opts.dir, "p") end
+      for _, workspace in ipairs(plugin_opts.workspaces) do
+        if workspace.dir then
+          if not (vim.uv or vim.loop).fs_stat(workspace.dir) then vim.fn.mkdir(workspace.dir, "p") end
+        end
+      end
     end,
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -94,7 +98,7 @@ local M = {
           ["gf"] = {
             function()
               if require("obsidian").util.cursor_on_markdown_link() then
-                return "<Cmd>ObsidianFollowLink<CR>"
+                return "<Cmd>Obsidian follow_link<CR>"
               else
                 return "gf"
               end
@@ -106,8 +110,14 @@ local M = {
       }
     end,
     opts = {
-      dir = vim.env.HOME .. "/Documents/Obsidian", -- specify the vault location. no need to call 'vim.fn.expand' here
-      use_advanced_uri = true,
+      workspaces = {
+        {
+          dir = vim.env.HOME .. "/Documents/Obsidian", -- specify the vault location. no need to call 'vim.fn.expand' here
+        },
+      },
+      open = {
+        use_advanced_uri = true,
+      },
       finder = "telescope.nvim",
       completion = {
         nvim_cmp = false,

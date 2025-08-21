@@ -150,6 +150,9 @@ return {
       local builtin = require "statuscol.builtin"
       require("statuscol").setup {
         relculright = true,
+        bt_ignore = {
+          "nofile",
+        },
         ft_ignore = {
           "dapui_.*",
           "dbui",

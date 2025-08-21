@@ -61,7 +61,7 @@ return {
       create_autocmd(
         "FileType",
         "dbui query mappings", --
-        { "mysql", "plsql", "sql", "javascript" },
+        { "mysql", "plsql", "sql", "javascript", "redis" },
         function(args)
           if not vim.b[args.buf].dbui_db_key_name then return end
 
@@ -110,6 +110,7 @@ return {
     end,
     dependencies = {
       { "tpope/vim-dadbod" },
+      { "tpope/vim-dotenv" },
       { "kristijanhusak/vim-dadbod-completion" },
       {
         "Saghen/blink.cmp",

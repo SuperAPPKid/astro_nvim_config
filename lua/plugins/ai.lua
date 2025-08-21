@@ -90,6 +90,9 @@ return {
     end,
     opts = {
       provider = "copilot",
+      selection = {
+        hint_display = "none",
+      },
       selector = {
         provider = "snacks",
       },
