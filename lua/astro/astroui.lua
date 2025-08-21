@@ -60,6 +60,7 @@ return {
       test = "󰙨",
       watch = "󰂥",
       Avante = "",
+      Copilot = "",
       Dial = "󱓉",
       Dial_additive = "󱖢",
       IdeHelper = "󱚌", -- php

@@ -6,7 +6,6 @@
 return {
   "AstroNvim/astrocommunity",
 
-  { import = "astrocommunity.editing-support.copilotchat-nvim" },
   { import = "astrocommunity.editing-support.cloak-nvim" },
   {
     "laytan/cloak.nvim",
