@@ -157,10 +157,11 @@ return {
         },
         phpactor = {
           init_options = {
-            ["language_server_reference_reference_finder.reference_timeout"] = 180,
+            ["language_server_reference_reference_finder.reference_timeout"] = 120,
           },
           handlers = {
             ["window/showMessage"] = function(_, _) end,
+            ["window/showMessageRequest"] = function(_, _) return vim.NIL end,
           },
         },
         rust_analyzer = {
