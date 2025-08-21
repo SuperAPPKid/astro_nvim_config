@@ -76,14 +76,19 @@ return {
         "<Cmd>DiffviewOpen -uno -- %<CR>",
         desc = "Diff Changes",
       },
+      {
+        "<Leader>gdf",
+        "<Cmd>DiffviewFileHistory %<CR>",
+        desc = "Diff History (file)",
+      },
+      {
+        "<Leader>gdF",
+        "<Cmd>DiffviewFileHistory<CR>",
+        desc = "Diff History (all)",
+      },
     },
     opts = {
-      file_panel = {
-        win_config = { -- See |diffview-config-win_config|
-          position = "bottom",
-          height = 16,
-        },
-      },
+      enhanced_diff_hl = true,
       hooks = {
         view_opened = function() require("diffview.actions").toggle_files() end,
       },
@@ -123,11 +128,6 @@ return {
         "<Leader>gdB",
         "<Cmd>AdvancedGitSearch changed_on_branch<CR>",
         desc = "Branch Changed",
-      },
-      {
-        "<Leader>gdf",
-        "<Cmd>AdvancedGitSearch diff_commit_file<CR>",
-        desc = "Diff Commit (File)",
       },
       {
         "<Leader>gd",
@@ -290,6 +290,7 @@ return {
     specs = {
       {
         "echasnovski/mini.ai",
+        optional = true,
         opts = {
           custom_textobjects = {
             ["g"] = function()
@@ -356,8 +357,26 @@ return {
           maps.n["<Leader>gQ"] = { function() require("gitsigns").setqflist "all" end, desc = "Quickfix hunk (all)" }
           maps.n["[G"] = { function() require("gitsigns").nav_hunk "first" end, desc = "First Git hunk" }
           maps.n["]G"] = { function() require("gitsigns").nav_hunk "last" end, desc = "Last Git hunk" }
-          maps.n["]g"] = { function() require("gitsigns").nav_hunk "next" end, desc = "Next Git hunk" }
-          maps.n["[g"] = { function() require("gitsigns").nav_hunk "prev" end, desc = "Previous Git hunk" }
+          maps.n["]g"] = {
+            function()
+              if vim.wo.diff then
+                vim.cmd.normal { "]c", bang = true }
+              else
+                require("gitsigns").nav_hunk "next"
+              end
+            end,
+            desc = "Next Git hunk",
+          }
+          maps.n["[g"] = {
+            function()
+              if vim.wo.diff then
+                vim.cmd.normal { "[c", bang = true }
+              else
+                require("gitsigns").nav_hunk "prev"
+              end
+            end,
+            desc = "Previous Git hunk",
+          }
 
           maps.v["<Leader>g"] = vim.tbl_get(opts, "_map_sections", "g")
           maps.v["<Leader>gh"] = {
