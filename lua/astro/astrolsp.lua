@@ -1,18 +1,5 @@
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
-local function decode_json_file(filename)
-  local file = io.open(filename, "r")
-  if file then
-    local content = file:read "*all"
-    file:close()
-
-    local ok, data = pcall(vim.fn.json_decode, content)
-    if ok and type(data) == "table" then return data end
-  end
-end
-
-local function has_nested_key(json, ...) return vim.tbl_get(json, ...) ~= nil end
-
 ---@type LazySpec
 return {
   "AstroNvim/astrolsp",
@@ -221,39 +208,6 @@ return {
             },
           },
         },
-        tailwindcss = {
-          root_dir = function(fname)
-            local root_pattern = require("lspconfig").util.root_pattern
-
-            -- First, check for common Tailwind config files
-            local root = root_pattern(
-              "tailwind.config.mjs",
-              "tailwind.config.cjs",
-              "tailwind.config.js",
-              "tailwind.config.ts",
-              "postcss.config.js",
-              "config/tailwind.config.js",
-              "assets/tailwind.config.js"
-            )(fname)
-            -- If not found, check for package.json dependencies
-            if not root then
-              local package_root = root_pattern "package.json"(fname)
-              if package_root then
-                local package_data = decode_json_file(package_root .. "/package.json")
-                if
-                  package_data
-                  and (
-                    has_nested_key(package_data, "dependencies", "tailwindcss")
-                    or has_nested_key(package_data, "devDependencies", "tailwindcss")
-                  )
-                then
-                  root = package_root
-                end
-              end
-            end
-            return root
-          end,
-        },
         tsserver = {
           settings = {
             typescript = {
@@ -282,11 +236,33 @@ return {
           },
         },
         volar = {
-          init_options = {
-            vue = {
-              hybridMode = true,
-            },
-          },
+          on_init = function(client)
+            client.handlers["tsserver/request"] = function(_, result, context)
+              local clients = vim.lsp.get_clients { bufnr = context.bufnr, name = "vtsls" }
+              if #clients == 0 then
+                vim.notify(
+                  "Could not found `vtsls` lsp client, vue_lsp would not work without it.",
+                  vim.log.levels.ERROR
+                )
+                return
+              end
+              local ts_client = clients[1]
+
+              local param = unpack(result)
+              local id, command, payload = unpack(param)
+              ts_client:exec_cmd({
+                title = "vue_request_forward", -- You can give title anything as it's used to represent a command in the UI, `:h Client:exec_cmd`
+                command = "typescript.tsserverRequest",
+                arguments = {
+                  command,
+                  payload,
+                },
+              }, { bufnr = context.bufnr }, function(_, r)
+                local response_data = { { id, r.body } }
+                client:notify("tsserver/response", response_data)
+              end)
+            end
+          end,
         },
         vtsls = {
           filetypes = require("astrocore").list_insert_unique(vim.tbl_get(opts, "config", "vtsls", "filetypes") or {
