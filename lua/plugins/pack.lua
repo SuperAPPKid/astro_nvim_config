@@ -105,6 +105,11 @@ return {
     end,
   },
 
+  {
+    "darfink/vim-plist",
+    config = function() vim.g.plist_display_format = "json" end,
+  },
+
   -- ruby
   {
     "suketa/nvim-dap-ruby",
