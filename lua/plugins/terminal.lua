@@ -2,6 +2,20 @@
 return {
   {
     "akinsho/toggleterm.nvim",
+    cmd = {
+      "TermSelect",
+      "TermExec",
+      "TermNew",
+      "ToggleTerm",
+      "ToggleTermToggleAll",
+      "ToggleTermSendVisualLines",
+      "ToggleTermSendVisualSelection",
+      "ToggleTermSendCurrentLine",
+      "ToggleTermSetName",
+    },
+    dependencies = {
+      "ryanmsnyder/toggleterm-manager.nvim",
+    },
     specs = {
       {
         "AstroNvim/astrocore",
@@ -34,7 +48,27 @@ return {
           }
 
           local mappings = opts.mappings
-          mappings.n["<C-T>"] = { "<Cmd>ToggleTerm<CR>" }
+          mappings.n["<C-T>"] = {
+            function()
+              local terms = require("toggleterm.terminal").get_all()
+              if #terms < 2 then
+                return "<Cmd>ToggleTerm<CR>"
+              else
+                return "<Cmd>Telescope toggleterm_manager<CR>"
+              end
+            end,
+            expr = true,
+          }
+          mappings.n["<Leader>tr"] = {
+            function()
+              local terms = require("toggleterm.terminal").get_all(true)
+              if #terms ~= 0 then return "<Cmd>ToggleTermSetName<CR>" end
+            end,
+            expr = true,
+          }
+          mappings.n["<Leader>tf"] = { "<Cmd>TermNew direction=float<CR>", desc = "TermNew float" }
+          mappings.n["<Leader>th"] = { "<Cmd>TermNew direction=horizontal<CR>", desc = "TermNew horizontal split" }
+          mappings.n["<Leader>tv"] = { "<Cmd>TermNew direction=vertical<CR>", desc = "TermNew vertical split" }
 
           if vim.fn.executable "lazygit" == 1 then
             local show_lazygit = function()
@@ -120,6 +154,37 @@ return {
               desc = "ToggleTerm lazydocker",
             }
           end
+
+          if vim.fn.executable "btop" == 1 then
+            mappings.n["<Leader>tt"] = {
+              function() require("astrocore").toggle_term_cmd { cmd = "btop", direction = "float" } end,
+              desc = "ToggleTerm btop",
+            }
+          end
+
+          if vim.fn.executable "gemini" == 1 then
+            mappings.n["<Leader>tG"] = {
+              function() require("astrocore").toggle_term_cmd { cmd = "gemini", direction = "float" } end,
+              desc = "ToggleTerm gemini",
+            }
+          end
+
+          local gdu
+          if vim.fn.has "win32" == 1 then
+            gdu = "gdu_windows_amd64.exe"
+          elseif vim.fn.has "mac" == 1 then
+            gdu = "gdu-go"
+          else
+            gdu = "gdu"
+          end
+          if vim.fn.executable(gdu) == 1 then
+            mappings.n["<Leader>tu"] = {
+              function() require("astrocore").toggle_term_cmd { cmd = gdu, direction = "float" } end,
+              desc = "ToggleTerm gdu",
+            }
+          else
+            mappings.n["<Leader>tu"] = false
+          end
         end,
       },
     },
@@ -150,20 +215,9 @@ return {
 
   {
     "ryanmsnyder/toggleterm-manager.nvim",
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          opts.mappings.n["<Leader>fs"] = { "<Cmd>Telescope toggleterm_manager<CR>", desc = "Search Toggleterms" }
-        end,
-      },
-    },
     dependencies = {
       "nvim-telescope/telescope.nvim",
       "nvim-lua/plenary.nvim",
-    },
-    keys = {
-      { "<Leader>tl", "<Cmd>Telescope toggleterm_manager<CR>", desc = "Search Toggleterms" },
     },
     config = function(_, opts)
       require("toggleterm-manager").setup(opts)
@@ -191,6 +245,14 @@ return {
             action = function(...) require("toggleterm-manager").actions.create_term(...) end,
             exit_on_action = false,
           },
+          ["<C-t>"] = {
+            action = function(buf, _) require("telescope.actions").close(buf) end,
+            exit_on_action = true,
+          },
+          ["<C-\\>"] = {
+            action = function(buf, _) require("telescope.actions").close(buf) end,
+            exit_on_action = true,
+          },
         },
         i = {
           ["<CR>"] = { -- toggles terminal open/closed
@@ -208,6 +270,14 @@ return {
           ["<C-n>"] = { -- creates a new terminal buffer
             action = function(...) require("toggleterm-manager").actions.create_term(...) end,
             exit_on_action = false,
+          },
+          ["<C-t>"] = {
+            action = function(buf, _) require("telescope.actions").close(buf) end,
+            exit_on_action = true,
+          },
+          ["<C-\\>"] = {
+            action = function(buf, _) require("telescope.actions").close(buf) end,
+            exit_on_action = true,
           },
         },
       }
