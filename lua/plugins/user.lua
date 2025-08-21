@@ -1227,37 +1227,6 @@ return {
   },
 
   {
-    "superappkid/hover.nvim",
-    keys = {
-      { "K", function() require("hover").hover() end, desc = "Hover cursor" },
-    },
-    opts = {
-      init = function()
-        -- Require providers
-        require "hover.providers.dap"
-        require "hover.providers.diagnostic"
-        require "hover.providers.dictionary"
-        require "hover.providers.fold_preview"
-        -- require "hover.providers.gh"
-        -- require "hover.providers.gh_user"
-        -- require "hover.providers.jira"
-        require "hover.providers.lsp"
-        require "hover.providers.man"
-      end,
-      preview_opts = {
-        border = "double",
-      },
-      -- What to do if hover() is called when a hover popup is already open:
-      -- "cycle_providers" - cycle to the next enabled provider
-      -- "focus" - move the cursor into the popup
-      -- "preview_window" - move the popup contents to a :h preview-window
-      -- "close" - close the popup
-      -- "ignore" - do nothing
-      multiple_hover = "focus",
-    },
-  },
-
-  {
     "kwkarlwang/bufjump.nvim",
     lazy = true,
     specs = {
