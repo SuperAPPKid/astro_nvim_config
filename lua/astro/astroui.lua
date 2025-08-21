@@ -53,6 +53,7 @@ return {
       misc = "",
       note = "",
       planet = "",
+      play = "",
       project = "󰃥",
       refactoring = "󰣪",
       req = "󱗆",
