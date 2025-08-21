@@ -1711,4 +1711,23 @@ return {
       },
     },
   },
+
+  {
+    "andymass/vim-matchup",
+    event = "User AstroFile",
+    init = function()
+      -- vim.g.matchup_matchparen_offscreen = { method = "popup", fullwidth = 1, highlight = "Normal", syntax_hl = 1 }
+      vim.g.matchup_matchparen_offscreen = {}
+      vim.g.matchup_transmute_enabled = 1
+      vim.g.matchup_delim_noskips = 2
+
+      -- vim.g.matchup_motion_enabled = 0
+      vim.g.matchup_text_obj_enabled = 0
+      -- vim.g.matchup_motion_cursor_end = 0
+
+      vim.g.matchup_matchparen_nomode = "i"
+      vim.g.matchup_matchparen_deferred = 1
+      vim.g.matchup_matchparen_hi_surround_always = 1
+    end,
+  },
 }
