@@ -1857,13 +1857,4 @@ return {
     "darfink/vim-plist",
     config = function() vim.g.plist_display_format = "json" end,
   },
-
-  {
-    "sustech-data/wildfire.nvim",
-    event = "User AstroFile",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = function(opts)
-      if require("astrocore").is_available "nvim-treesitter" then require("wildfire").setup(opts) end
-    end,
-  },
 }
