@@ -228,6 +228,9 @@ if vim.fn.executable(deno) == 1 then
         desc = "Markdown Preview",
       },
     },
+    opts = {
+      app = "browser", -- 'webview', 'browser', string or a table of strings
+    },
   })
 end
 
