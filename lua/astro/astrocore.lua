@@ -213,7 +213,6 @@ return {
         ["<Leader>gt"] = false,
         ["<Leader>gK"] = false,
 
-        ["<Leader>l"] = false,
         ["<Leader>lD"] = false,
 
         ["<Leader>w"] = false,
