@@ -273,7 +273,7 @@ return {
   },
 
   {
-    "superappkid/modes.nvim",
+    "mvllow/modes.nvim",
     event = "User AstroFile",
     opts = {
       set_number = true,
