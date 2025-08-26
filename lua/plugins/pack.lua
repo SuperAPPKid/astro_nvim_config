@@ -110,16 +110,6 @@ return {
     config = function() vim.g.plist_display_format = "json" end,
   },
 
-  -- ruby
-  {
-    "suketa/nvim-dap-ruby",
-    ft = "ruby",
-    dependencies = {
-      "mfussenegger/nvim-dap",
-    },
-    config = true,
-  },
-
   -- java
   {
     "nvim-java/nvim-java",
@@ -132,5 +122,15 @@ return {
       local lsp_opts = require("astrolsp").lsp_opts "jdtls"
       require("lspconfig").jdtls.setup(lsp_opts)
     end,
+  },
+
+  -- ruby
+  {
+    "suketa/nvim-dap-ruby",
+    ft = "ruby",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+    },
+    config = true,
   },
 }
