@@ -57,6 +57,15 @@ return {
             "--disable-progress-bar",
           },
         },
+        yamllint = {
+          args = {
+            "-d",
+            "{extends: relaxed, rules: {line-length: {max: 120}}}",
+            "--format",
+            "parsable",
+            "-",
+          },
+        },
       },
     },
     config = function(_, opts)
