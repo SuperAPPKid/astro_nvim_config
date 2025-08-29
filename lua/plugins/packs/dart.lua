@@ -12,7 +12,7 @@ return {
     },
     init = function(_)
       vim.api.nvim_create_autocmd("FileType", {
-        group = vim.api.nvim_create_augroup("dart_mappings", { clear = true }),
+        group = vim.api.nvim_create_augroup("dart_setting", { clear = true }),
         desc = "Add map for dart",
         pattern = "dart",
         callback = function(args)
