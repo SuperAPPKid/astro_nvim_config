@@ -5,16 +5,38 @@ return {
     ft = "dart",
     dependencies = {
       { "nvim-telescope/telescope.nvim" },
-      { "AstroNvim/astrolsp", opts = function(_, opts) opts.handlers.dartls = false end },
+      {
+        "AstroNvim/astrolsp",
+        opts = function(_, opts) opts.servers = require("astrocore").list_insert_unique(opts.servers, { "dartls" }) end,
+      },
     },
+    init = function(_)
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("dart_mappings", { clear = true }),
+        desc = "Add map for dart",
+        pattern = "dart",
+        callback = function(args)
+          require("astrocore").set_mappings({
+            n = {
+              ["<Leader>zz"] = { "<Cmd>Telescope flutter commands<CR>", desc = "Flutter commands" },
+            },
+          }, { buffer = args.buf })
+        end,
+      })
+    end,
     config = function(_, opts)
       require("flutter-tools").setup(opts)
       require("telescope").load_extension "flutter"
     end,
     opts = function(_, opts)
       local astrolsp_avail, astrolsp = pcall(require, "astrolsp")
-      if astrolsp_avail then opts.lsp = astrolsp.lsp_opts "dartls" end
-      opts.debugger = { enabled = true }
+      if astrolsp_avail then
+        opts.debugger = { enabled = true }
+        opts.lsp = astrolsp.lsp_opts "dartls"
+      end
+      opts.ui = { border = "double" }
+      opts.widget_guides = { enabled = true }
+      opts.dev_log = { enabled = false }
     end,
   },
 
