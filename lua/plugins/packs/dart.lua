@@ -7,7 +7,15 @@ return {
       { "nvim-telescope/telescope.nvim" },
       {
         "AstroNvim/astrolsp",
-        opts = function(_, opts) opts.servers = require("astrocore").list_insert_unique(opts.servers, { "dartls" }) end,
+        opts = function(_, opts)
+          opts.servers = require("astrocore").list_insert_unique(opts.servers, { "dartls" })
+          local default_handler = opts.handlers[1]
+          opts.handlers.dartls = function(server, handler_opts)
+            default_handler(server, handler_opts, true)
+            opts.config.dartls = require("astrocore").extend_tbl(opts.config.dartls, handler_opts)
+            require("flutter-tools.lsp").attach()
+          end
+        end,
       },
     },
     init = function(_)
@@ -30,10 +38,7 @@ return {
     end,
     opts = function(_, opts)
       local astrolsp_avail, astrolsp = pcall(require, "astrolsp")
-      if astrolsp_avail then
-        opts.debugger = { enabled = true }
-        opts.lsp = astrolsp.lsp_opts "dartls"
-      end
+      if astrolsp_avail then opts.debugger = { enabled = true } end
       opts.ui = { border = "double" }
       opts.widget_guides = { enabled = true }
       opts.dev_log = { enabled = false }

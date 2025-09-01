@@ -328,7 +328,7 @@ return {
       -- customize how language servers are attached
       handlers = {
         -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
-        function(server, handler_opts)
+        function(server, handler_opts, skip_setup)
           if vim.fn.has "nvim-0.11" ~= 1 then
             for _, handler_opt in pairs(handler_opts) do
               -- HACK: workaround for https://github.com/neovim/neovim/issues/28058
@@ -354,7 +354,7 @@ return {
             end
           end
 
-          require("lspconfig")[server].setup(handler_opts)
+          if not skip_setup then require("lspconfig")[server].setup(handler_opts) end
         end,
 
         -- the key is the server that is being setup with `lspconfig`
