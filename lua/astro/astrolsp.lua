@@ -5,8 +5,6 @@ return {
   "AstroNvim/astrolsp",
   version = false,
   opts = function(_, opts)
-    local register_capability_handler = vim.lsp.handlers["client/registerCapability"]
-
     local new_opts = {
       -- Configuration table of features provided by AstroLSP
       features = {
@@ -329,16 +327,14 @@ return {
       handlers = {
         -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
         function(server, handler_opts, skip_setup)
-          if vim.fn.has "nvim-0.11" ~= 1 then
-            for _, handler_opt in pairs(handler_opts) do
-              -- HACK: workaround for https://github.com/neovim/neovim/issues/28058
-              if type(handler_opt) == "table" and handler_opt.workspace then
-                handler_opt.workspace.didChangeWatchedFiles = {
-                  dynamicRegistration = true,
-                  relativePatternSupport = false,
-                }
-                break
-              end
+          for _, handler_opt in pairs(handler_opts) do
+            -- HACK: workaround for https://github.com/neovim/neovim/issues/28058
+            if type(handler_opt) == "table" and handler_opt.workspace then
+              handler_opt.workspace.didChangeWatchedFiles = {
+                dynamicRegistration = true,
+                relativePatternSupport = false,
+              }
+              break
             end
           end
 
@@ -390,16 +386,7 @@ return {
           },
         },
       },
-      lsp_handlers = {
-        ["client/registerCapability"] = function(err, res, ctx)
-          local ret = register_capability_handler(err, res, ctx)
-          -- local attached_client = M.attached_clients[ctx.client_id]
-          -- if attached_client then
-          --   M.on_attach(attached_client, vim.api.nvim_get_current_buf())
-          -- end
-          return ret
-        end,
-      },
+      lsp_handlers = {},
       -- mappings to be set up on attaching of a language server
       mappings = {
         n = {
