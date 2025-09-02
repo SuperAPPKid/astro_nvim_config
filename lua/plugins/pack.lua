@@ -119,8 +119,13 @@ return {
     },
     config = function(_, opts)
       require("java").setup(opts)
-      local lsp_opts = require("astrolsp").lsp_opts "jdtls"
-      require("lspconfig").jdtls.setup(lsp_opts)
+
+      local astrolsp_avail, astrolsp = pcall(require, "astrolsp")
+      if astrolsp_avail then
+        astrolsp.lsp_setup "jdtls"
+      else
+        require("lspconfig").jdtls.setup {}
+      end
     end,
   },
 
