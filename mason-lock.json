@@ -48,7 +48,7 @@
   "nginx-config-formatter": "1.3.0",
   "nginx-language-server": "0.9.0",
   "omnisharp": "v1.39.14",
-  "php-cs-fixer": "v3.86.0",
+  "php-cs-fixer": "v3.87.1",
   "php-debug-adapter": "v1.37.0",
   "phpactor": "2025.07.25.0",
   "prettier": "3.6.2",
