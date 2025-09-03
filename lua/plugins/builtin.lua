@@ -186,11 +186,6 @@ return {
   },
 
   {
-    "neovim/nvim-lspconfig",
-    opts = function(_, _) require("lspconfig.ui.windows").default_options.border = "double" end,
-  },
-
-  {
     "folke/todo-comments.nvim",
     specs = {
       "AstroNvim/astrocore",

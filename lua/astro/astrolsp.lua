@@ -6,12 +6,33 @@ return {
   version = false,
   opts = function(_, opts)
     local new_opts = {
+      defaults = {
+        hover = { border = "double", silent = true }, -- customize lsp hover window
+      },
       -- Configuration table of features provided by AstroLSP
       features = {
         autoformat = true, -- enable or disable auto formatting on start
         codelens = true, -- enable/disable codelens refresh on start
         inlay_hints = true, -- enable/disable inlay hints on start
         semantic_tokens = false, -- enable/disable semantic token highlighting
+      },
+      -- Configuration of LSP file operation functionality
+      file_operations = {
+        -- the timeout when executing LSP client operations
+        timeout = 10000,
+        -- fully disable/enable file operation methods
+        operations = {
+          willRename = true,
+          didRename = true,
+          willCreate = true,
+          didCreate = true,
+          willDelete = true,
+          didDelete = true,
+        },
+      },
+      -- A custom flags table to be passed to all language servers  (`:h lspconfig-setup`)
+      flags = {
+        exit_timeout = 5000,
       },
       -- customize lsp formatting options
       formatting = {
@@ -33,10 +54,6 @@ return {
         -- filter = function(client) -- fully override the default formatting function
         --   return true
         -- end
-      },
-      -- enable servers that you already have installed without mason
-      servers = {
-        -- "pyright"
       },
       -- Configure default capabilities for language servers (`:h vim.lsp.protocol.make_client.capabilities()`)
       capabilities = {},
@@ -323,6 +340,8 @@ return {
           end,
         },
       },
+      -- Extra configuration for the `mason-lspconfig.nvim` plugin
+      mason_lspconfig = {},
       -- customize how language servers are attached
       handlers = {
         -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
@@ -357,6 +376,8 @@ return {
         -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
         -- set to false to disable the setup of a language server
       },
+      -- Configure buffer local user commands to add when attaching a language server
+      commands = {},
       -- Configure buffer local auto commands to add when attaching a language server
       autocmds = {
         -- first key is the `augroup` to add the auto commands to (:h augroup)
@@ -386,8 +407,11 @@ return {
           },
         },
       },
-      lsp_handlers = {},
-      -- mappings to be set up on attaching of a language server
+      -- Configuration of mappings added when attaching a language server during the core `on_attach` function
+      -- The first key into the table is the vim map mode (`:h map-modes`), and the value is a table of entries to be passed to `vim.keymap.set` (`:h vim.keymap.set`):
+      --   - The key is the first parameter or the vim mode (only a single mode supported) and the value is a table of keymaps within that mode:
+      --     - The first element with no key in the table is the action (the 2nd parameter) and the rest of the keys/value pairs are options for the third parameter.
+      --       There is also a special `cond` key which can either be a string of a language server capability or a function with `client` and `bufnr` parameters that returns a boolean of whether or not the mapping is added.
       mappings = {
         n = {
           K = false,
@@ -406,6 +430,9 @@ return {
           -- },
         },
       },
+      -- A list like table of servers that should be setup, useful for enabling language servers not installed with Mason.
+      servers = {},
+      -- A custom `on_attach` function to be run after the default `on_attach` function, takes two parameters `client` and `bufnr`  (`:h lspconfig-setup`)
       on_attach = function(_, _) end,
     }
     return require("astrocore").extend_tbl(opts, new_opts)
