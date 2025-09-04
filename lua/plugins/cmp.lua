@@ -93,7 +93,7 @@ return {
             return true
           end,
         },
-        ["<C-Y>"] = { "show_documentation", "hide_documentation" },
+        ["<C-Y>"] = { "show", "show_documentation", "hide_documentation" },
       },
       signature = {
         enabled = true,
