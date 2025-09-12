@@ -43,7 +43,7 @@ return {
         "<Leader>zS",
         function()
           local ext = require("astrocore.buffer").is_valid() and vim.fn.expand "%:e" or ""
-          local paths = require("astrocore.buffer").is_valid() and vim.fn.expand "%" or nil
+          local paths = require("astrocore.buffer").is_valid() and vim.fn.fnameescape(vim.fn.expand "%") or nil
           grug_far_open {
             prefills = {
               paths = paths,
@@ -63,7 +63,7 @@ return {
         "<Leader>zS",
         function()
           local ext = require("astrocore.buffer").is_valid() and vim.fn.expand "%:e" or ""
-          local paths = require("astrocore.buffer").is_valid() and vim.fn.expand "%" or nil
+          local paths = require("astrocore.buffer").is_valid() and vim.fn.fnameescape(vim.fn.expand "%") or nil
           grug_far_open({
             visualSelectionUsage = "operate-within-range",
             startCursorRow = 4,
