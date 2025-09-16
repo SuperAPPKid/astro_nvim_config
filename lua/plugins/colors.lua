@@ -26,7 +26,6 @@ return {
           dragon = {
             ui = {
               fg_dim = "#c5c9c5",
-              -- bg = "#1F1F28",
             },
           },
           all = {
@@ -45,6 +44,8 @@ return {
           FloatBorder = { fg = theme.ui.fg_dim, bg = "none" },
           FoldColumn = { fg = theme.ui.fg_dim, bg = "none" },
           FloatTitle = { bg = "none" },
+          TabLineFill = { bg = "none" },
+          StatusLine = { bg = "none" },
 
           -- Save an hlgroup with dark background and dimmed foreground
           -- so that you can use it where your still want darker windows.
