@@ -124,7 +124,7 @@ return {
       if astrolsp_avail then
         astrolsp.lsp_setup "jdtls"
       else
-        require("lspconfig").jdtls.setup {}
+        vim.lsp.config("jdtls", {})
       end
     end,
   },

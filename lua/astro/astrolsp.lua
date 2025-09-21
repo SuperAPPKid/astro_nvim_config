@@ -371,7 +371,7 @@ return {
             end
           end
 
-          if not skip_setup then require("lspconfig")[server].setup(handler_opts) end
+          if not skip_setup then vim.lsp.config(server, handler_opts) end
         end,
 
         -- the key is the server that is being setup with `lspconfig`
