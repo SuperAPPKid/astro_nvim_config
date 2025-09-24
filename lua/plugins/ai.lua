@@ -285,7 +285,6 @@ return {
         tool = "🔧",
       },
       separator = "━━",
-      show_folds = false,
     },
   },
 }
