@@ -527,7 +527,6 @@ return {
         end,
       },
     },
-    event = "User AstroFile",
     config = function(_, opts)
       local fidget = require "fidget"
       fidget.setup(opts)
