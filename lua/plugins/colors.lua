@@ -39,8 +39,10 @@ return {
         local theme = colors.theme
         local palette = colors.palette
         return {
+          Normal = { bg = "none" },
+          NormalNC = { bg = "none" },
           NormalFloat = { bg = "none" },
-          WinSeparator = { fg = palette.dragonBlue, bg = "none" },
+          WinSeparator = { fg = palette.carpYellow, bg = "none" },
           FloatBorder = { fg = theme.ui.fg_dim, bg = "none" },
           FoldColumn = { fg = theme.ui.fg_dim, bg = "none" },
           FloatTitle = { bg = "none" },
@@ -54,8 +56,8 @@ return {
 
           -- Popular plugins that open floats will link to NormalFloat by default;
           -- set their background accordingly if you wish to keep them dark and borderless
-          LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-          MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+          LazyNormal = { bg = "none", fg = theme.ui.fg_dim },
+          MasonNormal = { bg = "none", fg = theme.ui.fg_dim },
 
           NeoTreeFloatBorder = { fg = theme.ui.fg_dim, bg = "none" },
           NeoTreeTitleBar = { fg = theme.ui.bg_m3, bg = theme.ui.fg_dim },

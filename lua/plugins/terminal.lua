@@ -195,11 +195,7 @@ return {
         height = function(_) return vim.o.lines - 3 end,
         width = function(_) return vim.o.columns end,
       },
-      highlights = {
-        NormalFloat = {
-          link = "NormalDark",
-        },
-      },
+      shade_terminal = false,
     },
   },
 
