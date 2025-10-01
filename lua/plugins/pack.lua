@@ -125,6 +125,7 @@ return {
         astrolsp.lsp_setup "jdtls"
       else
         vim.lsp.config("jdtls", {})
+        vim.lsp.enable { "jdtls" }
       end
     end,
   },
