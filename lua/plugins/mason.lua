@@ -64,7 +64,7 @@ return {
 
         -- docker
         "docker-compose-language-service",
-        "dockerfile-language-server",
+        "docker-language-server",
         "hadolint",
 
         -- go
