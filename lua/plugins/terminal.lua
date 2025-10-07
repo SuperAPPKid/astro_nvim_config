@@ -162,12 +162,31 @@ return {
             }
           end
 
+          local support_ai = false
           if vim.fn.executable "gemini" == 1 then
-            mappings.n["<Leader>tG"] = {
+            support_ai = true
+            mappings.n["<Leader>tag"] = {
               function() require("astrocore").toggle_term_cmd { cmd = "gemini", direction = "float" } end,
-              desc = "ToggleTerm gemini",
+              desc = "gemini",
             }
           end
+          if vim.fn.executable "opencode" == 1 then
+            support_ai = true
+            mappings.n["<Leader>tao"] = {
+              function()
+                require("astrocore").toggle_term_cmd { cmd = "OPENCODE_THEME=system opencode", direction = "float" }
+              end,
+              desc = "opencode",
+            }
+          end
+          if vim.fn.executable "claude" == 1 then
+            support_ai = true
+            mappings.n["<Leader>tac"] = {
+              function() require("astrocore").toggle_term_cmd { cmd = "claude", direction = "float" } end,
+              desc = "claude",
+            }
+          end
+          if support_ai then mappings.n["<Leader>ta"] = { "<Nop>", desc = "ToggleTerm ai" } end
 
           local gdu
           if vim.fn.has "win32" == 1 then
