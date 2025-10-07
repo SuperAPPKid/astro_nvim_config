@@ -251,7 +251,7 @@ return {
             },
           },
         },
-        volar = {
+        vue_ls = {
           on_init = function(client)
             client.handlers["tsserver/request"] = function(_, result, context)
               local clients = vim.lsp.get_clients { bufnr = context.bufnr, name = "vtsls" }
