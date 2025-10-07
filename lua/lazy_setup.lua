@@ -35,4 +35,7 @@ require("lazy").setup({
     timeout = 300, -- kill processes that take more than 5 minutes
   },
   concurrency = 32,
+  rocks = {
+    hererocks = true,
+  },
 } --[[@as LazyConfig]])
