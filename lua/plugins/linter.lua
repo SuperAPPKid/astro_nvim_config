@@ -50,8 +50,6 @@ return {
           args = {
             "lint",
             "-n",
-            "-d",
-            "ansi",
             "-f",
             "json",
             "--disable-progress-bar",
