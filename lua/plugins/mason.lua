@@ -10,11 +10,6 @@ return {
   },
 
   {
-    "williamboman/mason-lspconfig.nvim",
-    version = "^2",
-  },
-
-  {
     "zapling/mason-lock.nvim",
     lazy = true,
     cmd = {
