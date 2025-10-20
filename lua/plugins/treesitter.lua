@@ -15,9 +15,7 @@ return {
     dependencies = {
       {
         "nvim-treesitter/nvim-treesitter-context",
-        cmd = {
-          "TSContext",
-        },
+        cmd = "TSContext",
         opts = {
           max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
           multiline_threshold = 1, -- Maximum number of lines to show for a single context

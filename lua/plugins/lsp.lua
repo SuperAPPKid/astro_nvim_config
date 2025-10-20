@@ -283,8 +283,11 @@ return {
             desc = "Goto definition",
             cond = "textDocument/definition",
           }
-          maps.n["gd"] =
-            { "<Cmd>Lspsaga peek_definition<CR>", desc = "Peek definition", cond = "textDocument/definition" }
+          maps.n["gd"] = {
+            "<Cmd>Lspsaga peek_definition<CR>", --
+            desc = "Peek definition",
+            cond = "textDocument/definition",
+          }
 
           -- typeDefinition
           maps.n["gy"] = {
