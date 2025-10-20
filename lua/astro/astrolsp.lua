@@ -1,3 +1,8 @@
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+for _, section in pairs(capabilities.textDocument) do
+  if type(section) == "table" and section.dynamicRegistration ~= nil then section.dynamicRegistration = false end
+end
+
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
 ---@type LazySpec
@@ -351,7 +356,6 @@ return {
               -- HACK: workaround for https://github.com/neovim/neovim/issues/28058
               if type(handler_opt) == "table" and handler_opt.workspace then
                 handler_opt.workspace.didChangeWatchedFiles = {
-                  dynamicRegistration = true,
                   relativePatternSupport = false,
                 }
                 break
@@ -369,6 +373,12 @@ return {
               client.server_capabilities.documentRangeFormattingProvider = false
               client.server_capabilities.semanticTokensProvider = false -- turn off semantic tokens
             end
+          end
+
+          if handler_opts.capabilities then
+            handler_opts.capabilities = vim.tbl_deep_extend("force", handler_opts.capabilities, capabilities)
+          else
+            handler_opts.capabilities = capabilities
           end
 
           if not skip_setup then
