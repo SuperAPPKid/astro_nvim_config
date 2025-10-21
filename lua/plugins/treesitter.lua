@@ -1,7 +1,7 @@
 -- Customize Treesitter
 
 ---@type LazySpec
----@diagnostic disable: inject-field
+---@diagnostic disable: inject-field, missing-fields
 return {
   {
     "sustech-data/wildfire.nvim",
@@ -42,104 +42,111 @@ return {
         },
         branch = "master",
       }
-      parser_config.blade = {
-        install_info = {
-          url = "https://github.com/EmranMR/tree-sitter-blade",
-          files = { "src/parser.c" },
-          branch = "main",
+      parser_config.blade.filetype = "blade"
+
+      require("nvim-treesitter.configs").setup {
+        -- Install parsers synchronously (only applied to `ensure_installed`)
+        sync_install = false,
+        -- Automatically install missing parsers when entering buffer
+        -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+        auto_install = true,
+        -- List of parsers to ignore installing (or "all")
+        ignore_install = {},
+        ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
+          "angular",
+          "bash",
+          "blade",
+          "c",
+          "c_sharp",
+          "cpp",
+          "css",
+          "cuda",
+          "dart",
+          "diff",
+          "dockerfile",
+          "gdscript",
+          "glsl",
+          "godot_resource",
+          "go",
+          "goctl",
+          "gomod",
+          "gosum",
+          "git_config",
+          "git_rebase",
+          "gitattributes",
+          "gitcommit",
+          "gitignore",
+          "helm",
+          "html",
+          "http",
+          "java",
+          "javascript",
+          "jsdoc",
+          "json",
+          "jsonc",
+          "kdl",
+          "kotlin",
+          "lua",
+          "luap",
+          "markdown",
+          "markdown_inline",
+          "nix",
+          "objc",
+          "php",
+          "phpdoc",
+          "proto",
+          "python",
+          "ruby",
+          "rust",
+          "scss",
+          "sql",
+          "styled",
+          "swift",
+          "svelte",
+          "templ",
+          "terraform",
+          "toml",
+          "tsx",
+          "typescript",
+          "vue",
+          "vim",
+          "xml",
+          "yaml",
+        }),
+        textobjects = {
+          select = {
+            enable = false,
+          },
+          move = {
+            goto_next_start = {
+              ["]f"] = { query = "@function.outer", desc = "Next function start" },
+              ["]a"] = { query = "@parameter.inner", desc = "Next argument start" },
+            },
+            goto_next_end = {
+              ["]F"] = { query = "@function.outer", desc = "Next function end" },
+              ["]A"] = { query = "@parameter.inner", desc = "Next argument end" },
+            },
+            goto_previous_start = {
+              ["[f"] = { query = "@function.outer", desc = "Previous function start" },
+              ["[a"] = { query = "@parameter.inner", desc = "Previous argument start" },
+            },
+            goto_previous_end = {
+              ["[F"] = { query = "@function.outer", desc = "Previous function end" },
+              ["[A"] = { query = "@parameter.inner", desc = "Previous argument end" },
+            },
+          },
+          swap = {
+            swap_next = {
+              [">A"] = { query = "@parameter.inner", desc = "Swap next argument" },
+            },
+            swap_previous = {
+              ["<A"] = { query = "@parameter.inner", desc = "Swap previous argument" },
+            },
+          },
         },
-        filetype = "blade",
-      }
-
-      -- add more things to the ensure_installed table protecting against community packs modifying it
-      opts.auto_install = false
-      opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
-        "angular",
-        "bash",
-        "blade",
-        "c",
-        "c_sharp",
-        "cpp",
-        "css",
-        "cuda",
-        "dart",
-        "diff",
-        "dockerfile",
-        "gdscript",
-        "glsl",
-        "godot_resource",
-        "go",
-        "goctl",
-        "gomod",
-        "gosum",
-        "git_config",
-        "git_rebase",
-        "gitattributes",
-        "gitcommit",
-        "gitignore",
-        "helm",
-        "html",
-        "http",
-        "java",
-        "javascript",
-        "jsdoc",
-        "json",
-        "jsonc",
-        "kdl",
-        "kotlin",
-        "lua",
-        "luap",
-        "markdown",
-        "markdown_inline",
-        "nix",
-        "objc",
-        "php",
-        "phpdoc",
-        "proto",
-        "python",
-        "ruby",
-        "rust",
-        "scss",
-        "sql",
-        "styled",
-        "swift",
-        "svelte",
-        "templ",
-        "terraform",
-        "toml",
-        "tsx",
-        "typescript",
-        "vue",
-        "vim",
-        "xml",
-        "yaml",
-      })
-
-      opts.textobjects.select.enable = false
-      opts.incremental_selection.enable = false
-
-      opts.textobjects.move.goto_next_start = {
-        ["]f"] = { query = "@function.outer", desc = "Next function start" },
-        ["]a"] = { query = "@parameter.inner", desc = "Next argument start" },
-      }
-      opts.textobjects.move.goto_next_end = {
-        ["]F"] = { query = "@function.outer", desc = "Next function end" },
-        ["]A"] = { query = "@parameter.inner", desc = "Next argument end" },
-      }
-      opts.textobjects.move.goto_previous_start = {
-        ["[f"] = { query = "@function.outer", desc = "Previous function start" },
-        ["[a"] = { query = "@parameter.inner", desc = "Previous argument start" },
-      }
-      opts.textobjects.move.goto_previous_end = {
-        ["[F"] = { query = "@function.outer", desc = "Previous function end" },
-        ["[A"] = { query = "@parameter.inner", desc = "Previous argument end" },
-      }
-
-      opts.textobjects.swap.swap_next = {
-        [">A"] = { query = "@parameter.inner", desc = "Swap next argument" },
-      }
-      opts.textobjects.swap.swap_previous = {
-        ["<A"] = { query = "@parameter.inner", desc = "Swap previous argument" },
+        incremental_selection = {
+          enable = false,
+        },
       }
 
       vim.treesitter.language.register("bash", "dotenv")
