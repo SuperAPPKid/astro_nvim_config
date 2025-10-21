@@ -1,8 +1,3 @@
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-for _, section in pairs(capabilities.textDocument) do
-  if type(section) == "table" and section.dynamicRegistration ~= nil then section.dynamicRegistration = false end
-end
-
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
 ---@type LazySpec
@@ -10,6 +5,13 @@ return {
   "AstroNvim/astrolsp",
   version = false,
   opts = function(_, opts)
+    local capabilities = {}
+    for k, v in pairs(vim.lsp.protocol.make_client_capabilities()) do
+      if type(v) == "table" and v.dynamicRegistration ~= nil then
+        capabilities[k] = { v = { dynamicRegistration = false } }
+      end
+    end
+
     local new_opts = {
       defaults = {
         hover = { border = "double", silent = true }, -- customize lsp hover window
@@ -450,6 +452,7 @@ return {
       -- A custom `on_attach` function to be run after the default `on_attach` function, takes two parameters `client` and `bufnr`  (`:h lspconfig-setup`)
       on_attach = function(_, _) end,
     }
+
     return require("astrocore").extend_tbl(opts, new_opts)
   end,
 }
