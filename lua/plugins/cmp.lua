@@ -10,11 +10,22 @@ return {
     version = "*",
     dependencies = {
       "Kaiser-Yang/blink-cmp-git",
+      "Kaiser-Yang/blink-cmp-avante",
       "MahanRahmati/blink-nerdfont.nvim",
       "ribru17/blink-cmp-spell",
       "hrsh7th/cmp-calc",
       "kdheepak/cmp-latex-symbols",
-      "Kaiser-Yang/blink-cmp-avante",
+      {
+        -- We disable autotag closing in php files since it breaks blink.cmp
+        ---@see https://github.com/saghen/blink.cmp/issues/2234#issuecomment-3461410965
+        "windwp/nvim-ts-autotag",
+        optional = true,
+        opts = {
+          per_filetype = {
+            ["php"] = { enable_close = false },
+          },
+        },
+      },
     },
     opts = {
       completion = {
