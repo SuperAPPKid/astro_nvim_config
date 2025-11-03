@@ -276,9 +276,8 @@ return {
     "superappkid/modes.nvim",
     event = "User AstroFile",
     opts = {
-      set_number = true,
       set_signcolumn = false,
-      line_opacity = 0.3,
+      line_opacity = 0.6,
       ignore = {
         "neo-tree",
         "neo-tree-popup",
