@@ -76,7 +76,7 @@ return {
               local flags = worktree and (" --work-tree=%s --git-dir=%s"):format(worktree.toplevel, worktree.gitdir)
                 or ""
               require("astrocore").toggle_term_cmd {
-                cmd = "lazygit " .. flags,
+                cmd = "lazygit" .. flags,
                 direction = "float",
                 on_exit = function() require("utils").git_broadcast() end,
               }
