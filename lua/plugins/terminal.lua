@@ -20,6 +20,31 @@ return {
       {
         "AstroNvim/astrocore",
         opts = function(_, opts)
+          ---@type table<string,table<integer,table>>
+          local terms = {}
+
+          ---@param opts string|table A terminal command string or a table of options for Terminal:new() (Check toggleterm.nvim documentation for table format)
+          local function toggle_term_cmd(opts)
+            -- if a command string is provided, create a basic table for Terminal:new() options
+            if type(opts) == "string" then opts = { cmd = opts } end
+            opts = require("astrocore").extend_tbl({ hidden = true }, opts)
+            local num = vim.v.count > 0 and vim.v.count or 1
+            -- if terminal doesn't exist yet, create it
+            if not terms[opts.cmd] then terms[opts.cmd] = {} end
+            if not terms[opts.cmd][num] then
+              if not opts.count then opts.count = vim.tbl_count(terms) * 100 + num end
+              local on_exit = opts.on_exit
+              opts.on_exit = function(...)
+                terms[opts.cmd][num] = nil
+                if vim.tbl_count(terms[opts.cmd]) == 0 then terms[opts.cmd] = nil end
+                if on_exit then on_exit(...) end
+              end
+              terms[opts.cmd][num] = require("toggleterm.terminal").Terminal:new(opts)
+            end
+            -- toggle the terminal
+            terms[opts.cmd][num]:toggle()
+          end
+
           opts.autocmds.my_toggle_term = {
             {
               event = "TermOpen",
@@ -75,7 +100,7 @@ return {
               local worktree = require("astrocore").file_worktree()
               local flags = worktree and (" --work-tree=%s --git-dir=%s"):format(worktree.toplevel, worktree.gitdir)
                 or ""
-              require("astrocore").toggle_term_cmd {
+              toggle_term_cmd {
                 cmd = "lazygit" .. flags,
                 direction = "float",
                 on_exit = function() require("utils").git_broadcast() end,
@@ -112,7 +137,7 @@ return {
                   local key_termcode = vim.api.nvim_replace_termcodes(keys, true, true, true)
                   vim.api.nvim_feedkeys(key_termcode, "n", false)
                 end
-                require("astrocore").toggle_term_cmd {
+                toggle_term_cmd {
                   direction = "float",
                   cmd = string.format([[yazi "%s" --chooser-file "%s"]], file_path, fm_tmpfile),
                   dir = vim.fn.expand "%:p:h",
@@ -150,14 +175,14 @@ return {
 
           if vim.fn.executable "lazydocker" == 1 then
             mappings.n["<Leader>td"] = {
-              function() require("astrocore").toggle_term_cmd { direction = "float", cmd = "lazydocker" } end,
+              function() toggle_term_cmd { direction = "float", cmd = "lazydocker" } end,
               desc = "ToggleTerm lazydocker",
             }
           end
 
           if vim.fn.executable "btop" == 1 then
             mappings.n["<Leader>tt"] = {
-              function() require("astrocore").toggle_term_cmd { cmd = "btop", direction = "float" } end,
+              function() toggle_term_cmd { cmd = "btop", direction = "float" } end,
               desc = "ToggleTerm btop",
             }
           end
@@ -166,23 +191,21 @@ return {
           if vim.fn.executable "gemini" == 1 then
             support_ai = true
             mappings.n["<Leader>tag"] = {
-              function() require("astrocore").toggle_term_cmd { cmd = "gemini", direction = "float" } end,
+              function() toggle_term_cmd { cmd = "gemini", direction = "float" } end,
               desc = "gemini",
             }
           end
           if vim.fn.executable "opencode" == 1 then
             support_ai = true
             mappings.n["<Leader>tao"] = {
-              function()
-                require("astrocore").toggle_term_cmd { cmd = "OPENCODE_THEME=system opencode", direction = "float" }
-              end,
+              function() toggle_term_cmd { cmd = "OPENCODE_THEME=system opencode", direction = "float" } end,
               desc = "opencode",
             }
           end
           if vim.fn.executable "claude" == 1 then
             support_ai = true
             mappings.n["<Leader>tac"] = {
-              function() require("astrocore").toggle_term_cmd { cmd = "claude", direction = "float" } end,
+              function() toggle_term_cmd { cmd = "claude", direction = "float" } end,
               desc = "claude",
             }
           end
@@ -198,7 +221,7 @@ return {
           end
           if vim.fn.executable(gdu) == 1 then
             mappings.n["<Leader>tu"] = {
-              function() require("astrocore").toggle_term_cmd { cmd = gdu, direction = "float" } end,
+              function() toggle_term_cmd { cmd = gdu, direction = "float" } end,
               desc = "ToggleTerm gdu",
             }
           else
