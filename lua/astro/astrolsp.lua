@@ -297,10 +297,10 @@ return {
             "typescript.tsx",
           }, { "vue" }),
           settings = {
-            typescript = {
+            javascript = {
               updateImportsOnFileMove = { enabled = "always" },
               inlayHints = {
-                parameterNames = { enabled = "all" },
+                parameterNames = { enabled = "literals" },
                 parameterTypes = { enabled = true },
                 variableTypes = { enabled = true },
                 propertyDeclarationTypes = { enabled = true },
@@ -308,10 +308,20 @@ return {
                 enumMemberValues = { enabled = true },
               },
             },
-            javascript = {
+            tsserver = {
+              globalPlugins = {
+                {
+                  name = "typescript-svelte-plugin",
+                  location = vim.fn.expand "$MASON/packages/svelte-language-server/node_modules/typescript-svelte-plugin",
+                  configNamespace = "typescript",
+                  enableForWorkspaceTypeScriptVersions = true,
+                },
+              },
+            },
+            typescript = {
               updateImportsOnFileMove = { enabled = "always" },
               inlayHints = {
-                parameterNames = { enabled = "literals" },
+                parameterNames = { enabled = "all" },
                 parameterTypes = { enabled = true },
                 variableTypes = { enabled = true },
                 propertyDeclarationTypes = { enabled = true },
