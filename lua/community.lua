@@ -44,6 +44,13 @@ return {
     "kawre/leetcode.nvim",
     opts = {
       arg = "leetcode",
+      description = {
+        position = "left",
+        width = "50%",
+      },
+      editor = {
+        reset_previous_code = false,
+      },
       lang = "golang",
       image_support = true,
       injector = {
