@@ -58,7 +58,7 @@ return {
         separator = "━━━",
         keymaps = {
           ["s"] = { "keymap.run_action", opts = { action = "start" }, desc = "Start task" },
-          ["S"] = { "keymap.run_action", opts = { action = "stokkkp" }, desc = "Stop task" },
+          ["S"] = { "keymap.run_action", opts = { action = "stop" }, desc = "Stop task" },
           ["p"] = {
             desc = "Toggle task output in a preview floating window",
             callback = function()
