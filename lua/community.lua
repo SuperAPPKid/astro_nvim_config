@@ -52,7 +52,6 @@ return {
         reset_previous_code = false,
       },
       lang = "golang",
-      image_support = true,
       injector = {
         ["golang"] = {
           imports = function() return { "package main" } end,
@@ -220,11 +219,6 @@ return {
       watermark = "",
       bg_theme = "sea",
     },
-  },
-  { import = "astrocommunity.media.image-nvim" },
-  {
-    "3rd/image.nvim",
-    init = function() vim.cmd "silent !tmux set -gq allow-passthrough on" end,
   },
 
   { import = "astrocommunity.neovim-lua-development.helpview-nvim" },
