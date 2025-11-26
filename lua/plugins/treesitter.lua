@@ -44,7 +44,12 @@ return {
       }
       parser_config.blade.filetype = "blade"
 
-      require("nvim-treesitter.configs").setup {
+      vim.treesitter.language.register("bash", "dotenv")
+      vim.treesitter.language.register("scss", "less")
+      vim.treesitter.language.register("scss", "postcss")
+      vim.treesitter.language.register("gomod", "gowork")
+
+      opts = require("astrocore").extend_tbl(opts, {
         -- Install parsers synchronously (only applied to `ensure_installed`)
         sync_install = false,
         -- Automatically install missing parsers when entering buffer
@@ -147,12 +152,9 @@ return {
         incremental_selection = {
           enable = false,
         },
-      }
+      })
 
-      vim.treesitter.language.register("bash", "dotenv")
-      vim.treesitter.language.register("scss", "less")
-      vim.treesitter.language.register("scss", "postcss")
-      vim.treesitter.language.register("gomod", "gowork")
+      return opts
     end,
   },
 }
