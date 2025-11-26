@@ -58,6 +58,18 @@ return {
         },
       },
       picker = { provider = "telescope" },
+      keys = {
+        toggle = { "q" },
+        confirm = { "<CR>" },
+
+        reset_testcases = "R",
+        use_testcase = "",
+        focus_testcases = "H",
+        focus_result = "L",
+      },
+      plugins = {
+        non_standalone = true,
+      },
       storage = { home = vim.env.HOME .. "/Documents/leetcode" },
     },
   },
