@@ -26,6 +26,7 @@ return {
           dragon = {
             ui = {
               fg_dim = "#c5c9c5",
+              bg_p2 = "#2c2000", -- CursorLine
             },
           },
           all = {
