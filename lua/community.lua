@@ -63,9 +63,9 @@ return {
         confirm = { "<CR>" },
 
         reset_testcases = "R",
-        use_testcase = "",
-        focus_testcases = "H",
-        focus_result = "L",
+        use_testcase = "T",
+        focus_testcases = "<C-h>",
+        focus_result = "<C-l>",
       },
       plugins = {
         non_standalone = true,
