@@ -277,7 +277,7 @@ return {
     event = "User AstroFile",
     opts = {
       set_signcolumn = false,
-      line_opacity = 0.25,
+      line_opacity = 0.5,
       ignore = {
         "neo-tree",
         "neo-tree-popup",

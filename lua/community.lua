@@ -63,7 +63,7 @@ return {
         confirm = { "<CR>" },
 
         reset_testcases = "R",
-        use_testcase = "T",
+        use_testcase = "U",
         focus_testcases = "<C-h>",
         focus_result = "<C-l>",
       },
