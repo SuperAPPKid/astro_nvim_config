@@ -147,6 +147,7 @@ return {
         "phpactor",
         "php-debug-adapter",
         "php-cs-fixer",
+        "pint",
 
         -- python
         "basedpyright",

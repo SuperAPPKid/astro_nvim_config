@@ -103,7 +103,7 @@ return {
         ["lua"] = { "stylua" },
         ["markdown"] = { "prettierd", "prettier", stop_after_first = true },
         ["nginx"] = { "nginxfmt" },
-        ["php"] = { "php_cs_fixer" },
+        ["php"] = { "php_cs_fixer", "pint" },
         ["postcss"] = { "prettierd", "prettier", stop_after_first = true },
         ["proto"] = { "buf" },
         ["python"] = { "isort", "black" },
