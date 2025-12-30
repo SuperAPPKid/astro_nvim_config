@@ -1636,12 +1636,15 @@ return {
     "chrisgrieser/nvim-origami",
     event = "BufReadPost",
     opts = {
-      useLspFoldsWithTreesitterFallback = false,
+      useLspFoldsWithTreesitterFallback = {
+        enabled = false,
+        foldmethodIfNeitherIsAvailable = "manual",
+      },
       autoFold = {
         enabled = false,
       },
       foldKeymaps = {
-        hOnlyOpensOnFirstColumn = true,
+        closeOnlyOnFirstColumn = true,
       },
     },
   },
