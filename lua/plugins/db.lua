@@ -117,7 +117,9 @@ return {
         opts = {
           sources = {
             per_filetype = {
-              sql = { "dadbod", "buffer" },
+              sql = { "snippets", "dadbod", "buffer" },
+              mysql = { "snippets", "dadbod", "buffer" },
+              plsql = { "snippets", "dadbod", "buffer" },
             },
             providers = {
               dadbod = {
