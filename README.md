@@ -1,28 +1,10 @@
-# AstroNvim Template
+# Neovim Configuration
 
-**NOTE:** This is for AstroNvim v4+
-
-A template for getting started with [AstroNvim](https://github.com/AstroNvim/AstroNvim)
-
-# 🛠️ Installation
-
-## Make a backup of your current nvim and shared folder
-
-```sh
-mv ~/.config/nvim ~/.config/nvim.bak
-mv ~/.local/share/nvim ~/.local/share/nvim.bak
-mv ~/.local/state/nvim ~/.local/state/nvim.bak
-mv ~/.cache/nvim ~/.cache/nvim.bak
 ```
-
-## Clone the repository
-
-```sh
-git clone https://github.com/superappkid/astro_nvim_config ~/.config/nvim
-```
-
-## Start Neovim
-
-```sh
-nvim
+https://github.com/cordx56/rustowl
+https://github.com/nvzone/menu
+https://github.com/brianhuster/live-preview.nvim
+https://github.com/esmuellert/codediff.nvim
+https://github.com/milanglacier/minuet-ai.nvim
+https://github.com/leoluz/nvim-dap-go -> support launch.json
 ```
