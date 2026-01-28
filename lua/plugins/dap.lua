@@ -68,6 +68,14 @@ return {
     },
     opts = function(_, opts)
       opts.expand_lines = false
+      opts.mappings = {
+        open = "O",
+        remove = "D",
+        edit = "E",
+        repl = "R",
+        toggle = "T",
+      }
+
       opts.layouts = {
         {
           elements = {
