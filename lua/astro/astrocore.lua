@@ -202,6 +202,18 @@ return {
           desc = "Close Tab",
         },
 
+        ["<Leader>n"] = {
+          function()
+            vim.ui.input({ prompt = "File name: " }, function(input)
+              if not input or input == "" then return end
+
+              vim.cmd "enew"
+              vim.cmd("write " .. input)
+            end)
+          end,
+          desc = "New File",
+        },
+
         ["<C-S>"] = save_file,
         ["<C-Q>"] = { "<Cmd>confirm qall<CR>", desc = "Force quit" },
         ["<C-W>d"] = { "" },

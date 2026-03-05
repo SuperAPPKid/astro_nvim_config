@@ -365,7 +365,7 @@ return {
     end,
     cmd = "Oil",
     keys = {
-      { "<Leader>O", function() require("oil").open() end, desc = "Open folder in Oil" },
+      { "<Leader>F", function() require("oil").open() end, desc = "Open folder in Oil" },
     },
     opts = function(_, opts)
       local get_icon = require("astroui").get_icon
