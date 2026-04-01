@@ -1011,7 +1011,7 @@ return {
                   border = "double",
                 },
               },
-              on_enter = function() vim.b.virtualedit = "all" end,
+              on_enter = function() vim.wo.virtualedit = "all" end,
             },
             mode = "n",
             body = "<Leader>zv",
