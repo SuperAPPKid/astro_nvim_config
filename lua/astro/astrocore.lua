@@ -55,6 +55,7 @@ return {
     })
 
     -- vim options can be configured here
+    opts.options.opt.fillchars = { eob = " " }
     opts.options = extend_tbl(opts.options, {
       opt = { -- vim.opt.<key>
         relativenumber = true, -- sets vim.opt.relativenumber
@@ -63,6 +64,11 @@ return {
         wrap = true, -- sets vim.opt.wrap
         autoread = true,
         swapfile = false,
+        fillchars = {
+          foldopen = nil,
+          foldclose = nil,
+          foldsep = nil,
+        },
       },
 
       g = { -- vim.g.<key>
@@ -267,5 +273,98 @@ return {
         end,
       },
     })
+
+    -- Configuration of treesitter features in Neovim
+    opts.treesitter = {
+      ensure_installed = {
+        "angular",
+        "bash",
+        "blade",
+        "c",
+        "c_sharp",
+        "cpp",
+        "css",
+        "cuda",
+        "dart",
+        "diff",
+        "dockerfile",
+        "gdscript",
+        "glsl",
+        "godot_resource",
+        "go",
+        "goctl",
+        "gomod",
+        "gosum",
+        "git_config",
+        "git_rebase",
+        "gitattributes",
+        "gitcommit",
+        "gitignore",
+        "helm",
+        "html",
+        "http",
+        "java",
+        "javascript",
+        "jsdoc",
+        "json",
+        "kdl",
+        "kotlin",
+        "lua",
+        "luap",
+        "markdown",
+        "markdown_inline",
+        "nix",
+        "objc",
+        "php",
+        "phpdoc",
+        "proto",
+        "python",
+        "ruby",
+        "rust",
+        "scss",
+        "sql",
+        "styled",
+        "swift",
+        "svelte",
+        "templ",
+        "terraform",
+        "toml",
+        "tsx",
+        "typescript",
+        "vue",
+        "vim",
+        "vimdoc",
+        "xml",
+        "yaml",
+      },
+      textobjects = {
+        move = {
+          goto_next_start = {
+            ["]f"] = { query = "@function.outer", desc = "Next function start" },
+            ["]a"] = { query = "@parameter.inner", desc = "Next argument start" },
+          },
+          goto_next_end = {
+            ["]F"] = { query = "@function.outer", desc = "Next function end" },
+            ["]A"] = { query = "@parameter.inner", desc = "Next argument end" },
+          },
+          goto_previous_start = {
+            ["[f"] = { query = "@function.outer", desc = "Previous function start" },
+            ["[a"] = { query = "@parameter.inner", desc = "Previous argument start" },
+          },
+          goto_previous_end = {
+            ["[F"] = { query = "@function.outer", desc = "Previous function end" },
+            ["[A"] = { query = "@parameter.inner", desc = "Previous argument end" },
+          },
+        },
+        swap = {
+          swap_next = {
+            [">A"] = { query = "@parameter.inner", desc = "Swap next argument" },
+          },
+          swap_previous = {
+            ["<A"] = { query = "@parameter.inner", desc = "Swap previous argument" },
+          },
+        },
+      },
+    }
   end,
 }

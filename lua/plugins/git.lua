@@ -289,7 +289,7 @@ return {
     "lewis6991/gitsigns.nvim",
     specs = {
       {
-        "echasnovski/mini.ai",
+        "nvim-mini/mini.ai",
         optional = true,
         opts = {
           custom_textobjects = {

@@ -244,7 +244,7 @@ return {
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
   { import = "astrocommunity.scrolling.mini-animate" },
   {
-    "echasnovski/mini.animate",
+    "nvim-mini/mini.animate",
     init = function(_)
       vim.api.nvim_create_autocmd("BufEnter", {
         group = vim.api.nvim_create_augroup("mini.animate_ignore_filetypes", { clear = true }),

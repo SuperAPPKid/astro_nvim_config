@@ -10,7 +10,7 @@ return {
   },
 
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     version = "^2",
     config = function(_, opts)
       local is_available = require("astrocore").is_available

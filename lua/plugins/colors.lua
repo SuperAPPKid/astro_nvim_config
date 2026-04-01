@@ -66,15 +66,14 @@ return {
 
           WhichKeyFloat = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
           LspInfoBorder = { fg = theme.ui.fg_dim, bg = "none" },
+          LspReferenceText = { bg = palette.winterRed },
+          LspReferenceRead = { bg = palette.winterRed },
+          LspReferenceWrite = { bg = palette.winterRed },
           DapUIFloatBorder = { fg = theme.ui.fg_dim, bg = "none" },
 
           TelescopePromptBorder = { fg = theme.ui.fg_dim, bg = "none" },
           TelescopeResultsBorder = { fg = theme.ui.fg_dim, bg = "none" },
           TelescopePreviewBorder = { fg = theme.ui.fg_dim, bg = "none" },
-
-          IlluminatedWordText = { bg = palette.winterRed },
-          IlluminatedWordRead = { bg = palette.winterRed },
-          IlluminatedWordWrite = { bg = palette.winterRed },
 
           DiagnosticUnderlineError = { sp = palette.peachRed },
           DiagnosticUnderlineWarn = { sp = palette.surimiOrange },

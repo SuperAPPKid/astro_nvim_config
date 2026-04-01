@@ -362,7 +362,8 @@ return {
       -- customize how language servers are attached
       handlers = {
         -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
-        function(server, handler_opts, skip_setup)
+        ["*"] = function(server)
+          local handler_opts = vim.lsp.config[server]
           if vim.fn.has "nvim-0.11.4" == 0 then
             for _, handler_opt in pairs(handler_opts) do
               -- HACK: workaround for https://github.com/neovim/neovim/issues/28058
@@ -393,12 +394,9 @@ return {
             handler_opts.capabilities = capabilities
           end
 
-          if not skip_setup then
-            vim.lsp.config(server, handler_opts)
-            vim.lsp.enable { server }
-          end
+          vim.lsp.config(server, handler_opts)
+          vim.lsp.enable { server }
         end,
-
         -- the key is the server that is being setup with `lspconfig`
         -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
         -- set to false to disable the setup of a language server

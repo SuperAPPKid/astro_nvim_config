@@ -3,12 +3,6 @@
 
 ---@type LazySpec
 return {
-
-  {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    enabled = true,
-  },
-
   {
     "numToStr/Comment.nvim",
     enabled = true,
@@ -207,26 +201,6 @@ return {
   },
 
   {
-    "RRethy/vim-illuminate",
-    specs = {
-      {
-        "AstroNvim/astrocore",
-        opts = function(_, opts)
-          local maps = opts.mappings
-          maps.n["]r"] = {
-            function() require("illuminate").goto_next_reference() end,
-            desc = maps.n["]r"].desc or "Move to next reference under cursor",
-          }
-          maps.n["[r"] = {
-            function() require("illuminate").goto_prev_reference() end,
-            desc = maps.n["[r"].desc or "Move to previous reference under cursor",
-          }
-        end,
-      },
-    },
-  },
-
-  {
     "max397574/better-escape.nvim",
     opts = function(_, opts)
       opts.mappings = {
@@ -240,7 +214,7 @@ return {
   },
 
   {
-    "echasnovski/mini.icons",
+    "nvim-mini/mini.icons",
     opts = {
       lsp = {
         text = { glyph = "" },

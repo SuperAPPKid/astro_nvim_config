@@ -33,127 +33,34 @@ return {
       return keys
     end,
     opts = function(_, opts)
-      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-      parser_config.go = {
-        install_info = {
-          url = "https://github.com/superappkid/tree-sitter-go",
-          files = { "src/parser.c" },
-          revision = "7444f1535e3ec32e7bf8b063b42201c0ef7e6097",
-        },
-        branch = "master",
-      }
-      parser_config.blade.filetype = "blade"
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "TSUpdate",
+        callback = function()
+          local parsers = require "nvim-treesitter.parsers"
+          parsers.go = {
+            install_info = {
+              url = "https://github.com/superappkid/tree-sitter-go",
+              files = { "src/parser.c" },
+              revision = "7444f1535e3ec32e7bf8b063b42201c0ef7e6097",
+            },
+            branch = "master",
+          }
+          parsers.blade.filetype = "blade"
+        end,
+      })
 
       vim.treesitter.language.register("bash", "dotenv")
       vim.treesitter.language.register("scss", "less")
       vim.treesitter.language.register("scss", "postcss")
       vim.treesitter.language.register("gomod", "gowork")
-
-      opts = require("astrocore").extend_tbl(opts, {
-        -- Install parsers synchronously (only applied to `ensure_installed`)
-        sync_install = false,
-        -- Automatically install missing parsers when entering buffer
-        -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-        auto_install = false,
-        -- List of parsers to ignore installing (or "all")
-        ignore_install = {},
-        ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
-          "angular",
-          "bash",
-          "blade",
-          "c",
-          "c_sharp",
-          "cpp",
-          "css",
-          "cuda",
-          "dart",
-          "diff",
-          "dockerfile",
-          "gdscript",
-          "glsl",
-          "godot_resource",
-          "go",
-          "goctl",
-          "gomod",
-          "gosum",
-          "git_config",
-          "git_rebase",
-          "gitattributes",
-          "gitcommit",
-          "gitignore",
-          "helm",
-          "html",
-          "http",
-          "java",
-          "javascript",
-          "jsdoc",
-          "json",
-          "kdl",
-          "kotlin",
-          "lua",
-          "luap",
-          "markdown",
-          "markdown_inline",
-          "nix",
-          "objc",
-          "php",
-          "phpdoc",
-          "proto",
-          "python",
-          "ruby",
-          "rust",
-          "scss",
-          "sql",
-          "styled",
-          "swift",
-          "svelte",
-          "templ",
-          "terraform",
-          "toml",
-          "tsx",
-          "typescript",
-          "vue",
-          "vim",
-          "xml",
-          "yaml",
-        }),
-        textobjects = {
-          select = {
-            enable = false,
-          },
-          move = {
-            goto_next_start = {
-              ["]f"] = { query = "@function.outer", desc = "Next function start" },
-              ["]a"] = { query = "@parameter.inner", desc = "Next argument start" },
-            },
-            goto_next_end = {
-              ["]F"] = { query = "@function.outer", desc = "Next function end" },
-              ["]A"] = { query = "@parameter.inner", desc = "Next argument end" },
-            },
-            goto_previous_start = {
-              ["[f"] = { query = "@function.outer", desc = "Previous function start" },
-              ["[a"] = { query = "@parameter.inner", desc = "Previous argument start" },
-            },
-            goto_previous_end = {
-              ["[F"] = { query = "@function.outer", desc = "Previous function end" },
-              ["[A"] = { query = "@parameter.inner", desc = "Previous argument end" },
-            },
-          },
-          swap = {
-            swap_next = {
-              [">A"] = { query = "@parameter.inner", desc = "Swap next argument" },
-            },
-            swap_previous = {
-              ["<A"] = { query = "@parameter.inner", desc = "Swap previous argument" },
-            },
-          },
-        },
-        incremental_selection = {
-          enable = false,
-        },
-      })
-
       return opts
     end,
+  },
+
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    opts = {
+      select = { enable = true },
+    },
   },
 }

@@ -88,7 +88,9 @@ return {
           size = 0.5,
         },
       }
-      opts.floating.border = "double"
+      opts.floating = {
+        border = "double",
+      }
     end,
   },
 

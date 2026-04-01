@@ -10,10 +10,11 @@ return {
         "AstroNvim/astrolsp",
         opts = function(_, opts)
           opts.servers = require("astrocore").list_insert_unique(opts.servers, { "dartls" })
-          local default_handler = opts.handlers[1]
-          opts.handlers.dartls = function(server, handler_opts)
+          local default_handler = opts.handlers["*"]
+          opts.handlers.dartls = function(server)
+            local handler_opts = vim.lsp.config[server]
             handler_opts.autostart = false
-            default_handler(server, handler_opts)
+            default_handler(server)
             lsp_opts = handler_opts
           end
         end,

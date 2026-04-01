@@ -140,13 +140,12 @@ return {
 
   {
     "luukvbaal/statuscol.nvim",
-    enabled = function() return vim.fn.has "nvim-0.10" == 1 end,
     dependencies = {
       {
         "rebelot/heirline.nvim",
-        opts = function(_, opts)
-          if vim.fn.has "nvim-0.10" == 1 then opts.statuscolumn = nil end
-        end,
+        opts = {
+          statuscolumn = false,
+        },
       },
     },
     config = function()

@@ -630,7 +630,7 @@ return {
   },
 
   {
-    "echasnovski/mini.surround",
+    "nvim-mini/mini.surround",
     dependencies = {
       {
         "AstroNvim/astrocore",
@@ -1118,7 +1118,7 @@ return {
   },
 
   {
-    "echasnovski/mini.ai",
+    "nvim-mini/mini.ai",
     event = "User AstroFile",
     opts = function(_, opts)
       local gen_spec = require("mini.ai").gen_spec
