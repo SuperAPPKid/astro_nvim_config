@@ -3,7 +3,7 @@
 ---@type LazySpec
 return {
   "AstroNvim/astrolsp",
-  version = false,
+  version = "^3",
   opts = function(_, opts)
     local capabilities = {}
     for k, v in pairs(vim.lsp.protocol.make_client_capabilities()) do
