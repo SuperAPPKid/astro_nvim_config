@@ -18,7 +18,7 @@ local save_file = {
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
-  version = "^2",
+  version = false,
   opts = function(_, opts)
     -- Configure core features of AstroNvim
     opts.features = extend_tbl(opts.features, {
