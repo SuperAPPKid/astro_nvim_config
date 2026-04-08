@@ -89,7 +89,7 @@ local M = {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
-      "Saghen/blink.cmp",
+      "saghen/blink.cmp",
     },
     config = function(_, opts)
       require("obsidian").setup(opts)

@@ -15,11 +15,14 @@ return {
         dependencies = {
           { "LiadOz/nvim-dap-repl-highlights", config = true },
         },
-        opts = function(_, opts)
-          if opts.ensure_installed ~= "all" then
-            opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "dap_repl" })
-          end
-        end,
+      },
+    },
+    specs = {
+      {
+        "AstroNvim/astrocore",
+        opts = {
+          treesitter = { ensure_installed = { "dap_repl" } },
+        },
       },
     },
     config = function()

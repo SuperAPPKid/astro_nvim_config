@@ -113,7 +113,7 @@ return {
       { "tpope/vim-dotenv" },
       { "kristijanhusak/vim-dadbod-completion" },
       {
-        "Saghen/blink.cmp",
+        "saghen/blink.cmp",
         opts = {
           sources = {
             per_filetype = {

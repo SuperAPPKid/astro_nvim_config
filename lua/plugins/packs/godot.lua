@@ -48,7 +48,7 @@ return {
     cmd = { "GodotRun", "GodotRunLast", "GodotStart" },
     dependencies = {
       {
-        "Saghen/blink.cmp",
+        "saghen/blink.cmp",
         opts = {
           sources = {
             per_filetype = {

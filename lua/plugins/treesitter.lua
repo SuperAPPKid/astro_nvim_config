@@ -12,6 +12,7 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
+    commit = "90cd6580e720caedacb91fdd587b747a6e77d61f", -- last version with nvim 0.11.0
     dependencies = {
       {
         "nvim-treesitter/nvim-treesitter-context",
@@ -45,7 +46,6 @@ return {
             },
             branch = "master",
           }
-          parsers.blade.filetype = "blade"
         end,
       })
 

@@ -91,6 +91,11 @@ return {
             },
           },
         },
+        blade = {
+          cmd = { "laravel-dev-generators", "lsp" },
+          filetypes = { "blade" },
+          root_dir = function(fname) return vim.fs.root(fname, ".git") end,
+        },
         bashls = {
           filetypes = { "sh", "bash", "zsh" },
         },
@@ -456,10 +461,14 @@ return {
         },
       },
       -- A list like table of servers that should be setup, useful for enabling language servers not installed with Mason.
-      servers = {},
+      servers = opts.servers,
       -- A custom `on_attach` function to be run after the default `on_attach` function, takes two parameters `client` and `bufnr`  (`:h lspconfig-setup`)
       on_attach = function(_, _) end,
     }
+
+    if vim.fn.executable "laravel-dev-generators" == 1 then
+      new_opts.servers = require("astrocore").list_insert_unique(new_opts.servers, { "blade" })
+    end
 
     return require("astrocore").extend_tbl(opts, new_opts)
   end,
