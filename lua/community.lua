@@ -51,10 +51,13 @@ return {
       editor = {
         reset_previous_code = false,
       },
-      lang = "golang",
+      lang = "",
       injector = {
         ["golang"] = {
           imports = function() return { "package main" } end,
+        },
+        ["python3"] = {
+          imports = function() return { "from leetcode import * # NOSONAR" } end,
         },
       },
       picker = { provider = "telescope" },
