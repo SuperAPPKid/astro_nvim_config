@@ -10,13 +10,10 @@ return {
     },
     opts = {
       linters_by_ft = {
-        ["ansible"] = { "ansible_lint" },
-        ["bash"] = { "bash" },
         ["dockerfile"] = { "hadolint" },
         ["go"] = { "golangcilint" },
         ["kotlin"] = { "ktlint" },
         ["proto"] = { "buf_lint" },
-        ["sh"] = { "shellcheck" },
         ["sql"] = { "sqlfluff" },
         ["tf"] = { "tflint", "tfsec" },
         ["terraform"] = { "tflint", "tfsec" },
