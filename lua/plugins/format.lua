@@ -115,7 +115,7 @@ return {
         ["terraform"] = { "terraform_fmt" },
         ["terraform-vars"] = { "terraform_fmt" },
         ["tf"] = { "terraform_fmt" },
-        ["toml"] = { "taplo" },
+        ["toml"] = { "tombi" },
         ["typescript"] = { "biome" },
         ["typescriptreact"] = { "biome" },
         ["vue"] = { "biome" },

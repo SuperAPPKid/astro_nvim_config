@@ -87,7 +87,7 @@ return {
         "prettierd",
         "rust-analyzer",
         "svelte-language-server",
-        "taplo", -- toml
+        "tombi", -- toml
         "tailwindcss-language-server",
         "vue-language-server",
 
