@@ -7,6 +7,7 @@ return {
     config = function(_, opts)
       local path = vim.fn.exepath "debugpy-adapter"
       if path == "" then path = vim.fn.exepath "python" end
+      opts.console = "internalConsole"
       require("dap-python").setup(path, opts)
     end,
   },

@@ -106,7 +106,7 @@ return {
         ["php"] = { "php_cs_fixer", "pint" },
         ["postcss"] = { "prettierd", "prettier", stop_after_first = true },
         ["proto"] = { "buf" },
-        ["python"] = { "isort", "black" },
+        ["python"] = { "ruff_fix", "ruff_organize_imports", "ruff_format" },
         ["ruby"] = { "standardrb" },
         ["scss"] = { "prettierd", "prettier", stop_after_first = true },
         ["sh"] = { "shfmt", "shellcheck" },

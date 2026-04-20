@@ -150,9 +150,8 @@ return {
 
         -- python
         "basedpyright",
-        "black",
         "debugpy",
-        "isort",
+        "ruff",
 
         -- ruby
         "solargraph",
