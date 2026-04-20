@@ -1,26 +1,4 @@
 local lint -- cache for the nvim-lint package
-
-local sonarlint_analyzers_path = vim.fn.stdpath "data"
-  .. "/mason/packages/sonarlint-language-server/extension/analyzers/"
-
-local sonarlint_ft = {
-  "c",
-  "cpp",
-  "css",
-  "docker",
-  "go",
-  "html",
-  "java",
-  "javascript",
-  "javascriptreact",
-  "php",
-  "python",
-  "typescript",
-  "typescriptreact",
-  "xml",
-  "yaml.docker-compose",
-}
-
 ---@type LazySpec
 return {
   {
@@ -118,29 +96,5 @@ return {
         end,
       })
     end,
-  },
-
-  {
-    "https://gitlab.com/schrieveslaach/sonarlint.nvim",
-    ft = sonarlint_ft,
-    opts = {
-      server = {
-        cmd = {
-          "sonarlint-language-server",
-          "-stdio",
-          "-analyzers",
-          sonarlint_analyzers_path .. "sonargo.jar",
-          sonarlint_analyzers_path .. "sonarhtml.jar",
-          sonarlint_analyzers_path .. "sonariac.jar",
-          sonarlint_analyzers_path .. "sonarjava.jar",
-          sonarlint_analyzers_path .. "sonarjavasymbolicexecution.jar",
-          sonarlint_analyzers_path .. "sonarjs.jar",
-          sonarlint_analyzers_path .. "sonarphp.jar",
-          sonarlint_analyzers_path .. "sonarpython.jar",
-          sonarlint_analyzers_path .. "sonarxml.jar",
-        },
-      },
-      filetypes = sonarlint_ft,
-    },
   },
 }

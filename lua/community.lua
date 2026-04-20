@@ -57,7 +57,7 @@ return {
           imports = function() return { "package main" } end,
         },
         ["python3"] = {
-          imports = function() return { "from leetcode import * # NOSONAR" } end,
+          imports = function() return { "from leetcode import *" } end,
         },
       },
       picker = { provider = "telescope" },
