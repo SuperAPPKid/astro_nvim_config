@@ -84,7 +84,6 @@ return {
         "marksman", -- markdown
         "nginx-config-formatter",
         "nginx-language-server",
-        "prettier",
         "prettierd",
         "rust-analyzer",
         "svelte-language-server",
