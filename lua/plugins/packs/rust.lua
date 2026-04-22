@@ -70,4 +70,12 @@ return {
     end,
     config = function(_, opts) vim.g.rustaceanvim = require("astrocore").extend_tbl(opts, vim.g.rustaceanvim) end,
   },
+
+  {
+    "cordx56/rustowl",
+    version = "*", -- Latest stable version
+    build = "curl -L https://raw.githubusercontent.com/cordx56/rustowl/refs/heads/main/scripts/installer | sh",
+    ft = "rust",
+    config = true,
+  },
 }
