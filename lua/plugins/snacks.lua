@@ -68,7 +68,56 @@ return {
       end
     end,
     opts = function(_, opts)
-      opts.bigfile = {}
+      local get_icon = require("astroui").get_icon
+
+      opts.bigfile = {
+        enabled = true,
+        notify = true,
+        size = 1.5 * 1024 * 1024, -- 1.5MB
+        line_length = 3000,
+        ---@param ctx {buf: number, ft:string}
+        setup = function(ctx)
+          if vim.fn.exists ":MatchParenDisable" ~= 0 then vim.cmd [[MatchParenDisable]] end
+          vim.opt_local.swapfile = false
+          vim.opt_local.foldmethod = "manual"
+          vim.opt_local.undolevels = -1
+          vim.opt_local.undoreload = 0
+          vim.opt_local.list = false
+          vim.cmd "syntax clear"
+          vim.opt_local.syntax = "off"
+          vim.opt_local.filetype = ""
+          vim.diagnostic.enable(false)
+          if vim.fn.exists ":VimadeDisable" ~= 0 then vim.cmd [[VimadeDisable]] end
+          vim.cmd "TSDisable highlight"
+          vim.cmd "TSDisable incremental_selection"
+          vim.cmd "TSDisable indent"
+          vim.cmd "TSDisable textobjects.lsp_interop"
+          vim.cmd "TSDisable textobjects.move"
+          vim.cmd "TSDisable textobjects.select"
+          vim.cmd "TSDisable textobjects.swap"
+          require("lualine").hide()
+          for _, client in pairs(vim.lsp.get_clients()) do
+            client.stop()
+          end
+          vim.api.nvim_create_autocmd({ "LspAttach" }, {
+            buffer = buf,
+            callback = function(args)
+              vim.schedule(function() vim.lsp.buf_detach_client(buf, args.data.client_id) end)
+            end,
+          })
+          local ok, blink_cmp = pcall(require, "blink.cmp")
+          if ok then
+            blink_cmp.hide()
+            blink_cmp.cancel()
+          end
+          vim.api.nvim_buf_set_option(0, "omnifunc", "")
+          Snacks.util.wo(0, { foldmethod = "manual", statuscolumn = "", conceallevel = 0 })
+          vim.b.minianimate_disable = true
+          vim.schedule(function()
+            if vim.api.nvim_buf_is_valid(ctx.buf) then vim.bo[ctx.buf].syntax = ctx.ft end
+          end)
+        end,
+      }
 
       opts.input.config = function(input_opts, _) input_opts.icon = "" end
 
@@ -76,7 +125,128 @@ return {
 
       opts.dashboard.config = function(dashboard_opts, _)
         dashboard_opts.enabled = false
-        dashboard_opts.preset.header = table.concat(require("ascii").art.text.neovim.delta_corps_priest1, "\n")
+        dashboard_opts.preset = {
+          keys = function()
+            return {
+              {
+                text = {
+                  { "           " .. "" .. "  ", hl = "SnacksDashboardIcon" },
+                  { "new file", hl = "SnacksDashboardDesc", width = 45 },
+                  { "░▒▓", hl = "SnacksDashboardFade" },
+                  { " i ", hl = "SnacksDashboardKey" },
+                  { "▓▒░", hl = "SnacksDashboardFade" },
+                },
+                action = "<Leader>n",
+                key = "n",
+              },
+              {
+                text = {
+                  { "           " .. "" .. "  ", hl = "SnacksDashboardIcon" },
+                  { "old files", hl = "SnacksDashboardDesc", width = 45 },
+                  { "░▒▓", hl = "SnacksDashboardFade" },
+                  { " o ", hl = "SnacksDashboardKey" },
+                  { "▓▒░", hl = "SnacksDashboardFade" },
+                },
+                action = "<Leader>fo",
+                key = "o",
+              },
+              {
+                text = {
+                  { "           " .. "" .. "  ", hl = "SnacksDashboardIcon" },
+                  { "browse cwd", hl = "SnacksDashboardDesc", width = 45 },
+                  { "░▒▓", hl = "SnacksDashboardFade" },
+                  { " b ", hl = "SnacksDashboardKey" },
+                  { "▓▒░", hl = "SnacksDashboardFade" },
+                },
+                action = "<Leader>fE",
+                key = "b",
+              },
+              {
+                text = {
+                  { "           " .. get_icon("Search", 0, true) .. "  ", hl = "SnacksDashboardIcon" },
+                  { "find file", hl = "SnacksDashboardDesc", width = 45 },
+                  { "░▒▓", hl = "SnacksDashboardFade" },
+                  { " f ", hl = "SnacksDashboardKey" },
+                  { "▓▒░", hl = "SnacksDashboardFade" },
+                },
+                action = "<Leader>fF",
+                key = "f",
+              },
+              {
+                text = {
+                  { "           " .. "" .. "  ", hl = "SnacksDashboardIcon" },
+                  { "find text", hl = "SnacksDashboardDesc", width = 45 },
+                  { "░▒▓", hl = "SnacksDashboardFade" },
+                  { " w ", hl = "SnacksDashboardKey" },
+                  { "▓▒░", hl = "SnacksDashboardFade" },
+                },
+                action = "<Leader>fW",
+                key = "w",
+              },
+              {
+                text = {
+                  { "           " .. get_icon("GitBranch", 0, true) .. "  ", hl = "SnacksDashboardIcon" },
+                  { "browse git", hl = "SnacksDashboardDesc", width = 45 },
+                  { "░▒▓", hl = "SnacksDashboardFade" },
+                  { " g ", hl = "SnacksDashboardKey" },
+                  { "▓▒░", hl = "SnacksDashboardFade" },
+                },
+                action = "<Leader>gg",
+                key = "g",
+              },
+              {
+                text = {
+                  { "           " .. "󰒲" .. "  ", hl = "SnacksDashboardIcon" },
+                  { "lazy", hl = "SnacksDashboardDesc", width = 45 },
+                  { "░▒▓", hl = "SnacksDashboardFade" },
+                  { " l ", hl = "SnacksDashboardKey" },
+                  { "▓▒░", hl = "SnacksDashboardFade" },
+                },
+                action = "<Leader>ps",
+                key = "l",
+              },
+              {
+                text = {
+                  { "           " .. "󱊍" .. "  ", hl = "SnacksDashboardIcon" },
+                  { "mason", hl = "SnacksDashboardDesc", width = 45 },
+                  { "░▒▓", hl = "SnacksDashboardFade" },
+                  { " m ", hl = "SnacksDashboardKey" },
+                  { "▓▒░", hl = "SnacksDashboardFade" },
+                },
+                action = "<Leader>pm",
+                key = "m",
+              },
+              {
+                text = {
+                  { "           " .. get_icon("Refresh", 0, true) .. "  ", hl = "SnacksDashboardIcon" },
+                  { "session", hl = "SnacksDashboardDesc", width = 45 },
+                  { "░▒▓", hl = "SnacksDashboardFade" },
+                  { " s ", hl = "SnacksDashboardKey" },
+                  { "▓▒░", hl = "SnacksDashboardFade" },
+                },
+                action = "<Leader>Sf",
+                key = "s",
+              },
+            }
+          end,
+        }
+        dashboard_opts.sections = {
+          {
+            section = "terminal",
+            cmd = vim.fn.stdpath "config" .. "/nvim-logo -e",
+            height = 10,
+            width = 70,
+            padding = 1,
+          },
+          {
+            section = "keys",
+            gap = 0,
+            padding = 2,
+          },
+          {
+            section = "startup",
+          },
+        }
       end
 
       local old_indent_filter = opts.indent.filter

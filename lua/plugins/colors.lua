@@ -1,7 +1,9 @@
 ---@type LazySpec
 return {
+
   {
     "rebelot/kanagawa.nvim",
+    dependencies = { "xero/evangelion.nvim" },
     specs = {
       {
         "AstroNvim/astroui",
@@ -39,6 +41,7 @@ return {
       overrides = function(colors)
         local theme = colors.theme
         local palette = colors.palette
+        local eva = require("evangelion.unit01").get()
         return {
           Normal = { bg = "none" },
           NormalNC = { bg = "none" },
@@ -107,6 +110,13 @@ return {
           ModesVisual = { bg = palette.crystalBlue },
           ModesReplace = { bg = palette.oniViolet },
           ModesFormat = { bg = palette.sakuraPink },
+
+          SnacksDashboardIcon = { fg = eva.dummyplug },
+          SnacksDashboardDesc = { fg = eva.adam },
+          SnacksDashboardKey = { fg = eva.kaworu, bg = eva.melchior, bold = true },
+          SnacksDashboardFooter = { fg = eva.shinji, bold = true },
+          SnacksDashboardSpecial = { fg = eva.kaworu, bg = eva.melchior, bold = true },
+          SnacksDashboardFade = { fg = eva.melchior },
 
           GitSignsAdd = { fg = palette.springGreen },
           GitSignsChange = { fg = palette.roninYellow },
