@@ -1,3 +1,12 @@
+local enabled_for_pure_text = function()
+  if vim.tbl_contains({ "gitcommit", "markdown", "jj" }, vim.bo.filetype) then return true end
+  local captures = vim.treesitter.get_captures_at_cursor(0)
+  for _, v in ipairs(captures) do
+    if vim.startswith(v, "comment") or vim.startswith(v, "string") then return true end
+  end
+  return false
+end
+
 ---@type LazySpec
 return {
   {
@@ -10,7 +19,6 @@ return {
     version = "*",
     dependencies = {
       "Kaiser-Yang/blink-cmp-git",
-      "Kaiser-Yang/blink-cmp-avante",
       "MahanRahmati/blink-nerdfont.nvim",
       "ribru17/blink-cmp-spell",
       "hrsh7th/cmp-calc",
@@ -29,6 +37,16 @@ return {
     },
     opts = {
       completion = {
+        documentation = {
+          auto_show = false,
+          window = { border = "double" },
+        },
+        list = {
+          cycle = {
+            from_bottom = true,
+            from_top = true,
+          },
+        },
         menu = {
           auto_show = true,
           border = "double",
@@ -49,16 +67,7 @@ return {
             },
           },
         },
-        documentation = {
-          auto_show = false,
-          window = { border = "double" },
-        },
-        list = {
-          cycle = {
-            from_bottom = true,
-            from_top = true,
-          },
-        },
+        trigger = { prefetch_on_insert = false },
       },
       cmdline = {
         completion = {
@@ -116,16 +125,15 @@ return {
         default = function()
           return {
             "calc",
+            "nerdfont",
             "codeium",
             "copilot",
-            "git",
             "latex_symbols",
-            "lazydev",
             "lsp",
-            "nerdfont",
             "path",
             "snippets",
             "spell",
+            "git",
           }
         end,
         per_filetype = {
@@ -133,13 +141,8 @@ return {
           lazy = {},
           oil = {},
           sagarename = {},
-          AvanteInput = { "avante" },
         },
         providers = {
-          avante = {
-            module = "blink-cmp-avante",
-            name = "Avante",
-          },
           buffer = {
             score_offset = 900,
           },
@@ -147,6 +150,7 @@ return {
             name = "calc",
             module = "blink.compat.source",
             score_offset = 800,
+            enabled = enabled_for_pure_text,
           },
           codeium = {
             name = "codeium",
@@ -181,8 +185,13 @@ return {
           git = {
             name = "Git",
             module = "blink-cmp-git",
+            enabled = enabled_for_pure_text,
+            score_offset = 600,
             opts = {
               before_reload_cache = false,
+              commit = {
+                triggers = { "@" },
+              },
               git_centers = {
                 github = {
                   issue = { enable = false },
@@ -208,14 +217,8 @@ return {
               strategy = 0,
             },
           },
-          lazydev = {
-            name = "LazyDev",
-            module = "lazydev.integrations.blink",
-            -- make lazydev completions top priority (see `:h blink.cmp`)
-            score_offset = 800,
-          },
           lsp = {
-            score_offset = 1000,
+            score_offset = 900,
             transform_items = function(_, items)
               for _, item in ipairs(items) do
                 item.kind_icon = "󰚩"
@@ -224,12 +227,16 @@ return {
             end,
           },
           nerdfont = {
-            module = "blink-nerdfont",
             name = "Nerd",
-            score_offset = 700,
+            module = "blink-nerdfont",
+            enabled = enabled_for_pure_text,
+            score_offset = 1000,
           },
           path = {
-            score_offset = 600,
+            score_offset = 800,
+          },
+          snippets = {
+            score_offset = 800,
           },
           spell = {
             name = "Spell",

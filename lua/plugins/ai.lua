@@ -21,6 +21,23 @@ return {
       "zbirenbaum/copilot.lua", -- for providers='copilot'
       "HakonHarnes/img-clip.nvim",
       "MeanderingProgrammer/render-markdown.nvim",
+      "Kaiser-Yang/blink-cmp-avante",
+      {
+        "saghen/blink.cmp",
+        opts = {
+          sources = {
+            per_filetype = {
+              AvanteInput = { "avante" },
+            },
+            providers = {
+              avante = {
+                module = "blink-cmp-avante",
+                name = "Avante",
+              },
+            },
+          },
+        },
+      },
     },
     keys = function(_, keys)
       keys = {}

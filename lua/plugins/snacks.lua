@@ -2,6 +2,22 @@
 return {
   {
     "folke/lazydev.nvim",
+    dependencies = {
+      "saghen/blink.cmp",
+      opts = {
+        sources = {
+          per_filetype = {
+            lua = { inherit_defaults = true, "lazydev" },
+          },
+          providers = {
+            lazydev = {
+              name = "LazyDev",
+              module = "lazydev.integrations.blink",
+            },
+          },
+        },
+      },
+    },
     ft = "lua",
     opts = function(_, opts)
       opts.library =
