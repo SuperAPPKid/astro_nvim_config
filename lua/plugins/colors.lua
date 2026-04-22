@@ -139,7 +139,6 @@ return {
   {
     "uga-rosa/ccc.nvim",
     tag = "v1.7.2",
-    event = "User AstroFile",
     keys = {
       { "<Leader>zc", "<Cmd>CccConvert<CR>", desc = "Convert color" },
       { "<Leader>zp", "<Cmd>CccPick<CR>", desc = "Pick Color" },
