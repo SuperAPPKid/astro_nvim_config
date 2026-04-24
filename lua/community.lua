@@ -261,4 +261,6 @@ return {
       close = { enable = false },
     },
   },
+
+  { import = "astrocommunity.utility.nvzone-menu" },
 }
