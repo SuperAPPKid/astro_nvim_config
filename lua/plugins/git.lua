@@ -76,21 +76,53 @@ return {
         "<Cmd>DiffviewOpen -uno -- %<CR>",
         desc = "Diff Changes",
       },
-      {
-        "<Leader>gdf",
-        "<Cmd>DiffviewFileHistory %<CR>",
-        desc = "Diff History (file)",
-      },
-      {
-        "<Leader>gdF",
-        "<Cmd>DiffviewFileHistory<CR>",
-        desc = "Diff History (all)",
-      },
     },
     opts = {
       enhanced_diff_hl = true,
       hooks = {
         view_opened = function() require("diffview.actions").toggle_files() end,
+      },
+    },
+  },
+
+  {
+    "esmuellert/codediff.nvim",
+    enabled = enabled,
+    dependencies = { "MunifTanjim/nui.nvim" },
+    config = function(opts)
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "CodeDiffOpen",
+        callback = function()
+          vim.g.codediff_saved_showtabline = vim.o.showtabline
+          vim.o.showtabline = 0
+        end,
+      })
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "CodeDiffClose",
+        callback = function()
+          if vim.g.codediff_saved_showtabline then
+            vim.o.showtabline = vim.g.codediff_saved_showtabline
+            vim.g.codediff_saved_showtabline = nil
+          end
+        end,
+      })
+      require("codediff").setup(opts)
+    end,
+    keys = {
+      {
+        "<Leader>gdf",
+        "<Cmd>CodeDiff history %<CR>",
+        desc = "Diff File (parent)",
+      },
+      {
+        "<Leader>gdF",
+        "<Cmd>CodeDiff history --base %<CR>",
+        desc = "Diff File (this)",
+      },
+      {
+        "<Leader>gdh",
+        "<Cmd>CodeDiff history<CR>",
+        desc = "Diff History (all)",
       },
     },
   },
@@ -127,7 +159,7 @@ return {
       {
         "<Leader>gdB",
         "<Cmd>AdvancedGitSearch changed_on_branch<CR>",
-        desc = "Branch Changed",
+        desc = "Current Changed",
       },
       {
         "<Leader>gd",
