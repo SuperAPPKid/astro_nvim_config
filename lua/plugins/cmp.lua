@@ -56,7 +56,6 @@ return {
               source_name = {
                 text = function(ctx)
                   local override_names = {
-                    codeium = "Codeium",
                     copilot = "Copilot",
                     latex_symbols = "Latex",
                   }
@@ -126,7 +125,6 @@ return {
           return {
             "calc",
             "nerdfont",
-            "codeium",
             "copilot",
             "latex_symbols",
             "lsp",
@@ -151,18 +149,6 @@ return {
             module = "blink.compat.source",
             score_offset = 800,
             enabled = enabled_for_pure_text,
-          },
-          codeium = {
-            name = "codeium",
-            module = "codeium.blink",
-            async = true,
-            transform_items = function(_, items)
-              for _, item in ipairs(items) do
-                item.kind_hl = "MiniIconsOrange"
-              end
-              return items
-            end,
-            score_offset = 600,
           },
           copilot = {
             name = "copilot",
