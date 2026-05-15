@@ -103,7 +103,7 @@ return {
 
         -- csharp
         "omnisharp",
-        "csharpier",
+        { "csharpier", condition = function() return vim.fn.executable "dotnet" == 1 end },
         "netcoredbg",
 
         -- docker
@@ -145,7 +145,7 @@ return {
         "phpactor",
         "php-debug-adapter",
         "php-cs-fixer",
-        "pint",
+        { "pint", condition = function() return vim.fn.executable "composer" == 1 end },
 
         -- python
         "basedpyright",
@@ -153,8 +153,8 @@ return {
         "ruff",
 
         -- ruby
-        "solargraph",
-        "standardrb",
+        { "solargraph", condition = function() return vim.fn.executable "gem" == 1 end },
+        { "standardrb", condition = function() return vim.fn.executable "gem" == 1 end },
 
         -- sql
         "sqlfluff",
