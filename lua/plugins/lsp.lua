@@ -258,6 +258,7 @@ return {
       },
     },
     dependencies = {
+      { "stevearc/aerial.nvim", enabled = false },
       { "nvim-treesitter/nvim-treesitter" },
       {
         "AstroNvim/astrolsp",
