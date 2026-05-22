@@ -1732,4 +1732,11 @@ return {
       vim.g.matchup_matchparen_hi_surround_always = 1
     end,
   },
+
+  -- macos dependency: https://github.com/laishulu/macism
+  {
+    "keaising/im-select.nvim",
+    event = "User AstroFile",
+    config = true,
+  },
 }
