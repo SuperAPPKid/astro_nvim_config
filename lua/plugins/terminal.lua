@@ -204,9 +204,16 @@ return {
           end
           if vim.fn.executable "claude" == 1 then
             support_ai = true
-            mappings.n["<Leader>tac"] = {
+            mappings.n["<Leader>tal"] = {
               function() toggle_term_cmd { cmd = "claude", direction = "float" } end,
               desc = "claude",
+            }
+          end
+          if vim.fn.executable "codex" == 1 then
+            support_ai = true
+            mappings.n["<Leader>tac"] = {
+              function() toggle_term_cmd { cmd = "codex", direction = "float" } end,
+              desc = "codex",
             }
           end
           if support_ai then mappings.n["<Leader>ta"] = { "<Nop>", desc = "ToggleTerm ai" } end
