@@ -103,7 +103,10 @@ return {
 
         -- csharp
         "omnisharp",
-        { "csharpier", condition = function() return vim.fn.executable "dotnet" == 1 end },
+        {
+          "csharpier",
+          condition = function() return vim.fn.system("dotnet --version") and vim.v.shell_error == 0 end,
+        },
         "netcoredbg",
 
         -- docker
