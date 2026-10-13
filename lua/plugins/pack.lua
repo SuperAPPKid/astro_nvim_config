@@ -65,6 +65,7 @@ return {
   {
     "adalessa/laravel.nvim",
     fmt = { "php", "blade" },
+    cond = function() return vim.loop.fs_stat(vim.fn.getcwd() .. "/artisan") ~= nil end,
     cmd = { "Composer", "Npm", "Yarn", "Laravel", "LaravelModel" },
     dependencies = {
       "nvim-telescope/telescope.nvim",
